@@ -7,6 +7,20 @@
 
 <script>
 export default {
+  name: 'Contact',
+  data () {
+    return {
+      firstName: 'Luke',
+      lastName: 'Skywalker',
+      groupName: 'Heroes'
+    }
+  },
+  methods: {
+    enterProfile () {
+      // This function should be called when someone taps on a contact.
+      console.log('Enter profile function')
+    }
+  }
 }
 </script>
 
