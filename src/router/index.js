@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Signin from '@/signin/components/Signin'
 import Container from '@/contacts/components/Container'
 import Profile from '@/contacts/components/Profile'
+import Notif from '@/notif/components/Notif'
 
 Vue.use(Router)
 
@@ -22,6 +23,11 @@ export default new Router({
       path: '/profile', // I want this to eventually go to a profile with a unique ID
       name: 'Profile',
       component: Profile
+    },
+    {
+      path: '/notif', // Notifications page
+      name: 'Notif',
+      component: Notif
     }
   ]
 })
