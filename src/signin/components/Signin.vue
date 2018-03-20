@@ -2,10 +2,13 @@
     <div id="signin">
         <h1>This is the sign in page</h1>
         <br>
-        <input type="text">
+        <sui-input placeholder="First Name" />
         <br>
         <br>
-        <input type="email">
+        <sui-input placeholder="Last Name" />
+        <br>
+        <br>
+        <sui-input placeholder="Email" />
         <br>
         <br>
         <button>Sign Up</button>
