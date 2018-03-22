@@ -1,18 +1,20 @@
 <template>
 <div>
     <!-- Not sure if I want to make a seperate component for a contact -->
-    <h1>Here is a single contact</h1>
+    <slot></slot>
 </div>
 </template>
 
 <script>
 export default {
-  name: 'Contact',
+  // props: ['key'],
   data () {
     return {
+      id: '1',
       firstName: 'Luke',
       lastName: 'Skywalker',
-      groupName: 'Heroes'
+      group: 'Heroes',
+      profilePic: './path/to/pic'
     }
   },
   methods: {

@@ -8,6 +8,7 @@ import 'semantic-ui-css/semantic.min.css'
 
 Vue.config.productionTip = false
 
+Vue.use(SuiVue)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
@@ -15,5 +16,3 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
-
-Vue.use(SuiVue)
