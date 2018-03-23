@@ -1,15 +1,15 @@
 <template>
-<div id="notifications">
+  <div id="notifications">
     <!-- This will be the component for the notification view -->
     <h1>{{ name }}</h1>
     <button @click="exitNotif">[Icon-exit]</button>
     <p>Shared their contact information with you.</p>
     <section id="notif-area">
-        <h1>Personal</h1>
-        <p>[Icon-email] {{ email }}</p>
-        <p>[Icon-Phone] {{ phone }}</p>
+      <h1>Personal</h1>
+      <p>[Icon-email] {{ email }}</p>
+      <p>[Icon-Phone] {{ phone }}</p>
     </section>
-</div>
+  </div>
 </template>
 
 <script>

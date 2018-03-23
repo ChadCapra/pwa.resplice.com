@@ -1,18 +1,27 @@
 <template>
   <div>
-    <sui-sidebar class="sidebar" animation="push" width="wide" :visible=nav>
-      <sui-menu secondary>
-        <sui-menu-item>
-          <sui-button color="black" animated @click="setNavVisible" class="nav-btn">
-            <sui-button-content visible>
-              <sui-icon size="large" name="bars" />
-            </sui-button-content>
-            <sui-button-content hidden>
-              <sui-icon name="left arrow" />
-            </sui-button-content>
-          </sui-button>
-        </sui-menu-item>
-      </sui-menu>
+    <sui-sidebar animation="push" width="wide" :visible=nav>
+      <div class="sidebar">
+        <sui-menu secondary>
+          <sui-menu-item>
+            <sui-button color="black" animated @click="setNavVisible" class="nav-btn">
+              <sui-button-content visible>
+                <sui-icon size="large" name="bars" />
+              </sui-button-content>
+              <sui-button-content hidden>
+                <sui-icon name="left arrow" />
+              </sui-button-content>
+            </sui-button>
+          </sui-menu-item>
+        </sui-menu>
+        <sui-divider />
+        <sui-container class="nav-btns" text-align="left">
+          <sui-button class="nav-btn" content="Groups" icon="users" label-position="left" />
+          <sui-button class="nav-btn" content="Messages" icon="comment" label-position="left" />
+          <sui-button class="nav-btn" content="Phone" icon="phone" label-position="left" />
+          <sui-button class="nav-btn" content="Map" icon="map" label-position="left" />
+        </sui-container>
+      </div>
     </sui-sidebar>
   </div>
 </template>
@@ -24,18 +33,22 @@ export default {
 </script>
 
 <style>
-  .nav-btn {
-    margin: auto;
+  .side-bar .nav-btn {
+    margin-bottom: 20px;
     padding: 10px;
-
   }
 
   .sidebar {
     background-color: #1BBC9B;
-    padding: 10px;
+    height: 100%;
   }
 
   .test {
     background-color: #1BBC9B;
+  }
+
+  .nav-btns {
+    padding: 20px;
+    background-color: lightblue;
   }
 </style>
