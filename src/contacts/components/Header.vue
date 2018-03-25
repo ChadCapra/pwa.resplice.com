@@ -1,5 +1,17 @@
 <template>
-  <header>
+  <div>
+    <el-row>
+      <el-col :span="4"><icon name="bars" scale="2"></icon></el-col>
+      <el-col :span="20">
+        <el-input
+        placeholder="Search..."
+        suffix-icon="search"
+        v-model="searchInput">
+        </el-input>
+      </el-col>
+    </el-row>
+  </div>
+  <!-- <header>
     <sui-menu secondary>
       <sui-menu-item>
         <sui-button color="teal" animated @click="setNavVisible" class="nav-btn">
@@ -15,12 +27,17 @@
         <sui-input placeholder="Search Contacts & Groups" icon="search" size="25" />
       </sui-menu-item>
     </sui-menu>
-  </header>
+  </header> -->
 </template>
 
 <script>
 export default {
-  props: ['setNavVisible']
+  props: ['setNavVisible'],
+  data () {
+    return {
+      searchInput: ''
+    }
+  }
 }
 </script>
 

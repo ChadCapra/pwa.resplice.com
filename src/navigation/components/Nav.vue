@@ -1,5 +1,23 @@
 <template>
-  <div>
+  <el-container>
+    <el-menu-item index="1">
+      <icon name="users"></icon>
+      <span slot="title">Groups</span>
+    </el-menu-item>
+    <el-menu-item index="2">
+      <icon name="comment"></icon>
+      <span slot="title">Message</span>
+    </el-menu-item>
+    <el-menu-item index="3">
+      <icon name="phone"></icon>
+      <span slot="title">Phone</span>
+    </el-menu-item>
+    <el-menu-item index="4">
+      <icon name="map"></icon>
+      <span slot="title">Map</span>
+    </el-menu-item>
+  </el-container>
+  <!-- <div>
     <sui-sidebar animation="push" width="wide" :visible=nav>
       <div class="sidebar">
         <sui-menu secondary>
@@ -23,7 +41,7 @@
         </sui-container>
       </div>
     </sui-sidebar>
-  </div>
+  </div> -->
 </template>
 
 <script>
