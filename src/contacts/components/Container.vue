@@ -1,11 +1,13 @@
 <template>
 <!-- Contacts Parent Component -->
 <el-container class="contacts">
-  <!-- <el-aside width="200px">Aside <icon name="bars" label="Navigation"></icon></el-aside> -->
+  <el-aside class="nav" width="65%" height="100%" :style="{ display: navVisible }">
+    <re-nav :setNavVisible="setNavVisible"></re-nav>
+  </el-aside>
   <el-container>
     <el-header>
-    <el-row type="flex" justify="center">
-      <el-col :span="2"><icon class="nav" name="bars" scale="2.5"></icon></el-col>
+    <el-row type="flex" justify="center" :style="{ display: headVisible }">
+      <el-col :span="2"><icon class="nav-btn" name="bars" @click.native="setNavVisible" scale="2.5"></icon></el-col>
       <el-col :span="2"></el-col>
       <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
         <el-input
@@ -18,7 +20,7 @@
     </el-row>
     </el-header>
     <el-main>
-      <re-contact v-for="contact in contacts" :contact="contact" :key="contact.id"></re-contact>
+      <re-contact v-for="contact in contacts" :contact="contact" :headVisible="headVisible" :key="contact.id"></re-contact>
     </el-main>
   </el-container>
 </el-container>
@@ -77,7 +79,8 @@ export default {
           pic: require('../../assets/finn.png')
         }
       ],
-      navVisible: false
+      navVisible: 'none',
+      headVisible: ''
     }
   },
   components: {
@@ -86,24 +89,36 @@ export default {
   },
   methods: {
     setNavVisible () {
-      if (this.navVisible) {
-        this.navVisible = false
+      if (this.navVisible === 'block') {
+        this.headVisible = ''
+        this.navVisible = 'none'
       } else {
-        this.navVisible = true
+        this.headVisible = 'none'
+        this.navVisible = 'block'
       }
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
   .el-header {
     padding-top: 10px;
   }
   .contacts {
     text-align: center;
   }
-  .nav {
+  .nav-btn {
     color: #1BBC9B;
+    transition: all .30s ease;
+  }
+  .nav-btn:hover {
+    cursor: pointer;
+    color: #0be8ba;
+  }
+  .nav {
+    padding-top: 10px;
+    background-color: #1BBC9B;
+    text-align: left;
   }
 </style>

@@ -3,7 +3,7 @@
   <div class="contact" @click="enterProfile">
     <span class="c-back"><el-row type="flex" justify="left" :gutter="10">
       <el-col :span="8"><img :src="contact.pic" :alt="contact.firstName"></el-col>
-      <el-col class="name" :xs="14" :sm="14" :md="14" :lg="6" :xl="6">
+      <el-col class="name" :style="{ display: headVisible }" :xs="14" :sm="14" :md="14" :lg="6" :xl="6">
         {{ contact.firstName + ' '}}<span class="l-name">{{ contact.lastName }}</span>
         <br>
         <div class="g-name"><span>{{ contact.group }}</span></div>
@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  props: ['contact'],
+  props: ['contact', 'headVisible'],
   data () {
     return {
       id: '1',
@@ -28,7 +28,7 @@ export default {
     enterProfile () {
       // This function should be called when someone taps on a contact.
       console.log('Entered a profile')
-      this.$router.push({ name: 'profile', params: { contactId: 1 } })
+      this.$router.push({ name: 'Profile', params: { contactId: 1 } })
     }
   }
 }
@@ -40,9 +40,10 @@ export default {
   }
   .contact {
     margin-bottom: 20px;
+    transition: all .30s ease;
   }
   .contact:hover {
-    background-color: lightblue;
+    background-color: lightgray;
     cursor: pointer;
   }
   .name {

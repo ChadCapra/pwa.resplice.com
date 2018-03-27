@@ -1,6 +1,12 @@
 <template>
   <div class="background">
     <div class="signin">
+      <el-steps :active="active" align-center>
+        <el-step title="Sign Up"></el-step>
+        <el-step title="Add your info"></el-step>
+        <el-step title="Invite people"></el-step>
+        <el-step title="Enjoy!"></el-step>
+      </el-steps>
       <el-row type="flex" justify="center">
         <el-col :xs="20" :sm="20" :md="16" :lg="12" :xl="6">
           <div class="sign-logo"><img :src="logo" alt="Resplice Logo"></div>
@@ -46,7 +52,8 @@ export default {
         email: '',
         password: ''
       },
-      logo: require('../../assets/re_logo.png')
+      logo: require('../../assets/re_logo.png'),
+      active: 0
     }
   },
   methods: {
@@ -60,6 +67,7 @@ export default {
           })
         }
       })
+      this.$router.push({ name: 'Container' })
     }
   }
 }
@@ -81,9 +89,11 @@ export default {
    background-size: cover;
    background-position: center;
    width: 100%;
-   height: 100%;
    overflow: hidden;
    z-index: -1;
+ }
+ .signin {
+   padding-top: 10px;
  }
 </style>
 

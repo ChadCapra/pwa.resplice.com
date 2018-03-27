@@ -1,16 +1,7 @@
 <template>
   <div id="app">
     <main>
-      <!-- <img src="./assets/logo.png" alt="Vue.js PWA"> -->
-      <router-view></router-view>
-      <br>
-      <router-link to="/">Go back to the main contacts container</router-link>
-      <br>
-      <router-link to="/signin">Go to Sign-in page</router-link>
-      <br>
-      <router-link to="/profile">Go to a profile page</router-link>
-      <br>
-      <router-link to="/notif">Go to the notifications page</router-link>
+      <router-view style="height: 100vh;"></router-view>
     </main>
   </div>
 </template>
@@ -31,10 +22,13 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #ffffff;
+  width: 100%;
+  height: 100vh;
+  /* background-color: white; */
 }
 
 main {
-  text-align: center;
+  text-align: center; 
 }
 
 a {
