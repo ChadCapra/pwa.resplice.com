@@ -20,7 +20,7 @@ export default new Router({
       component: Signin
     },
     {
-      path: '/profile', // I want this to eventually go to a profile with a unique ID
+      path: '/profile/:id', // I want this to eventually go to a profile with a unique ID
       name: 'Profile',
       component: Profile
     },

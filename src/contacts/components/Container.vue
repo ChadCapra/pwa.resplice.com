@@ -1,15 +1,15 @@
 <template>
 <!-- Contacts Parent Component -->
 <el-container class="contacts">
-  <el-aside class="nav" width="65%" height="100%" :style="{ display: navVisible }">
+  <el-aside class="nav" width="250px" height="100%" :style="{ display: navVisible }">
     <re-nav :setNavVisible="setNavVisible"></re-nav>
   </el-aside>
   <el-container>
     <el-header>
-    <el-row type="flex" justify="center" :style="{ display: headVisible }">
-      <el-col :span="2"><icon class="nav-btn" name="bars" @click.native="setNavVisible" scale="2.5"></icon></el-col>
+    <el-row type="flex" justify="left" :style="{ display: headVisible }">
+      <el-col :span="2"><icon class="nav-btn" :style="{ display: navBtnVisible }" name="bars" @click.native="setNavVisible" scale="2.5"></icon></el-col>
       <el-col :span="2"></el-col>
-      <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
+      <el-col :xs="20" :sm="20" :md="16" :lg="12" :xl="12">
         <el-input
         placeholder="Search Contacts & Groups"
         suffix-icon="search"
@@ -77,10 +77,39 @@ export default {
           lastName: 'Finn',
           group: 'Heroes',
           pic: require('../../assets/finn.png')
+        },
+        {
+          id: '7',
+          firstName: 'Darth',
+          lastName: 'Revan',
+          group: 'Villains',
+          pic: require('../../assets/revan.png')
+        },
+        {
+          id: '8',
+          firstName: 'Darth',
+          lastName: 'Revan',
+          group: 'Villains',
+          pic: require('../../assets/revan.png')
+        },
+        {
+          id: '9',
+          firstName: 'Darth',
+          lastName: 'Revan',
+          group: 'Villains',
+          pic: require('../../assets/revan.png')
+        },
+        {
+          id: '10',
+          firstName: 'Darth',
+          lastName: 'Revan',
+          group: 'Villains',
+          pic: require('../../assets/revan.png')
         }
       ],
-      navVisible: 'none',
-      headVisible: ''
+      navVisible: '',
+      headVisible: '',
+      navBtnVisible: ''
     }
   },
   components: {
@@ -92,9 +121,18 @@ export default {
       if (this.navVisible === 'block') {
         this.headVisible = ''
         this.navVisible = 'none'
+        this.navBtnVisible = 'block'
+      } else if (this.navVisible === '' && window.innerWidth >= 1000) {
+        this.navVisible = 'none'
+        this.navBtnVisible = 'block'
       } else {
-        this.headVisible = 'none'
-        this.navVisible = 'block'
+        if (window.innerWidth < 1000) {
+          this.headVisible = 'none'
+          this.navVisible = 'block'
+        } else {
+          this.navVisible = 'block'
+          this.navBtnVisible = 'none'
+        }
       }
     }
   }
@@ -111,6 +149,7 @@ export default {
   .nav-btn {
     color: #1BBC9B;
     transition: all .30s ease;
+    float: left;
   }
   .nav-btn:hover {
     cursor: pointer;
@@ -120,5 +159,14 @@ export default {
     padding-top: 10px;
     background-color: #1BBC9B;
     text-align: left;
+    display: none;
+  }
+  @media (min-width: 1000px) {
+    .nav {
+      display: block;
+    }
+    .nav-btn {
+      display: none;
+    }
   }
 </style>

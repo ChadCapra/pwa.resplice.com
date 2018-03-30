@@ -1,7 +1,17 @@
 <template>
-  <div>
-    <p>Profile View</p>
-  </div>
+  <el-container>
+    <el-header>
+      <el-row>
+        <el-col :span="2">
+          <icon class="exit-btn" name="arrow-left" scale="2.5" @click.native="exitProfile"></icon>
+        </el-col>
+        <el-col :span="20" :justify="center">
+          <span>Profile</span>
+        </el-col>
+      </el-row>
+    </el-header>
+    <el-main>User PID: {{ $route.params.id }}</el-main>
+</el-container>
 </template>
 
 <script>
@@ -28,11 +38,28 @@ export default {
         }
       }
     }
+  },
+  methods: {
+    exitProfile () {
+      this.$router.push({ name: 'Container' })
+    }
   }
 }
 </script>
 
-<style>
+<style scoped>
+  .el-header {
+      padding-top: 10px;
+      font-size: 36px;
+    }
+  .exit-btn {
+    float: left;
+    color: #1BBC9B;
+  }
+  .exit-btn:hover {
+    color: #0be8ba;
+    cursor: pointer;
+  }
 </style>
 
 

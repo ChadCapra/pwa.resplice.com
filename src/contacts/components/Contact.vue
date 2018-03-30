@@ -2,7 +2,7 @@
 <!-- Not sure if I want to make a seperate component for a contact -->
   <div class="contact" @click="enterProfile">
     <span class="c-back"><el-row type="flex" justify="left" :gutter="10">
-      <el-col :span="8"><img :src="contact.pic" :alt="contact.firstName"></el-col>
+      <el-col :xs="8" :sm="8" :md="4" :lg="2" :xl="2"><img :src="contact.pic" :alt="contact.firstName"></el-col>
       <el-col class="name" :style="{ display: headVisible }" :xs="14" :sm="14" :md="14" :lg="6" :xl="6">
         {{ contact.firstName + ' '}}<span class="l-name">{{ contact.lastName }}</span>
         <br>
@@ -27,8 +27,9 @@ export default {
   methods: {
     enterProfile () {
       // This function should be called when someone taps on a contact.
+      var id = this.contact.id
       console.log('Entered a profile')
-      this.$router.push({ name: 'Profile', params: { contactId: 1 } })
+      this.$router.push({ name: 'Profile', params: { id } })
     }
   }
 }
