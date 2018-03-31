@@ -9,7 +9,7 @@
     <el-row type="flex" justify="left" :style="{ display: headVisible }">
       <el-col :span="2"><icon class="nav-btn" :style="{ display: navBtnVisible }" name="bars" @click.native="setNavVisible" scale="2.5"></icon></el-col>
       <el-col :span="2"></el-col>
-      <el-col :xs="20" :sm="20" :md="16" :lg="12" :xl="12">
+      <el-col :xs="18" :sm="18" :md="16" :lg="12" :xl="12">
         <el-input
         placeholder="Search Contacts & Groups"
         suffix-icon="search"
@@ -142,6 +142,7 @@ export default {
 <style scoped>
   .el-header {
     padding-top: 10px;
+    background-color: #35495E;
   }
   .contacts {
     text-align: center;

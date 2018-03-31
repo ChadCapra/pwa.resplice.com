@@ -21,7 +21,7 @@ body {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #ffffff;
+  color: #303133;
   width: 100%;
   height: 100vh;
   /* background-color: white; */

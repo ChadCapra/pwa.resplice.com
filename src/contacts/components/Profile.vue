@@ -10,7 +10,20 @@
         </el-col>
       </el-row>
     </el-header>
-    <el-main>User PID: {{ $route.params.id }}</el-main>
+    <el-main>User PID: {{ $route.params.id }}
+      <div class="loading" v-if="loading">
+        Insert loading animation here...
+      </div>
+
+      <div class="error" v-if="error">
+        Insert Error Message here...
+      </div>
+
+      <!-- <div class="profile" v-if="post"></div> -->
+      <div class="profile">
+        Main Profile Loaded...
+      </div>
+    </el-main>
 </el-container>
 </template>
 
@@ -19,6 +32,9 @@ export default {
   data () {
     return {
       userData: {
+        loading: false,
+        post: null,
+        error: null,
         firstName: 'Luke',
         lastName: 'Skywalker',
         group: 'Heroes',
@@ -39,7 +55,25 @@ export default {
       }
     }
   },
+  created () {
+    // fetch data when the component is created
+    // this.fetchData()
+  },
   methods: {
+    // fetchData () {
+    //   this.error = this.post = null
+    //   this.loading = true
+    //   // getPost is the data fetching API function
+    //   // We want to pull data from cache if network is unavailable
+    //   getPost(this.$route.params.id, (err, post) => {
+    //     this.loading = false
+    //     if (err) {
+    //       this.error = err.toString()
+    //     } else {
+    //       this.post = post
+    //     }
+    //   })
+    // },
     exitProfile () {
       this.$router.push({ name: 'Container' })
     }
@@ -49,9 +83,11 @@ export default {
 
 <style scoped>
   .el-header {
-      padding-top: 10px;
-      font-size: 36px;
-    }
+    padding-top: 10px;
+    font-size: 36px;
+    background-color: #35495E;
+    color: #fff;
+  }
   .exit-btn {
     float: left;
     color: #1BBC9B;

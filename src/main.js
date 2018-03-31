@@ -23,6 +23,7 @@ import 'vue-awesome/icons/sort-down'
 import 'vue-awesome/icons/ellipsis-h'
 import 'vue-awesome/icons/search'
 import 'vue-awesome/icons/arrow-left'
+import 'vue-awesome/icons/bell'
 import Icon from 'vue-awesome/components/Icon'
 // Import Vue.js App component and router components
 import App from './App'
