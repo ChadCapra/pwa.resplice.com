@@ -118,6 +118,7 @@ export default {
   },
   methods: {
     setNavVisible () {
+      // I should be able to clean this code up using v-for instead of style binding
       if (this.navVisible === 'block') {
         this.headVisible = ''
         this.navVisible = 'none'
