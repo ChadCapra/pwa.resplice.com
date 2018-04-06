@@ -5,19 +5,19 @@
         <el-col :span="2">
           <icon class="exit-btn" name="arrow-left" scale="2.5" @click.native="exitProfile"></icon>
         </el-col>
-        <el-col :span="20" :justify="center">
+        <el-col :span="20" justify="center">
           <span>Profile</span>
         </el-col>
       </el-row>
     </el-header>
     <el-main>
-      <div class="loading" v-if="loading">
+      <!-- <div class="loading" v-if="loading">
         Insert loading animation here...
       </div>
 
       <div class="error" v-if="error">
         Insert Error Message here...
-      </div>
+      </div> -->
 
       <!-- <div class="profile" v-if="post"></div> -->
       <div class="profile">
@@ -36,39 +36,53 @@
           <el-col :xs="6" :sm="6" :md="4" :lg="4" :xl="4"><icon class="access-btn" name="globe" scale="2.5"></icon></el-col>
           <el-col :xs="6" :sm="6" :md="4" :lg="4" :xl="4"><icon class="access-btn" name="ellipsis-h" scale="2.5"></icon></el-col>
         </el-row>
-        <el-row>
-          <el-col :span="12">Info row 1</el-col>
+        <el-row class="info-row" type="flex" justify="center">
+          <el-col :span="12">
+            <el-dropdown>
+              <span class="dropdown-link">
+                <icon class="info-icon" name="phone" scale="2.5"></icon>
+                Dropdown List<i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>Action 1</el-dropdown-item>
+                <el-dropdown-item>Action 2</el-dropdown-item>
+                <el-dropdown-item>Action 3</el-dropdown-item>
+                <el-dropdown-item>Action 4</el-dropdown-item>
+                <el-dropdown-item divided>Action 5</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </el-col>
           <el-col :span="12">Info row 1</el-col>
         </el-row>
-        <el-row>
+        <el-row class="info-row" type="flex" justify="center">
           <el-col :span="12">Info row 2</el-col>
           <el-col :span="12">Info row 2</el-col>
         </el-row>
-        <el-row>
+        <el-row class="info-row" type="flex" justify="center">
           <el-col :span="12">Info row 3</el-col>
           <el-col :span="12">Info row 3</el-col>
         </el-row>
-        <el-row>
+        <el-row class="info-row" type="flex" justify="center">
           <el-col :span="12">Info row 4</el-col>
           <el-col :span="12">Info row 4</el-col>
         </el-row>
-        <el-row>
+        <el-row class="info-row" type="flex" justify="center">
           <el-col :span="12">Info row 5</el-col>
           <el-col :span="12">Info row 5</el-col>
         </el-row>
       </div>
     </el-main>
-</el-container>
+  </el-container>
 </template>
 
 <script>
 export default {
   data () {
     return {
+      loading: false,
+      post: null,
+      error: null,
       userData: {
-        loading: false,
-        post: null,
-        error: null,
         firstName: 'Luke',
         lastName: 'Skywalker',
         group: 'Heroes',
@@ -150,6 +164,17 @@ export default {
   .pro-pic {
     height: 25vh;
     margin: 15px;
+  }
+  .info-row {
+    padding: 10px;
+    border: 5px;
+  }
+  .dropdown-link {
+    cursor: pointer;
+    vertical-align: top;
+  }
+  .info-icon {
+    color: #1BBC9B;
   }
 </style>
 
