@@ -52,7 +52,7 @@ export default {
         email: '',
         password: ''
       },
-      logo: require('../../assets/re_logo.png'),
+      logo: require('../assets/re_logo.png'),
       active: 0
     }
   },
@@ -85,7 +85,7 @@ export default {
    padding-bottom: 40px;
  }
  .background {
-   background-image: url('../../assets/signup.jpg');
+   background-image: url('../assets/signup.jpg');
    background-size: cover;
    background-position: center;
    width: 100%;

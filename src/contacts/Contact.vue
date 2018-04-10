@@ -1,11 +1,9 @@
 <template>
   <div class="contact" @click="enterProfile">
-    <el-row type="flex" justify="left" :gutter="10">
-      <el-col :xs="8" :sm="8" :md="4" :lg="2" :xl="2"><img :src="contact.pic" :alt="contact.firstName"></el-col>
-      <el-col class="name" :style="{ display: headVisible }" :xs="14" :sm="14" :md="14" :lg="6" :xl="6">
-        {{ contact.firstName + ' '}}<span class="l-name">{{ contact.lastName }}</span>
-        <br>
-        <div class="g-name"><span>{{ contact.group }}</span></div>
+    <el-row type="flex" justify="left">
+      <el-col class="c-content" :xs="22" :sm="22" :md="22" :lg="12" :xl="12">
+        <img class="contact-img" style="margin-right: 20px;" :src="contact.pic" :alt="contact.firstName">
+        <div class="f-name" v-if="contact.firstName">{{ contact.firstName }}</div><span class="l-name" v-if="contact.lastName">{{ contact.lastName }}</span>
       </el-col>
     </el-row>
   </div>
@@ -33,7 +31,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .l-name {
     color: #1BBC9B;
   }
@@ -41,22 +39,18 @@ export default {
     margin-bottom: 20px;
     transition: all .30s ease;
     border-radius: 50px;
+    font-size: 24px;
+    text-align: left;
   }
   .contact:hover {
     background-color: #ebeef5;
     cursor: pointer;
   }
-  .name {
-    font-size: 24px;
-    text-align: left;
+  .c-content {
+    display: flex;
+    align-items: center;
   }
-  .g-name {
-    margin-top: 10px;
-    margin-left: 5px;
-    color: #fff;
-  }
-  .g-name span {
-    background-color: #1BBC9B;
-    padding: 3px;
+  .f-name {
+    margin-right: 5px;
   }
 </style>

@@ -3,7 +3,7 @@
     <el-header>
       <el-row>
         <el-col :span="2">
-          <icon class="exit-btn" name="arrow-left" scale="2.5" @click.native="exitProfile"></icon>
+          <icon class="exit-btn" name="arrow-left" scale="2" @click.native="exitProfile"></icon>
         </el-col>
         <el-col :span="20" justify="center">
           <span>Profile</span>
@@ -22,7 +22,7 @@
       <!-- <div class="profile" v-if="post"></div> -->
       <div class="profile">
         <el-row class="pro-pic">
-          <el-col :span="24"><img src='../../assets/profile_pic.png' alt="Profile Picture"></el-col>
+          <el-col :span="24"><img src='../assets/profile_pic.png' alt="Profile Picture"></el-col>
         </el-row>
         <el-row>
           <el-col>First Last</el-col>
@@ -86,7 +86,7 @@ export default {
         firstName: 'Luke',
         lastName: 'Skywalker',
         group: 'Heroes',
-        profilePic: require('../../assets/profile_pic.png'),
+        profilePic: require('../assets/profile_pic.png'),
         personal: {
           emails: [
             'lukesky@rebels.com',
@@ -133,7 +133,7 @@ export default {
 <style scoped>
   .el-header {
     padding-top: 10px;
-    font-size: 36px;
+    font-size: 28px;
     background-color: #35495E;
     color: #fff;
   }

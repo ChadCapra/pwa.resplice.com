@@ -42,7 +42,7 @@ export default {
   data () {
     return {
       index: 0,
-      profilePic: require('../../assets/bastilla.png')
+      profilePic: require('../assets/bastilla.png')
     }
   },
   methods: {
@@ -65,7 +65,7 @@ export default {
     margin-left: 20px;
     margin-right: 20px;
     vertical-align: top;
-    transition: all .30s ease;
+    transition: all 0.3s ease;
   }
   .nav-btn-w:hover {
     cursor: pointer;

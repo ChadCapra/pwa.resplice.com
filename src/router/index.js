@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Signin from '@/signin/components/Signin'
-import Container from '@/contacts/components/Container'
-import Profile from '@/contacts/components/Profile'
-import Notif from '@/notif/components/Notif'
+import Signin from '@/signin/Signin'
+import Container from '@/contacts/Container'
+import Profile from '@/contacts/Profile'
+import Notif from '@/notif/Notif'
 
 Vue.use(Router)
 

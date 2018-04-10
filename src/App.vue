@@ -18,10 +18,10 @@ body {
 }
 
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'Sanchez', serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #303133;
+  color: #32393d;
   width: 100%;
   height: 100vh;
   /* background-color: white; */
