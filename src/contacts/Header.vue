@@ -3,7 +3,7 @@
     <el-row>
       <icon class="back-btn btn" name="arrow-left" scale="2"></icon>
       <transition name="fade" mode="out-in">
-        <span v-if="searchState" class="group">Group Name - 100</span>
+        <span v-if="searchDisabled" class="group">Group Name - 100</span>
       </transition>
       <label :data-state="search" for="search">
         <input type="text" placeholder="Search" @click="searchOn" @blur="searchOff"/>
@@ -35,17 +35,17 @@ export default {
   data () {
     return {
       searchInput: '',
-      searchState: true,
+      searchDisabled: true,
       search: 'close'
     }
   },
   methods: {
     searchOn () {
-      this.searchState = !this.searchState
+      this.searchDisabled = false
       this.search = 'open'
     },
     searchOff () {
-      this.searchState = !this.searchState
+      this.searchDisabled = true
       this.search = 'close'
     }
   }

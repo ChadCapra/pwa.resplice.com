@@ -4,6 +4,11 @@ import Signin from '@/signin/Signin'
 import Container from '@/contacts/Container'
 import Profile from '@/contacts/Profile'
 import Notif from '@/notif/Notif'
+import Groups from '@/contacts/Groups'
+import Maps from '@/contacts/Map'
+import UserProfile from '@/contacts/UserProfile'
+import Settings from '@/contacts/Settings'
+import ContactList from '@/contacts/ContactList'
 
 Vue.use(Router)
 
@@ -12,7 +17,29 @@ export default new Router({
     {
       path: '/',
       name: 'Container',
-      component: Container
+      component: Container,
+      children: [
+        {
+          path: '',
+          component: ContactList
+        },
+        {
+          path: 'groups',
+          component: Groups
+        },
+        {
+          path: 'map',
+          component: Maps
+        },
+        {
+          path: 'userprofile',
+          component: UserProfile
+        },
+        {
+          path: 'settings',
+          component: Settings
+        }
+      ]
     },
     {
       path: '/signin',

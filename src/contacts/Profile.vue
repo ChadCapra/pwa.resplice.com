@@ -124,7 +124,7 @@ export default {
     //   })
     // },
     exitProfile () {
-      this.$router.push({ name: 'Container' })
+      this.$router.push({ path: '/' })
     }
   }
 }
@@ -134,7 +134,7 @@ export default {
   .el-header {
     padding-top: 10px;
     font-size: 28px;
-    background-color: #35495E;
+    background-color: #32393d;
     color: #fff;
   }
   .exit-btn {

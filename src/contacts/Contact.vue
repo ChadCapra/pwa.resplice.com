@@ -23,7 +23,6 @@ export default {
   // },
   methods: {
     enterProfile () {
-      // This function should be called when someone taps on a contact.
       var id = this.contact.id
       this.$router.push({ name: 'Profile', params: { id } })
     }
