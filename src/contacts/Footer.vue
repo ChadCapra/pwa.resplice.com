@@ -16,6 +16,13 @@
       <router-link to="/settings"><div class="r-link"><icon name="cog" scale="2"></icon></div></router-link>
     </el-col>
   </el-row>
+  <!-- <el-row class="nav-tabs" type="flex" justify="center">
+    <router-link to="/" tag="el-col" active-class="active-nav" class="tab" exact><icon name="address-book" scale="2"></icon></router-link>
+    <router-link to="/groups" tag="el-col" active-class="active-nav" class="tab"><icon name="users" scale="2"></icon></router-link>
+    <router-link to="/map" tag="el-col" active-class="active-nav" class="tab"><icon name="map" scale="2"></icon></router-link>
+    <router-link to="/userprofile" tag="el-col" active-class="active-nav" class="tab"><icon name="user" scale="2"></icon></router-link>
+    <router-link to="/settings" tag="el-col" active-class="active-nav" class="tab"><icon name="cog" scale="2"></icon></router-link>
+  </el-row> -->
 </template>
 
 <script>
@@ -36,14 +43,6 @@ export default {
       this.index.zero = this.index.one = this.index.two = this.index.three = this.index.four = false // Fills the entire object with false values
       this.index[pos] = true // Adds the style to the element at index pos
     }
-    // enterContacts () {
-    // },
-    // enterGroups () {
-    // },
-    // enterMap () {
-    // },
-    // enterUserProfile () {
-    // }
   }
 }
 </script>

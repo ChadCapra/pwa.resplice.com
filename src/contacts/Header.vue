@@ -10,23 +10,6 @@
         <icon name="search" aria-hidden="true"></icon>
       </label>
     </el-row>
-    <el-row class="search">
-      <el-col :xs="18" :sm="18" :md="12" :lg="12" :xl="12">
-        <!-- <el-input
-          placeholder="Search for contact, tag, or group"
-          v-model="searchInput"
-          clearable>
-          <icon slot="prefix" scale="1.5" class="el-input__icon search-icon" name="search"></icon>
-        </el-input> -->
-      </el-col>
-      <el-button class="action-btn" type="primary" size="small" round><icon name="bars"></icon></el-button>
-    </el-row>
-    <!-- <el-row class="action-btns" type="flex" justify="center">
-      <el-col :xs="6" :sm="6" :md="6" :lg="4" :xl="2"><icon class="action-btn" name="phone" scale="2"></icon></el-col>
-      <el-col :xs="6" :sm="6" :md="6" :lg="4" :xl="2"><icon class="action-btn" name="envelope" scale="2"></icon></el-col>
-      <el-col :xs="6" :sm="6" :md="6" :lg="4" :xl="2"><icon class="action-btn" name="comment" scale="2"></icon></el-col>
-      <el-col :xs="6" :sm="6" :md="6" :lg="4" :xl="2"><icon class="action-btn" name="search" scale="2"></icon></el-col>
-    </el-row> -->
   </div>
 </template>
 
@@ -57,19 +40,6 @@ export default {
   margin-bottom: 10px;
   color: #fff;
   font-size: 28px;
-}
-.action-btns {
-  margin-top: 5px;
-  color: #1BBC9B;
-}
-.action-btn {
-  float: right;
-  box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
-  transition: all 0.5s ease;
-  &:hover {
-    transform: scale(1.05);
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-  }
 }
 .btn {
   color: #1BBC9B;

@@ -16,7 +16,6 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Container',
       component: Container,
       children: [
         {
@@ -55,8 +54,12 @@ export default new Router({
       path: '/notif', // Notifications page
       name: 'Notif',
       component: Notif
+    },
+    {
+      path: '*', redirect: '/' // Catch all route
     }
   ],
+  mode: 'history',
   scrollBehavior (to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition
