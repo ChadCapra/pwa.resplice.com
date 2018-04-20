@@ -2,6 +2,10 @@
 
 > A new way to contact
 
+## Vue.js Style Guide
+
+[Style Guide](https://vuejs.org/v2/style-guide/)
+
 ## Build Setup
 
 ``` bash

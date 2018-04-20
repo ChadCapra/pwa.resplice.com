@@ -2,7 +2,7 @@
   "name": "resplice-pwa",
   "version": "1.0.0",
   "description": "A new way to contact",
-  "author": "Marcus Virginia <marcusvirg@yahoo.com>",
+  "author": "Marcus Virginia <marcusvirg345@gmail.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
