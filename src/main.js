@@ -29,7 +29,11 @@ import Icon from 'vue-awesome/components/Icon'
 // Import Vue.js App component and router components
 import App from './App'
 import router from './router'
+<<<<<<< HEAD
 import store from './store'
+=======
+import store from './store/store'
+>>>>>>> 61e3b2e71832d09b52eec9e1b4b838743c60b481
 
 Vue.config.productionTip = false
 
@@ -40,6 +44,7 @@ new Vue({
   el: '#app',
   store,
   router,
+  store,
   template: '<App/>',
   components: { App }
 })
