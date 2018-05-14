@@ -25,7 +25,7 @@
           <el-col :span="24"><img src='../assets/profile_pic.png' alt="Profile Picture"></el-col>
         </el-row>
         <el-row>
-          <el-col>First Last</el-col>
+          <el-col style="color: #1BBC9B; font-size: 24px;">{{ userData.firstName + ' ' + userData.lastName}}</el-col>
         </el-row>
         <el-row>
           <el-col>User PID: {{ $route.params.id }}</el-col>
@@ -37,38 +37,30 @@
           <el-col :xs="6" :sm="6" :md="4" :lg="4" :xl="4"><icon class="access-btn" name="ellipsis-h" scale="2.5"></icon></el-col>
         </el-row>
         <el-row class="info-row" type="flex" justify="center">
-          <el-col :span="12">
-            <el-dropdown>
-              <span class="dropdown-link">
-                <icon class="info-icon" name="phone" scale="2.5"></icon>
-                Dropdown List<i class="el-icon-arrow-down el-icon--right"></i>
-              </span>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>Action 1</el-dropdown-item>
-                <el-dropdown-item>Action 2</el-dropdown-item>
-                <el-dropdown-item>Action 3</el-dropdown-item>
-                <el-dropdown-item>Action 4</el-dropdown-item>
-                <el-dropdown-item divided>Action 5</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </el-col>
-          <el-col :span="12">Info row 1</el-col>
+          <el-card class="info-card">
+            <div slot="header" class="info-card-header">
+              <span>{{ userData.personal.name }}</span>
+            </div>
+            <div v-for="i in userData.personal.phones" :key="i" class="text item">
+              {{ i }}
+            </div>
+            <div v-for="i in userData.personal.emails" :key="i" class="text item">
+              {{ i }}
+            </div>
+          </el-card>
         </el-row>
         <el-row class="info-row" type="flex" justify="center">
-          <el-col :span="12">Info row 2</el-col>
-          <el-col :span="12">Info row 2</el-col>
-        </el-row>
-        <el-row class="info-row" type="flex" justify="center">
-          <el-col :span="12">Info row 3</el-col>
-          <el-col :span="12">Info row 3</el-col>
-        </el-row>
-        <el-row class="info-row" type="flex" justify="center">
-          <el-col :span="12">Info row 4</el-col>
-          <el-col :span="12">Info row 4</el-col>
-        </el-row>
-        <el-row class="info-row" type="flex" justify="center">
-          <el-col :span="12">Info row 5</el-col>
-          <el-col :span="12">Info row 5</el-col>
+          <el-card class="info-card">
+            <div slot="header" class="info-card-header">
+              <span>{{ userData.work.name }}</span>
+            </div>
+            <div v-for="i in userData.work.phones" :key="i" class="text item">
+              <icon name="phone" ></icon>{{ i }}
+            </div>
+            <div v-for="i in userData.work.emails" :key="i" class="text item">
+              {{ i }}
+            </div>
+          </el-card>
         </el-row>
       </div>
     </el-main>
@@ -86,21 +78,7 @@ export default {
         firstName: 'Luke',
         lastName: 'Skywalker',
         group: 'Heroes',
-        profilePic: require('../assets/profile_pic.png'),
-        personal: {
-          emails: [
-            'lukesky@rebels.com',
-            'lukesky@heroes.com'
-          ],
-          phones: [
-            '333-333-3333',
-            '999-999-9999'
-          ]
-        },
-        work: {
-          emails: ['lukesky@tatooine.com'],
-          phones: ['123-456-7890']
-        }
+        profilePic: require('../assets/profile_pic.png')
       }
     }
   },
@@ -162,18 +140,21 @@ export default {
     cursor: pointer;
   }
   .pro-pic {
-    height: 25vh;
+    height: 10vh;
     margin: 15px;
   }
   .info-row {
     padding: 10px;
     border: 5px;
   }
-  .dropdown-link {
-    cursor: pointer;
-    vertical-align: top;
-  }
   .info-icon {
+    color: #1BBC9B;
+  }
+  .info-card {
+    text-align: left;
+    width: 100%;
+  }
+  .info-card-header {
     color: #1BBC9B;
   }
 </style>
