@@ -6,8 +6,8 @@ const state = {
     userName: '',
     password: '',
     is_admin: false,
-    attribute: {
-      1: {
+    attributes: [
+      {
         id: '1',
         contact_id: 100,
         attribute_group_id: 10,
@@ -16,7 +16,7 @@ const state = {
         verified: true,
         primary_of_type: false
       },
-      2: {
+      {
         id: '2',
         contact_id: 100,
         attribute_group_id: 10,
@@ -25,7 +25,7 @@ const state = {
         verified: true,
         primary_of_type: false
       },
-      3: {
+      {
         id: '3',
         contact_id: 100,
         attribute_group_id: 10,
@@ -34,7 +34,7 @@ const state = {
         verified: true,
         primary_of_type: true
       },
-      4: {
+      {
         id: '4',
         contact_id: 100,
         attribute_group_id: 10,
@@ -43,13 +43,13 @@ const state = {
         verified: false,
         primary_of_type: false
       }
-    }
+    ]
   }
 }
 
 const getters = {
-  attribute: state => {
-    return state.attribute
+  attributes: state => {
+    return state.attributes
   },
   userId: state => {
     return state.user.id

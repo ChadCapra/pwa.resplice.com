@@ -56,7 +56,7 @@ export default new Router({
       component: Notif
     },
     {
-      path: '*', redirect: '/' // Catch all route
+      path: '*', redirect: '/' // Catch all other routes
     }
   ],
   mode: 'history',

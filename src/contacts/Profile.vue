@@ -78,7 +78,17 @@ export default {
         firstName: 'Luke',
         lastName: 'Skywalker',
         group: 'Heroes',
-        profilePic: require('../assets/profile_pic.png')
+        profilePic: require('../assets/profile_pic.png'),
+        personal: {
+          name: 'Personal',
+          phones: ['555-555-5555'],
+          emails: ['personal@domain.com']
+        },
+        work: {
+          name: 'Work',
+          phones: ['999-999-9999'],
+          emails: ['email@domain.com']
+        }
       }
     }
   },
