@@ -1,6 +1,5 @@
 <template>
   <div>
-    <el-button class="action-btn" type="primary" size="small" round><icon name="bars"></icon></el-button>
     <re-contact v-for="contact in contacts" :contact="contact" :key="contact.id"></re-contact>
   </div>
 </template>
@@ -95,15 +94,6 @@ export default {
 .action-btns {
   margin-top: 5px;
   color: #1BBC9B;
-}
-.action-btn {
-  float: right;
-  box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
-  transition: all 0.5s ease;
-  &:hover {
-    transform: scale(1.05);
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-  }
 }
 </style>
 
