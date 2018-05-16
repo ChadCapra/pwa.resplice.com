@@ -25,7 +25,7 @@
           <el-col :span="24"><img src='../assets/profile_pic.png' alt="Profile Picture"></el-col>
         </el-row>
         <el-row>
-          <el-col style="color: #1BBC9B; font-size: 24px;">{{ userData.firstName + ' ' + userData.lastName}}</el-col>
+          <el-col style="color: #1BBC9B; font-size: 24px;">{{ firstName + ' ' + lastName }}</el-col>
         </el-row>
         <el-row>
           <el-col>User PID: {{ $route.params.id }}</el-col>
@@ -39,7 +39,7 @@
         <el-row class="info-row" type="flex" justify="center">
           <el-card class="info-card">
             <div slot="header" class="info-card-header">
-              <span>{{ userData.personal.name }}</span>
+              <span>Personal</span>
             </div>
             <div v-for="i in userData.personal.phones" :key="i" class="text item">
               <icon class="info-icon" name="phone" scale="1.5"></icon>{{ i }}
@@ -52,7 +52,7 @@
         <el-row class="info-row" type="flex" justify="center">
           <el-card class="info-card">
             <div slot="header" class="info-card-header">
-              <span>{{ userData.work.name }}</span>
+              <span>Work</span>
             </div>
             <div v-for="i in userData.work.phones" :key="i" class="text item">
               <icon class="info-icon" name="phone" scale="1.5"></icon>{{ i }}
@@ -97,8 +97,17 @@ export default {
     // this.fetchData()
   },
   computed: {
-    contact () {
-      return this.$store.contacts.getters.contacts(this.$route.params.id)
+    attributes () {
+      return this.$store.getters.attributes(this.$route.params.id)
+    },
+    id () {
+      return this.$store.getters.contactId(this.$route.params.id)
+    },
+    firstName () {
+      return this.$store.getters.contactFirst(this.$route.params.id)
+    },
+    lastName () {
+      return this.$store.getters.contactLast(this.$route.params.id)
     }
   },
   methods: {
