@@ -42,10 +42,10 @@
               <span>{{ userData.personal.name }}</span>
             </div>
             <div v-for="i in userData.personal.phones" :key="i" class="text item">
-              {{ i }}
+              <icon class="info-icon" name="phone" scale="1.5"></icon>{{ i }}
             </div>
             <div v-for="i in userData.personal.emails" :key="i" class="text item">
-              {{ i }}
+              <icon class="info-icon" name="envelope" scale="1.5"></icon>{{ i }}
             </div>
           </el-card>
         </el-row>
@@ -55,10 +55,10 @@
               <span>{{ userData.work.name }}</span>
             </div>
             <div v-for="i in userData.work.phones" :key="i" class="text item">
-              <icon name="phone" ></icon>{{ i }}
+              <icon class="info-icon" name="phone" scale="1.5"></icon>{{ i }}
             </div>
             <div v-for="i in userData.work.emails" :key="i" class="text item">
-              {{ i }}
+              <icon class="info-icon" name="envelope" scale="1.5"></icon>{{ i }}
             </div>
           </el-card>
         </el-row>
@@ -95,6 +95,11 @@ export default {
   created () {
     // fetch data when the component is created
     // this.fetchData()
+  },
+  computed: {
+    contact () {
+      return this.$store.contacts.getters.contacts(this.$route.params.id)
+    }
   },
   methods: {
     // fetchData () {
@@ -158,6 +163,7 @@ export default {
     border: 5px;
   }
   .info-icon {
+    margin-right: 5px;
     color: #1BBC9B;
   }
   .info-card {
