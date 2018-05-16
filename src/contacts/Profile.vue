@@ -78,7 +78,6 @@ export default {
         firstName: 'Luke',
         lastName: 'Skywalker',
         group: 'Heroes',
-        profilePic: require('../assets/profile_pic.png'),
         personal: {
           name: 'Personal',
           phones: ['555-555-5555'],
@@ -108,6 +107,9 @@ export default {
     },
     lastName () {
       return this.$store.getters.contactLast(this.$route.params.id)
+    },
+    profilePic () {
+      return this.$store.getters.contactProfilePic(this.$route.params.id)
     }
   },
   methods: {
