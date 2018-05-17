@@ -12,13 +12,13 @@ export default new Vuex.Store({
         id: '1',
         firstName: 'Luke',
         lastName: 'Skywalker',
-        profilePic: require('../assets/profile_pic.png'),
+        profilePic: require('../assets/luke.png'),
         attributes: [
           {
             id: '1',
             contact_id: '1',
             attribute_group_id: '1',
-            type: 'mobile',
+            type: 'personal',
             value: '999-999-9999',
             verified: true,
             primary_of_type: false
@@ -27,7 +27,7 @@ export default new Vuex.Store({
             id: '2',
             contact_id: '1',
             attribute_group_id: '3',
-            type: 'address',
+            type: 'personal',
             value: '1176 14th Ave SE Minneapolis, MN 55414',
             verified: true,
             primary_of_type: false
@@ -36,7 +36,7 @@ export default new Vuex.Store({
             id: '3',
             contact_id: '1',
             attribute_group_id: '1',
-            type: 'phone',
+            type: 'work',
             value: '555-555-5555',
             verified: true,
             primary_of_type: true
@@ -45,8 +45,8 @@ export default new Vuex.Store({
             id: '4',
             contact_id: '1',
             attribute_group_id: '2',
-            type: 'email',
-            value: 'name@domain.com',
+            type: 'work',
+            value: 'luke@rebels.com',
             verified: false,
             primary_of_type: false
           }
@@ -56,14 +56,142 @@ export default new Vuex.Store({
         id: '5',
         firstName: 'Bastilla',
         lastName: 'Shan',
-        profilePic: require('../assets/profile_pic.png'),
+        profilePic: require('../assets/bastilla.png'),
         attributes: [
           {
             id: '1',
             contact_id: '5',
             attribute_group_id: '2',
-            type: 'email',
+            type: 'work',
             value: 'shan@darkside.com',
+            verified: false,
+            primary_of_type: true
+          },
+          {
+            id: '2',
+            contact_id: '5',
+            attribute_group_id: '4',
+            type: 'twitter',
+            value: '@bastillashan',
+            verified: true,
+            primary_of_type: true
+          }
+        ]
+      },
+      {
+        id: '2',
+        firstName: 'Darth',
+        lastName: 'Vader',
+        profilePic: require('../assets/vader.png'),
+        attributes: [
+          {
+            id: '1',
+            contact_id: '2',
+            attribute_group_id: '1',
+            type: 'personal',
+            value: '678-444-2345',
+            verified: false,
+            primary_of_type: true
+          }
+        ]
+      },
+      {
+        id: '3',
+        firstName: 'Han',
+        lastName: 'Solo',
+        profilePic: require('../assets/han.png'),
+        attributes: [
+          {
+            id: '1',
+            contact_id: '3',
+            attribute_group_id: '2',
+            type: 'work',
+            value: 'han@heroes.com',
+            verified: false,
+            primary_of_type: true
+          }
+        ]
+      },
+      {
+        id: '4',
+        firstName: 'Darth',
+        lastName: 'Revan',
+        profilePic: require('../assets/revan.png'),
+        attributes: [
+          {
+            id: '1',
+            contact_id: '4',
+            attribute_group_id: '2',
+            type: 'personal',
+            value: 'revan@darkside.com',
+            verified: false,
+            primary_of_type: true
+          }
+        ]
+      },
+      {
+        id: '6',
+        firstName: 'Finn',
+        lastName: null,
+        profilePic: require('../assets/finn.png'),
+        attributes: [
+          {
+            id: '1',
+            contact_id: '6',
+            attribute_group_id: '3',
+            type: 'work',
+            value: '111 Saber Ln, Jabi Town, Coruscant, Core',
+            verified: false,
+            primary_of_type: true
+          }
+        ]
+      },
+      {
+        id: '7',
+        firstName: 'Anakin',
+        lastName: 'Skywalker',
+        profilePic: require('../assets/anakin.png'),
+        attributes: [
+          {
+            id: '1',
+            contact_id: '7',
+            attribute_group_id: '3',
+            type: 'personal',
+            value: '5344 JarJar St, Inner City, Naboo, Mid Rim',
+            verified: false,
+            primary_of_type: true
+          }
+        ]
+      },
+      {
+        id: '8',
+        firstName: 'Obi-wan',
+        lastName: 'Kenobi',
+        profilePic: require('../assets/obi-wan.png'),
+        attributes: [
+          {
+            id: '1',
+            contact_id: '8',
+            attribute_group_id: '2',
+            type: 'personal',
+            value: 'obitheman@jtemple.com',
+            verified: false,
+            primary_of_type: true
+          }
+        ]
+      },
+      {
+        id: '9',
+        firstName: 'Mace',
+        lastName: 'Windu',
+        profilePic: require('../assets/mace.png'),
+        attributes: [
+          {
+            id: '1',
+            contact_id: '9',
+            attribute_group_id: '1',
+            type: 'work',
+            value: '908-489-1564',
             verified: false,
             primary_of_type: true
           }
@@ -74,20 +202,35 @@ export default new Vuex.Store({
       {
         id: '1',
         group: 'phone',
-        name: 'personal',
-        isUnique: false
+        isUnique: false,
+        attributes: []
       },
       {
         id: '2',
         group: 'email',
-        name: 'work',
-        isUnique: true
+        isUnique: true,
+        attributes: []
       },
       {
         id: '3',
         group: 'address',
-        name: 'personal',
-        isUnique: false
+        isUnique: false,
+        attributes: []
+      },
+      {
+        id: '4',
+        group: 'social',
+        isUnique: true,
+        attributes: []
+      }
+    ],
+    groups: [
+      {
+        owner_id: '1',
+        name: 'family',
+        description: 'All my family',
+        shared: false,
+        editable: false
       }
     ]
   },
@@ -95,19 +238,19 @@ export default new Vuex.Store({
     getContactById: state => id => {
       return state.contacts.find(contact => contact.id === id)
     },
-    attributes: (state, getters) => id => {
+    getAttributes: (state, getters) => id => {
       return getters.getContactById(id).attributes
     },
-    contactId: (state, getters) => id => {
+    getContactId: (state, getters) => id => {
       return getters.getContactById(id).id
     },
-    contactFirst: (state, getters) => id => {
+    getContactFirst: (state, getters) => id => {
       return getters.getContactById(id).firstName
     },
-    contactLast: (state, getters) => id => {
+    getContactLast: (state, getters) => id => {
       return getters.getContactById(id).lastName
     },
-    contacProfilePic: (state, getters) => id => {
+    getContactProfilePic: (state, getters) => id => {
       return getters.getContactById(id).profilePic
     }
   },
