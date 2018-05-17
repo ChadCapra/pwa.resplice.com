@@ -22,10 +22,10 @@
       <!-- <div class="profile" v-if="post"></div> -->
       <div class="profile">
         <el-row class="pro-pic">
-          <el-col :span="24"><img src='../assets/profile_pic.png' alt="Profile Picture"></el-col>
+          <el-col :span="24"><img :src='profilePic' alt="Profile Picture"></el-col>
         </el-row>
         <el-row>
-          <el-col style="color: #1BBC9B; font-size: 24px;">{{ firstName + ' ' + lastName }}</el-col>
+          <el-col style="color: #1BBC9B; font-size: 24px;"><span v-if="firstName != null">{{ firstName }}</span><span v-if="lastName != null">{{ ' ' + lastName }}</span></el-col>
         </el-row>
         <el-row>
           <el-col>User PID: {{ $route.params.id }}</el-col>
@@ -36,29 +36,16 @@
           <el-col :xs="6" :sm="6" :md="4" :lg="4" :xl="4"><icon class="access-btn" name="globe" scale="2.5"></icon></el-col>
           <el-col :xs="6" :sm="6" :md="4" :lg="4" :xl="4"><icon class="access-btn" name="ellipsis-h" scale="2.5"></icon></el-col>
         </el-row>
-        <el-row class="info-row" type="flex" justify="center">
+        <el-row v-for="aGroup in activeAttributeGroups" :key="aGroup.id" class="info-row" type="flex" justify="center">
           <el-card class="info-card">
             <div slot="header" class="info-card-header">
-              <span>Personal</span>
+              {{ aGroup.group }}
             </div>
-            <div v-for="i in userData.personal.phones" :key="i" class="text item">
-              <icon class="info-icon" name="phone" scale="1.5"></icon>{{ i }}
-            </div>
-            <div v-for="i in userData.personal.emails" :key="i" class="text item">
-              <icon class="info-icon" name="envelope" scale="1.5"></icon>{{ i }}
-            </div>
-          </el-card>
-        </el-row>
-        <el-row class="info-row" type="flex" justify="center">
-          <el-card class="info-card">
-            <div slot="header" class="info-card-header">
-              <span>Work</span>
-            </div>
-            <div v-for="i in userData.work.phones" :key="i" class="text item">
-              <icon class="info-icon" name="phone" scale="1.5"></icon>{{ i }}
-            </div>
-            <div v-for="i in userData.work.emails" :key="i" class="text item">
-              <icon class="info-icon" name="envelope" scale="1.5"></icon>{{ i }}
+            <div v-for="info in aGroup.attributes" :key="info.id" class="info-section text item">
+              <div class="info-type">{{ info.type }}</div>
+              <div class="info-item">
+                {{ info.value }}<icon class="info-action-icon" :name="getIconName(info.attribute_group_id)" scale="2" @click="executeAction"></icon>
+              </div>
             </div>
           </el-card>
         </el-row>
@@ -97,19 +84,35 @@ export default {
   },
   computed: {
     attributes () {
-      return this.$store.getters.attributes(this.$route.params.id)
+      return this.$store.getters.getAttributes(this.$route.params.id)
+    },
+    activeAttributeGroups () {
+      var groups = this.$store.state.attributeGroups // get state attributeGroups
+      groups.forEach(g => {
+        g.attributes = [] // reset state
+      })
+      this.attributes.forEach(a => { // push each attribute to a group.attributes array
+        groups.find(element => element.id === a.attribute_group_id).attributes.push(a)
+      })
+      var activeGroups = [] // Create active groups variable
+      groups.forEach(g => {
+        if (g.attributes.length > 0) {
+          activeGroups.push(g) // Check which groups have attributes in them and return them.
+        }
+      })
+      return activeGroups
     },
     id () {
-      return this.$store.getters.contactId(this.$route.params.id)
+      return this.$store.getters.getContactId(this.$route.params.id)
     },
     firstName () {
-      return this.$store.getters.contactFirst(this.$route.params.id)
+      return this.$store.getters.getContactFirst(this.$route.params.id)
     },
     lastName () {
-      return this.$store.getters.contactLast(this.$route.params.id)
+      return this.$store.getters.getContactLast(this.$route.params.id)
     },
     profilePic () {
-      return this.$store.getters.contactProfilePic(this.$route.params.id)
+      return this.$store.getters.getContactProfilePic(this.$route.params.id)
     }
   },
   methods: {
@@ -127,6 +130,23 @@ export default {
     //     }
     //   })
     // },
+    getIconName (agi) {
+      switch (agi) {
+        case '1':
+          return 'phone'
+        case '2':
+          return 'envelope'
+        case '3':
+          return 'home'
+        case '4':
+          return 'share'
+        default:
+          return 'mobile'
+      }
+    },
+    executeAction () {
+      console.log('Action executed')
+    },
     exitProfile () {
       this.$router.push({ path: '/' })
     }
@@ -173,7 +193,7 @@ export default {
     padding: 10px;
     border: 5px;
   }
-  .info-icon {
+  .info-action-icon {
     margin-right: 5px;
     color: #1BBC9B;
   }
@@ -183,6 +203,22 @@ export default {
   }
   .info-card-header {
     color: #1BBC9B;
+    text-transform: capitalize;
+    font-size: 18px;
+  }
+  .info-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  .info-type {
+    opacity: 0.7;
+    text-transform: capitalize;
+  }
+  .info-section {
+    margin-bottom: 15px;
   }
 </style>
 
