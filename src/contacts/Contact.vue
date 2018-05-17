@@ -2,7 +2,7 @@
   <div class="contact" @click="enterProfile">
     <el-row type="flex" justify="left">
       <el-col class="c-content" :xs="22" :sm="22" :md="22" :lg="12" :xl="12">
-        <img class="contact-img" style="margin-right: 20px;" :src="contact.pic" :alt="contact.firstName">
+        <img class="contact-img" style="margin-right: 20px;" :src="contact.profilePic" :alt="contact.firstName">
         <div class="f-name" v-if="contact.firstName">{{ contact.firstName }}</div><span class="l-name" v-if="contact.lastName">{{ contact.lastName }}</span>
       </el-col>
     </el-row>
@@ -12,15 +12,6 @@
 <script>
 export default {
   props: ['contact', 'headVisible'],
-  // data () {
-  //   return {
-  //     id: '1',
-  //     firstName: 'Luke',
-  //     lastName: 'Skywalker',
-  //     group: 'Heroes',
-  //     profilePic: './path/to/pic'
-  //   }
-  // },
   methods: {
     enterProfile () {
       var id = this.contact.id
