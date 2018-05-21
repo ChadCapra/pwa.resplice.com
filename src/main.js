@@ -27,13 +27,15 @@ import 'vue-awesome/icons/bell'
 import 'vue-awesome/icons/address-book'
 import 'vue-awesome/icons/share'
 import Icon from 'vue-awesome/components/Icon'
+// Import vue-touch for phone gestures
+import VueTouch from 'vue-touch'
 // Import Vue.js App component and router components
 import App from './App'
 import router from './router'
 import store from './store/store'
 
 Vue.config.productionTip = false
-
+Vue.use(VueTouch)
 Vue.use(ElementUI)
 Vue.component('icon', Icon)
 /* eslint-disable no-new */
