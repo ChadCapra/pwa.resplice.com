@@ -3,9 +3,11 @@
     <el-row>
       <icon class="back-btn btn" name="arrow-left" scale="2"></icon>
       <transition name="fade" mode="out-in">
-        <span v-if="searchDisabled" class="group">Group Name - 100</span>
+        <span v-if="searchDisabled">
+          <slot name="headerContent"></slot>
+        </span>
       </transition>
-      <label :data-state="search" for="search">
+      <label v-if="searchVisible" :data-state="search" for="search">
         <input type="text" placeholder="Search" @click="searchOn" @blur="searchOff"/>
         <icon name="search" aria-hidden="true"></icon>
       </label>
@@ -19,7 +21,8 @@ export default {
     return {
       searchInput: '',
       searchDisabled: true,
-      search: 'close'
+      search: 'close',
+      searchVisible: true
     }
   },
   methods: {
