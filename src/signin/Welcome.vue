@@ -25,10 +25,10 @@ export default {
 
 <style lang="scss" scoped>
   .top {
-    color: $--color-primary;
+    color: #1BBC9B;
   }
   .body {
-    background-color: $--color-primary;
+    background-color: #1BBC9B;
     color: white;
   }
 </style>

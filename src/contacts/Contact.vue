@@ -23,7 +23,7 @@ export default {
 
 <style lang="scss" scoped>
   .l-name {
-    color: $--color-primary;
+    color: #1BBC9B;
   }
   .contact {
     margin-bottom: 20px;
