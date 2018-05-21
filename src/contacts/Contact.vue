@@ -21,9 +21,9 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .l-name {
-    color: #1BBC9B;
+    color: $--color-primary;
   }
   .contact {
     margin-bottom: 20px;

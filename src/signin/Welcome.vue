@@ -23,12 +23,12 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .top {
-    color: #1BBC9B;
+    color: $--color-primary;
   }
   .body {
-    background-color: #1BBC9B;
+    background-color: $--color-primary;
     color: white;
   }
 </style>
