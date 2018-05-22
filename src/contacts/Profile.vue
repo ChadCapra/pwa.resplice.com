@@ -60,22 +60,7 @@ export default {
     return {
       loading: false,
       post: null,
-      error: null,
-      userData: {
-        firstName: 'Luke',
-        lastName: 'Skywalker',
-        group: 'Heroes',
-        personal: {
-          name: 'Personal',
-          phones: ['555-555-5555'],
-          emails: ['personal@domain.com']
-        },
-        work: {
-          name: 'Work',
-          phones: ['999-999-9999'],
-          emails: ['email@domain.com']
-        }
-      }
+      error: null
     }
   },
   created () {

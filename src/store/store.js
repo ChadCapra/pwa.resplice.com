@@ -7,6 +7,38 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    user: {
+      id: '0',
+      isLoggedIn: true,
+      username: 'marcusvirg345',
+      password: '12345',
+      token: 'e2134wer33245df',
+      userBasic: {
+        firstName: 'Marcus',
+        lastName: 'Virginia',
+        profilePic: '',
+        gender: 'Male',
+        DOB: '08/13/1996'
+      },
+      userAttributes: [
+        {
+          id: '1',
+          attribute_group_id: '1',
+          type: 'personal',
+          value: '218-591-0657',
+          verified: true,
+          primary_of_type: true
+        },
+        {
+          id: '2',
+          attribute_group_id: '3',
+          type: 'personal',
+          value: '1176 14th Ave SE Minneapolis, MN 55414',
+          verified: false,
+          primary_of_type: true
+        }
+      ]
+    },
     contacts: [
       {
         id: '1',
@@ -252,6 +284,9 @@ export default new Vuex.Store({
     },
     getContactProfilePic: (state, getters) => id => {
       return getters.getContactById(id).profilePic
+    },
+    getUserInfo: state => {
+      return state.user
     }
   },
   mutations: {

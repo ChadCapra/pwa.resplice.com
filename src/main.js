@@ -26,6 +26,7 @@ import 'vue-awesome/icons/arrow-left'
 import 'vue-awesome/icons/bell'
 import 'vue-awesome/icons/address-book'
 import 'vue-awesome/icons/share'
+import 'vue-awesome/icons/plus'
 import Icon from 'vue-awesome/components/Icon'
 // Import vue-touch for phone gestures
 import VueTouch from 'vue-touch'
