@@ -39,11 +39,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.group {
-  margin-bottom: 10px;
-  color: #fff;
-  font-size: 28px;
-}
 .btn {
   color: #1BBC9B;
   transition: all .30s ease;

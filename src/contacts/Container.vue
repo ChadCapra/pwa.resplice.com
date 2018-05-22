@@ -2,7 +2,13 @@
 <!-- Contacts Parent Component -->
 <el-container class="contacts">
   <el-header>
-    <re-header></re-header>
+    <re-header>
+      <template slot="headerContent">
+        <span class="header-content">
+          <slot name="header">Resplice</slot>
+        </span>
+      </template>
+    </re-header>
   </el-header>
   <el-main>
     <router-view></router-view>
@@ -31,6 +37,11 @@ export default {
   .el-header {
     padding-top: 10px;
     background-color: #32393d;
+  }
+  .header-content {
+    margin-bottom: 10px;
+    color: #fff;
+    font-size: 28px;
   }
   .el-footer {
     background-color: #32393D;
