@@ -17,14 +17,20 @@
       <el-card>
         <div class="info-header" slot="header">Basic Information</div>
         <div class="info">
-          <el-input v-model="fullName">
-            <template slot="prepend">Name</template>
+          <el-input v-model="fullName" placeholder="Full Name">
+            <template slot="prepend"><icon name="address-card"></icon></template>
           </el-input>
         </div>
         <div class="info">
-          <el-input v-model="userData.userBasic.DOB">
+          <!-- <el-input v-model="userData.userBasic.DOB">
             <template slot="prepend">Date of Birth</template>
-          </el-input>
+          </el-input> -->
+          <el-date-picker
+            v-model="userData.userBasic.DOB"
+            type="date"
+            placeholder="Date of Birth">
+            <template slot="prepend"><icon name="calender"></icon></template>
+          </el-date-picker>
         </div>
         <div class="info">
           <!-- <el-input v-model="userData.userBasic.gender">
