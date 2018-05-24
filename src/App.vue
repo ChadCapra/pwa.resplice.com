@@ -15,6 +15,7 @@ export default {
 <style>
 body {
   margin: 0;
+  background-color: #fff;
 }
 
 #app {
@@ -24,7 +25,6 @@ body {
   color: #32393d;
   width: 100%;
   height: 100vh;
-  /* background-color: white; */
 }
 
 main {
