@@ -9,6 +9,7 @@ import Maps from '@/contacts/Map'
 import UserProfile from '@/contacts/UserProfile'
 import Settings from '@/contacts/Settings'
 import ContactList from '@/contacts/ContactList'
+import Welcome from '@/signin/Welcome'
 
 Vue.use(Router)
 
@@ -54,6 +55,11 @@ export default new Router({
       path: '/notif', // Notifications page
       name: 'Notif',
       component: Notif
+    },
+    {
+      path: '/welcome',
+      name: 'Welcome',
+      component: Welcome
     },
     {
       path: '*', redirect: '/' // Catch all other routes
