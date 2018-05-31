@@ -5,6 +5,7 @@ import Vue from 'vue'
 import '../theme/index.css'
 // Import Element CSS framework
 import ElementUI from 'element-ui'
+import locale from 'element-ui/lib/locale/lang/en'
 // Import needed FontAwesome logos and Icon component
 import 'vue-awesome/icons/envelope'
 import 'vue-awesome/icons/phone'
@@ -39,7 +40,7 @@ import store from './store/store'
 
 Vue.config.productionTip = false
 Vue.use(VueTouch)
-Vue.use(ElementUI)
+Vue.use(ElementUI, {locale})
 Vue.component('icon', Icon)
 /* eslint-disable no-new */
 new Vue({
