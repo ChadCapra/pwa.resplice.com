@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row>
-      <icon class="back-btn btn" name="arrow-left" scale="2"></icon>
+      <!-- <icon class="back-btn btn" name="arrow-left" scale="2"></icon> -->
       <transition name="fade" mode="out-in">
         <span v-if="searchDisabled">
           <slot name="headerContent"></slot>
@@ -45,7 +45,6 @@ export default {
   &:hover {
     color: #0be8ba;
     cursor: pointer;
-    transform: scale(1.05);
   }
 }
 .profile-btn {
@@ -119,7 +118,6 @@ label{
   }
 }
 label:hover {
-  transform: scale(1.05);
   box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
 }
 .fade-enter-active, .fade-leave-active {
