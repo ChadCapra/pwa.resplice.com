@@ -7,7 +7,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    isLoggedIn: true,
+    currentUser: null,
     user: {
       id: '0',
       username: 'marcusvirg345',
@@ -18,7 +18,7 @@ export default new Vuex.Store({
         lastName: 'Virginia',
         profilePic: '',
         gender: 'Male',
-        DOB: '08/13/1996'
+        DOB: '1996/08/13'
       },
       userAttributes: [
         {
@@ -290,14 +290,30 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    setCurrentUser: (state, payload) => {
+      state.currentUser = payload
+    },
     changeUserName: (state, payload) => id => {
       state.contacts[id].userName = payload
     },
     changePassword: (state, payload) => id => {
       state.contacts[id].password = payload
+    },
+    updateDOB: (state, payload) => {
+      state.user.userBasic.DOB = payload
+    },
+    updateFirstName: (state, payload) => {
+      state.user.userBasic.firstName = payload
+    },
+    updateLastName: (state, payload) => {
+      state.user.userBasic.lastName = payload
+    },
+    updateGender: (state, payload) => {
+      state.user.userBasic.gender = payload
     }
   },
   actions: {
+    login: ({commit}, id, payload) => {},
     changeUserName: ({ commit }, id, payload) => {
       commit('changeUserName', id, payload)
     },
