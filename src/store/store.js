@@ -7,9 +7,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    isLoggedIn: true,
     user: {
       id: '0',
-      isLoggedIn: true,
       username: 'marcusvirg345',
       password: '12345',
       token: 'e2134wer33245df',
