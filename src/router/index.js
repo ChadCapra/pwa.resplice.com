@@ -65,7 +65,7 @@ export default new Router({
       path: '*', redirect: '/' // Catch all other routes
     }
   ],
-  mode: 'history',
+  // mode: 'history',
   scrollBehavior (to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition
