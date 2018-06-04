@@ -175,8 +175,7 @@ export default {
     margin: 15px;
   }
   .info-row {
-    padding: 10px;
-    border: 5px;
+    margin-top: 15px;
   }
   .info-action-icon {
     margin-right: 5px;
