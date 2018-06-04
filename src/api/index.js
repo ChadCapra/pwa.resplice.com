@@ -1,5 +1,7 @@
 import axios from 'axios'
 
-export const api = axios.create({
+const api = axios.create({
   baseURL: 'https://api.respice.com/'
 })
+
+export default api
