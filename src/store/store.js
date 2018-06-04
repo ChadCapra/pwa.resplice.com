@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Api from '../api'
 // import contacts from './modules/contacts'
 // import group from './modules/group'
 
@@ -313,7 +314,18 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    login: ({commit}, id, payload) => {},
+    login: ({commit}, id, payload) => {
+      Api.get('users')
+        .then(response => {
+          commit('setCurrentUser', response)
+        })
+        .catch(e => {
+          console.log(e)
+        })
+    },
+    logout: ({commit}, id, payload) => {
+      commit('setCurrentUser', null)
+    },
     changeUserName: ({ commit }, id, payload) => {
       commit('changeUserName', id, payload)
     },
