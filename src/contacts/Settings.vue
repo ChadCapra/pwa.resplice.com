@@ -13,7 +13,7 @@
         </div>
         <div class="setting">
           <icon name="globe" scale="2" color="#1BBC9B"></icon>
-          <el-select v-model="language" placeholder="Language">
+          <el-select v-model="lang" placeholder="Language">
             <el-option value="English"></el-option>
             <el-option value="Spanish"></el-option>
             <el-option value="German"></el-option>
@@ -29,13 +29,6 @@
       <div slot="header" class="setting-header">App</div>
       <div class="setting-content">
         <div class="setting-text">
-          <span style="opacity: 0.7;">Sort Contacts by</span>
-          <el-select v-model="sortBy" placeholder="Sort">
-            <el-option value="First Name"></el-option>
-            <el-option value="Last Name"></el-option>
-          </el-select>
-        </div>
-        <div class="setting-text">
           <span style="opacity: 0.7;">Name Format</span>
           <el-select v-model="nameFormat" placeholder="Name Format">
             <el-option value="First Last"></el-option>
@@ -44,7 +37,7 @@
         </div>
         <div class="setting">
           <span style="opacity: 0.7;">Show Recently Contacted</span>
-          <el-switch v-model="showRecentlyContacted"></el-switch>
+          <el-switch v-model="toggle" @change="toggleShowRecentlyContacted"></el-switch>
         </div>
       </div>
     </el-card>
@@ -64,10 +57,25 @@ import { mapActions } from 'vuex'
 export default {
   data () {
     return {
-      language: 'English',
-      sortBy: 'First Name',
-      nameFormat: 'First Last',
-      showRecentlyContacted: true
+      toggle: true
+    }
+  },
+  computed: {
+    lang: {
+      get () {
+        return this.$store.state.user.lang
+      },
+      set (value) {
+        this.$store.commit('updateLanguage', value)
+      }
+    },
+    nameFormat: {
+      get () {
+        return this.$store.state.settings.nameFormat
+      },
+      set (value) {
+        this.$store.commit('updateNameFormat', value)
+      }
     }
   },
   methods: {
@@ -77,6 +85,9 @@ export default {
     userLogout () {
       this.logout()
       this.$router.push({ name: 'Signin' })
+    },
+    toggleShowRecentlyContacted () {
+      this.$store.commit('toggleShowRecentlyContacted', this.toggle)
     }
   }
 }

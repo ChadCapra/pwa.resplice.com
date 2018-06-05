@@ -13,6 +13,7 @@ export default new Vuex.Store({
       id: '0',
       username: 'marcusvirg345',
       password: '12345',
+      lang: 'English',
       token: 'e2134wer33245df',
       userBasic: {
         firstName: 'Marcus',
@@ -265,7 +266,11 @@ export default new Vuex.Store({
         shared: false,
         editable: false
       }
-    ]
+    ],
+    settings: {
+      nameFormat: 'First Last',
+      showRecentlyContact: true
+    }
   },
   getters: {
     getContactById: state => id => {
@@ -311,6 +316,15 @@ export default new Vuex.Store({
     },
     updateGender: (state, payload) => {
       state.user.userBasic.gender = payload
+    },
+    updateLanguage: (state, payload) => {
+      state.user.lang = payload
+    },
+    changeNameFormat: (state, payload) => {
+      state.settings.nameFormat = payload
+    },
+    toggleShowRecentlyContacted: (state, payload) => {
+      state.settings.showRecentlyContact = payload
     }
   },
   actions: {
