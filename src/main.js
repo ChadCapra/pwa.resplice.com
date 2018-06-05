@@ -34,7 +34,7 @@ import 'vue-awesome/icons/lock'
 import Icon from 'vue-awesome/components/Icon'
 // Import vue-touch for phone gestures
 import VueTouch from 'vue-touch'
-// Import Vue.js App component and router components
+// Import Vue.js App component, router component, and VueX for state management
 import App from './App'
 import router from './router'
 import store from './store/store'
