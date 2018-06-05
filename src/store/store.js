@@ -8,7 +8,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    currentUser: null,
+    currentUser: 1,
     user: {
       id: '0',
       username: 'marcusvirg345',
