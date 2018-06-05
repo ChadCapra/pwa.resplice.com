@@ -46,7 +46,7 @@
       <el-button type="danger" @click="userLogout">Logout</el-button>
       <el-button type="warning">Give Us Feedback :)</el-button>
       <el-button type="info">Legal &amp; Terms of use</el-button>
-      <el-button type="primary">About Contacts</el-button>
+      <el-button type="primary">About Resplice</el-button>
     </div>
   </div>
 </template>
