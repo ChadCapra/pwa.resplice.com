@@ -40,7 +40,7 @@ import router from './router'
 import store from './store/store'
 
 Vue.config.productionTip = false
-Vue.use(VueTouch)
+Vue.use(VueTouch, {name: 'v-touch'})
 Vue.use(ElementUI, {locale})
 Vue.component('icon', Icon)
 /* eslint-disable no-new */
