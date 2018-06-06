@@ -74,7 +74,7 @@ export default {
         return this.$store.state.settings.nameFormat
       },
       set (value) {
-        this.$store.commit('updateNameFormat', value)
+        this.$store.commit('changeNameFormat', value)
       }
     }
   },
