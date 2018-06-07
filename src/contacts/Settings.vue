@@ -9,7 +9,7 @@
         </div>
         <div class="setting">
           <icon name="lock" scale="2" color="#1BBC9B"></icon>
-          <el-input placeholder="Password"></el-input>
+          <el-input type="password" placeholder="Password"></el-input>
         </div>
         <div class="setting">
           <icon name="globe" scale="2" color="#1BBC9B"></icon>
