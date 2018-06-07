@@ -13,7 +13,7 @@ export default {
   },
   computed: {
     contacts () {
-      return this.$store.state.contacts
+      return this.$store.getters.getContacts
     }
   }
 }
@@ -21,5 +21,3 @@ export default {
 
 <style lang="scss" scoped>
 </style>
-
-
