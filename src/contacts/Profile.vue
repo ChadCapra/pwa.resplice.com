@@ -6,7 +6,7 @@
           <icon class="exit-btn" name="arrow-left" scale="2" @click.native="exitProfile"></icon>
         </el-col>
         <el-col :span="20" justify="center">
-          <span>Profile</span>
+          <span>Contact</span>
         </el-col>
       </el-row>
     </el-header>
