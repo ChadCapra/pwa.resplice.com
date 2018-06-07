@@ -260,10 +260,35 @@ export default new Vuex.Store({
     ],
     groups: [
       {
+        id: '1',
         owner_id: '1',
-        name: 'family',
+        name: 'Family',
         description: 'All my family',
         shared: false,
+        editable: false
+      },
+      {
+        id: '2',
+        owner_id: '1',
+        name: 'Roommates',
+        description: '1176ers Roommates',
+        shared: true,
+        editable: false
+      },
+      {
+        id: '3',
+        owner_id: '1',
+        name: 'Basketball Team',
+        description: 'Wrenshall Basketball Open Gym',
+        shared: true,
+        editable: false
+      },
+      {
+        id: '4',
+        owner_id: '1',
+        name: 'Capabit (Work)',
+        description: 'Capabit Solutions Employees',
+        shared: true,
         editable: false
       }
     ],
@@ -291,8 +316,17 @@ export default new Vuex.Store({
     getContactProfilePic: (state, getters) => id => {
       return getters.getContactById(id).profilePic
     },
+    getContacts: state => {
+      return state.contacts
+    },
     getUserInfo: state => {
       return state.user
+    },
+    getGroupById: state => id => {
+      return state.groups.find(group => group.id === id)
+    },
+    getGroups: state => {
+      return state.groups
     }
   },
   mutations: {
