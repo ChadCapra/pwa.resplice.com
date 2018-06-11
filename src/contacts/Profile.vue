@@ -28,10 +28,7 @@
           <el-col :span="24"><img :src='profilePic' alt="Profile Picture"></el-col>
         </el-row>
         <el-row>
-          <el-col style="color: #1BBC9B; font-size: 24px;"><span v-if="firstName != null">{{ firstName }}</span><span v-if="lastName != null">{{ ' ' + lastName }}</span></el-col>
-        </el-row>
-        <el-row>
-          <el-col>User PID: {{ $route.params.id }}</el-col>
+          <el-col style="color: #1BBC9B; font-size: 24px; margin-bottom: 20px;"><span v-if="firstName != null">{{ firstName }}</span><span v-if="lastName != null">{{ ' ' + lastName }}</span></el-col>
         </el-row>
         <el-row class="access" type="flex" justify="center">
           <el-col :xs="6" :sm="6" :md="4" :lg="4" :xl="4"><icon class="access-btn" name="phone" scale="2.5"></icon></el-col>
