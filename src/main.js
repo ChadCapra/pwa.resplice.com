@@ -31,6 +31,7 @@ import 'vue-awesome/icons/share'
 import 'vue-awesome/icons/plus'
 import 'vue-awesome/icons/calendar'
 import 'vue-awesome/icons/lock'
+import 'vue-awesome/icons/times'
 import Icon from 'vue-awesome/components/Icon'
 // Import vue-touch for phone gestures
 import VueTouch from 'vue-touch'
