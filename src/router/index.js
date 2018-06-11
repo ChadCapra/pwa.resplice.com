@@ -10,6 +10,7 @@ import UserProfile from '@/contacts/UserProfile'
 import Settings from '@/contacts/Settings'
 import ContactList from '@/contacts/ContactList'
 import Welcome from '@/signin/Welcome'
+import GroupList from '@/contacts/GroupList'
 
 Vue.use(Router)
 
@@ -26,6 +27,11 @@ export default new Router({
         {
           path: 'groups',
           component: Groups
+        },
+        {
+          name: 'group',
+          path: '/group/:id',
+          component: GroupList
         },
         {
           path: 'map',

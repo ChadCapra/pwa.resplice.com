@@ -265,7 +265,8 @@ export default new Vuex.Store({
         name: 'Family',
         description: 'All my family',
         shared: false,
-        editable: false
+        editable: false,
+        memberIds: ['2', '3', '7']
       },
       {
         id: '2',
@@ -273,7 +274,8 @@ export default new Vuex.Store({
         name: 'Roommates',
         description: '1176ers Roommates',
         shared: true,
-        editable: false
+        editable: false,
+        memberIds: ['3', '4', '8', '2', '5']
       },
       {
         id: '3',
@@ -281,7 +283,8 @@ export default new Vuex.Store({
         name: 'Basketball Team',
         description: 'Wrenshall Basketball Open Gym',
         shared: true,
-        editable: false
+        editable: false,
+        memberIds: ['6', '7', '9']
       },
       {
         id: '4',
@@ -289,7 +292,8 @@ export default new Vuex.Store({
         name: 'Capabit (Work)',
         description: 'Capabit Solutions Employees',
         shared: true,
-        editable: false
+        editable: false,
+        memberIds: ['2', '3', '7']
       }
     ],
     settings: {
@@ -318,6 +322,9 @@ export default new Vuex.Store({
     },
     getContacts: state => {
       return state.contacts
+    },
+    getGroupContacts: state => memberIds => {
+      return state.contacts.filter(contact => memberIds.includes(contact.id))
     },
     getUserInfo: state => {
       return state.user

@@ -1,6 +1,6 @@
 <template>
   <div v-if="groups.length > 0" class="groups">
-    <el-card v-for="group in groups" :key="group.id" class="group" shadow="hover">
+    <el-card v-for="group in groups" :key="group.id" class="group" shadow="hover" @click.native="goToGroup(group.id)">
       <div class="g-header">
         <h1>{{ group.name }}</h1>
       </div>
@@ -23,6 +23,11 @@ export default {
     groups () {
       return this.$store.getters.getGroups
     }
+  },
+  methods: {
+    goToGroup (id) {
+      this.$router.push({ name: 'group', params: { id } })
+    }
   }
 }
 </script>
@@ -39,6 +44,10 @@ export default {
 }
 .group {
   margin: 15px;
+  &:hover {
+    color: #1BBC9B;
+    cursor: pointer;
+  }
 }
 .g-buttons {
   display: flex;
