@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Api from '../api'
 // import contacts from './modules/contacts'
 // import group from './modules/group'
 
@@ -7,18 +8,19 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    currentUser: 1,
     user: {
       id: '0',
-      isLoggedIn: true,
       username: 'marcusvirg345',
       password: '12345',
+      lang: 'English',
       token: 'e2134wer33245df',
       userBasic: {
         firstName: 'Marcus',
         lastName: 'Virginia',
         profilePic: '',
         gender: 'Male',
-        DOB: '08/13/1996'
+        DOB: '1996/08/13'
       },
       userAttributes: [
         {
@@ -258,13 +260,51 @@ export default new Vuex.Store({
     ],
     groups: [
       {
+        id: '1',
         owner_id: '1',
-        name: 'family',
+        name: 'Family',
         description: 'All my family',
         shared: false,
-        editable: false
+        editable: false,
+        memberIds: ['2', '3', '7']
+      },
+      {
+        id: '2',
+        owner_id: '1',
+        name: 'Roommates',
+        description: '1176ers Roommates',
+        shared: true,
+        editable: false,
+        memberIds: ['3', '4', '8', '2', '5']
+      },
+      {
+        id: '3',
+        owner_id: '1',
+        name: 'Basketball Team',
+        description: 'Wrenshall Basketball Open Gym',
+        shared: true,
+        editable: false,
+        memberIds: ['6', '7', '9']
+      },
+      {
+        id: '4',
+        owner_id: '1',
+        name: 'Capabit (Work)',
+        description: 'Capabit Solutions Employees',
+        shared: true,
+        editable: false,
+        memberIds: ['2', '3', '7']
       }
-    ]
+    ],
+    settings: {
+      nameFormat: 'First Last',
+      showRecentlyContact: true
+    },
+    header: {
+      showSearch: true,
+      showBack: false,
+      text: 'Resplice'
+    }
   },
   getters: {
     getContactById: state => id => {
@@ -285,19 +325,67 @@ export default new Vuex.Store({
     getContactProfilePic: (state, getters) => id => {
       return getters.getContactById(id).profilePic
     },
+    getContacts: state => {
+      return state.contacts
+    },
+    getGroupContacts: state => memberIds => {
+      return state.contacts.filter(contact => memberIds.includes(contact.id))
+    },
     getUserInfo: state => {
       return state.user
+    },
+    getGroupById: state => id => {
+      return state.groups.find(group => group.id === id)
+    },
+    getGroups: state => {
+      return state.groups
     }
   },
   mutations: {
+    setCurrentUser: (state, payload) => {
+      state.currentUser = payload
+    },
     changeUserName: (state, payload) => id => {
       state.contacts[id].userName = payload
     },
     changePassword: (state, payload) => id => {
       state.contacts[id].password = payload
+    },
+    updateDOB: (state, payload) => {
+      state.user.userBasic.DOB = payload
+    },
+    updateFirstName: (state, payload) => {
+      state.user.userBasic.firstName = payload
+    },
+    updateLastName: (state, payload) => {
+      state.user.userBasic.lastName = payload
+    },
+    updateGender: (state, payload) => {
+      state.user.userBasic.gender = payload
+    },
+    updateLanguage: (state, payload) => {
+      state.user.lang = payload
+    },
+    changeNameFormat: (state, payload) => {
+      state.settings.nameFormat = payload
+    },
+    toggleShowRecentlyContacted: (state, payload) => {
+      state.settings.showRecentlyContact = payload
     }
   },
   actions: {
+    login: ({commit}, id, payload) => {
+      Api.get('users')
+        .then(response => {
+          commit('setCurrentUser', response)
+        })
+        .catch(e => {
+          console.log(e)
+        })
+    },
+    logout: ({commit}, id, payload) => {
+      commit('setCurrentUser', null)
+    },
     changeUserName: ({ commit }, id, payload) => {
       commit('changeUserName', id, payload)
     },

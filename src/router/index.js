@@ -9,6 +9,8 @@ import Maps from '@/contacts/Map'
 import UserProfile from '@/contacts/UserProfile'
 import Settings from '@/contacts/Settings'
 import ContactList from '@/contacts/ContactList'
+import Welcome from '@/signin/Welcome'
+import GroupList from '@/contacts/GroupList'
 
 Vue.use(Router)
 
@@ -25,6 +27,11 @@ export default new Router({
         {
           path: 'groups',
           component: Groups
+        },
+        {
+          name: 'group',
+          path: '/group/:id',
+          component: GroupList
         },
         {
           path: 'map',
@@ -46,7 +53,7 @@ export default new Router({
       component: Signin
     },
     {
-      path: '/profile/:id', // I want this to eventually go to a profile with a unique ID
+      path: '/profile/:id',
       name: 'Profile',
       component: Profile
     },
@@ -56,10 +63,15 @@ export default new Router({
       component: Notif
     },
     {
+      path: '/welcome',
+      name: 'Welcome',
+      component: Welcome
+    },
+    {
       path: '*', redirect: '/' // Catch all other routes
     }
   ],
-  mode: 'history',
+  // mode: 'history',
   scrollBehavior (to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition

@@ -1,12 +1,15 @@
 <template>
   <el-container>
     <el-header>
-      <el-row>
-        <el-col :span="2">
-          <icon class="exit-btn" name="arrow-left" scale="2" @click.native="exitProfile"></icon>
+      <el-row align="top" justify="space-between">
+        <el-col :xs="6" :sm="4" :md="2" :lg="2" :xl="2">
+          <icon class="exit-btn" name="arrow-left" scale="2" @click.native="$router.go(-1)"></icon>
         </el-col>
-        <el-col :span="20" justify="center">
-          <span>Profile</span>
+        <el-col :xs="12" :sm="18" :md="20" :lg="20" :xl="20">
+          <span>Contact</span>
+        </el-col>
+        <el-col :xs="6" :sm="4" :md="2" :lg="2" :xl="2" justify="center" style="display: flex; justify-content: flex-end;">
+          <el-button type="primary" size="medium">Share</el-button>
         </el-col>
       </el-row>
     </el-header>
@@ -25,10 +28,7 @@
           <el-col :span="24"><img :src='profilePic' alt="Profile Picture"></el-col>
         </el-row>
         <el-row>
-          <el-col style="color: #1BBC9B; font-size: 24px;"><span v-if="firstName != null">{{ firstName }}</span><span v-if="lastName != null">{{ ' ' + lastName }}</span></el-col>
-        </el-row>
-        <el-row>
-          <el-col>User PID: {{ $route.params.id }}</el-col>
+          <el-col style="color: #1BBC9B; font-size: 24px; margin-bottom: 20px;"><span v-if="firstName != null">{{ firstName }}</span><span v-if="lastName != null">{{ ' ' + lastName }}</span></el-col>
         </el-row>
         <el-row class="access" type="flex" justify="center">
           <el-col :xs="6" :sm="6" :md="4" :lg="4" :xl="4"><icon class="access-btn" name="phone" scale="2.5"></icon></el-col>
@@ -131,9 +131,6 @@ export default {
     },
     executeAction () {
       console.log('Action executed')
-    },
-    exitProfile () {
-      this.$router.push({ path: '/' })
     }
   }
 }
@@ -141,7 +138,7 @@ export default {
 
 <style scoped>
   .el-header {
-    padding-top: 10px;
+    padding-top: 13px;
     font-size: 28px;
     background-color: #32393d;
     color: #fff;
@@ -175,8 +172,7 @@ export default {
     margin: 15px;
   }
   .info-row {
-    padding: 10px;
-    border: 5px;
+    margin-top: 15px;
   }
   .info-action-icon {
     margin-right: 5px;

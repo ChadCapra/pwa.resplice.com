@@ -74,27 +74,27 @@ export default {
 </script>
 
 <style scoped>
- .sign-field {
-   padding: 5px;
- }
- .sign-btn {
-   padding: 10px;
- }
- .sign-logo {
-   padding-top: 50px;
-   padding-bottom: 40px;
- }
- .background {
-   background-image: url('../assets/signup.jpg');
-   background-size: cover;
-   background-position: center;
-   width: 100%;
-   overflow: hidden;
-   z-index: -1;
- }
- .signin {
-   padding-top: 10px;
- }
+.sign-field {
+  padding: 5px;
+}
+.sign-btn {
+  padding: 10px;
+}
+.sign-logo {
+  padding-top: 50px;
+  padding-bottom: 40px;
+}
+.background {
+  background: #0F2027;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  width: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+.signin {
+  padding-top: 10px;
+}
 </style>
 
 
