@@ -82,10 +82,10 @@ export default {
     border-radius: 50px;
     font-size: 24px;
     text-align: left;
-  }
-  .contact:hover {
-    background-color: #ebeef5;
-    cursor: pointer;
+    &:hover {
+      background-color: #ebeef5;
+      cursor: pointer;
+    }
   }
   .contact-actions {
     width: 100%;
