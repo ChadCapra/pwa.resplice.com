@@ -1,12 +1,15 @@
 <template>
   <el-container>
     <el-header>
-      <el-row>
-        <el-col :span="2">
+      <el-row align="top" justify="space-between">
+        <el-col :xs="6" :sm="4" :md="2" :lg="2" :xl="2">
           <icon class="exit-btn" name="arrow-left" scale="2" @click.native="exitProfile"></icon>
         </el-col>
-        <el-col :span="20" justify="center">
+        <el-col :xs="12" :sm="18" :md="20" :lg="20" :xl="20">
           <span>Contact</span>
+        </el-col>
+        <el-col :xs="6" :sm="4" :md="2" :lg="2" :xl="2" justify="center" style="display: flex; justify-content: flex-end;">
+          <el-button type="primary" size="medium">Share</el-button>
         </el-col>
       </el-row>
     </el-header>
@@ -141,7 +144,7 @@ export default {
 
 <style scoped>
   .el-header {
-    padding-top: 10px;
+    padding-top: 13px;
     font-size: 28px;
     background-color: #32393d;
     color: #fff;
