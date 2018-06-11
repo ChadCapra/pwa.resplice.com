@@ -44,20 +44,58 @@
     <div class="buttons">
       <el-button type="success">Download Your Data</el-button>
       <el-button type="danger" @click="userLogout">Logout</el-button>
-      <el-button type="warning">Give Us Feedback :)</el-button>
-      <el-button type="info">Legal &amp; Terms of use</el-button>
-      <el-button type="primary">About Resplice</el-button>
+      <el-button type="warning" @click="showModalFeedback = true">Give Us Feedback :)</el-button>
+      <el-button type="info" @click="showModalLegal = true">Legal &amp; Terms of use</el-button>
+      <el-button type="primary" @click="showModalAbout = true">About Resplice</el-button>
     </div>
+    <re-modal v-show="showModalLegal" @close="showModalLegal = false">
+      <h1>Legal &amp; Terms of Use</h1>
+      <p>Here lies resplice's terms of use and the legal mumbo jumbo that no one reads. We need to be GDPR Compliant though :)</p>
+    </re-modal>
+    <re-modal v-show="showModalAbout" @close="showModalAbout = false">
+      <h1>About Resplice</h1>
+      <p>Resplice is an online address book to ensure you always have the most up-to-date information on your contacts</p>
+    </re-modal>
+    <re-modal v-show="showModalFeedback" @close="showModalFeedback = false">
+      <el-form ref="feedbackForm" class="feedback-form">
+        <el-form-item label="Feedback Type">
+          <el-checkbox-group v-model="feedback.type">
+            <el-checkbox label="Bug" name="type"></el-checkbox>
+            <el-checkbox label="Feature Request" name="type"></el-checkbox>
+            <el-checkbox label="Enhancement" name="type"></el-checkbox>
+            <el-checkbox label="Kudos" name="type"></el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
+        <el-form-item label="Feedback Description">
+          <el-input type="textarea" v-model="feedback.desc"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="feedbackSubmit">Submit</el-button>
+        </el-form-item>
+      </el-form>
+    </re-modal>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
+import Modal from '@/contacts/SlideModal.vue'
 
 export default {
+  components: {
+    're-modal': Modal
+  },
   data () {
     return {
-      toggle: true
+      toggle: true,
+      showModalLegal: false,
+      showModalAbout: false,
+      showModalFeedback: false,
+      feedback: {
+        type: [],
+        desc: '',
+        device: navigator
+      }
     }
   },
   computed: {
@@ -88,6 +126,10 @@ export default {
     },
     toggleShowRecentlyContacted () {
       this.$store.commit('toggleShowRecentlyContacted', this.toggle)
+    },
+    feedbackSubmit () {
+      console.log(this.feedback)
+      // make api request to bug/feature tracker
     }
   }
 }
