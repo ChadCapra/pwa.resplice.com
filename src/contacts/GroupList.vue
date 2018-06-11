@@ -15,7 +15,18 @@ export default {
     groupContacts () {
       let group = this.$store.getters.getGroupById(this.$route.params.id)
       return this.$store.getters.getGroupContacts(group.memberIds)
+    },
+    groupName () {
+      return this.$store.getters.getGroupById(this.$route.params.id).name
     }
+  },
+  mounted () {
+    this.$store.state.header.showBack = true
+    this.$store.state.header.text = this.groupName
+  },
+  destroyed () {
+    this.$store.state.header.showBack = false
+    this.$store.state.header.text = 'Resplice'
   }
 }
 </script>

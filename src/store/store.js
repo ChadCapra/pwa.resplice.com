@@ -299,6 +299,11 @@ export default new Vuex.Store({
     settings: {
       nameFormat: 'First Last',
       showRecentlyContact: true
+    },
+    header: {
+      showSearch: true,
+      showBack: false,
+      text: 'Resplice'
     }
   },
   getters: {

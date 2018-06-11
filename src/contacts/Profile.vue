@@ -3,7 +3,7 @@
     <el-header>
       <el-row align="top" justify="space-between">
         <el-col :xs="6" :sm="4" :md="2" :lg="2" :xl="2">
-          <icon class="exit-btn" name="arrow-left" scale="2" @click.native="exitProfile"></icon>
+          <icon class="exit-btn" name="arrow-left" scale="2" @click.native="$router.go(-1)"></icon>
         </el-col>
         <el-col :xs="12" :sm="18" :md="20" :lg="20" :xl="20">
           <span>Contact</span>
@@ -134,9 +134,6 @@ export default {
     },
     executeAction () {
       console.log('Action executed')
-    },
-    exitProfile () {
-      this.$router.push({ path: '/' })
     }
   }
 }
