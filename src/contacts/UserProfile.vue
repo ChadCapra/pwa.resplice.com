@@ -1,17 +1,13 @@
 <template>
   <div class="profile">
-    <el-row justify="center">
-      <el-upload
-        class="avatar-uploader"
-        action="#"
-        :show-file-list="false"
-        :on-success="handleAvatarSuccess"
-        :before-upload="beforeAvatarUpload">
-        <img v-if="profilePic" :src="profilePic" alt="User Avatar" class="avatar">
-        <div v-else class="avatar-icon">
-          <icon name="plus" scale="2.5"></icon>
+    <el-row class="pic-uploader">
+      <div class="profile-pic">
+        <div v-if="profilePic" class="avatar-container">
+          <img :src="profilePic" alt="User Avatar" class="avatar">
         </div>
-      </el-upload>
+        <div v-else class="pic-placeholder" @click="getImg"><icon name="plus" scale="2"></icon></div>
+        <input type="file" style="display: none;" ref="upload" @change="cropImg">
+      </div>
     </el-row>
     <el-row>
       <el-card>
@@ -50,6 +46,8 @@
           </el-autocomplete>
         </div>
       </el-card>
+
+      <!-- User Attributes -->
       <el-card>
         <div class="info-header" slot="header">Contact Information</div>
         <div class="info">
@@ -108,15 +106,33 @@
         </div>
       </el-card>
     </el-row>
+    <re-modal v-show="showPicModal" @close="showPicModal = false">
+      <vue-croppie
+        ref="crop"
+        :enable-orientation="true"
+        :boundary="{width: 250, height: 250}"
+        :viewport="{width: 200, height: 200, type: 'circle'}"
+        class="cropper"
+        :enableResize="false"></vue-croppie>
+        <el-button type="primary" class="cropper-save" @click="upload">Save</el-button>
+    </re-modal>
   </div>
 </template>
 
 <script>
+import Modal from '@/contacts/SlideModal.vue'
+import axios from 'axios'
+// import cloudinary from 'cloudinary-core'
+
 export default {
+  components: {
+    're-modal': Modal
+  },
   data () {
     return {
+      showPicModal: false,
       swiped: false,
-      profilePic: '',
+      profilePic: null,
       genders: ['Male', 'Female', 'Pan', 'Tri'],
       options: [
         {
@@ -141,6 +157,16 @@ export default {
         }
       ],
       value: ''
+    }
+  },
+  created () {
+    if (!this.profilePic) {
+      this.$notify({
+        title: 'Profile Picture',
+        message: 'You havent uploaded a profile picture yet?! Click the plus at the top to upload your shiny new picture...',
+        type: 'warning',
+        duration: 5000
+      })
     }
   },
   computed: {
@@ -187,8 +213,63 @@ export default {
     handleSwipe () {
       this.swiped = true
     },
-    handleAvatarSuccess (res, file) {
-      this.profilePic = URL.createObjectURL(file.raw)
+    getImg () {
+      const input = this.$refs.upload
+      input.click()
+    },
+    cropImg () {
+      var file = this.$refs.upload.files[0]
+      if (this.beforeAvatarUpload(file)) {
+        var url = window.URL.createObjectURL(file)
+        console.log(url)
+        this.$refs.crop.bind({
+          url: url
+        })
+        this.showPicModal = true
+      }
+    },
+    upload () {
+      const cloudName = 'capabit-solutions'
+      const unsignedUploadPreset = 'y49z5nwh'
+      var orginalFile = this.$refs.upload.files[0]
+      var croppedFile
+      let options = {
+        type: 'base64',
+        size: 'orginal',
+        format: 'png',
+        circle: true
+      }
+      this.$refs.crop.result(options, (output) => {
+        this.profilePic = output
+        croppedFile = new File([output], orginalFile.name, {type: output.type, lastModified: Date.now()})
+        console.log(croppedFile)
+      })
+      // TODO: Upload to cloudinary this is a task for tomorrow
+      // var cl = new cloudinary.Cloudinary({cloud_name: 'capabit-solutions', api_key: '422859735239721', secure: true})
+      // console.log(cl.url('sample'))
+      // const CDN_url = 'https://res.cloudinary.com/capabit-solutions/'
+      const APIUrl = `https://api.cloudinary.com/v1_1/${cloudName}/upload`
+      var fd = new FormData()
+      fd.append('upload_preset', unsignedUploadPreset)
+      fd.append('tags', 'resplice-upload')
+      fd.append('file', croppedFile)
+      const config = {
+        headers: {'X-Requested-With': 'XMLHttpRequest'},
+        async: true,
+        onUploadProgress: progressEvent => {
+          console.log(`onUploadProgress progressEvent.loaded: ${progressEvent.loaded}, progressEvent.total: ${progressEvent.total}`)
+        }
+      }
+      axios.post(APIUrl, fd, config)
+        .then(res => {
+          var response = res.data
+          console.log('API Reponse data: ', response)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      this.showPicModal = false
+      this.$refs.crop.destroy()
     },
     beforeAvatarUpload (file) {
       const isJPG = file.type === 'image/jpeg'
@@ -218,37 +299,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .avatar-uploader {
-    margin: none;
-    width: 170px;
-    height: 170px;
-    border: 1px dashed grey;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
+  .pic-uploader {
+    height: 210px;
     overflow: hidden;
-    &:hover {
-      border-color: #409EFF;
-    }
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
   }
-  .avatar-icon {
+  .avatar-container {
     display: flex;
-    align-items: center;
     justify-content: center;
-    margin: 0;
-    width: 170px;
-    height: 170px;
-    color: #8c939d;
-    text-align: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
   }
   .avatar {
-    width: 170px;
-    height: 170px;
-    display: block;  
+    width: 200px;
+    height: 200px;
   }
   .el-card {
     margin-bottom: 20px;
@@ -265,6 +333,9 @@ export default {
     align-items: center;
     margin-bottom: 10px;
   }
+  .info-content .el-input, .info-content .el-select {
+    margin-bottom: 10px;
+  }
   .info {
     text-align: left;
     display: flex;
@@ -274,5 +345,25 @@ export default {
   .el-input-group__prepend {
     padding: 15px;
     width: 150px;
+  }
+  .pic-placeholder {
+    color: #1BBC9B;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    background-color: #E0E0E0;
+    &:hover {
+      background-color: grey;
+      cursor: pointer;
+    }
+  }
+  .cropper {
+    margin-top: 50px;
+  }
+  .cropper-save {
+    margin-top: -300px;
   }
 </style>
