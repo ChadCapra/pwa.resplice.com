@@ -1,10 +1,10 @@
 <template>
   <div v-if="groups.length > 0" class="groups">
-    <el-card v-for="group in groups" :key="group.id" class="group" shadow="hover" @click.native="goToGroup(group.id)">
-      <div class="g-header">
+    <el-card v-for="group in groups" :key="group.id" class="group" shadow="hover">
+      <div class="g-header" @click="goToGroup(group.id)">
         <h1>{{ group.name }}</h1>
+        <div class="g-description">{{ group.description }}</div>
       </div>
-      <div class="g-description">{{ group.description }}</div>
       <div class="g-buttons">
         <el-button v-if="!group.shared" type="primary">Share</el-button>
         <el-button type="danger">Delete</el-button>
@@ -44,14 +44,16 @@ export default {
 }
 .group {
   margin: 15px;
-  &:hover {
-    color: #1BBC9B;
-    cursor: pointer;
-  }
 }
 .g-buttons {
   display: flex;
   justify-content: center;
   margin-top: 15px;
+}
+.g-header {
+  &:hover {
+    color: #1BBC9B;
+    cursor: pointer;
+  }
 }
 </style>
