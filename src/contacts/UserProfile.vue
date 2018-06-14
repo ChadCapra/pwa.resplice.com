@@ -106,7 +106,7 @@
         </div>
       </el-card>
     </el-row>
-    <re-modal v-show="showPicModal" @close="showPicModal = false">
+    <re-modal v-show="showPicModal" @close="showPicModal = false" :loading="loading">
       <vue-croppie
         ref="crop"
         :enable-orientation="true"
@@ -114,7 +114,7 @@
         :viewport="{width: 200, height: 200, type: 'circle'}"
         class="cropper"
         :enableResize="false"></vue-croppie>
-        <el-button type="primary" class="cropper-save" @click="upload">Save</el-button>
+        <el-button type="primary" class="cropper-save" @click="buildImage">Save</el-button>
     </re-modal>
   </div>
 </template>
@@ -132,7 +132,7 @@ export default {
     return {
       showPicModal: false,
       swiped: false,
-      profilePic: null,
+      loading: false,
       genders: ['Male', 'Female', 'Pan', 'Tri'],
       options: [
         {
@@ -157,16 +157,6 @@ export default {
         }
       ],
       value: ''
-    }
-  },
-  created () {
-    if (!this.profilePic) {
-      this.$notify({
-        title: 'Profile Picture',
-        message: 'You havent uploaded a profile picture yet?! Click the plus at the top to upload your shiny new picture...',
-        type: 'warning',
-        duration: 5000
-      })
     }
   },
   computed: {
@@ -205,8 +195,26 @@ export default {
         this.$store.commit('updateGender', value)
       }
     },
+    profilePic: {
+      get () {
+        return this.$store.state.user.userBasic.profilePic
+      },
+      set (value) {
+        this.$store.commit('updateProfilePic', value)
+      }
+    },
     fullName () {
       return this.$store.getters.getUserInfo.userBasic.firstName + ' ' + this.$store.getters.getUserInfo.userBasic.lastName
+    }
+  },
+  created () {
+    if (!this.profilePic) {
+      this.$notify({
+        title: 'Profile Picture',
+        message: 'You havent uploaded a profile picture yet?! Click the plus at the top to upload your shiny new picture...',
+        type: 'warning',
+        duration: 5000
+      })
     }
   },
   methods: {
@@ -220,58 +228,79 @@ export default {
     cropImg () {
       var file = this.$refs.upload.files[0]
       if (this.beforeAvatarUpload(file)) {
-        var url = window.URL.createObjectURL(file)
-        console.log(url)
         this.$refs.crop.bind({
-          url: url
+          url: window.URL.createObjectURL(file)
         })
-        this.showPicModal = true
+        this.showPicModal = true // show modal
       }
     },
-    upload () {
-      const cloudName = 'capabit-solutions'
+    buildImage () {
       const unsignedUploadPreset = 'y49z5nwh'
-      var orginalFile = this.$refs.upload.files[0]
-      var croppedFile
+      // Build file data using FormData object
+      var fileData = new FormData()
+      fileData.append('upload_preset', unsignedUploadPreset)
+      fileData.append('tags', 'resplice-upload')
+      // Define cropper options
       let options = {
         type: 'base64',
         size: 'orginal',
         format: 'png',
         circle: true
       }
+      // get the result of the cropper and upload to cloudinary
       this.$refs.crop.result(options, (output) => {
-        this.profilePic = output
-        croppedFile = new File([output], orginalFile.name, {type: output.type, lastModified: Date.now()})
-        console.log(croppedFile)
+        fileData.append('file', output) // append the file output to the FormData object
+        this.upload(fileData) // call upload
       })
-      // TODO: Upload to cloudinary this is a task for tomorrow
+    },
+    upload (fd) {
+      const cloudName = 'capabit-solutions'
       // var cl = new cloudinary.Cloudinary({cloud_name: 'capabit-solutions', api_key: '422859735239721', secure: true})
       // console.log(cl.url('sample'))
-      // const CDN_url = 'https://res.cloudinary.com/capabit-solutions/'
       const APIUrl = `https://api.cloudinary.com/v1_1/${cloudName}/upload`
-      var fd = new FormData()
-      fd.append('upload_preset', unsignedUploadPreset)
-      fd.append('tags', 'resplice-upload')
-      fd.append('file', croppedFile)
+      // Config cloudinary API request
       const config = {
         headers: {'X-Requested-With': 'XMLHttpRequest'},
         async: true,
         onUploadProgress: progressEvent => {
-          console.log(`onUploadProgress progressEvent.loaded: ${progressEvent.loaded}, progressEvent.total: ${progressEvent.total}`)
+          this.loading = true
         }
       }
+      // Post request to Cloudinary
       axios.post(APIUrl, fd, config)
         .then(res => {
-          var response = res.data
-          console.log('API Reponse data: ', response)
+          // Set profile picture in user state
+          this.profilePic = res.data.secure_url
+          // Cleanup
+          this.loading = false
+          this.showPicModal = false
+          this.$refs.crop.destroy()
         })
         .catch(err => {
-          console.log(err)
+          if (err.message === 'Network Error') {
+            this.$notify({
+              title: 'Network Error',
+              message: 'You are not online or there is a problem with your network, please try again when you are connected to the internet.',
+              type: 'error',
+              duration: 5000
+            })
+          } else {
+            this.$notify({
+              title: 'Upload Error',
+              message: 'There was an error while uploading your picture, please try again later or contact support@capabit.com',
+              type: 'error',
+              duration: 5000
+            })
+            console.log(err)
+          }
+          // Cleanup
+          this.loading = false
+          this.showPicModal = false
+          this.$refs.crop.destroy()
         })
-      this.showPicModal = false
-      this.$refs.crop.destroy()
     },
     beforeAvatarUpload (file) {
+      // file verification before cropping
       const isJPG = file.type === 'image/jpeg'
       const isPNG = file.type === 'image/png'
       const isLt2m = file.size / 1024 / 1024 < 2

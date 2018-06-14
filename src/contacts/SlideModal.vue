@@ -1,5 +1,5 @@
 <template>
-  <div class="modal">
+  <div class="modal" v-loading="loading">
     <icon class="close" name="times" scale="2" @click.native="$emit('close')"></icon>
     <slot></slot>
   </div>
@@ -7,6 +7,7 @@
 
 <script>
 export default {
+  props: ['loading']
 }
 </script>
 

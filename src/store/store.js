@@ -18,7 +18,7 @@ export default new Vuex.Store({
       userBasic: {
         firstName: 'Marcus',
         lastName: 'Virginia',
-        profilePic: '',
+        profilePic: null,
         gender: 'Male',
         DOB: '1996/08/13'
       },
@@ -365,6 +365,9 @@ export default new Vuex.Store({
     },
     updateLanguage: (state, payload) => {
       state.user.lang = payload
+    },
+    updateProfilePic: (state, payload) => {
+      state.user.userBasic.profilePic = payload
     },
     changeNameFormat: (state, payload) => {
       state.settings.nameFormat = payload
