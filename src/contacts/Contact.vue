@@ -14,7 +14,7 @@
           :pan-options="{ direction: 'horizontal', threshold: 10 }"
           class="contact-img" 
           style="margin-right: 20px;" 
-          :src="contact.profilePic" 
+          :src="contact.thumbnail" 
           :alt="contact.firstName"></v-touch>
         <div class="name" ref="name">
           <div class="f-name" v-if="contact.firstName">{{ contact.firstName }}</div>
@@ -103,7 +103,7 @@ export default {
   }
   .name {
     display: flex;
-    flex-wrap: wrap
+    flex-wrap: wrap;
   }
   .l-name {
     color: #1BBC9B;
