@@ -21,8 +21,6 @@ export default {
   components: {
     'reHeader': Header,
     'reFooter': Footer
-  },
-  methods: {
   }
 }
 </script>
