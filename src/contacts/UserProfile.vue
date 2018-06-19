@@ -2,8 +2,9 @@
   <div class="profile">
     <el-row class="pic-uploader">
       <div class="profile-pic">
-        <div v-if="profilePic" class="avatar-container">
+        <div v-if="profilePic" class="avatar-container" @click="getImg">
           <img :src="profilePic" alt="User Avatar" class="avatar">
+          <icon name="edit" class="edit" scale="2"></icon>
         </div>
         <div v-else class="pic-placeholder" @click="getImg"><icon name="plus" scale="2"></icon></div>
         <input type="file" style="display: none;" ref="upload" @change="cropImg">
@@ -23,9 +24,6 @@
           </el-input>
         </div>
         <div class="info">
-          <!-- <el-input v-model="userData.userBasic.DOB">
-            <template slot="prepend">Date of Birth</template>
-          </el-input> -->
           <el-date-picker
             v-model="DOB"
             type="date"
@@ -50,48 +48,12 @@
       <!-- User Attributes -->
       <el-card>
         <div class="info-header" slot="header">Contact Information</div>
-        <div class="info">
+        <div v-for="type in userData.attributeTypes" :key="type.id" class="info">
           <div class="info-content-header">
-            <span>Phone</span>
+            <span style="text-transform: capitalize;">{{ type.name }}</span>
             <el-button type="primary" size="small">Add</el-button>
           </div>
-          <div v-for="info in userData.userAttributes" :key="info.id" class="info-content">
-            <el-input :value="info.value">
-            </el-input>
-            <el-select v-model="value" placeholder="Select">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </div>
-        </div>
-        <div class="info">
-          <div class="info-content-header">
-            <span>Email</span>
-            <el-button type="primary" size="small">Add</el-button>
-          </div>
-          <div v-for="info in userData.userAttributes" :key="info.id" class="info-content">
-            <el-input :value="info.value">
-            </el-input>
-            <el-select v-model="value" placeholder="Select">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </div>
-        </div>
-        <div class="info">
-          <div class="info-content-header">
-            <span>Address</span>
-            <el-button type="primary" size="small">Add</el-button>
-          </div>
-          <div v-for="info in userData.userAttributes" :key="info.id" class="info-content">
+          <div v-for="info in userAttributesFiltered(type.id)" :key="info.id" class="info-content">
             <el-input :value="info.value">
             </el-input>
             <el-select v-model="value" placeholder="Select">
@@ -122,7 +84,6 @@
 <script>
 import Modal from '@/contacts/SlideModal.vue'
 import axios from 'axios'
-// import cloudinary from 'cloudinary-core'
 
 export default {
   components: {
@@ -218,6 +179,14 @@ export default {
     }
   },
   methods: {
+    userAttributesFiltered (typeId) {
+      var attr = this.$store.getters.getUserInfo.userAttributes
+      console.log(attr)
+      console.log(typeId)
+      return attr.filter(a => {
+        a.attribute_group_id = typeId
+      })
+    },
     handleSwipe () {
       this.swiped = true
     },
@@ -394,5 +363,11 @@ export default {
   }
   .cropper-save {
     margin-top: -300px;
+  }
+  .edit {
+    position: absolute;
+    color: #1BBC9B;
+    margin-left: 90px;
+    top: 170px;
   }
 </style>
