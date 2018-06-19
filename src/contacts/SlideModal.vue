@@ -32,5 +32,9 @@ export default {
   position: fixed;
   top: 1%;
   right: 2%;
+  &:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+  }
 }
 </style>

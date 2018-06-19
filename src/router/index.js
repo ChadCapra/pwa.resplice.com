@@ -6,11 +6,18 @@ import Profile from '@/contacts/Profile'
 import Notif from '@/notif/Notif'
 import Groups from '@/contacts/Groups'
 import Maps from '@/contacts/Map'
-import UserProfile from '@/contacts/UserProfile'
+// import UserProfile from '@/contacts/UserProfile'
 import Settings from '@/contacts/Settings'
 import ContactList from '@/contacts/ContactList'
 import Welcome from '@/signin/Welcome'
 import GroupList from '@/contacts/GroupList'
+// Import Skeletons and set up async components
+import UserLoading from '@/skeleton/UserLoading'
+const UserProfile = () => ({
+  component: import('@/contacts/UserProfile'),
+  loading: UserLoading,
+  delay: 10
+})
 
 Vue.use(Router)
 
@@ -21,11 +28,12 @@ export default new Router({
       component: Container,
       children: [
         {
+          name: 'root',
           path: '',
           component: ContactList
         },
         {
-          path: 'groups',
+          path: '/groups',
           component: Groups
         },
         {
@@ -34,15 +42,15 @@ export default new Router({
           component: GroupList
         },
         {
-          path: 'map',
+          path: '/map',
           component: Maps
         },
         {
-          path: 'userprofile',
+          path: '/userprofile',
           component: UserProfile
         },
         {
-          path: 'settings',
+          path: '/settings',
           component: Settings
         }
       ]

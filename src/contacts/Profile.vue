@@ -14,18 +14,9 @@
       </el-row>
     </el-header>
     <el-main>
-      <!-- <div class="loading" v-if="loading">
-        Insert loading animation here...
-      </div>
-
-      <div class="error" v-if="error">
-        Insert Error Message here...
-      </div> -->
-
-      <!-- <div class="profile" v-if="post"></div> -->
       <div class="profile">
         <el-row class="pro-pic">
-          <el-col :span="24"><img :src='profilePic' alt="Profile Picture"></el-col>
+          <el-col :span="24"><img v-if="profilePic" :src='profilePic' alt="Profile Picture"><div v-else class="pic-placeholder"></div></el-col>
         </el-row>
         <el-row>
           <el-col style="color: #1BBC9B; font-size: 24px; margin-bottom: 20px;"><span v-if="firstName != null">{{ firstName }}</span><span v-if="lastName != null">{{ ' ' + lastName }}</span></el-col>
@@ -63,11 +54,8 @@ export default {
       error: null
     }
   },
-  created () {
-    // fetch data when the component is created
-    // this.fetchData()
-  },
   computed: {
+    // Find a better way to do attributes, using getters and setters
     attributes () {
       return this.$store.getters.getAttributes(this.$route.params.id)
     },
@@ -101,20 +89,6 @@ export default {
     }
   },
   methods: {
-    // fetchData () {
-    //   this.error = this.post = null
-    //   this.loading = true
-    //   // getPost is the data fetching API function
-    //   // We want to pull data from cache if network is unavailable
-    //   getPost(this.$route.params.id, (err, post) => {
-    //     this.loading = false
-    //     if (err) {
-    //       this.error = err.toString()
-    //     } else {
-    //       this.post = post
-    //     }
-    //   })
-    // },
     getIconName (agi) {
       switch (agi) {
         case '1':
