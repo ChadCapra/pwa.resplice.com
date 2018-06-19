@@ -10,11 +10,16 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  created () {
+    if (this.$store.state.loggedIn) {
+      this.$store.dispatch('login')
+    }
+  }
 }
 </script>
 
-<style>
+<style lang="scss">
 body {
   margin: 0;
   background-color: #fff;
@@ -45,5 +50,36 @@ button, span {
   -ms-user-select: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent; 
+}
+
+.pic-placeholder {
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(271deg, #b4b7b6, #999999);
+  background-size: 400% 400%;
+
+  -webkit-animation: skeleton 1.5s ease infinite;
+  -moz-animation: skeleton 1.5s ease infinite;
+  animation: skeleton 1.5s ease infinite;
+
+  @-webkit-keyframes skeleton {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+  @-moz-keyframes skeleton {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+  @keyframes skeleton { 
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
 }
 </style>
