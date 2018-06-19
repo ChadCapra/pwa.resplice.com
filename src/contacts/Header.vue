@@ -6,7 +6,7 @@
         <span v-if="searchDisabled" class="header-text">{{ headerText }}</span>
       </transition>
       <label v-if="showSearch" :data-state="search" for="search">
-        <input type="text" placeholder="Search" @click="searchOn" @blur="searchOff"/>
+        <input type="text" v-model="searchInput" placeholder="Search" @click="searchOn" @blur="searchOff"/>
         <icon name="search" aria-hidden="true"></icon>
       </label>
     </el-row>
@@ -17,7 +17,6 @@
 export default {
   data () {
     return {
-      searchInput: '',
       searchDisabled: true,
       search: 'close'
     }
@@ -41,6 +40,15 @@ export default {
     },
     headerText () {
       return this.$store.state.header.text
+    },
+    searchInput: {
+      get () {
+        return this.$store.state.searchInput
+      },
+      set (text) {
+        text = text.replace(/\s/g, '').toLowerCase()
+        this.$store.commit('updateSearch', text)
+      }
     }
   }
 }
