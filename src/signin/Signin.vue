@@ -1,7 +1,7 @@
 <template>
   <div class="background">
     <div class="signin">
-      <el-steps :active="active" align-center>
+      <el-steps :active="active" align-center v-show="isSignUp">
         <el-step title="Sign Up"></el-step>
         <el-step title="Add your info"></el-step>
         <el-step title="Invite people"></el-step>
@@ -12,32 +12,85 @@
           <div class="sign-logo"><img :src="logo" alt="Resplice Logo"></div>
         </el-col>
       </el-row>
-      <el-row type="flex" justify="center">
-        <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
-          <div class="sign-field"><el-input placeholder="First Name" v-model="userData.firstName">
-            <template slot="prepend"><icon name="user"></icon></template>
-          </el-input></div>
-        </el-col>
-      </el-row>
-      <el-row type="flex" justify="center">
-        <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
-          <div class="sign-field"><el-input placeholder="Last Name" v-model="userData.lastName">
-            <template slot="prepend"><icon name="user"></icon></template>
-          </el-input></div>
-        </el-col>
-      </el-row>
-      <el-row type="flex" justify="center">
-        <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
-          <div class="sign-field"><el-input placeholder="Email" v-model="userData.email">
-            <template slot="prepend"><icon name="envelope"></icon></template>
-          </el-input></div>
-        </el-col>
-      </el-row>
-      <el-row type="flex" justify="center">
-        <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
-          <div class="sign-btn"><el-button type="primary" @click="signUp">Sign Up</el-button></div>
-        </el-col>
-      </el-row>
+      <!-- Sign up form -->
+      <div class="form-signup" v-show="isSignUp">
+        <el-row type="flex" justify="center">
+          <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
+            <div class="sign-field"><el-input placeholder="First Name" v-model="signInData.firstName">
+              <template slot="prepend"><icon name="user"></icon></template>
+            </el-input></div>
+          </el-col>
+        </el-row>
+        <el-row type="flex" justify="center">
+          <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
+            <div class="sign-field"><el-input placeholder="Last Name" v-model="signInData.lastName">
+              <template slot="prepend"><icon name="user"></icon></template>
+            </el-input></div>
+          </el-col>
+        </el-row>
+        <el-row type="flex" justify="center">
+          <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
+            <div class="sign-field"><el-input placeholder="Email" v-model="signInData.email">
+              <template slot="prepend"><icon name="envelope"></icon></template>
+            </el-input></div>
+          </el-col>
+        </el-row>
+        <el-row type="flex" justify="center">
+          <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
+            <div class="sign-field"><el-input placeholder="Password" v-model="signInData.password">
+              <template slot="prepend"><icon name="lock"></icon></template>
+            </el-input></div>
+          </el-col>
+        </el-row>
+        <el-row type="flex" justify="center">
+            <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
+              <div class="sign-btn">
+                <el-button type="primary" plain @click="isSignUp = false; initialState = true">Prev</el-button>
+                <el-button type="primary" @click="signUp">Submit</el-button>
+              </div>
+            </el-col>
+          </el-row>
+      </div>
+      <!-- Login form -->
+      <div class="form-login" v-show="isLogin">
+        <el-row type="flex" justify="center">
+          <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
+            <div class="sign-field"><el-input placeholder="Username" v-model="loginData.username">
+              <template slot="prepend"><icon name="user"></icon></template>
+            </el-input></div>
+          </el-col>
+        </el-row>
+        <el-row type="flex" justify="center">
+          <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
+            <div class="sign-field"><el-input placeholder="Password" v-model="loginData.password">
+              <template slot="prepend"><icon name="lock"></icon></template>
+            </el-input></div>
+          </el-col>
+        </el-row>
+        <el-row type="flex" justify="center">
+            <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
+              <div class="sign-btn">
+                <el-button type="primary" plain @click="isLogin = false; initialState = true">Prev</el-button>
+                <el-button type="primary" @click="login">Login</el-button>
+              </div>
+            </el-col>
+          </el-row>
+      </div>
+      <div class="btns" v-show="initialState">
+        <el-row type="flex" justify="center">
+            <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
+              <div class="g-signin2" data-onsuccess="onSignIn" data-width="190" data-height="40" data-longtitle="true" data-theme="light"></div>
+            </el-col>
+          </el-row>
+          <el-row type="flex" justify="center">
+            <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
+              <div class="sign-btn">
+                <el-button type="primary" plain @click="isSignUp = true; initialState = false">Sign Up</el-button>
+                <el-button type="primary" @click="isLogin = true; initialState = false">Login</el-button>
+              </div>
+            </el-col>
+          </el-row>
+        </div>
     </div>
   </div>
 </template>
@@ -46,19 +99,26 @@
 export default {
   data () {
     return {
-      userData: {
+      isLogin: false,
+      isSignUp: false,
+      initialState: true,
+      logo: require('../assets/re_logo.png'),
+      active: 0,
+      signInData: {
         firstName: '',
         lastName: '',
         email: '',
         password: ''
       },
-      logo: require('../assets/re_logo.png'),
-      active: 0
+      loginData: {
+        username: '',
+        password: ''
+      }
     }
   },
   methods: {
     signUp () {
-      this.$alert('This user signed up', 'Sign Up', {
+      this.$alert('Welcome to Resplice, please click continue to enter your information', 'Sign Up Successful!', {
         confirmButtonText: 'Continue',
         callback: action => {
           this.$message({
@@ -67,7 +127,11 @@ export default {
           })
         }
       })
-      this.$router.push({ name: 'Container' })
+      this.$router.push({ name: 'Welcome' })
+    },
+    login () {
+      this.$store.dispatch('login')
+      this.$router.push({ name: 'root' })
     }
   }
 }
@@ -85,15 +149,25 @@ export default {
   padding-bottom: 40px;
 }
 .background {
-  background: #0F2027;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #134E5E;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #134E5E, #71B280);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #134E5E, #71B280); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   width: 100%;
   overflow: hidden;
   z-index: -1;
 }
 .signin {
   padding-top: 10px;
+}
+/* .form-signup {
+  display: none;
+}
+.form-login {
+  display: none;
+} */
+.g-signin2 {
+  display: flex;
+  justify-content: center;
 }
 </style>
 
