@@ -1,5 +1,7 @@
 <template>
+<keep-alive>
   <google-map name="resplice"></google-map>
+</keep-alive>
 </template>
 
 <script>
