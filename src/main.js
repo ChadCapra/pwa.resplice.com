@@ -38,6 +38,10 @@ import 'vue-awesome/icons/times'
 import 'vue-awesome/icons/edit'
 import 'vue-awesome/icons/at'
 import 'vue-awesome/icons/paper-plane'
+import 'vue-awesome/icons/facebook-square'
+import 'vue-awesome/icons/twitter'
+import 'vue-awesome/icons/google'
+import 'vue-awesome/icons/link'
 import Icon from 'vue-awesome/components/Icon'
 
 // Import vue-touch for phone gestures
