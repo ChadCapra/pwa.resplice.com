@@ -12,6 +12,10 @@
           <el-input type="password" placeholder="Password"></el-input>
         </div>
         <div class="setting">
+          <icon name="lock" scale="2" color="#1BBC9B"></icon>
+          <el-input type="password" placeholder="Confirm Password"></el-input>
+        </div>
+        <div class="setting">
           <icon name="globe" scale="2" color="#1BBC9B"></icon>
           <el-select v-model="lang" placeholder="Language">
             <el-option value="English"></el-option>
