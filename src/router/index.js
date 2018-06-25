@@ -4,7 +4,7 @@ import Signin from '@/signin/Signin'
 import SignUp from '@/signin/Signup'
 import Container from '@/contacts/Container'
 import Profile from '@/contacts/Profile'
-import Notif from '@/notif/Notif'
+import Notif from '@/share/Notif'
 import Groups from '@/contacts/Groups'
 import Maps from '@/contacts/Map'
 import UserProfile from '@/contacts/UserProfile'
@@ -12,6 +12,7 @@ import Settings from '@/contacts/Settings'
 import ContactList from '@/contacts/ContactList'
 import Welcome from '@/signin/Welcome'
 import GroupList from '@/contacts/GroupList'
+import Share from '@/share/Share'
 
 Vue.use(Router)
 
@@ -63,6 +64,11 @@ export default new Router({
       path: '/profile/:id',
       name: 'Profile',
       component: Profile
+    },
+    {
+      path: '/share',
+      name: 'Share',
+      component: Share
     },
     {
       path: '/notif', // Notifications page
