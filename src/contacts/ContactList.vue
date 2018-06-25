@@ -36,6 +36,9 @@ export default {
     loading () {
       return this.$store.getters.getContactsLoading
     }
+  },
+  created () {
+    this.$store.state.header.showSearch = true
   }
 }
 </script>
