@@ -1,8 +1,13 @@
 <template>
-  <div v-if="contacts">
-    <re-contact v-for="contact in contacts" :contact="contact" :key="contact.id"></re-contact>
+  <div v-if="loading">
+    <re-loading></re-loading>
   </div>
-  <div v-else>You have no contacts</div>
+  <div v-else>
+    <div v-if="contacts">
+      <re-contact v-for="contact in contacts" :contact="contact" :key="contact.id"></re-contact>
+    </div>
+    <div v-else>You have no contacts</div>
+  </div>
 </template>
 
 <script>
@@ -14,7 +19,8 @@ export default {
       component: import('./Contact.vue'),
       loading: ListLoading,
       delay: 100
-    })
+    }),
+    're-loading': ListLoading
   },
   computed: {
     contacts () {
@@ -26,6 +32,9 @@ export default {
     },
     search () {
       return this.$store.getters.getSearchInput
+    },
+    loading () {
+      return this.$store.getters.getContactsLoading
     }
   }
 }
