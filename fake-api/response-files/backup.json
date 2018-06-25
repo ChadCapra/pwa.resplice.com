@@ -1,0 +1,28 @@
+{
+  "user_attributes": [
+    {
+      "id": "1",
+      "type_id": "1",
+      "value": "218-591-0657",
+      "genre": "personal",
+      "verified": true,
+      "primary_of_type": true
+    },
+    {
+      "id": "2",
+      "type_id": "3",
+      "value": "1176 14th Ave SE Minneapolis, MN 55414",
+      "genre": "personal",
+      "verified": false,
+      "primary_of_type": true
+    },
+    {
+      "id": "3",
+      "type_id": "2",
+      "value": "marcusvirg345@gmail.com",
+      "genre": "personal",
+      "verified": true,
+      "primary_of_type": true
+    }
+  ]
+}
