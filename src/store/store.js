@@ -18,39 +18,60 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     loggedIn: true,
+    userLoading: true,
+    contactsLoading: true,
+    groupsLoading: true,
     searchState: '',
-    user: null,
+    user: {},
     contacts: null,
     groups: null,
-    attributeGroups: [
+    attributeTypes: [
       {
         id: '1',
-        group: 'phone',
-        isUnique: false,
+        name: 'Phone',
+        icon: 'phone',
+        isUnique: true,
         attributes: []
       },
       {
         id: '2',
-        group: 'email',
+        name: 'Email',
+        icon: 'envelope',
         isUnique: true,
         attributes: []
       },
       {
         id: '3',
-        group: 'address',
-        isUnique: false,
+        name: 'Address',
+        icon: 'home',
+        isUnique: true,
         attributes: []
       },
       {
         id: '4',
-        group: 'social',
+        name: 'Social',
+        icon: 'at',
+        isUnique: true,
+        attributes: []
+      },
+      {
+        id: '5',
+        name: 'Website',
+        icon: 'globe',
+        isUnique: true,
+        attributes: []
+      },
+      {
+        id: '6',
+        name: 'Other',
+        icon: 'paper-plane',
         isUnique: true,
         attributes: []
       }
     ],
     settings: {
       nameFormat: 'First Last',
-      showRecentlyContact: true
+      showRecentlyContacted: true
     },
     navIndex: {
       one: true,
@@ -72,17 +93,21 @@ export default new Vuex.Store({
     getAttributes: (state, getters) => id => {
       return getters.getContactById(id).attributes
     },
+    getFilteredAttributes: state => typeId => {
+      var attributes = state.user.user_attributes
+      return attributes.filter(attr => attr.type_id === typeId)
+    },
     getContactId: (state, getters) => id => {
       return getters.getContactById(id).id
     },
     getContactFirst: (state, getters) => id => {
-      return getters.getContactById(id).firstName
+      return getters.getContactById(id).first_name
     },
     getContactLast: (state, getters) => id => {
-      return getters.getContactById(id).lastName
+      return getters.getContactById(id).last_name
     },
     getContactProfilePic: (state, getters) => id => {
-      return getters.getContactById(id).profilePic
+      return getters.getContactById(id).profile_pic
     },
     getContacts: state => {
       return state.contacts
@@ -90,7 +115,7 @@ export default new Vuex.Store({
     getNavIndex: state => {
       return state.navIndex
     },
-    getFilteredContacts: (state, getters) => text => {
+    getFilteredContacts: state => text => {
       return state.contacts.filter(contact => (contact.searchableAttributes.includes(text.toLowerCase())))
     },
     getGroupContacts: state => memberIds => {
@@ -99,8 +124,11 @@ export default new Vuex.Store({
     getUserInfo: state => {
       return state.user
     },
-    getUserAttributeGroups: state => {
-      return state.user.attributeTypes
+    getUserAttributes: state => {
+      return state.user.user_attributes
+    },
+    getAttributeTypes: state => {
+      return state.attributeTypes
     },
     getGroupById: state => id => {
       return state.groups.find(group => group.id === id)
@@ -110,14 +138,35 @@ export default new Vuex.Store({
     },
     getSearchInput: state => {
       return state.searchState
+    },
+    getUserLoading: state => {
+      return state.userLoading
+    },
+    getContactsLoading: state => {
+      return state.contactsLoading
+    },
+    getGroupsLoading: state => {
+      return state.groupsLoading
     }
   },
   mutations: {
     setCurrentUser: (state, payload) => {
       state.user = payload
     },
+    setContacts: (state, payload) => {
+      state.contacts = payload
+    },
+    setGroups: (state, payload) => {
+      state.groups = payload
+    },
+    setLogin: (state, payload) => {
+      state.loggedIn = payload
+    },
+    setTypeNotUnique: (state, payload) => {
+      state.attributeTypes.find(type => type.id === payload).isUnique = false
+    },
     changeUserName: (state, payload) => id => {
-      state.contacts[id].userName = payload
+      state.contacts[id].username = payload
     },
     changePassword: (state, payload) => id => {
       state.contacts[id].password = payload
@@ -130,22 +179,22 @@ export default new Vuex.Store({
       state.searchState = payload
     },
     updateDOB: (state, payload) => {
-      state.user.userBasic.DOB = payload
+      state.user.user_basic.dob = payload
     },
     updateFirstName: (state, payload) => {
-      state.user.userBasic.firstName = payload
+      state.user.user_basic.first_name = payload
     },
     updateLastName: (state, payload) => {
-      state.user.userBasic.lastName = payload
+      state.user.user_basic.last_name = payload
     },
     updateGender: (state, payload) => {
-      state.user.userBasic.gender = payload
+      state.user.user_basic.gender = payload
     },
     updateLanguage: (state, payload) => {
       state.user.lang = payload
     },
     updateProfilePic: (state, payload) => {
-      state.user.userBasic.profilePic = payload
+      state.user.user_basic.profile_pic = payload
     },
     changeNameFormat: (state, payload) => {
       state.settings.nameFormat = payload
@@ -153,20 +202,39 @@ export default new Vuex.Store({
     toggleShowRecentlyContacted: (state, payload) => {
       state.settings.showRecentlyContact = payload
     },
-    setContacts: (state, payload) => {
-      state.contacts = payload
-    },
-    setGroups: (state, payload) => {
-      state.groups = payload
-    },
-    setLogin: (state, payload) => {
-      state.loggedIn = payload
-    },
     buildSearchableAttributes: state => {
       var contacts = state.contacts
       for (var i = 0; i < contacts.length; ++i) {
-        contacts[i].searchableAttributes = `${contacts[i].firstName}${contacts[i].lastName}`.toLowerCase()
+        contacts[i].searchableAttributes = `${contacts[i].first_name}${contacts[i].last_name}`.toLowerCase()
       }
+    },
+    sanitizeAttributes: state => {
+      var mod = state.user.user_attributes
+      for (var i = mod.length - 1; i >= 0; i--) {
+        if (mod[i].value === '') {
+          mod.splice(i, 1)
+        }
+      }
+      state.user.user_attributes = mod
+    },
+    addAttribute: (state, payload) => {
+      payload.id = state.user.user_attributes.length + 1
+      state.user.user_attributes.push(payload)
+    },
+    removeAttribute: (state, payload) => {
+      var attributes = state.user.user_attributes
+      var attr = state.user.user_attributes.find(attribute => attribute.id === payload)
+      var i = attributes.indexOf(attr)
+      state.user.user_attributes.splice(i, 1)
+    },
+    loadingDoneUser: state => {
+      state.userLoading = false
+    },
+    loadingDoneContacts: state => {
+      state.contactsLoading = false
+    },
+    loadingDoneGroups: state => {
+      state.groupsLoading = false
     }
   },
   actions: {
@@ -174,6 +242,7 @@ export default new Vuex.Store({
       axios.get(`${baseUrl}/user`, config)
         .then(response => {
           commit('setCurrentUser', response.data)
+          commit('loadingDoneUser')
         })
         .catch(e => {
           console.log(e)
@@ -182,6 +251,7 @@ export default new Vuex.Store({
         .then(response => {
           commit('setContacts', response.data)
           commit('buildSearchableAttributes')
+          commit('loadingDoneContacts')
         })
         .catch(e => {
           console.log(e)
@@ -189,14 +259,15 @@ export default new Vuex.Store({
       axios.get(`${baseUrl}/groups`, config)
         .then(response => {
           commit('setGroups', response.data)
+          commit('loadingDoneGroups')
         })
         .catch(e => {
           console.log(e)
         })
       commit('setLogin', true)
     },
-    logout: ({commit}, id, payload) => {
-      commit('setCurrentUser', null)
+    logout: ({commit}) => {
+      commit('setCurrentUser', {})
       commit('setContacts', null)
       commit('setLogin', false)
       commit('setGroups', null)
@@ -206,6 +277,9 @@ export default new Vuex.Store({
     },
     changePassword: ({ commit }, id, payload) => {
       commit('changePassword', id, payload)
+    },
+    pushAttribute: ({ commit }, payload) => {
+      commit('addAttribute', payload)
     }
   }
   // modules: {
