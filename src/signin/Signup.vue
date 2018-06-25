@@ -1,23 +1,36 @@
 <template>
   <div class="background">
     <div class="signin">
+      <el-steps :active="active" align-center>
+        <el-step title="Sign Up"></el-step>
+        <el-step title="Add your info"></el-step>
+        <el-step title="Invite people"></el-step>
+        <el-step title="Enjoy!"></el-step>
+      </el-steps>
       <el-row type="flex" justify="center">
         <el-col :xs="20" :sm="20" :md="16" :lg="12" :xl="6">
           <div class="sign-logo"><img :src="logo" alt="Resplice Logo"></div>
         </el-col>
       </el-row>
-      <!-- Login form -->
-      <div class="form-login" v-show="isLogin">
+      <!-- Sign up form -->
+      <div class="form-signup">
         <el-row type="flex" justify="center">
           <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
-            <div class="sign-field"><el-input placeholder="Username" v-model="loginData.username">
+            <div class="sign-field"><el-input placeholder="Username" v-model="signInData.username">
               <template slot="prepend"><icon name="user"></icon></template>
             </el-input></div>
           </el-col>
         </el-row>
         <el-row type="flex" justify="center">
           <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
-            <div class="sign-field"><el-input placeholder="Password" v-model="loginData.password">
+            <div class="sign-field"><el-input placeholder="Password" v-model="signInData.password">
+              <template slot="prepend"><icon name="lock"></icon></template>
+            </el-input></div>
+          </el-col>
+        </el-row>
+        <el-row type="flex" justify="center">
+          <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
+            <div class="sign-field"><el-input placeholder="Confirm Password" v-model="signInData.cPassword">
               <template slot="prepend"><icon name="lock"></icon></template>
             </el-input></div>
           </el-col>
@@ -25,26 +38,11 @@
         <el-row type="flex" justify="center">
             <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
               <div class="sign-btn">
-                <el-button type="primary" plain @click="isLogin = false; initialState = true">Prev</el-button>
-                <el-button type="primary" @click="login">Login</el-button>
+                <el-button type="primary" plain @click="this.$router.go(-1)">Prev</el-button>
+                <el-button type="primary" @click="signUp">Submit</el-button>
               </div>
             </el-col>
           </el-row>
-      </div>
-      <div class="btns" v-show="initialState">
-        <el-row type="flex" justify="center">
-          <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
-            <div class="g-signin2" data-onsuccess="onSignIn" data-width="190" data-height="40" data-longtitle="true" data-theme="light"></div>
-          </el-col>
-        </el-row>
-        <el-row type="flex" justify="center">
-          <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
-            <div class="sign-btn">
-              <el-button type="primary" plain @click="$router.push({ name: 'Welcome' })">Sign Up</el-button>
-              <el-button type="primary" @click="isLogin = true; initialState = false">Login</el-button>
-            </div>
-          </el-col>
-        </el-row>
       </div>
     </div>
   </div>
@@ -54,20 +52,12 @@
 export default {
   data () {
     return {
-      isLogin: false,
-      isSignUp: false,
-      initialState: true,
       logo: require('../assets/re_logo.png'),
       active: 0,
       signInData: {
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: ''
-      },
-      loginData: {
         username: '',
-        password: ''
+        password: '',
+        cPassword: ''
       }
     }
   },
@@ -83,10 +73,6 @@ export default {
         }
       })
       this.$router.push({ name: 'Welcome' })
-    },
-    login () {
-      this.$store.dispatch('login')
-      this.$router.push({ name: 'root' })
     }
   }
 }
@@ -113,10 +99,6 @@ export default {
 }
 .signin {
   padding-top: 10px;
-}
-.g-signin2 {
-  display: flex;
-  justify-content: center;
 }
 </style>
 
