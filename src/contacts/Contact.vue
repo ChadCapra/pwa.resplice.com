@@ -15,10 +15,10 @@
           class="contact-img" 
           style="margin-right: 20px;" 
           :src="contact.thumbnail" 
-          :alt="contact.firstName"></v-touch>
+          :alt="contact.first_name"></v-touch>
         <div class="name" ref="name">
-          <div class="f-name" v-if="contact.firstName">{{ contact.firstName }}</div>
-          <span class="l-name" v-if="contact.lastName">{{ contact.lastName }}</span>
+          <div class="f-name" v-if="contact.first_name">{{ contact.first_name }}</div>
+          <span class="l-name" v-if="contact.last_name">{{ contact.last_name }}</span>
         </div>
       </el-col>
     </el-row>
