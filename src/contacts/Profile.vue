@@ -27,12 +27,12 @@
           <el-col :xs="6" :sm="6" :md="4" :lg="4" :xl="4"><icon class="access-btn" name="globe" scale="2.5"></icon></el-col>
           <el-col :xs="6" :sm="6" :md="4" :lg="4" :xl="4"><icon class="access-btn" name="ellipsis-h" scale="2.5"></icon></el-col>
         </el-row>
-        <el-row v-for="aGroup in activeAttributeGroups" :key="aGroup.id" class="info-row" type="flex" justify="center">
+        <el-row v-for="type in activeAttributeTypes" :key="type.id" class="info-row" type="flex" justify="center">
           <el-card class="info-card">
             <div slot="header" class="info-card-header">
-              {{ aGroup.group }}
+              {{ type.name }}
             </div>
-            <div v-for="info in aGroup.attributes" :key="info.id" class="info-section text item">
+            <div v-for="info in type.attributes" :key="info.id" class="info-section text item">
               <div class="info-type">{{ info.type }}</div>
               <div class="info-item">
                 {{ info.value }}<icon class="info-action-icon" :name="getIconName(info.attribute_group_id)" scale="2" @click="executeAction"></icon>
@@ -59,21 +59,21 @@ export default {
     attributes () {
       return this.$store.getters.getAttributes(this.$route.params.id)
     },
-    activeAttributeGroups () {
-      var groups = this.$store.state.attributeGroups // get state attributeGroups
-      groups.forEach(g => {
-        g.attributes = [] // reset state
+    activeAttributeTypes () {
+      var types = this.$store.state.attributeTypes // get state attributeTypes
+      types.forEach(type => {
+        type.attributes = [] // reset state
       })
       this.attributes.forEach(a => { // push each attribute to a group.attributes array
-        groups.find(element => element.id === a.attribute_group_id).attributes.push(a)
+        types.find(element => element.id === a.attribute_group_id).attributes.push(a)
       })
-      var activeGroups = [] // Create active groups variable
-      groups.forEach(g => {
-        if (g.attributes.length > 0) {
-          activeGroups.push(g) // Check which groups have attributes in them and return them.
+      var activeTypes = [] // Create active types variable
+      types.forEach(type => {
+        if (type.attributes.length > 0) {
+          activeTypes.push(type) // Check which types have attributes in them and return them.
         }
       })
-      return activeGroups
+      return activeTypes
     },
     id () {
       return this.$store.getters.getContactId(this.$route.params.id)
