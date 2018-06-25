@@ -1,9 +1,12 @@
 <template>
-  <div class="profile">
+  <div v-if="userLoading">
+    <re-user-loading></re-user-loading>
+  </div>
+  <div v-else class="profile">
     <el-row class="pic-uploader">
       <div class="profile-pic">
         <div v-if="profilePic" class="avatar-container" @click="getImg">
-          <img :src="profilePic" alt="User Avatar" class="avatar">
+          <img :src="profilePic" ref="userImage" alt="User Avatar" class="avatar">
           <icon name="edit" class="edit" scale="2"></icon>
         </div>
         <div v-else class="pic-placeholder" @click="getImg"><icon name="plus" scale="2"></icon></div>
@@ -33,9 +36,6 @@
           </el-date-picker>
         </div>
         <div class="info">
-          <!-- <el-input v-model="userData.userBasic.gender">
-            <template slot="prepend">Gender</template>
-          </el-input> -->
           <el-autocomplete
             class="inline-input"
             v-model="gender"
@@ -48,26 +48,31 @@
       <!-- User Attributes -->
       <el-card>
         <div class="info-header" slot="header">Contact Information</div>
-        <div v-for="type in userData.attributeTypes" :key="type.id" class="info">
+        <div v-for="type in attributeTypes" :key="type.id" class="info">
           <div class="info-content-header">
-            <span style="text-transform: capitalize;">{{ type.name }}</span>
-            <el-button type="primary" size="small">Add</el-button>
+            <div class="type">
+              <icon :name="type.icon"></icon>
+              <span>{{ type.name }}</span>
+            </div>
+            <el-button type="primary" size="small" @click="addAttribute(type.id)">Add</el-button>
           </div>
           <div v-for="info in userAttributesFiltered(type.id)" :key="info.id" class="info-content">
             <el-input :value="info.value">
             </el-input>
-            <el-select v-model="value" placeholder="Select">
+            <el-select v-model="values[info.id]" placeholder="Select Type">
               <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
+                v-for="type in options"
+                :key="type.value"
+                :label="type.label"
+                :value="type.value">
               </el-option>
             </el-select>
           </div>
         </div>
       </el-card>
     </el-row>
+
+    <!-- Cropping and upload modal -->
     <re-modal v-show="showPicModal" @close="showPicModal = false" :loading="loading">
       <vue-croppie
         ref="crop"
@@ -84,10 +89,12 @@
 <script>
 import Modal from '@/contacts/SlideModal.vue'
 import axios from 'axios'
+import UserLoading from '@/skeleton/UserLoading.vue'
 
 export default {
   components: {
-    're-modal': Modal
+    're-modal': Modal,
+    're-user-loading': UserLoading
   },
   data () {
     return {
@@ -97,36 +104,46 @@ export default {
       genders: ['Male', 'Female', 'Pan', 'Tri'],
       options: [
         {
-          value: 'Option1',
-          label: 'Option1'
+          value: 'personal',
+          label: 'Personal'
         },
         {
-          value: 'Option2',
-          label: 'Option2'
+          value: 'home',
+          label: 'Home'
         },
         {
-          value: 'Option3',
-          label: 'Option3'
+          value: 'work',
+          label: 'Work'
         },
         {
-          value: 'Option4',
-          label: 'Option4'
+          value: 'mobile',
+          label: 'Mobile'
         },
         {
-          value: 'Option5',
-          label: 'Option5'
+          value: 'main',
+          label: 'Main'
+        },
+        {
+          value: 'other',
+          label: 'Other'
         }
       ],
-      value: ''
+      values: []
     }
   },
   computed: {
+    userLoading () {
+      return this.$store.getters.getUserLoading
+    },
     userData () {
       return this.$store.getters.getUserInfo
     },
+    attributeTypes () {
+      return this.$store.getters.getAttributeTypes
+    },
     firstName: {
       get () {
-        return this.$store.state.user.userBasic.firstName
+        return this.$store.getters.getUserInfo.user_basic.first_name
       },
       set (value) {
         this.$store.commit('updateFirstName', value)
@@ -134,7 +151,7 @@ export default {
     },
     lastName: {
       get () {
-        return this.$store.state.user.userBasic.lastName
+        return this.$store.getters.getUserInfo.user_basic.last_name
       },
       set (value) {
         this.$store.commit('updateLastName', value)
@@ -142,7 +159,7 @@ export default {
     },
     DOB: {
       get () {
-        return this.$store.state.user.userBasic.DOB
+        return this.$store.getters.getUserInfo.user_basic.dob
       },
       set (value) {
         this.$store.commit('updateDOB', value)
@@ -150,7 +167,7 @@ export default {
     },
     gender: {
       get () {
-        return this.$store.state.user.userBasic.gender
+        return this.$store.getters.getUserInfo.user_basic.gender
       },
       set (value) {
         this.$store.commit('updateGender', value)
@@ -158,14 +175,14 @@ export default {
     },
     profilePic: {
       get () {
-        return this.$store.state.user.userBasic.profilePic
+        return this.$store.getters.getUserInfo.user_basic.profile_pic
       },
       set (value) {
         this.$store.commit('updateProfilePic', value)
       }
     },
     fullName () {
-      return this.$store.getters.getUserInfo.userBasic.firstName + ' ' + this.$store.getters.getUserInfo.userBasic.lastName
+      return this.$store.getters.getUserInfo.user_basic.first_name + ' ' + this.$store.getters.getUserInfo.user_basic.last_name
     }
   },
   created () {
@@ -177,14 +194,25 @@ export default {
         duration: 5000
       })
     }
+    this.$store.state.header.showSearch = false
+    this.$store.state.header.showBack = true
+  },
+  destroyed () {
+    this.$store.state.header.showBack = false
   },
   methods: {
     userAttributesFiltered (typeId) {
-      var attr = this.$store.getters.getUserInfo.userAttributes
-      console.log(attr)
-      console.log(typeId)
-      return attr.filter(a => {
-        a.attribute_group_id = typeId
+      var attributes = this.$store.getters.getUserAttributes
+      return attributes.filter(attr => attr.type_id === typeId)
+    },
+    addAttribute (type) {
+      this.$store.dispatch('pushAttribute', {
+        id: '',
+        type_id: type,
+        value: '',
+        genre: '',
+        verified: false,
+        primary_of_type: false
       })
     },
     handleSwipe () {
@@ -326,7 +354,7 @@ export default {
     display: flex;
   }
   .info-content-header {
-    justify-content: space-around;
+    justify-content: space-between;
     display: flex;
     align-items: center;
     margin-bottom: 10px;
@@ -339,6 +367,15 @@ export default {
     display: flex;
     flex-direction: column;
     margin-top: 15px;
+  }
+  .type {
+    display: flex;
+    align-items: center;
+    text-transform: capitalize;
+    & .fa-icon {
+      margin-right: 15px;
+      color:#1BBC9B;
+    }
   }
   .el-input-group__prepend {
     padding: 15px;

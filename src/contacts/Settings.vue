@@ -1,7 +1,7 @@
 <template>
   <div class="settings">
     <el-card>
-      <div slot="header" class="setting-header">Account</div>
+      <div slot="header" class="setting-header">User Settings</div>
       <div class="setting-content">
         <div class="setting">
           <icon name="user" scale="2" color="#1BBC9B"></icon>
@@ -23,10 +23,13 @@
             <el-option value="Korean"></el-option>
           </el-select>
         </div>
+        <div class="setting">
+          <el-button @click="$router.push('/userprofile')" type="primary">Edit Profile</el-button>
+        </div>
       </div>
     </el-card>
     <el-card>
-      <div slot="header" class="setting-header">App</div>
+      <div slot="header" class="setting-header">App Settings</div>
       <div class="setting-content">
         <div class="setting-text">
           <span style="opacity: 0.7;">Name Format</span>
@@ -41,12 +44,18 @@
         </div>
       </div>
     </el-card>
+    <el-card>
+      <div class="setting-header" slot="header">App Information</div>
+      <div class="setting-content">
+        <el-button @click="handleSupport" type="danger" plain>Support</el-button>
+        <el-button @click="showModalFeedback = true" type="warning" plain>Give us Feedback :)</el-button>
+        <el-button @click="showModalLegal = true" type="info" plain>Legal &amp; Terms of Use</el-button>
+        <el-button @click="showModalAbout = true" type="primary" plain>About Resplice</el-button>
+      </div>
+    </el-card>
     <div class="buttons">
-      <el-button type="success">Download Your Data</el-button>
+      <el-button type="success" @click="handleDownload">Download Your Data</el-button>
       <el-button type="danger" @click="userLogout">Logout</el-button>
-      <el-button type="warning" @click="showModalFeedback = true">Give Us Feedback :)</el-button>
-      <el-button type="info" @click="showModalLegal = true">Legal &amp; Terms of use</el-button>
-      <el-button type="primary" @click="showModalAbout = true">About Resplice</el-button>
     </div>
     <re-modal v-show="showModalLegal" @close="showModalLegal = false">
       <h1>Legal &amp; Terms of Use</h1>
@@ -121,8 +130,8 @@ export default {
       'logout' // `this.logout` maps to `this.$store.dispatch('logout')`
     ]),
     userLogout () {
-      this.logout()
       this.$router.push({ name: 'Signin' })
+      this.logout() // Action created by mapActions
     },
     toggleShowRecentlyContacted () {
       this.$store.commit('toggleShowRecentlyContacted', this.toggle)
@@ -130,7 +139,18 @@ export default {
     feedbackSubmit () {
       console.log(this.feedback)
       // make api request to bug/feature tracker
+    },
+    handleSupport () {
+      window.location.href = 'mailto:support@capabit.com?subject=Resplice%20Support&body=Message%20goes%20here'
+    },
+    handleDownload () {
+      var userDataUrl = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(this.$store.state.user))} download="user.json"`
+      console.log(userDataUrl)
+      // window.location.href = userDataUrl
     }
+  },
+  created () {
+    this.$store.state.header.showSearch = false
   }
 }
 </script>
@@ -149,6 +169,9 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    & .is-plain {
+      margin: 0 0 10px 0;
+    }
   }
   .setting {
     display: flex;
