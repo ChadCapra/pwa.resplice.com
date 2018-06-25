@@ -41,6 +41,7 @@ main {
 a {
   color:bisque;
 }
+
 button, span {
   outline: 0;
   -webkit-touch-callout: none;
@@ -82,4 +83,29 @@ button, span {
     100%{background-position:0% 50%}
   }
 }
+
+.profile-pic-loading {
+    background: linear-gradient(271deg, #b4b7b6, #999999);
+    background-size: 400% 400%;
+
+    -webkit-animation: skeleton 1.5s ease infinite;
+    -moz-animation: skeleton 1.5s ease infinite;
+    animation: skeleton 1.5s ease infinite;
+
+    @-webkit-keyframes skeleton {
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+    @-moz-keyframes skeleton {
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+    @keyframes skeleton { 
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+  }
 </style>
