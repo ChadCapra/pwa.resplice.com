@@ -39,6 +39,7 @@
           <el-autocomplete
             class="inline-input"
             v-model="gender"
+            placeholder="Gender"
             :fetch-suggestions="querySearch">
             <template slot="prepend">Gender</template>
           </el-autocomplete>
@@ -313,7 +314,7 @@ export default {
     querySearch (queryString, cb) {
       var genders = this.genders
       var results = queryString ? genders.filter(this.createFilter(queryString)) : genders
-      return results
+      cb(results)
     },
     createFilter (queryString) {
       return gender => {
