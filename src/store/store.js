@@ -24,6 +24,7 @@ export default new Vuex.Store({
     searchState: '',
     user: {},
     contacts: null,
+    contactCount: 0,
     groups: null,
     attributeTypes: [
       {
@@ -120,6 +121,9 @@ export default new Vuex.Store({
     },
     getGroupContacts: state => memberIds => {
       return state.contacts.filter(contact => memberIds.includes(contact.id))
+    },
+    getContactCount: state => {
+      return state.contactCount
     },
     getUserInfo: state => {
       return state.user
@@ -235,6 +239,9 @@ export default new Vuex.Store({
     },
     loadingDoneGroups: state => {
       state.groupsLoading = false
+    },
+    buildContactCount: state => {
+      state.contactCount = state.contacts.length
     }
   },
   actions: {
@@ -251,6 +258,7 @@ export default new Vuex.Store({
         .then(response => {
           commit('setContacts', response.data)
           commit('buildSearchableAttributes')
+          commit('buildContactCount')
           commit('loadingDoneContacts')
         })
         .catch(e => {
