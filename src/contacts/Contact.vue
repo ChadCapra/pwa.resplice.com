@@ -1,6 +1,6 @@
 <template>
   <div class="contact" @click="enterProfile">
-    <el-row type="flex" justify="left">
+    <el-row type="flex">
       <div class="contact-actions" ref="contactActions">
         <icon class="action-btn" name="phone" scale="2.5"></icon>
         <icon class="action-btn" name="comment" scale="2.5"></icon>
@@ -18,7 +18,7 @@
           :alt="contact.first_name"></v-touch>
         <div class="name" ref="name">
           <div class="f-name" v-if="contact.first_name">{{ contact.first_name }}</div>
-          <span class="l-name" v-if="contact.last_name">{{ contact.last_name }}</span>
+          <div class="l-name" v-if="contact.last_name">{{ contact.last_name }}</div>
         </div>
       </el-col>
     </el-row>
