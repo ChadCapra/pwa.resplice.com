@@ -1,8 +1,9 @@
 <template>
   <div class="share">
+    <!-- Search Bar fixed -->
     <el-row class="header" type="flex" justify="center">
       <el-col class="search-header" :span="19">
-        <input class="search" type="text" placeholder="Search">
+        <input class="search" type="text" placeholder="Search" @focus="showContacts = true" v-model="searchInput">
         <button type="submit" class="search-btn"><icon scale="1.5" name="search"></icon></button>
       </el-col>
     </el-row>
@@ -33,7 +34,30 @@
       </div>
       <el-button class="contact-btn" type="primary" plain @click="showContacts = true"><icon name="sort-down"></icon> View Resplice Contacts</el-button>
     </div>
-    <div v-show="showContacts" class="footer">{{ selectedContacts.length }}/{{ length }} contacts selected</div>
+    <!-- Footer -->
+    <div v-if="showContacts" class="footer">
+      <el-button type="primary" plain @click="showContacts = false; clearSelected()">Back</el-button>
+      <span>{{ selectedContacts.length }}/{{ length }} contacts selected</span>
+    </div>
+    <div v-else class="done-btn">
+      <el-button type="primary" @click="$router.push({name: 'root'})">Done</el-button>
+    </div>
+    <!-- FABs -->
+    <div v-show="selectedContacts.length > 0" class="fab">
+      <el-button type="success" @click="confirmSelected"><icon scale="1.25" name="check"></icon></el-button>
+      <el-button type="danger" @click="clearSelected"><icon scale="1.25" name="times"></icon></el-button>
+    </div>
+    <!-- Text Dialog -->
+    <el-dialog
+      title="Text"
+      :visible.sync="showText"
+      width="50%"
+      :before-close="closeText">
+      <span>Enter phone numbers separated by a comma</span>
+    </el-dialog>
+    <!-- Email Dialog -->
+
+    <!-- Link Dialog -->
   </div>
 </template>
 
@@ -42,12 +66,36 @@ import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
-      showContacts: true,
-      selectedContacts: []
+      showContacts: false,
+      selectedContacts: [],
+      searchText: '',
+      showText: false,
+      showEmail: false,
+      showLink: false
     }
   },
   computed: {
-    ...mapGetters({ contacts: 'getContacts', length: 'getContactCount' })
+    ...mapGetters({ length: 'getContactCount' }),
+    searchInput: {
+      get () {
+        return this.searchText
+      },
+      set (text) {
+        this.searchText = text
+        text = text.replace(/\s/g, '').toLowerCase()
+        this.$store.commit('updateSearch', text)
+      }
+    },
+    contacts () {
+      if (this.search) {
+        return this.$store.getters.getFilteredContacts(this.search)
+      } else {
+        return this.$store.getters.getContacts
+      }
+    },
+    search () {
+      return this.$store.getters.getSearchInput
+    }
   },
   methods: {
     handlePlatform (id) {
@@ -82,7 +130,16 @@ export default {
         var index = this.selectedContacts.indexOf(id)
         this.selectedContacts.splice(index, 1)
       }
-    }
+    },
+    clearSelected () {
+      this.selectedContacts = [] // reset selected contacts
+    },
+    confirmSelected () {
+      // Confirm selected contacts and move to the attributes page
+      this.$store.dispatch('setSharingContacts', this.selectedContacts)
+      this.$router.push({name: 'Attributes'})
+    },
+    closeText () {}
   }
 }
 </script>
@@ -91,8 +148,11 @@ export default {
   .share {
     display: flex;
     flex-direction: column;
-    padding: 20px 0 20px 0;
+    padding: 0 0 20px 0;
     height: 100vh;
+  }
+  .platform {
+    margin: 75px 0 50px 0;
   }
   .platforms {
     display: flex;
@@ -153,8 +213,14 @@ export default {
   }
   .header {
     min-height: 41px;
+    position: fixed;
+    width: 100%;
+    background-color: #FFF;
+    z-index: 10;
+    padding-top: 15px;
   }
   .contact-list {
+    padding-top: 50px;
     padding-bottom: 50px;
   }
   .contact {
@@ -175,13 +241,12 @@ export default {
     margin-left: 3px;
     color: #1BBC9B;
   }
-  .selected {}
   .icon-checked {
     width: 50px;
     height: 50px;
     border-radius: 50%;
     background-color:#1BBC9B;
-    color: #FFFFFF;
+    color: #FFF;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -196,6 +261,29 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    & span {
+      flex-grow: 1;
+    }
+    & .el-button {
+      margin-left: 10px;
+    }
+  }
+  .fab {
+    position: fixed;
+    bottom: 75px;
+    right: 20px;
+    & .el-button {
+      border-radius: 50%;
+      height: 60px;
+      width: 60px;
+      box-shadow: 0px 1px 5px 0px black;
+      z-index: 10;
+    }
+  }
+  .done-btn {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
   }
 </style>
 
