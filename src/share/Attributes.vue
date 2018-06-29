@@ -6,61 +6,28 @@
       <p>Select the attributes you would like to share:</p>
     </div>
     <div class="body">
-      <el-tree
-        :data="data2"
-        show-checkbox
-        node-key="id"
-        :props="defaultProps">
-      </el-tree>
+      <div class="minimal">
+        <input type="checkbox" name="select" id="minimal" class="checkbox">
+        <!-- <span class="checkbox"></span> -->
+        <span>Share minimal attributes</span>
+        <div class="btns">
+          <el-button class="btn" type="primary" round>View</el-button>
+        </div>
+      </div>
+      <div class="default">
+        <input type="checkbox" name="select" id="default" class="checkbox">
+        <!-- <span class="checkbox"></span> -->
+        <span>Share default attributes</span>
+        <div class="btns">
+          <el-button class="btn" type="primary" round>View</el-button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data () {
-    return {
-      data2: [{
-        id: 1,
-        label: 'Level one 1',
-        children: [{
-          id: 4,
-          label: 'Level two 1-1',
-          children: [{
-            id: 9,
-            label: 'Level three 1-1-1'
-          }, {
-            id: 10,
-            label: 'Level three 1-1-2'
-          }]
-        }]
-      }, {
-        id: 2,
-        label: 'Level one 2',
-        children: [{
-          id: 5,
-          label: 'Level two 2-1'
-        }, {
-          id: 6,
-          label: 'Level two 2-2'
-        }]
-      }, {
-        id: 3,
-        label: 'Level one 3',
-        children: [{
-          id: 7,
-          label: 'Level two 3-1'
-        }, {
-          id: 8,
-          label: 'Level two 3-2'
-        }]
-      }],
-      defaultProps: {
-        children: 'children',
-        label: 'label'
-      }
-    }
-  },
   computed: {
     sharingContacts () {
       return this.$store.getters.getSharingContacts
@@ -89,7 +56,7 @@ export default {
     color: white;
     background-color: #1BBC9B;
     flex-grow: 1;
-    padding: 25px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
   }
@@ -111,8 +78,49 @@ export default {
       margin: 5px;
     }
   }
-  .el-tree {
-    color:#FFF;
-    background: transparent;
+  .btn {
+    background-color: #fff;
+    color: #1BBC9B;
+  }
+  .minimal, .default {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .minimal {
+    margin: 10px 0 15px 0;
+  }
+  .default {
+    margin: 15px 0 10px 0;
+  }
+  .checkbox {
+    position: relative;
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
+    appearance: none;
+    outline: 0;
+    &:before {
+      content: '';
+
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 1;
+
+      width: 100%;
+      height: 100%;
+
+      border: 2px solid #FFF;
+
+      transition: all 0.3s ease-in-out;
+    }
+    &:checked:before {
+      height: 50%;
+      border-color: #FFF;
+      transform: rotate(-45deg);
+      border-top-style: none;
+      border-right-style: none;
+    }
   }
 </style>
