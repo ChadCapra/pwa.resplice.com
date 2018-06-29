@@ -1,13 +1,11 @@
 <template>
   <div>
-    <el-row>
-      <icon class="back-btn btn" name="arrow-left" scale="2"></icon>
+    <el-row align="middle" justify="space-between">
+      <icon v-if="showBack" class="back-btn btn" name="arrow-left" scale="2" @click.native="$router.go(-1)"></icon>
       <transition name="fade" mode="out-in">
-        <span v-if="searchDisabled">
-          <slot name="headerContent"></slot>
-        </span>
+        <span v-if="searchDisabled" class="header-text">{{ headerText }}</span>
       </transition>
-      <label v-if="searchVisible" :data-state="search" for="search">
+      <label v-if="showSearch" :data-state="search" for="search">
         <input type="text" placeholder="Search" @click="searchOn" @blur="searchOff"/>
         <icon name="search" aria-hidden="true"></icon>
       </label>
@@ -21,8 +19,7 @@ export default {
     return {
       searchInput: '',
       searchDisabled: true,
-      search: 'close',
-      searchVisible: true
+      search: 'close'
     }
   },
   methods: {
@@ -33,6 +30,17 @@ export default {
     searchOff () {
       this.searchDisabled = true
       this.search = 'close'
+    }
+  },
+  computed: {
+    showSearch () {
+      return this.$store.state.header.showSearch
+    },
+    showBack () {
+      return this.$store.state.header.showBack
+    },
+    headerText () {
+      return this.$store.state.header.text
     }
   }
 }
@@ -45,7 +53,6 @@ export default {
   &:hover {
     color: #0be8ba;
     cursor: pointer;
-    transform: scale(1.05);
   }
 }
 .profile-btn {
@@ -63,6 +70,11 @@ export default {
 .search {
   margin-top: 16px;
 }
+.header-text {
+    margin-bottom: 10px;
+    color: #fff;
+    font-size: 28px;
+  }
 label{
   float: right;
   position: relative;
@@ -119,7 +131,6 @@ label{
   }
 }
 label:hover {
-  transform: scale(1.05);
   box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
 }
 .fade-enter-active, .fade-leave-active {

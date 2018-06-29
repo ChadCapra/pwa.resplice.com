@@ -13,17 +13,11 @@ export default {
   },
   computed: {
     contacts () {
-      return this.$store.state.contacts
+      return this.$store.getters.getContacts
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.action-btns {
-  margin-top: 5px;
-  color: #1BBC9B;
-}
 </style>
-
-

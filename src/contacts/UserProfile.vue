@@ -17,14 +17,26 @@
       <el-card>
         <div class="info-header" slot="header">Basic Information</div>
         <div class="info">
-          <el-input v-model="fullName">
-            <template slot="prepend">Name</template>
+          <el-input v-model="firstName" placeholder="First Name">
+            <template slot="prepend">First Name</template>
           </el-input>
         </div>
         <div class="info">
-          <el-input v-model="userData.userBasic.DOB">
-            <template slot="prepend">Date of Birth</template>
+          <el-input v-model="lastName" placeholder="Last Name">
+            <template slot="prepend">Last Name</template>
           </el-input>
+        </div>
+        <div class="info">
+          <!-- <el-input v-model="userData.userBasic.DOB">
+            <template slot="prepend">Date of Birth</template>
+          </el-input> -->
+          <el-date-picker
+            v-model="DOB"
+            type="date"
+            placeholder="Date of Birth"
+            value-format="yyyy/MM/dd">
+            <template slot="prepend"><icon name="calender"></icon></template>
+          </el-date-picker>
         </div>
         <div class="info">
           <!-- <el-input v-model="userData.userBasic.gender">
@@ -32,17 +44,67 @@
           </el-input> -->
           <el-autocomplete
             class="inline-input"
-            v-model="userData.userBasic.gender"
-            :fetch-suggestions="querySearch"
-            @select="handleSelect">
+            v-model="gender"
+            :fetch-suggestions="querySearch">
             <template slot="prepend">Gender</template>
           </el-autocomplete>
         </div>
       </el-card>
       <el-card>
         <div class="info-header" slot="header">Contact Information</div>
-        <div v-for="info in userData.userAttributes" :key="info.id" class="info">
-          {{ info.value }}
+        <div class="info">
+          <div class="info-content-header">
+            <span>Phone</span>
+            <el-button type="primary" size="small">Add</el-button>
+          </div>
+          <div v-for="info in userData.userAttributes" :key="info.id" class="info-content">
+            <el-input :value="info.value">
+            </el-input>
+            <el-select v-model="value" placeholder="Select">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </div>
+        </div>
+        <div class="info">
+          <div class="info-content-header">
+            <span>Email</span>
+            <el-button type="primary" size="small">Add</el-button>
+          </div>
+          <div v-for="info in userData.userAttributes" :key="info.id" class="info-content">
+            <el-input :value="info.value">
+            </el-input>
+            <el-select v-model="value" placeholder="Select">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </div>
+        </div>
+        <div class="info">
+          <div class="info-content-header">
+            <span>Address</span>
+            <el-button type="primary" size="small">Add</el-button>
+          </div>
+          <div v-for="info in userData.userAttributes" :key="info.id" class="info-content">
+            <el-input :value="info.value">
+            </el-input>
+            <el-select v-model="value" placeholder="Select">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </div>
         </div>
       </el-card>
     </el-row>
@@ -55,12 +117,67 @@ export default {
     return {
       swiped: false,
       profilePic: '',
-      genders: ['Male', 'Female', 'Pan', 'Tri']
+      genders: ['Male', 'Female', 'Pan', 'Tri'],
+      options: [
+        {
+          value: 'Option1',
+          label: 'Option1'
+        },
+        {
+          value: 'Option2',
+          label: 'Option2'
+        },
+        {
+          value: 'Option3',
+          label: 'Option3'
+        },
+        {
+          value: 'Option4',
+          label: 'Option4'
+        },
+        {
+          value: 'Option5',
+          label: 'Option5'
+        }
+      ],
+      value: ''
     }
   },
   computed: {
     userData () {
       return this.$store.getters.getUserInfo
+    },
+    firstName: {
+      get () {
+        return this.$store.state.user.userBasic.firstName
+      },
+      set (value) {
+        this.$store.commit('updateFirstName', value)
+      }
+    },
+    lastName: {
+      get () {
+        return this.$store.state.user.userBasic.lastName
+      },
+      set (value) {
+        this.$store.commit('updateLastName', value)
+      }
+    },
+    DOB: {
+      get () {
+        return this.$store.state.user.userBasic.DOB
+      },
+      set (value) {
+        this.$store.commit('updateDOB', value)
+      }
+    },
+    gender: {
+      get () {
+        return this.$store.state.user.userBasic.gender
+      },
+      set (value) {
+        this.$store.commit('updateGender', value)
+      }
     },
     fullName () {
       return this.$store.getters.getUserInfo.userBasic.firstName + ' ' + this.$store.getters.getUserInfo.userBasic.lastName
@@ -89,7 +206,7 @@ export default {
     querySearch (queryString, cb) {
       var genders = this.genders
       var results = queryString ? genders.filter(this.createFilter(queryString)) : genders
-      cb(results)
+      return results
     },
     createFilter (queryString) {
       return gender => {
@@ -102,6 +219,7 @@ export default {
 
 <style lang="scss" scoped>
   .avatar-uploader {
+    margin: none;
     width: 170px;
     height: 170px;
     border: 1px dashed grey;
@@ -138,19 +256,19 @@ export default {
   .info-header {
     color: #1BBC9B;
   }
-  .info-title {
-    text-transform: uppercase;
-    border-right: #d9d9d9;
-    border-right-width: 1px;
-    border-right-style: solid;
-    padding: 15px;
-  }
   .info-content {
-    padding: 15px;
+    display: flex;
+  }
+  .info-content-header {
+    justify-content: space-around;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
   }
   .info {
     text-align: left;
     display: flex;
+    flex-direction: column;
     margin-top: 15px;
   }
   .el-input-group__prepend {

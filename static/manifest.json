@@ -1,6 +1,11 @@
 {
   "name": "Resplice",
   "short_name": "Resplice",
+  "start_url": "https://app.resplice.com/",
+  "display": "standalone",
+  "background_color": "#1BBC9B",
+  "theme_color": "#1BBC9B",
+  "description" : "The live address book that never lets you get out of date information for your friends and family.",
   "icons": [
     {
       "src": "/static/img/icons/android-chrome-192x192.png",
@@ -12,9 +17,5 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ],
-  "start_url": "/index.html",
-  "display": "standalone",
-  "background_color": "#1BBC9B",
-  "theme_color": "#1BBC9B"
+  ]
 }
