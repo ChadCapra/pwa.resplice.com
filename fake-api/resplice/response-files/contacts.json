@@ -3,8 +3,8 @@
     "id": "1",
     "first_name": "Luke",
     "last_name": "Skywalker",
-    "profile_pic": "http://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_200/v1529421571/Resplice/kcxsqg64dwcsuixbxo1u.png",
-    "thumbnail": "http://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_80/v1529421571/Resplice/kcxsqg64dwcsuixbxo1u.png",
+    "profile_pic": "https://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_200/v1529421571/Resplice/kcxsqg64dwcsuixbxo1u.png",
+    "thumbnail": "https://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_80/v1529421571/Resplice/kcxsqg64dwcsuixbxo1u.png",
     "attributes": [
       {
         "id": "1",
@@ -48,8 +48,8 @@
     "id": "5",
     "first_name": "Bastilla",
     "last_name": "Shan",
-    "profile_pic": "http://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_200/v1529002384/Resplice/lydkw9phbpozik3t8bus.png",
-    "thumbnail": "http://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_80/v1529002384/Resplice/lydkw9phbpozik3t8bus.png",
+    "profile_pic": "https://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_200/v1529002384/Resplice/lydkw9phbpozik3t8bus.png",
+    "thumbnail": "https://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_80/v1529002384/Resplice/lydkw9phbpozik3t8bus.png",
     "attributes": [
       {
         "id": "1",
@@ -75,8 +75,8 @@
     "id": "2",
     "first_name": "Darth",
     "last_name": "Vader",
-    "profile_pic": "http://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_200/v1529421479/Resplice/ncf3iws37vcg6tdofrgh.png",
-    "thumbnail": "http://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_80/v1529421479/Resplice/ncf3iws37vcg6tdofrgh.png",
+    "profile_pic": "https://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_200/v1529421479/Resplice/ncf3iws37vcg6tdofrgh.png",
+    "thumbnail": "https://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_80/v1529421479/Resplice/ncf3iws37vcg6tdofrgh.png",
     "attributes": [
       {
         "id": "1",
@@ -94,7 +94,7 @@
     "first_name": "Han",
     "last_name": "Solo",
     "profile_pic": "http://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_200/v1529421536/Resplice/fng1vunrc5nyu2hhuvsj.png",
-    "thumbnail": "http://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_80/v1529421536/Resplice/fng1vunrc5nyu2hhuvsj.png",
+    "thumbnail": "https://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_80/v1529421536/Resplice/fng1vunrc5nyu2hhuvsj.png",
     "attributes": [
       {
         "id": "1",
@@ -111,8 +111,8 @@
     "id": "4",
     "first_name": "Darth",
     "last_name": "Revan",
-    "profile_pic": "http://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_200/v1529336274/Resplice/hnudtpaujzs0lszwwxdm.png",
-    "thumbnail": "http://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_80/v1529336274/Resplice/hnudtpaujzs0lszwwxdm.png",
+    "profile_pic": "https://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_200/v1529336274/Resplice/hnudtpaujzs0lszwwxdm.png",
+    "thumbnail": "https://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_80/v1529336274/Resplice/hnudtpaujzs0lszwwxdm.png",
     "attributes": [
       {
         "id": "1",
@@ -129,8 +129,8 @@
     "id": "6",
     "first_name": "Finn",
     "last_name": "",
-    "profile_pic": "http://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_200/v1529421559/Resplice/gjt75zp3rbwmj0jsrcap.png",
-    "thumbnail": "http://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_80/v1529421559/Resplice/gjt75zp3rbwmj0jsrcap.png",
+    "profile_pic": "https://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_200/v1529421559/Resplice/gjt75zp3rbwmj0jsrcap.png",
+    "thumbnail": "https://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_80/v1529421559/Resplice/gjt75zp3rbwmj0jsrcap.png",
     "attributes": [
       {
         "id": "1",
@@ -147,8 +147,8 @@
     "id": "7",
     "first_name": "Anakin",
     "last_name": "Skywalker",
-    "profile_pic": "http://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_200/v1529422129/Resplice/tvu15wjn6ljmgzeexhec.png",
-    "thumbnail": "http://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_80/v1529422129/Resplice/tvu15wjn6ljmgzeexhec.png",
+    "profile_pic": "https://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_200/v1529422129/Resplice/tvu15wjn6ljmgzeexhec.png",
+    "thumbnail": "https://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_80/v1529422129/Resplice/tvu15wjn6ljmgzeexhec.png",
     "attributes": [
       {
         "id": "1",
@@ -165,8 +165,8 @@
     "id": "8",
     "first_name": "Obi-wan",
     "last_name": "Kenobi",
-    "profile_pic": "http://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_200/v1529422158/Resplice/m3ifzpxcjmwnhl4d4gmi.png",
-    "thumbnail": "http://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_80/v1529422158/Resplice/m3ifzpxcjmwnhl4d4gmi.png",
+    "profile_pic": "https://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_200/v1529422158/Resplice/m3ifzpxcjmwnhl4d4gmi.png",
+    "thumbnail": "https://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_80/v1529422158/Resplice/m3ifzpxcjmwnhl4d4gmi.png",
     "attributes": [
       {
         "id": "1",
@@ -183,8 +183,8 @@
     "id": "9",
     "first_name": "Mace",
     "last_name": "Windu",
-    "profile_pic": "http://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_200/v1529422145/Resplice/jyxfbzkuonhfgltnumvl.png",
-    "thumbnail": "http://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_80/v1529422145/Resplice/jyxfbzkuonhfgltnumvl.png",
+    "profile_pic": "https://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_200/v1529422145/Resplice/jyxfbzkuonhfgltnumvl.png",
+    "thumbnail": "https://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_80/v1529422145/Resplice/jyxfbzkuonhfgltnumvl.png",
     "attributes": [
       {
         "id": "1",
