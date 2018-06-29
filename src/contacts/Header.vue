@@ -18,7 +18,8 @@ export default {
   data () {
     return {
       searchDisabled: true,
-      search: 'close'
+      search: 'close',
+      searchText: ''
     }
   },
   methods: {
@@ -43,9 +44,10 @@ export default {
     },
     searchInput: {
       get () {
-        return this.$store.state.searchInput
+        return this.searchText
       },
       set (text) {
+        this.searchText = text
         text = text.replace(/\s/g, '').toLowerCase()
         this.$store.commit('updateSearch', text)
       }
