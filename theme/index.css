@@ -40891,7 +40891,7 @@
       cursor: not-allowed; }
     .el-checkbox__input.is-checked .el-checkbox__inner {
       background-color: #1BBC9B;
-      border-color: #1BBC9B; }
+      border-color: #FFF; }
       .el-checkbox__input.is-checked .el-checkbox__inner::after {
         -webkit-transform: rotate(45deg) scaleY(1);
         transform: rotate(45deg) scaleY(1); }
@@ -40900,10 +40900,10 @@
     .el-checkbox__input.is-focus {
       /*focus时 视觉上区分*/ }
       .el-checkbox__input.is-focus .el-checkbox__inner {
-        border-color: #1BBC9B; }
+        border-color: #FFF; }
     .el-checkbox__input.is-indeterminate .el-checkbox__inner {
       background-color: #1BBC9B;
-      border-color: #1BBC9B; }
+      border-color: #FFF; }
       .el-checkbox__input.is-indeterminate .el-checkbox__inner::before {
         content: '';
         position: absolute;
