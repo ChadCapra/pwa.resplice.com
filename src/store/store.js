@@ -11,7 +11,7 @@ const config = {
     console.log(`Loading: ${progressEvent}`)
   }
 }
-const baseUrl = 'http://localhost:8081/api'
+const baseUrl = 'http://10.1.10.241:8081/api'
 
 Vue.use(Vuex)
 
@@ -85,6 +85,10 @@ export default new Vuex.Store({
       showSearch: true,
       showBack: false,
       text: 'Resplice'
+    },
+    sharing: {
+      contacts: [],
+      attributes: []
     }
   },
   getters: {
@@ -117,7 +121,7 @@ export default new Vuex.Store({
       return state.navIndex
     },
     getFilteredContacts: state => text => {
-      return state.contacts.filter(contact => (contact.searchableAttributes.includes(text.toLowerCase())))
+      return state.contacts.filter(contact => (contact.searchableAttributes.includes(text)))
     },
     getGroupContacts: state => memberIds => {
       return state.contacts.filter(contact => memberIds.includes(contact.id))
@@ -151,6 +155,12 @@ export default new Vuex.Store({
     },
     getGroupsLoading: state => {
       return state.groupsLoading
+    },
+    getSharingContacts: state => {
+      return state.sharing.contacts
+    },
+    getSharingAttributes: state => {
+      return state.sharing.attributes
     }
   },
   mutations: {
@@ -242,6 +252,16 @@ export default new Vuex.Store({
     },
     buildContactCount: state => {
       state.contactCount = state.contacts.length
+    },
+    setSharingContacts: (state, payload) => {
+      state.sharing.contacts = payload
+    },
+    setSharingAttributes: (state, payload) => {
+      state.sharing.attributes = payload
+    },
+    clearSharing: state => {
+      state.sharing.attributes = []
+      state.sharing.contacts = []
     }
   },
   actions: {
@@ -288,6 +308,12 @@ export default new Vuex.Store({
     },
     pushAttribute: ({ commit }, payload) => {
       commit('addAttribute', payload)
+    },
+    setSharingContacts: ({ commit }, payload) => {
+      commit('setSharingContacts', payload)
+    },
+    setSharingAttributes: ({ commit }, payload) => {
+      commit('setSharingAttributes', payload)
     }
   }
   // modules: {
