@@ -74,7 +74,7 @@ export default {
       this.$store.commit('sanitizeAttributes')
       this.submitted = true
       // Call action to submit new attributes to server
-      this.$router.push({name: 'root'})
+      this.$router.push({name: 'Share'})
     },
     attributesFiltered (type) {
       return this.$store.getters.getFilteredAttributes(type)
