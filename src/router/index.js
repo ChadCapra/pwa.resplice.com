@@ -5,14 +5,16 @@ import SignUp from '@/signin/Signup'
 import Container from '@/contacts/Container'
 import Profile from '@/contacts/Profile'
 import Notif from '@/share/Notif'
-import Groups from '@/contacts/Groups'
+// import Groups from '@/contacts/Groups'
 import Maps from '@/contacts/Map'
 import UserProfile from '@/contacts/UserProfile'
 import Settings from '@/contacts/Settings'
 import ContactList from '@/contacts/ContactList'
 import Welcome from '@/signin/Welcome'
-import GroupList from '@/contacts/GroupList'
+// import GroupList from '@/contacts/GroupList'
 import Share from '@/share/Share'
+import Attributes from '@/share/Attributes'
+import ComingSoon from '@/skeleton/ComingSoon'
 
 Vue.use(Router)
 
@@ -29,13 +31,13 @@ export default new Router({
         },
         {
           path: '/groups',
-          component: Groups
+          component: ComingSoon
         },
-        {
-          name: 'group',
-          path: '/group/:id',
-          component: GroupList
-        },
+        // {
+        //   name: 'group',
+        //   path: '/group/:id',
+        //   component: GroupList
+        // },
         {
           path: '/map',
           component: Maps
@@ -69,6 +71,11 @@ export default new Router({
       path: '/share',
       name: 'Share',
       component: Share
+    },
+    {
+      path: '/attributes',
+      name: 'Attributes',
+      component: Attributes
     },
     {
       path: '/notif', // Notifications page
