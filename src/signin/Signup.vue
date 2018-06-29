@@ -1,49 +1,29 @@
 <template>
-  <div class="background">
-    <div class="signin">
-      <el-steps :active="active" align-center>
-        <el-step title="Sign Up"></el-step>
-        <el-step title="Add your info"></el-step>
-        <el-step title="Invite people"></el-step>
-        <el-step title="Enjoy!"></el-step>
-      </el-steps>
+  <div class="sign-up">
+    <div class="top">
+      <h1>Sign Up</h1>
+      <h2>Pick a username &amp; a password</h2>
+    </div>
+    <div class="body">
       <el-row type="flex" justify="center">
-        <el-col :xs="20" :sm="20" :md="16" :lg="12" :xl="6">
-          <div class="sign-logo"><img :src="logo" alt="Resplice Logo"></div>
+        <el-col :xs="22" :sm="22" :md="16" :lg="8" :xl="8">
+          <h3 class="input-title">User Name</h3>
+          <input type="text" placeholder="User Name" class="input" v-model="userName">
         </el-col>
       </el-row>
-      <!-- Sign up form -->
-      <div class="form-signup">
-        <el-row type="flex" justify="center">
-          <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
-            <div class="sign-field"><el-input placeholder="Username" v-model="signInData.username">
-              <template slot="prepend"><icon name="user"></icon></template>
-            </el-input></div>
-          </el-col>
-        </el-row>
-        <el-row type="flex" justify="center">
-          <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
-            <div class="sign-field"><el-input placeholder="Password" v-model="signInData.password">
-              <template slot="prepend"><icon name="lock"></icon></template>
-            </el-input></div>
-          </el-col>
-        </el-row>
-        <el-row type="flex" justify="center">
-          <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
-            <div class="sign-field"><el-input placeholder="Confirm Password" v-model="signInData.cPassword">
-              <template slot="prepend"><icon name="lock"></icon></template>
-            </el-input></div>
-          </el-col>
-        </el-row>
-        <el-row type="flex" justify="center">
-            <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
-              <div class="sign-btn">
-                <el-button type="primary" plain @click="this.$router.go(-1)">Prev</el-button>
-                <el-button type="primary" @click="signUp">Submit</el-button>
-              </div>
-            </el-col>
-          </el-row>
-      </div>
+      <el-row type="flex" justify="center">
+        <el-col :xs="22" :sm="22" :md="16" :lg="8" :xl="8">
+          <h3 class="input-title">Password</h3>
+          <input type="password" placeholder="Password" class="input" v-model="password">
+        </el-col>
+      </el-row>
+      <el-row type="flex" justify="center">
+        <el-col :xs="22" :sm="22" :md="16" :lg="8" :xl="8">
+          <h3 class="input-title">Confirm Password</h3>
+          <input type="password" placeholder="Password" class="input" v-model="confirmPassword">
+        </el-col>
+      </el-row>
+      <el-button class="sub-btn" @click="submit" type="primary">Sign Up</el-button>
     </div>
   </div>
 </template>
@@ -52,54 +32,85 @@
 export default {
   data () {
     return {
-      logo: require('../assets/re_logo.png'),
-      active: 0,
-      signInData: {
-        username: '',
-        password: '',
-        cPassword: ''
-      }
+      userName: '',
+      password: '',
+      confirmPassword: ''
     }
   },
   methods: {
-    signUp () {
-      this.$alert('Welcome to Resplice, please click continue to enter your information', 'Sign Up Successful!', {
-        confirmButtonText: 'Continue',
-        callback: action => {
-          this.$message({
-            type: 'info',
-            message: `action: ${action}`
-          })
-        }
-      })
-      this.$router.push({ name: 'Welcome' })
+    submit () {
+      console.log(this.userName, this.password, this.confirmPassword)
+      this.$router.push({name: 'Share'})
     }
   }
 }
 </script>
 
-<style scoped>
-.sign-field {
-  padding: 5px;
-}
-.sign-btn {
-  padding: 10px;
-}
-.sign-logo {
-  padding-top: 50px;
-  padding-bottom: 40px;
-}
-.background {
-  background: #134E5E;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #134E5E, #71B280);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #134E5E, #71B280); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  width: 100%;
-  overflow: hidden;
-  z-index: -1;
-}
-.signin {
-  padding-top: 10px;
-}
+<style lang="scss" scoped>
+  .sign-up {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .sign-up > * {
+    flex-shrink: 0;
+  }
+  .top {
+    color: #1BBC9B;
+    background-color: #fff;
+  }
+  .body {
+    color: white;
+    background-color: #1BBC9B;
+    flex-grow: 1;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    & .el-row {
+      width: 100%;
+      height: 75px;
+      margin-bottom: 50px;
+    }
+  }
+  h1 {
+    font-size: 96px;
+    margin: 0;
+  }
+  h2 {
+    font-size: 36px;
+    margin: 5px;
+  }
+  @media screen and (max-width: 350px){
+    h1 {
+      font-size: 74px;
+      margin: 0;
+    }
+    h2 {
+      font-size: 20px;
+      margin: 5px;
+    }
+  }
+  .input {
+    outline: 0;
+    border: 0;
+    height: 80%;
+    width: 100%;
+    background: transparent;
+    border-bottom: 2px solid #fff;
+    color: #fff;
+    font-size: 16px;
+    height: 45px;
+  }
+  .input-title {
+    display: flex;
+    justify-content: flex-start;
+    margin: 0;
+  }
+  .sub-btn {
+    background-color: #fff;
+    color: #1BBC9B;
+  }
 </style>
 
 
