@@ -314,7 +314,8 @@ export default new Vuex.Store({
     },
     setSharingAttributes: ({ commit }, payload) => {
       commit('setSharingAttributes', payload)
-    }
+    },
+    share: ({ commit }, payload) => {}
   }
   // modules: {
   //   contacts,

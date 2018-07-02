@@ -51,7 +51,7 @@
     <el-dialog
       title="Text"
       :visible.sync="showText"
-      width="50%"
+      width="90%"
       :before-close="closeText">
       <span>Enter phone numbers separated by a comma</span>
     </el-dialog>
@@ -136,7 +136,11 @@ export default {
     },
     confirmSelected () {
       // Confirm selected contacts and move to the attributes page
-      this.$store.dispatch('setSharingContacts', this.selectedContacts)
+      var sharedContacts = []
+      this.selectedContacts.forEach(id => {
+        sharedContacts.push(this.contacts.find(contact => contact.id === id))
+      })
+      this.$store.dispatch('setSharingContacts', sharedContacts)
       this.$router.push({name: 'Attributes'})
     },
     closeText () {}
