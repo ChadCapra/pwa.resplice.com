@@ -4,12 +4,13 @@
   </div>
   <div v-else>
     <div v-if="contacts.length > 0">
+      <el-button style="margin-bottom: 10px" type="primary" round @click="$router.push({name: 'Share'})">Invite Contacts</el-button>
       <re-contact v-for="contact in contacts" :contact="contact" :key="contact.id"></re-contact>
     </div>
     <div class="no-contact" v-else>
       <p>You have no one sharing their attributes with you 😰</p>
       <p>Share your attributes with more people to get shares back!</p>
-      <el-button type="primary" @click="$router.push({name: 'Share'})">Share</el-button>
+      <el-button type="primary" round @click="$router.push({name: 'Share'})">Share</el-button>
     </div>
   </div>
 </template>
