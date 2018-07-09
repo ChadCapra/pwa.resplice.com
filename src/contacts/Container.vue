@@ -1,7 +1,7 @@
 <template>
 <!-- Contacts Parent Component -->
 <el-container class="contacts">
-  <el-header>
+  <el-header v-if="showHeader">
     <re-header></re-header>
   </el-header>
   <el-main>
@@ -21,6 +21,11 @@ export default {
   components: {
     'reHeader': Header,
     'reFooter': Footer
+  },
+  computed: {
+    showHeader () {
+      return this.$store.getters.getShowHeader
+    }
   }
 }
 </script>
