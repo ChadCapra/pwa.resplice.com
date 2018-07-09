@@ -33,11 +33,11 @@ export default new Router({
           path: '/groups',
           component: ComingSoon
         },
-        // {
-        //   name: 'group',
-        //   path: '/group/:id',
-        //   component: GroupList
-        // },
+        {
+          name: 'Share',
+          path: '/share',
+          component: Share
+        },
         {
           path: '/map',
           component: Maps
@@ -66,11 +66,6 @@ export default new Router({
       path: '/profile/:id',
       name: 'Profile',
       component: Profile
-    },
-    {
-      path: '/share',
-      name: 'Share',
-      component: Share
     },
     {
       path: '/attributes',
