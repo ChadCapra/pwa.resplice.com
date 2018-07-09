@@ -82,6 +82,7 @@ export default new Vuex.Store({
       five: false
     },
     header: {
+      showHeader: true,
       showSearch: true,
       showBack: false,
       text: 'Resplice'
@@ -161,6 +162,9 @@ export default new Vuex.Store({
     },
     getSharingAttributes: state => {
       return state.sharing.attributes
+    },
+    getShowHeader: state => {
+      return state.header.showHeader
     }
   },
   mutations: {
@@ -262,6 +266,12 @@ export default new Vuex.Store({
     clearSharing: state => {
       state.sharing.attributes = []
       state.sharing.contacts = []
+    },
+    removeHeader: state => {
+      state.header.showHeader = false
+    },
+    addHeader: state => {
+      state.header.showHeader = true
     }
   },
   actions: {
