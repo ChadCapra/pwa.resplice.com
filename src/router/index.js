@@ -15,6 +15,7 @@ import Welcome from '@/signin/Welcome'
 import Share from '@/share/Share'
 import Attributes from '@/share/Attributes'
 import ComingSoon from '@/skeleton/ComingSoon'
+import QRCamera from '@/share/QRCamera'
 
 Vue.use(Router)
 
@@ -81,6 +82,11 @@ export default new Router({
       path: '/welcome',
       name: 'Welcome',
       component: Welcome
+    },
+    {
+      path: '/qrcamera',
+      name: 'QRCamera',
+      component: QRCamera
     },
     {
       path: '*', redirect: '/' // Catch all other routes

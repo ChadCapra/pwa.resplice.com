@@ -43,6 +43,7 @@ import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/google'
 import 'vue-awesome/icons/link'
 import 'vue-awesome/icons/check'
+import 'vue-awesome/icons/camera'
 import Icon from 'vue-awesome/components/Icon'
 
 // Import vue-touch for phone gestures
@@ -51,12 +52,16 @@ import VueTouch from 'vue-touch'
 // Import croppie for cropping photos
 import VueCroppie from 'vue-croppie'
 
+// Import vue qrcode reader for reading qr codes
+import VueQrReader from 'vue-qrcode-reader'
+
 // Import Vue.js App component, router component, and VueX for state management
 import App from './App'
 import router from './router'
 import store from './store/store'
 
 Vue.config.productionTip = false
+Vue.use(VueQrReader, {name: 'qrcode-reader'})
 Vue.use(VueCroppie)
 Vue.use(VueTouch, {name: 'v-touch'})
 Vue.use(ElementUI, {locale})
