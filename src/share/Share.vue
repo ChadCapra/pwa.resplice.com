@@ -1,12 +1,16 @@
 <template>
   <div class="share">
-    <!-- Search Bar fixed -->
-    <el-row class="header" type="flex" justify="center">
-      <el-col class="search-header" :span="19">
-        <input class="search" type="text" placeholder="Search" @focus="showContacts = true" v-model="searchInput">
-        <button type="submit" class="search-btn"><icon scale="1.5" name="search"></icon></button>
-      </el-col>
-    </el-row>
+    <div class="share-header" :class="{ 'fixed-header': showContacts }">
+      <h1>Share Your Information</h1>
+      <h3>Share info with an exisiting contact, username, phone number, email, or scan a contact's recode to start sharing</h3>
+      <!-- Search Bar -->
+      <el-row class="search-header" type="flex" justify="center">
+        <el-col :span="22">
+          <input class="search" type="text" placeholder="Enter Username, Name, Email, or Phone #" @focus="showContacts = true" v-model="searchInput">
+          <button type="submit" class="search-btn"><icon scale="1.5" name="search"></icon></button>
+        </el-col>
+      </el-row>
+    </div>
     <!-- Contact List -->
     <div v-if="showContacts" class="contact-list">
       <el-row class="contact" v-for="contact in contacts" :key="contact.id" type="flex" justify="start">
@@ -18,51 +22,39 @@
         </el-col>
       </el-row>
     </div>
-    <!-- Platforms -->
-    <div v-else class="platform">
-      <div class="platform-header">
-        <h1>Share Your Information</h1>
-        <h3>Search for Resplice contacts or select a platform to get started.</h3>
+    <!-- QR Code & Link -->
+    <div v-else class="code">
+      <div id="scan" class="scan">
+        <img src="../assets/Unitag_QRCode_1531164898330.png" alt="QR Code">
       </div>
-      <div class="platforms">
-        <el-button class="platform-btn" type="primary" round @click="handlePlatform(1)"><div><icon name="comment"></icon>Text</div></el-button>
-        <el-button class="platform-btn" type="primary" round @click="handlePlatform(2)"><div><icon name="envelope"></icon>Email</div></el-button>
-        <el-button class="platform-btn facebook" round @click="handlePlatform(3)"><div><icon name="facebook-square"></icon>Facebook</div></el-button>
-        <el-button class="platform-btn twitter" round @click="handlePlatform(4)"><div><icon name="twitter"></icon>Twitter</div></el-button>
-        <el-button class="platform-btn google" round @click="handlePlatform(5)"><div><icon name="google"></icon>Google</div></el-button>
-        <el-button class="platform-btn" type="info" round @click="handlePlatform(6)"><div><icon name="link"></icon>Link</div></el-button>
+      <el-button v-show="!showContacts" class="code-btn" type="primary" @click="$router.push({name: 'QRCamera'})">
+        <div>Scan <icon name="camera" scale="1.25"></icon></div>
+      </el-button>
+      <div class="code-link">
+        <el-button class="code-btn twitter" type="primary">
+          <div>Invite on <icon name="twitter" scale="1.25"></icon></div>
+        </el-button>
+        <el-button class="code-btn facebook" type="primary">
+          <div>Invite on <icon name="facebook-square" scale="1.25"></icon></div>
+        </el-button>
       </div>
-      <el-button class="contact-btn" type="primary" plain @click="showContacts = true"><icon name="sort-down"></icon> View Resplice Contacts</el-button>
     </div>
     <!-- Footer -->
     <div v-if="showContacts" class="footer">
-      <el-button type="primary" plain @click="showContacts = false; clearSelected()">Back</el-button>
-      <span>{{ selectedContacts.length }}/{{ length }} contacts selected</span>
-    </div>
-    <div v-else class="done-btn">
-      <el-button type="primary" @click="$router.push({name: 'root'})">Done</el-button>
+      <el-button class="white-btn" type="primary" round @click="showContacts = false; clearSelected()">Back</el-button>
+      <span>{{ selectedContacts.length }} people selected</span>
     </div>
     <!-- FABs -->
     <div v-show="selectedContacts.length > 0" class="fab">
-      <el-button type="success" @click="confirmSelected"><icon scale="1.25" name="check"></icon></el-button>
-      <el-button type="danger" @click="clearSelected"><icon scale="1.25" name="times"></icon></el-button>
+      <el-button type="primary" @click="confirmSelected"><icon scale="1.25" name="check"></icon></el-button>
+      <el-button class="white-btn" type="primary" @click="clearSelected"><icon scale="1.25" name="times"></icon></el-button>
     </div>
-    <!-- Text Dialog -->
-    <el-dialog
-      title="Text"
-      :visible.sync="showText"
-      width="90%"
-      :before-close="closeText">
-      <span>Enter phone numbers separated by a comma</span>
-    </el-dialog>
-    <!-- Email Dialog -->
-
-    <!-- Link Dialog -->
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+
 export default {
   data () {
     return {
@@ -144,6 +136,12 @@ export default {
       this.$router.push({name: 'Attributes'})
     },
     closeText () {}
+  },
+  created () {
+    this.$store.commit('removeHeader')
+  },
+  destroyed () {
+    this.$store.commit('addHeader')
   }
 }
 </script>
@@ -152,37 +150,25 @@ export default {
   .share {
     display: flex;
     flex-direction: column;
-    padding: 0 0 20px 0;
-    height: 100vh;
+    padding: 0 0 15px 0;
   }
-  .platform {
-    margin: 75px 0 50px 0;
+  .share-header {
+    width: 100%;
+    background-color: #FFFFFF;
+    margin-top: -20px;
   }
-  .platforms {
+  .fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    margin-top: 0;
+    width: calc(100% - 50px);
+    padding: 0px 25px;
+  }
+  .search-header .el-col {
     display: flex;
-    flex-direction: column;
-  }
-  .platform-btn {
-    margin: 0 25px 10px 25px;
-    font-size: 14px;
-    color: white;
-    & .fa-icon {
-      margin-right: 10px;
-    }
-    & div {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  }
-  .facebook {
-    background-color: #3B5998;
-  }
-  .twitter {
-    background-color: #08A0E9;
-  }
-  .google {
-    background-color: #dc4c42;
+    justify-content: center;
   }
   .search {
     width: 80%;
@@ -193,12 +179,7 @@ export default {
     outline: none;
     color: #9DBFAF;
   }
-  .search-header {
-    display: flex;
-    justify-content: center;
-  }
   .search:focus {
-    font-weight: 900;
     color: #1BBC9B;
   }
   .search-btn {
@@ -211,21 +192,16 @@ export default {
     height: 41px;
     cursor: pointer;
   }
+
+  // Contact List
   .contact-btn {
     margin-top: 10%;
     margin-bottom: 20px;
   }
-  .header {
-    min-height: 41px;
-    position: fixed;
-    width: 100%;
-    background-color: #FFF;
-    z-index: 10;
-    padding-top: 15px;
-  }
   .contact-list {
-    padding-top: 50px;
-    padding-bottom: 50px;
+    margin-top: 150px;
+    padding-top: 25px;
+    padding-bottom: 30px;
   }
   .contact {
     margin: 15px 0px 15px 20px;
@@ -255,12 +231,34 @@ export default {
     justify-content: center;
     align-items: center;
   }
+
+  // QR Code & Link
+  .code-link {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    border-top: solid 2px #1BBC9B;
+    padding: 15px;
+    margin-top: 15px;
+    & .el-button {
+      margin: 5px;
+    }
+  }
+  .scan {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  // Footer
   .footer {
     width: 100%;
     background-color:#1BBC9B;
     color: #FFFFFF;
     position: fixed;
-    bottom: 0px;
+    bottom: 60px;
+    left: 0px;
     height: 50px;
     display: flex;
     justify-content: center;
@@ -272,22 +270,53 @@ export default {
       margin-left: 10px;
     }
   }
+
+  // Buttons
   .fab {
     position: fixed;
-    bottom: 75px;
+    bottom: 120px;
     right: 20px;
     & .el-button {
       border-radius: 50%;
       height: 60px;
       width: 60px;
-      box-shadow: 0px 1px 5px 0px black;
+      box-shadow: 0px 1px 10px 0px #0000004a;
       z-index: 10;
+    }
+  }
+  .code-btn {
+    & div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    & .fa-icon {
+      margin-left: 5px;
     }
   }
   .done-btn {
     position: fixed;
     bottom: 10px;
     right: 10px;
+  }
+  .white-btn {
+    background-color: #FFFFFF;
+    color: #1BBC9B;
+    border-color: #FFFFFF;
+  }
+
+  // Social Styles
+  .facebook {
+    background-color: #3B5998;
+    border-color: #3B5998;
+  }
+  .twitter {
+    background-color: #08A0E9;
+    border-color: #08A0E9;
+  }
+  .google {
+    background-color: #dc4c42;
+    border-color: #dc4c42;
   }
 </style>
 

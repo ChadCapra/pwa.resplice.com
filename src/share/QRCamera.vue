@@ -61,7 +61,9 @@ export default {
       }
     },
     onDecode (decodedUrl) {
-      this.paused = true
+      if (decodedUrl) {
+        this.paused = true
+      }
       console.log(decodedUrl)
     }
   }
