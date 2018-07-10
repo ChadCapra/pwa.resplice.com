@@ -26,6 +26,10 @@ export default new Vuex.Store({
     contacts: null,
     contactCount: 0,
     groups: null,
+    pending: {
+      outgoing: [],
+      incoming: []
+    },
     attributeTypes: [
       {
         id: '1',
@@ -325,7 +329,13 @@ export default new Vuex.Store({
     setSharingAttributes: ({ commit }, payload) => {
       commit('setSharingAttributes', payload)
     },
-    share: ({ commit }, payload) => {}
+    share: ({ commit }, payload) => {
+      // Call API
+
+      // Cleanup
+      commit('setSharingContacts', [])
+      commit('setSharingAttributes', [])
+    }
   }
   // modules: {
   //   contacts,

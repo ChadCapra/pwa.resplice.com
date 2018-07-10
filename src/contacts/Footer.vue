@@ -10,7 +10,7 @@
       <router-link to="/share"><div class="r-link"><icon name="plus" scale="2"></icon></div></router-link>
     </el-col>
     <el-col :xs="6" :sm="4" :md="4" :lg="4" :xl="2" :class="{ 'active-nav': index.four }" @click.native="changeIndex('four')" class="tab">
-      <router-link to="/map"><div class="r-link"><icon name="map" scale="2"></icon></div></router-link>
+      <router-link to="/pending"><div class="r-link"><icon name="bell" scale="2"></icon></div></router-link>
     </el-col>
     <el-col :xs="6" :sm="4" :md="4" :lg="4" :xl="2" :class="{ 'active-nav': index.five }" @click.native="changeIndex('five')" class="tab">
       <router-link to="/settings"><div class="r-link"><icon name="cog" scale="2"></icon></div></router-link>

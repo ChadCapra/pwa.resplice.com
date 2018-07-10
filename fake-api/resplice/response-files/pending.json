@@ -1,0 +1,65 @@
+{
+  "incoming": [
+    {
+      "id": "1",
+      "first_name": "Luke",
+      "last_name": "Skywalker",
+      "profile_pic": "https://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_200/v1529421571/Resplice/kcxsqg64dwcsuixbxo1u.png",
+      "thumbnail": "https://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_80/v1529421571/Resplice/kcxsqg64dwcsuixbxo1u.png",
+      "attributes": [
+        {
+          "id": "1",
+          "contact_id": "1",
+          "attribute_group_id": "1",
+          "type": "personal",
+          "value": "999-999-9999",
+          "verified": true,
+          "primary_of_type": false
+        },
+        {
+          "id": "2",
+          "contact_id": "1",
+          "attribute_group_id": "3",
+          "type": "personal",
+          "value": "1176 14th Ave SE Minneapolis, MN 55414",
+          "verified": true,
+          "primary_of_type": false
+        }
+      ]
+    }
+  ],
+  "outgoing": [
+    {
+      "id": "3",
+      "first_name": "Han",
+      "last_name": "Solo",
+      "profile_pic": "http://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_200/v1529421536/Resplice/fng1vunrc5nyu2hhuvsj.png",
+      "thumbnail": "https://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_80/v1529421536/Resplice/fng1vunrc5nyu2hhuvsj.png",
+      "attributes": [
+        {
+          "id": "1",
+          "contact_id": "3",
+          "attribute_group_id": "2",
+          "type": "work",
+          "value": "han@heroes.com",
+          "verified": false,
+          "primary_of_type": true
+        }
+      ]
+    },
+    {
+      "id": null,
+      "attributes": [
+        {
+          "id": "1",
+          "contact_id": null,
+          "attribute_group_id": "2",
+          "type": "personal",
+          "value": "obitheman@jtemple.com",
+          "verified": false,
+          "primary_of_type": true
+        }
+      ]
+    }
+  ]
+}

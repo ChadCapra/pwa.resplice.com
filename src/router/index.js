@@ -6,7 +6,7 @@ import Container from '@/contacts/Container'
 import Profile from '@/contacts/Profile'
 import Notif from '@/share/Notif'
 // import Groups from '@/contacts/Groups'
-import Maps from '@/contacts/Map'
+// import Maps from '@/contacts/Map'
 import UserProfile from '@/contacts/UserProfile'
 import Settings from '@/contacts/Settings'
 import ContactList from '@/contacts/ContactList'
@@ -16,6 +16,7 @@ import Share from '@/share/Share'
 import Attributes from '@/share/Attributes'
 import ComingSoon from '@/skeleton/ComingSoon'
 import QRCamera from '@/share/QRCamera'
+import WorkList from '@/share/WorkList'
 
 Vue.use(Router)
 
@@ -40,8 +41,8 @@ export default new Router({
           component: Share
         },
         {
-          path: '/map',
-          component: Maps
+          path: '/pending',
+          component: WorkList
         },
         {
           path: '/userprofile',
@@ -74,7 +75,7 @@ export default new Router({
       component: Attributes
     },
     {
-      path: '/notif', // Notifications page
+      path: '/notif',
       name: 'Notif',
       component: Notif
     },
