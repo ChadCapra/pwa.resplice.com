@@ -2,7 +2,9 @@
   <div class="attributes">
     <div class="top">
       <h1>Attributes</h1>
-      <h2>Sharing with {{ sharingContacts.length }} people</h2>
+      <h2>Sharing with 
+        <span v-if="sharingContacts.length === 1">{{ sharingContacts[0].first_name + ' ' + sharingContacts[0].last_name}}</span>
+        <span v-else>{{ sharingContacts.length }} people</span></h2>
       <p>Select the attributes you would like to share:</p>
     </div>
     <div class="body">
@@ -82,25 +84,47 @@ export default {
       })
     },
     shareAttributes () {
-      this.addToSharedAttributes()
-      this.$store.dispatch('setSharingAttributes', this.sharedAttributes)
-      this.sharedAttributes = []
-      this.dialogVisible = true
+      var checked = false
+      this.$refs.attr.forEach(attr => {
+        if (attr.checked) {
+          checked = true
+        }
+      })
+
+      if (!checked) {
+        this.$notify({
+          title: 'Attributes',
+          message: 'You have not selected any attributes to share with. Please check the boxes or select an attribute set. Remember, sharing is caring 😊.',
+          type: 'warning',
+          duration: 0
+        })
+      } else if (this.sharingContacts.length < 1) {
+        this.$notify({
+          title: 'Contacts',
+          message: 'You aren\'t sharing with anyone? Please go back and select a contact or contacts to share with.',
+          type: 'warning',
+          duration: 0
+        })
+      } else {
+        this.addToSharedAttributes()
+        this.$store.dispatch('setSharingAttributes', this.sharedAttributes)
+        this.sharedAttributes = []
+        this.dialogVisible = true
+      }
     },
     shareMinimalAttributes () {},
     shareDefaultAttributes () {},
     handleClose () {
       this.$notify({
         title: 'Sharing',
-        message: 'You did not complete your invitation, click Cancel or Confirm',
+        message: 'You did not complete your share, click Cancel or Confirm',
         type: 'warning'
       })
     },
     share () {
       this.dialogVisible = false
+      // API Call
       this.$store.dispatch('share')
-      this.$store.dispatch('setSharingAttributes', [])
-      this.$store.dispatch('setSharingContacts', [])
       this.$router.push({name: 'root'})
     }
   }
