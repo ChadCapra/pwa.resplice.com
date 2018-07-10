@@ -61,14 +61,17 @@
       <el-button type="success" @click="handleDownload">Download Your Data</el-button>
       <el-button type="danger" @click="userLogout">Logout</el-button>
     </div>
+    <!-- Terms of Use Page -->
     <re-modal v-show="showModalLegal" @close="showModalLegal = false">
       <h1>Legal &amp; Terms of Use</h1>
       <p>Here lies resplice's terms of use and the legal mumbo jumbo that no one reads. We need to be GDPR Compliant though :)</p>
     </re-modal>
+    <!-- About Resplice Modal -->
     <re-modal v-show="showModalAbout" @close="showModalAbout = false">
       <h1>About Resplice</h1>
       <p>Resplice is an online address book to ensure you always have the most up-to-date information on your contacts</p>
     </re-modal>
+    <!-- Show Modal Page -->
     <re-modal v-show="showModalFeedback" @close="showModalFeedback = false">
       <el-form ref="feedbackForm" class="feedback-form">
         <el-form-item label="Feedback Type">
@@ -200,6 +203,14 @@ export default {
       margin-left: 0px;
       width: 250px;
     }
+  }
+  .feedback-form {
+    margin-top: 20px;
+  }
+  .el-checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 </style>
 
