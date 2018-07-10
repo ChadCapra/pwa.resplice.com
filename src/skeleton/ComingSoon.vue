@@ -1,7 +1,7 @@
 <template>
   <div class="coming-soon">
     <h1>This feature is coming soon! Stay Tuned 📱</h1>
-    <div class="social">Follow us on Twitter: <div class="twitter"><a href="https://twitter.com/Resplice_pwa"><icon scale="1.5" name="twitter"></icon></a></div></div>
+    <div class="social">Follow us on Twitter: <div class="twitter"><a href="https://twitter.com/respliceapp"><icon scale="1.5" name="twitter"></icon></a></div></div>
     <span>Or check us our at: <a class="r-link" href="https://www.resplice.com">Resplice.com</a></span>
   </div>
 </template>
