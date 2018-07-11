@@ -1,6 +1,6 @@
 <template>
   <div v-loading="loading" class="camera">
-    <qrcode-reader @init="onInit" @decode="onDecode" :paused = "paused">
+    <qrcode-reader @init="onInit" @decode="onDecode" :track="repaintLocation" :paused="paused">
       <div class="qrcode-reader-text">Center the QR Code in the Camera frame to scan.</div>
     </qrcode-reader>
   </div>
@@ -65,7 +65,27 @@ export default {
         this.paused = true
       }
       console.log(decodedUrl)
+    },
+    repaintLocation (location, ctx) {
+      if (location !== null) {
+        const {
+          topLeftCorner,
+          topRightCorner,
+          bottomLeftCorner,
+          bottomRightCorner
+        } = location
+        ctx.strokeStyle = '#1BBC98' // instead of red
+        ctx.beginPath()
+        ctx.moveTo(topLeftCorner.x, topLeftCorner.y)
+        ctx.lineTo(bottomLeftCorner.x, bottomLeftCorner.y)
+        ctx.lineTo(bottomRightCorner.x, bottomRightCorner.y)
+        ctx.lineTo(topRightCorner.x, topRightCorner.y)
+        ctx.lineTo(topLeftCorner.x, topLeftCorner.y)
+        ctx.closePath()
+        ctx.stroke()
+      }
     }
+
   }
 }
 </script>
