@@ -1,6 +1,7 @@
 <template>
   <div class="share">
-    <div class="share-header" :class="{ 'fixed-header': showContacts }">
+    <!-- <div class="share-header" :class="{ 'fixed-header': showContacts }"> -->
+    <div class="share-header">
       <h1>Share Your Information</h1>
       <h3>Share info with an exisiting contact, username, phone number, email, or scan a contact's recode to start sharing</h3>
       <!-- Search Bar -->
@@ -13,14 +14,22 @@
     </div>
     <!-- Contact List -->
     <div v-if="showContacts" class="contact-list">
-      <el-row class="contact" v-for="contact in contacts" :key="contact.id" type="flex" justify="start">
-        <el-col class="contact-inner" @click.native="select(contact.id)">
-          <div v-if="findSelected(contact.id)" class="icon-checked"><icon name="check" scale="1.5"></icon></div>
-          <img v-else :src="contact.thumbnail" :alt="contact.first_name + ' ' + contact.last_name">
-          <div class="first-name">{{ contact.first_name }}</div>
-          <div class="last-name">{{ contact.last_name }}</div>
-        </el-col>
-      </el-row>
+      <div v-if="contacts.length > 0">
+        <el-row class="contact" v-for="contact in contacts" :key="contact.id" type="flex" justify="start">
+          <el-col class="contact-inner" @click.native="select(contact.id)">
+            <div v-if="findSelected(contact.id)" class="icon-checked"><icon name="check" scale="1.5"></icon></div>
+            <img v-else :src="contact.thumbnail" :alt="contact.first_name + ' ' + contact.last_name">
+            <div class="first-name">{{ contact.first_name }}</div>
+            <div class="last-name">{{ contact.last_name }}</div>
+          </el-col>
+        </el-row>
+      </div>
+      <div v-else>
+        <el-button class="new-share-btn" type="primary" @click="shareWithAttribute">
+          <div>Share with {{ search }}</div>
+        </el-button>
+        <p>Separate multiple values with commas<br>(e.g. 'his@domain.com, her@domain.com, 555-555-5555')</p>
+      </div>
     </div>
     <!-- QR Code & Link -->
     <div v-else class="code">
@@ -135,7 +144,15 @@ export default {
       this.$store.dispatch('setSharingContacts', sharedContacts)
       this.$router.push({name: 'Attributes'})
     },
-    closeText () {}
+    closeText () {},
+    shareWithAttribute () {
+      var contact = {
+        id: null,
+        attributes: [{ id: '1', value: this.search }]
+      }
+      this.$store.dispatch('setSharingContacts', [contact])
+      this.$router.push({name: 'Attributes'})
+    }
   },
   created () {
     this.$store.commit('removeHeader')
@@ -150,7 +167,6 @@ export default {
   .share {
     display: flex;
     flex-direction: column;
-    padding: 0 0 15px 0;
   }
   .share-header {
     width: 100%;
@@ -199,9 +215,8 @@ export default {
     margin-bottom: 20px;
   }
   .contact-list {
-    margin-top: 150px;
-    padding-top: 25px;
-    padding-bottom: 30px;
+    height: calc(100vh - 310px);
+    overflow: auto;
   }
   .contact {
     margin: 15px 0px 15px 20px;
@@ -303,6 +318,16 @@ export default {
     background-color: #FFFFFF;
     color: #1BBC9B;
     border-color: #FFFFFF;
+  }
+  .new-share-btn {
+    margin-top: 25px;
+    max-width: 275px;
+    & div {
+        max-width: 200px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
   }
 
   // Social Styles
