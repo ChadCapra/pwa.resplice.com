@@ -42,7 +42,10 @@ export default {
     }
   },
   created () {
-    this.$store.state.header.showSearch = true
+    this.$store.commit('showSearch')
+  },
+  destroyed () {
+    this.$store.commit('removeSearch')
   }
 }
 </script>
