@@ -3,8 +3,9 @@
     <div class="top">
       <h1>Attributes</h1>
       <h2>Sharing with 
-        <span v-if="sharingContacts.length === 1">{{ sharingContacts[0].first_name + ' ' + sharingContacts[0].last_name}}</span>
-        <span v-else>{{ sharingContacts.length }} people</span></h2>
+        <span v-if="sharingContacts.length === 1">{{ sharingInfo }}</span>
+        <span v-else>{{ sharingContacts.length }} people</span>
+      </h2>
       <p>Select the attributes you would like to share:</p>
     </div>
     <div class="body">
@@ -62,6 +63,13 @@ export default {
     },
     attributes () {
       return this.$store.getters.getUserAttributes
+    },
+    sharingInfo () {
+      if (this.sharingContacts[0].first_name === undefined && this.sharingContacts[0].last_name === undefined) {
+        return this.sharingContacts[0].attributes[0].value
+      } else {
+        return this.sharingContacts[0].first_name + ' ' + this.sharingContacts[0].last_name
+      }
     }
   },
   methods: {
@@ -179,7 +187,7 @@ export default {
   .share {
     position: fixed;
     bottom: 10px;
-    right: 40%;
+    left: calc(50% - 40px);
     margin: 0;
   }
   .minimal, .default {
