@@ -52,12 +52,8 @@
       "attributes": [
         {
           "id": "1",
-          "contact_id": null,
-          "attribute_group_id": "2",
-          "type": "personal",
           "value": "obitheman@jtemple.com",
-          "verified": false,
-          "primary_of_type": true
+          "verified": false
         }
       ]
     }
