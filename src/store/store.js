@@ -276,6 +276,12 @@ export default new Vuex.Store({
     },
     addHeader: state => {
       state.header.showHeader = true
+    },
+    showSearch: state => {
+      state.header.showSearch = true
+    },
+    removeSearch: state => {
+      state.header.showSearch = false
     }
   },
   actions: {
