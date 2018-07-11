@@ -44,6 +44,8 @@ import 'vue-awesome/icons/google'
 import 'vue-awesome/icons/link'
 import 'vue-awesome/icons/check'
 import 'vue-awesome/icons/camera'
+import 'vue-awesome/icons/arrow-circle-left'
+import 'vue-awesome/icons/arrow-circle-right'
 import Icon from 'vue-awesome/components/Icon'
 
 // Import vue-touch for phone gestures

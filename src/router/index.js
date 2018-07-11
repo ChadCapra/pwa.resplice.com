@@ -16,7 +16,7 @@ import Share from '@/share/Share'
 import Attributes from '@/share/Attributes'
 import ComingSoon from '@/skeleton/ComingSoon'
 import QRCamera from '@/share/QRCamera'
-import WorkList from '@/share/WorkList'
+import Queue from '@/share/Queue'
 
 Vue.use(Router)
 
@@ -42,7 +42,7 @@ export default new Router({
         },
         {
           path: '/pending',
-          component: WorkList
+          component: Queue
         },
         {
           path: '/userprofile',
