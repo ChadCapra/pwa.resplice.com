@@ -7,7 +7,7 @@
       <re-contact v-for="contact in contacts" :contact="contact" :key="contact.id"></re-contact>
     </div>
     <div class="no-contact" v-else>
-      <p>You have no one sharing their attributes with you 😰</p>
+      <p>You have no one sharing their attributes with you or we couldn't find that person while searching 😰</p>
       <p>Share your attributes with more people to get shares back!</p>
       <el-button type="primary" round @click="$router.push({name: 'Share'})">Share</el-button>
     </div>
