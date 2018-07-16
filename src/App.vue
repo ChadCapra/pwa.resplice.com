@@ -20,6 +20,10 @@ export default {
 </script>
 
 <style lang="scss">
+*:focus {
+  outline: 0;
+  outline: none;
+}
 body {
   margin: 0;
   background-color: #fff;

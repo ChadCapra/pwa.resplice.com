@@ -1,5 +1,10 @@
 <template>
-  <div class="contact" @click="enterProfile">
+  <v-touch
+    class="contact"
+    @tap="handleClick"
+    :class="{ 'contact-selected': selected }"
+    @press="$emit('selected')">
+  <!-- <div class="contact" @click="handleClick" :class="{ 'contact-selected': selected }"> -->
     <el-row type="flex">
       <div class="contact-actions" ref="contactActions">
         <icon class="action-btn" name="phone" scale="2.5"></icon>
@@ -7,10 +12,12 @@
         <icon class="action-btn" name="envelope" scale="2.5"></icon>
       </div>
       <el-col class="c-content" :xs="22" :sm="22" :md="22" :lg="12" :xl="12">
-        <v-touch 
+        <div v-if="selected" class="icon-checked"><icon name="check" scale="1.5"></icon></div>
+        <v-touch
+          v-else
           tag="img"
-          v-on:pan="picPan($event)"
-          v-on:swiperight="picSwipe($event)"
+          @pan="picPan($event)"
+          @swiperight="picSwipe($event)"
           :pan-options="{ direction: 'horizontal', threshold: 10 }"
           class="contact-img" 
           style="margin-right: 20px;" 
@@ -22,22 +29,20 @@
         </div>
       </el-col>
     </el-row>
-  </div>
+  <!-- </div> -->
+  </v-touch>
 </template>
 
 <script>
 export default {
-  props: ['contact', 'headVisible'],
-  data () {
-    return {
-      actionsOn: false
-    }
-  },
+  props: ['contact', 'headVisible', 'selected', 'actions'],
   methods: {
-    enterProfile () {
-      if (!this.actionsOn) {
+    handleClick () {
+      if (!this.actions) {
         var id = this.contact.id
         this.$router.push({ name: 'Profile', params: { id } })
+      } else {
+        this.$emit('selected')
       }
     },
     picPan (payload) {
@@ -83,9 +88,12 @@ export default {
     font-size: 24px;
     text-align: left;
     &:hover {
-      background-color: #ebeef5;
+      // background-color: #EBEEF5;
       cursor: pointer;
     }
+  }
+  .contact-selected {
+    background-color: #EBEEF5;
   }
   .contact-actions {
     width: 100%;
@@ -97,10 +105,22 @@ export default {
     justify-content: center;
     align-items: center;
   }
+  .icon-checked {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color:#1BBC9B;
+    color: #FFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+  }
   .c-content {
     display: flex;
     align-items: center;
   }
+
   .name {
     display: flex;
     flex-wrap: wrap;
