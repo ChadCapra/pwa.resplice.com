@@ -11,7 +11,7 @@ const config = {
     console.log(`Loading: ${progressEvent}`)
   }
 }
-const baseUrl = 'http://10.1.10.241:8081/api'
+const baseUrl = 'https://demo8920178.mockable.io/api'
 
 Vue.use(Vuex)
 
