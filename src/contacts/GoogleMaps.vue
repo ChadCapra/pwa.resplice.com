@@ -177,12 +177,11 @@ export default {
 
 <style lang="scss" scoped>
   .google-map {
-    right: 0;
-    top: 60px;
     width: 100vw;
-    height: calc(100vh - 120px);
+    height: calc(100vh - 60px);
     margin: 0px;
-    position: absolute;
+    margin-left: -20px;
+    margin-top: -20px;
     background-color: grey;
   }
 </style>

@@ -6,7 +6,7 @@ import Container from '@/contacts/Container'
 import Profile from '@/contacts/Profile'
 import Notif from '@/share/Notif'
 // import Groups from '@/contacts/Groups'
-// import Maps from '@/contacts/Map'
+import Map from '@/contacts/Map'
 import UserProfile from '@/contacts/UserProfile'
 import Settings from '@/contacts/Settings'
 import ContactList from '@/contacts/ContactList'
@@ -88,6 +88,11 @@ export default new Router({
       path: '/qrcamera',
       name: 'QRCamera',
       component: QRCamera
+    },
+    {
+      path: '/map',
+      name: 'Map',
+      component: Map
     },
     {
       path: '*', redirect: '/' // Catch all other routes
