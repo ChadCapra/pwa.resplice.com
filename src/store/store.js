@@ -94,6 +94,9 @@ export default new Vuex.Store({
     sharing: {
       contacts: [],
       attributes: []
+    },
+    map: {
+      locations: []
     }
   },
   getters: {
@@ -282,6 +285,9 @@ export default new Vuex.Store({
     },
     removeSearch: state => {
       state.header.showSearch = false
+    },
+    setMapLocations: (state, payload) => {
+      state.map.locations = payload
     }
   },
   actions: {
@@ -341,6 +347,16 @@ export default new Vuex.Store({
       // Cleanup
       commit('setSharingContacts', [])
       commit('setSharingAttributes', [])
+    },
+    buildMap: ({ commit }, payload) => {
+      // Sends a list of ids to server to get back lat and lng locations array
+      axios.post(`${baseUrl}/map`, payload, config)
+        .then(response => {
+          commit('setMapLocations', response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
   // modules: {
