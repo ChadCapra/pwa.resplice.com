@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-// import contacts from './modules/contacts'
-// import group from './modules/group'
 
 // Config for axios
 const config = {
