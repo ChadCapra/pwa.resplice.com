@@ -110,7 +110,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .el-header {
     padding-top: 13px;
     font-size: 28px;
@@ -121,10 +121,10 @@ export default {
     float: left;
     color: #1BBC9B;
     transition: all .30s ease;
-  }
-  .exit-btn:hover {
-    color: #0be8ba;
-    cursor: pointer;
+    &:hover {
+      color: #0be8ba;
+      cursor: pointer;
+    }
   }
   .access {
     position: relative;

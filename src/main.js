@@ -46,6 +46,13 @@ import 'vue-awesome/icons/check'
 import 'vue-awesome/icons/camera'
 import 'vue-awesome/icons/arrow-circle-left'
 import 'vue-awesome/icons/arrow-circle-right'
+import 'vue-awesome/icons/language'
+import 'vue-awesome/icons/shield'
+import 'vue-awesome/icons/eye'
+import 'vue-awesome/icons/info-circle'
+import 'vue-awesome/icons/question-circle'
+import 'vue-awesome/icons/balance-scale'
+import 'vue-awesome/icons/file'
 import Icon from 'vue-awesome/components/Icon'
 
 // Import vue-touch for phone gestures

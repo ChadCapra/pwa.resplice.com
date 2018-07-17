@@ -7,8 +7,9 @@ import Profile from '@/contacts/Profile'
 import Notif from '@/share/Notif'
 // import Groups from '@/contacts/Groups'
 import Map from '@/contacts/Map'
-import UserProfile from '@/contacts/UserProfile'
-import Settings from '@/contacts/Settings'
+import UserProfile from '@/settings/UserProfile'
+import Settings from '@/settings/Settings'
+import Setting from '@/settings/Setting'
 import ContactList from '@/contacts/ContactList'
 import Welcome from '@/signin/Welcome'
 // import GroupList from '@/contacts/GroupList'
@@ -45,12 +46,18 @@ export default new Router({
           component: Queue
         },
         {
-          path: '/userprofile',
-          component: UserProfile
-        },
-        {
           path: '/settings',
           component: Settings
+        }
+      ]
+    },
+    {
+      path: '/settings',
+      component: Setting,
+      children: [
+        {
+          path: 'userprofile',
+          component: UserProfile
         }
       ]
     },

@@ -48,7 +48,7 @@
 
       <!-- User Attributes -->
       <el-card>
-        <div class="info-header" slot="header">Contact Information</div>
+        <div class="info-header" slot="header">Attributes</div>
         <div v-for="type in attributeTypes" :key="type.id" class="info">
           <div class="info-content-header">
             <div class="type">
@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import Modal from '@/contacts/SlideModal.vue'
+import Modal from '@/skeleton/SlideModal.vue'
 import axios from 'axios'
 import UserLoading from '@/skeleton/UserLoading.vue'
 
