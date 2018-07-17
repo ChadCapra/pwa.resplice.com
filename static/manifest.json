@@ -1,7 +1,7 @@
 {
   "name": "Resplice",
   "short_name": "Resplice",
-  "start_url": "https://app.resplice.com/",
+  "start_url": "/#/",
   "display": "standalone",
   "background_color": "#1BBC9B",
   "theme_color": "#1BBC9B",
