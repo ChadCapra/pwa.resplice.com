@@ -3,7 +3,7 @@
     <div class="signin">
       <el-row type="flex" justify="center">
         <el-col :xs="20" :sm="20" :md="16" :lg="12" :xl="6">
-          <div class="sign-logo"><img :src="logo" alt="Resplice Logo"></div>
+          <div class="sign-logo"><img :src="logo" width="250" height="250" alt="Resplice Logo"></div>
         </el-col>
       </el-row>
       <!-- Login form -->
@@ -57,7 +57,7 @@ export default {
       isLogin: false,
       isSignUp: false,
       initialState: true,
-      logo: require('../assets/re_logo.png'),
+      logo: require('../assets/RespliceLogoTempAlt.png'),
       active: 0,
       signInData: {
         firstName: '',
