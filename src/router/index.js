@@ -1,23 +1,37 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
+// Sign In Components
 import Signin from '@/signin/Signin'
 import SignUp from '@/signin/Signup'
+import Welcome from '@/signin/Welcome'
+
+// Contact Components
+import ContactList from '@/contacts/ContactList'
 import Container from '@/contacts/Container'
-import Profile from '@/contacts/Profile'
-import Notif from '@/share/Notif'
+// import GroupList from '@/contacts/GroupList'
 // import Groups from '@/contacts/Groups'
 import Map from '@/contacts/Map'
+import Profile from '@/contacts/Profile'
+
+// Share Components
+import Share from '@/share/Share'
+import Attributes from '@/share/Attributes'
+import QRCamera from '@/share/QRCamera'
+import Queue from '@/share/Queue'
+import Notif from '@/share/Notif'
+
+// Settings Components
+import Appearance from '@/settings/Appearance'
+import Language from '@/settings/Language'
+import NotifSettings from '@/settings/NotifSettings'
+import PrivacySafety from '@/settings/PrivacySafety'
 import UserProfile from '@/settings/UserProfile'
 import Settings from '@/settings/Settings'
 import Setting from '@/settings/Setting'
-import ContactList from '@/contacts/ContactList'
-import Welcome from '@/signin/Welcome'
-// import GroupList from '@/contacts/GroupList'
-import Share from '@/share/Share'
-import Attributes from '@/share/Attributes'
+
+// Skeleton Components
 import ComingSoon from '@/skeleton/ComingSoon'
-import QRCamera from '@/share/QRCamera'
-import Queue from '@/share/Queue'
 
 Vue.use(Router)
 
@@ -37,8 +51,8 @@ export default new Router({
           component: ComingSoon
         },
         {
-          name: 'Share',
           path: '/share',
+          name: 'Share',
           component: Share
         },
         {
@@ -57,7 +71,28 @@ export default new Router({
       children: [
         {
           path: 'userprofile',
+          name: 'UserProfile',
           component: UserProfile
+        },
+        {
+          path: 'privacy-safety',
+          name: 'PrivacySafety',
+          component: PrivacySafety
+        },
+        {
+          path: 'notification',
+          name: 'NotifSettings',
+          component: NotifSettings
+        },
+        {
+          path: 'appearance',
+          name: 'Appearance',
+          component: Appearance
+        },
+        {
+          path: 'language',
+          name: 'Language',
+          component: Language
         }
       ]
     },

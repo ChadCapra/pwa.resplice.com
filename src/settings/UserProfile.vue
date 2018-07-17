@@ -74,7 +74,7 @@
     </el-row>
 
     <!-- Cropping and upload modal -->
-    <re-modal v-show="showPicModal" @close="showPicModal = false" :loading="loading">
+    <re-modal v-show="showPicModal" @close="showPicModal = false" :loading="loading" headerText="Crop Photo">
       <vue-croppie
         ref="crop"
         :enable-orientation="true"
@@ -400,7 +400,9 @@ export default {
     margin-top: 50px;
   }
   .cropper-save {
-    margin-top: -300px;
+    position: fixed;
+    bottom: 75px;
+    left: calc(50% - 40px);
   }
   .edit {
     position: absolute;
