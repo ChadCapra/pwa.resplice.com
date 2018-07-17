@@ -9,7 +9,7 @@ const config = {
     console.log(`Loading: ${progressEvent}`)
   }
 }
-const baseUrl = 'https://demo8920178.mockable.io/api'
+const baseUrl = 'https://resplice.mocklab.io/api'
 
 Vue.use(Vuex)
 
@@ -73,6 +73,7 @@ export default new Vuex.Store({
       }
     ],
     settings: {
+      headerText: '',
       nameFormat: 'First Last',
       showRecentlyContacted: true
     },
@@ -170,6 +171,9 @@ export default new Vuex.Store({
     },
     getShowHeader: state => {
       return state.header.showHeader
+    },
+    getSettingsHeaderText: state => {
+      return state.settings.headerText
     }
   },
   mutations: {
@@ -286,6 +290,9 @@ export default new Vuex.Store({
     },
     setMapLocations: (state, payload) => {
       state.map.locations = payload
+    },
+    setSettingsHeaderText: (state, payload) => {
+      state.settings.headerText = payload
     }
   },
   actions: {
