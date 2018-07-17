@@ -20,7 +20,9 @@ export default new Vuex.Store({
     contactsLoading: true,
     groupsLoading: true,
     searchState: '',
-    user: {},
+    user: {
+      user_attributes: []
+    },
     contacts: null,
     contactCount: 0,
     groups: null,
@@ -326,7 +328,7 @@ export default new Vuex.Store({
       commit('setLogin', true)
     },
     logout: ({commit}) => {
-      commit('setCurrentUser', {})
+      commit('setCurrentUser', {user_attributes: []})
       commit('setContacts', null)
       commit('setLogin', false)
       commit('setGroups', null)

@@ -22,7 +22,9 @@ export default {
 <style lang="scss">
 *:focus {
   outline: 0;
-  outline: none;
+}
+* {
+  -webkit-tap-highlight-color: transparent;
 }
 body {
   margin: 0;
@@ -43,7 +45,7 @@ main {
 }
 
 a {
-  color:bisque;
+  color: #1BBC98;
 }
 
 button, span {
