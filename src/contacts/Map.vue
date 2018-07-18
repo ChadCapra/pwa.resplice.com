@@ -12,7 +12,8 @@
       </el-row>
     </el-header>
     <el-main>
-      <google-map name="resplice"></google-map>
+      <div v-if="mapLoading" class="map-loading"></div>
+      <google-map v-else name="resplice"></google-map>
     </el-main>
   </el-container>
 </keep-alive>
@@ -24,6 +25,11 @@ import GoogleMaps from './GoogleMaps.vue'
 export default {
   components: {
     'google-map': GoogleMaps
+  },
+  computed: {
+    mapLoading () {
+      return this.$store.getters.getMapLoading
+    }
   }
 }
 </script>
@@ -34,6 +40,11 @@ export default {
     font-size: 28px;
     background-color: #32393d;
     color: #fff;
+  }
+  .map-loading {
+    background-color: grey;
+    width: 100%;
+    height: 100%;
   }
   .exit-btn {
     float: left;

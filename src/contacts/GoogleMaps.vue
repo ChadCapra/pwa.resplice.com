@@ -12,8 +12,14 @@ export default {
       mapName: this.name + '-map'
     }
   },
+  computed: {
+    locations () {
+      return this.$store.getters.getMapLocations
+    }
+  },
   mounted () {
     const element = document.getElementById(this.mapName)
+    var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     const options = {
       center: new google.maps.LatLng(44.979930, -93.234065),
       zoom: 14,
@@ -171,6 +177,19 @@ export default {
     }
     // eslint-disable-next-line
     const map = new google.maps.Map(element, options)
+    // this.locations.forEach(location => {
+    //   var marker = new google.maps.Marker({position: new google.maps.LatLng(location), title: 'Marker!'})
+    //   marker.setMap(map)
+    // })
+    // eslint-disable-next-line
+    var markers = this.locations.map((location, i) => {
+      return new google.maps.Marker({
+        position: location,
+        label: labels[i % labels.length]
+      })
+    })
+    // eslint-disable-next-line
+    var markerCluster = new MarkerClusterer(map, markers, {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'})
   }
 }
 </script>

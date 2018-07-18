@@ -19,6 +19,7 @@ export default new Vuex.Store({
     userLoading: true,
     contactsLoading: true,
     groupsLoading: true,
+    mapLoading: true,
     searchState: '',
     user: {
       user_attributes: []
@@ -165,6 +166,9 @@ export default new Vuex.Store({
     getGroupsLoading: state => {
       return state.groupsLoading
     },
+    getMapLoading: state => {
+      return state.mapLoading
+    },
     getSharingContacts: state => {
       return state.sharing.contacts
     },
@@ -176,6 +180,9 @@ export default new Vuex.Store({
     },
     getSettingsHeaderText: state => {
       return state.settings.headerText
+    },
+    getMapLocations: state => {
+      return state.map.locations
     }
   },
   mutations: {
@@ -265,6 +272,9 @@ export default new Vuex.Store({
     loadingDoneGroups: state => {
       state.groupsLoading = false
     },
+    loadingDoneMap: state => {
+      state.mapLoading = false
+    },
     buildContactCount: state => {
       state.contactCount = state.contacts.length
     },
@@ -350,7 +360,13 @@ export default new Vuex.Store({
     },
     share: ({ commit }, payload) => {
       // Call API
-
+      axios.post(`${baseUrl}/share`, payload, config)
+        .then(response => {
+          console.log(response.data)
+        })
+        .catch(error => {
+          console.log(error)
+        })
       // Cleanup
       commit('setSharingContacts', [])
       commit('setSharingAttributes', [])
@@ -359,7 +375,8 @@ export default new Vuex.Store({
       // Sends a list of ids to server to get back lat and lng locations array
       axios.post(`${baseUrl}/map`, payload, config)
         .then(response => {
-          commit('setMapLocations', response)
+          commit('setMapLocations', response.data)
+          commit('loadingDoneMap')
         })
         .catch(error => {
           console.log(error)
