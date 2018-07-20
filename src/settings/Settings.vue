@@ -7,7 +7,7 @@
         <el-col :span="12"><span>Shared With</span><br>{{ stats.sharesWith }}</el-col>
       </el-row>
       <el-row>
-        <el-col :span="12"><span>Contacts</span><br>{{ stats.contacts }}</el-col>
+        <el-col :span="12"><span>Contacts</span><br>{{ contactCount }}</el-col>
         <el-col :span="12"><span>Recodes Scanned</span><br>{{ stats.codes }}</el-col>
       </el-row>
     </div>
@@ -41,19 +41,19 @@
       <hr>
 
       <el-row type="flex" justify="start" class="settings-header">App Information</el-row>
-      <el-row type="flex" justify="start" class="setting" @click.native="showModalSupport = true">
+      <el-row type="flex" justify="start" class="setting" @click.native="$router.push({path: '/settings/support'})">
         <el-col :xs="2" :sm="2" :md="2" :lg="1" :xl="1"><icon name="question-circle" scale="1.5"></icon></el-col>
         <el-col :xs="22" :sm="22" :md="22" :lg="23" :xl="23">Support</el-col>
       </el-row>
-      <el-row type="flex" justify="start" class="setting" @click.native="showModalFeedback = true">
+      <el-row type="flex" justify="start" class="setting" @click.native="$router.push({path: '/settings/feedback'})">
         <el-col :xs="2" :sm="2" :md="2" :lg="1" :xl="1"><icon name="file" scale="1.5"></icon></el-col>
         <el-col :xs="22" :sm="22" :md="22" :lg="23" :xl="23">Give Us Feedback :)</el-col>
       </el-row>
-      <el-row type="flex" justify="start" class="setting" @click.native="showModalLegal = true">
+      <el-row type="flex" justify="start" class="setting" @click.native="$router.push({path: '/settings/legal'})">
         <el-col :xs="2" :sm="2" :md="2" :lg="1" :xl="1"><icon name="balance-scale" scale="1.5"></icon></el-col>
         <el-col :xs="22" :sm="22" :md="22" :lg="23" :xl="23">Legal &amp; Terms of Use</el-col>
       </el-row>
-      <el-row type="flex" justify="start" class="setting" @click.native="showModalAbout = true">
+      <el-row type="flex" justify="start" class="setting" @click.native="$router.push({path: '/settings/about'})">
         <el-col :xs="2" :sm="2" :md="2" :lg="1" :xl="1"><icon name="info-circle" scale="1.5"></icon></el-col>
         <el-col :xs="22" :sm="22" :md="22" :lg="23" :xl="23">About Resplice</el-col>
       </el-row>
@@ -61,66 +61,16 @@
 
     <el-button type="danger" class="logout-btn" @click="userLogout">Logout</el-button>
 
-    <!-- About Resplice Modal -->
-    <re-modal v-show="showModalSupport" @close="showModalSupport = false" headerText="Support">
-      <p>Please email us at <a href="mailto:support@capabit.com?subject=Resplice%20Support&body=Message%20goes%20here">support@capabit.com</a></p>
-      <p>Or go to our <a href="http://www.resplice.com">support page</a></p>
-    </re-modal>
-
-    <!-- Terms of Use Modal -->
-    <re-modal v-show="showModalLegal" @close="showModalLegal = false" headerText="Legal &amp; Terms of Use">
-      <p>Here lies resplice's terms of use and the legal mumbo jumbo that no one reads. We need to be GDPR Compliant though :)</p>
-    </re-modal>
-
-    <!-- About Resplice Modal -->
-    <re-modal v-show="showModalAbout" @close="showModalAbout = false" headerText="About Resplice">
-      <p>Resplice is an online address book to ensure you always have the most up-to-date information on your contacts</p>
-      <a href="http://www.resplice.com">See Our Website</a>
-    </re-modal>
-
-    <!-- Feedback Modal -->
-    <re-modal v-show="showModalFeedback" @close="showModalFeedback = false" headerText="Send Us Feedback">
-      <el-form ref="feedbackForm" class="feedback-form">
-        <el-form-item label="Feedback Type">
-          <el-checkbox-group v-model="feedback.type">
-            <el-checkbox label="Bug" name="type"></el-checkbox>
-            <el-checkbox label="Feature Request" name="type"></el-checkbox>
-            <el-checkbox label="Enhancement" name="type"></el-checkbox>
-            <el-checkbox label="Kudos" name="type"></el-checkbox>
-          </el-checkbox-group>
-        </el-form-item>
-        <el-form-item label="Feedback Description">
-          <el-input type="textarea" v-model="feedback.desc"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="feedbackSubmit">Submit</el-button>
-        </el-form-item>
-      </el-form>
-    </re-modal>
-
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
-import Modal from '@/skeleton/SlideModal.vue'
 
 export default {
-  components: {
-    're-modal': Modal
-  },
   data () {
     return {
       toggle: true,
-      showModalSupport: false,
-      showModalLegal: false,
-      showModalAbout: false,
-      showModalFeedback: false,
-      feedback: {
-        type: [],
-        desc: '',
-        device: navigator
-      },
       stats: {
         sharesTo: 10,
         sharesWith: 8,
@@ -145,6 +95,9 @@ export default {
       set (value) {
         this.$store.commit('changeNameFormat', value)
       }
+    },
+    contactCount () {
+      return this.$store.getters.getContactCount
     }
   },
   methods: {

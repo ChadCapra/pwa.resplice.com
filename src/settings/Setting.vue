@@ -25,15 +25,23 @@ export default {
   .el-header {
     padding-top: 13px;
     font-size: 28px;
-    background-color: #32393d;
-    color: #fff;
+    color: #FFFFFF;
+    background-color: #1BBC98;
+    & h1 {
+        margin: 0;
+    }
+  }
+  el-row {
+    display: flex;
+    align-items: center;
   }
   .exit-btn {
     float: left;
-    color: #1BBC9B;
+    color: #FFFFFF;
     transition: all .30s ease;
+    margin-left: 10px;
     &:hover {
-      color: #0be8ba;
+      color: #32393D;
       cursor: pointer;
     }
   }

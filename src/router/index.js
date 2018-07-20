@@ -29,6 +29,7 @@ import PrivacySafety from '@/settings/PrivacySafety'
 import UserProfile from '@/settings/UserProfile'
 import Settings from '@/settings/Settings'
 import Setting from '@/settings/Setting'
+import Static from '@/settings/Static'
 
 // Skeleton Components
 import ComingSoon from '@/skeleton/ComingSoon'
@@ -93,6 +94,11 @@ export default new Router({
           path: 'language',
           name: 'Language',
           component: Language
+        },
+        {
+          path: ':name',
+          name: 'Information',
+          component: Static
         }
       ]
     },
