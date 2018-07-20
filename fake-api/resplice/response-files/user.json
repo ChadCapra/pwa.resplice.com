@@ -3,10 +3,8 @@
   "username": "marcusvirg345",
   "password": "12345",
   "lang": "English",
-  "token": "e2134wer33245df",
   "user_basic": {
-    "first_name": "Marcus",
-    "last_name": "Virginia",
+    "name": "Marcus Virginia",
     "profile_pic": "https://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_200/v1529436559/Resplice/s2pucyrwxdy9gcprx4sd.png",
     "thumbnail": "https://res.cloudinary.com/capabit-solutions/image/upload/c_scale,w_80/v1529436559/Resplice/s2pucyrwxdy9gcprx4sd.png",
     "gender": "Male",
