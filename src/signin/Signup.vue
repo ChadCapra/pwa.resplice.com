@@ -37,9 +37,17 @@ export default {
       confirmPassword: ''
     }
   },
+  computed: {
+    user () {
+      return this.$store.getters.getUserInfo
+    }
+  },
   methods: {
     submit () {
       console.log(this.userName, this.password, this.confirmPassword)
+      this.$store.dispatch('changeUserName', this.userName)
+      this.$store.dispatch('changePassword', this.password)
+      this.$store.dispatch('signUp', this.user)
       this.$router.push({name: 'Share'})
     }
   }

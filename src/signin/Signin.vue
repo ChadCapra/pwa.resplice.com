@@ -17,7 +17,7 @@
         </el-row>
         <el-row type="flex" justify="center">
           <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
-            <div class="sign-field"><el-input placeholder="Password" v-model="loginData.password">
+            <div class="sign-field"><el-input type="password" placeholder="Password" v-model="loginData.password">
               <template slot="prepend"><icon name="lock"></icon></template>
             </el-input></div>
           </el-col>
@@ -55,20 +55,17 @@ export default {
   data () {
     return {
       isLogin: false,
-      isSignUp: false,
       initialState: true,
       logo: require('../assets/RespliceLogoTempAlt.png'),
-      active: 0,
-      signInData: {
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: ''
-      },
       loginData: {
         username: '',
         password: ''
       }
+    }
+  },
+  computed: {
+    loading () {
+      return this.$store.getters.getGroupsLoading
     }
   },
   methods: {
@@ -85,7 +82,7 @@ export default {
       this.$router.push({ name: 'Welcome' })
     },
     login () {
-      this.$store.dispatch('login')
+      this.$store.dispatch('login', this.loginData)
       this.$router.push({ name: 'root' })
     }
   }

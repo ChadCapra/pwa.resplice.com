@@ -59,6 +59,9 @@ export default {
     },
     otherAttributeTypes () {
       return this.$store.getters.getAttributeTypes.slice(3)
+    },
+    user () {
+      return this.$store.getters.getUserInfo
     }
   },
   methods: {
@@ -69,11 +72,12 @@ export default {
       this.$store.commit('removeAttribute', id)
     },
     submit () {
-      console.log(`Name: ${this.fullName}`)
+      this.$store.commit('updateName', this.fullName)
       console.log(this.$store.getters.getUserAttributes)
       this.$store.commit('sanitizeAttributes')
       this.submitted = true
       // Call action to submit new attributes to server
+      this.$store.dispatch('submitAttributes', this.user)
       this.$router.push({name: 'SignUp'})
     },
     attributesFiltered (type) {
