@@ -4,12 +4,13 @@ import axios from 'axios'
 
 // Config for axios
 const config = {
-  async: true,
-  onUploadProgress: progressEvent => {
-    console.log(`Loading: ${progressEvent}`)
-  }
+  async: true
+  // onUploadProgress: progressEvent => {
+  //   console.log(`Loading: ${progressEvent}`)
+  // }
 }
 const baseUrl = 'https://resplice.mocklab.io/api'
+axios.defaults.headers.common['Authorization'] = null
 
 Vue.use(Vuex)
 
@@ -22,6 +23,11 @@ export default new Vuex.Store({
     mapLoading: true,
     searchState: '',
     user: {
+      username: '',
+      password: '',
+      user_basic: {
+        name: ''
+      },
       user_attributes: []
     },
     contacts: null,
@@ -201,11 +207,11 @@ export default new Vuex.Store({
     setTypeNotUnique: (state, payload) => {
       state.attributeTypes.find(type => type.id === payload).isUnique = false
     },
-    changeUserName: (state, payload) => id => {
-      state.contacts[id].username = payload
+    changeUserName: (state, payload) => {
+      state.user.username = payload
     },
-    changePassword: (state, payload) => id => {
-      state.contacts[id].password = payload
+    changePassword: (state, payload) => {
+      state.user.password = payload
     },
     changeNavIndex: (state, payload) => {
       state.navIndex.one = state.navIndex.two = state.navIndex.three = state.navIndex.four = state.navIndex.five = false
@@ -217,11 +223,8 @@ export default new Vuex.Store({
     updateDOB: (state, payload) => {
       state.user.user_basic.dob = payload
     },
-    updateFirstName: (state, payload) => {
-      state.user.user_basic.first_name = payload
-    },
-    updateLastName: (state, payload) => {
-      state.user.user_basic.last_name = payload
+    updateName: (state, payload) => {
+      state.user.user_basic.name = payload
     },
     updateGender: (state, payload) => {
       state.user.user_basic.gender = payload
@@ -275,6 +278,12 @@ export default new Vuex.Store({
     loadingDoneMap: state => {
       state.mapLoading = false
     },
+    resetLoading: state => {
+      state.userLoading = true
+      state.contactsLoading = true
+      state.groupsLoading = true
+      state.mapLoading = true
+    },
     buildContactCount: state => {
       state.contactCount = state.contacts.length
     },
@@ -308,15 +317,25 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    login: ({commit}, id, payload) => {
-      axios.get(`${baseUrl}/user`, config)
+    login: ({commit, dispatch}, payload) => {
+      axios.post(`${baseUrl}/sign_in`, payload, config)
         .then(response => {
-          commit('setCurrentUser', response.data)
-          commit('loadingDoneUser')
+          console.log(response)
+          dispatch('setUser', response.data)
+          dispatch('setAllContacts')
+          dispatch('setAllGroups')
+          commit('setLogin', true)
         })
         .catch(e => {
           console.log(e)
         })
+    },
+    setUser: ({commit}, payload) => {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${payload.token}`
+      commit('setCurrentUser', payload)
+      commit('loadingDoneUser')
+    },
+    setAllContacts: ({commit}) => {
       axios.get(`${baseUrl}/contacts`, config)
         .then(response => {
           commit('setContacts', response.data)
@@ -327,6 +346,8 @@ export default new Vuex.Store({
         .catch(e => {
           console.log(e)
         })
+    },
+    setAllGroups: ({commit}) => {
       axios.get(`${baseUrl}/groups`, config)
         .then(response => {
           commit('setGroups', response.data)
@@ -335,19 +356,41 @@ export default new Vuex.Store({
         .catch(e => {
           console.log(e)
         })
-      commit('setLogin', true)
     },
     logout: ({commit}) => {
-      commit('setCurrentUser', {user_attributes: []})
+      commit('setCurrentUser', {username: '', password: '', user_basic: {name: ''}, user_attributes: []})
       commit('setContacts', null)
       commit('setLogin', false)
       commit('setGroups', null)
+      commit('resetLoading')
+      axios.defaults.headers.common['Authorization'] = null
     },
-    changeUserName: ({ commit }, id, payload) => {
-      commit('changeUserName', id, payload)
+    signUp: ({commit, dispatch}, payload) => {
+      axios.post(`${baseUrl}/sign_up`, payload, config)
+        .then(response => {
+          dispatch('setUser', response.data)
+          dispatch('setAllContacts', response.data.id)
+          dispatch('setAllGroups', response.data.id)
+          commit('setLogin', true)
+        })
+        .catch(e => {
+          console.log(e)
+        })
     },
-    changePassword: ({ commit }, id, payload) => {
-      commit('changePassword', id, payload)
+    submitAttributes: ({dispatch}, payload) => {
+      axios.post(`${baseUrl}/suggest_username`, payload)
+        .then(response => {
+          dispatch('changeUserName', response.data)
+        })
+        .catch(e => {
+          console.log(e)
+        })
+    },
+    changeUserName: ({ commit }, payload) => {
+      commit('changeUserName', payload)
+    },
+    changePassword: ({ commit }, payload) => {
+      commit('changePassword', payload)
     },
     pushAttribute: ({ commit }, payload) => {
       commit('addAttribute', payload)
@@ -380,6 +423,16 @@ export default new Vuex.Store({
         })
         .catch(error => {
           console.log(error)
+        })
+    },
+    feedbackSubmit: ({ commit }, payload) => {
+      axios.post(`${baseUrl}/feedback`, payload, config)
+        .then(response => {
+          console.log(payload)
+          console.log(response)
+        })
+        .catch(e => {
+          console.log(e)
         })
     }
   }
