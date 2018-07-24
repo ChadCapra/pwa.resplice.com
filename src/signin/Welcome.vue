@@ -16,9 +16,9 @@
           <el-row v-for="(attr, index) in attributesFiltered(type.id)" :key="attr.id" type="flex" justify="center" class="form-item">
             <el-col :xs="4" :sm="4" :md="2" :xl="1"><icon v-if="index === 0" :name="type.icon" scale="2.5"></icon></el-col>
             <el-col :xs="10" :sm="10" :md="8" :xl="6"><input type="text" :placeholder="type.name" v-model="attr.value" class="input"></el-col>
-            <el-col :xs="4" :sm="4" :md="2" :xl="1"><input type="text" placeholder="Attribute Name" v-model="attr.genre" class="input"></el-col>
+            <el-col :xs="4" :sm="4" :md="2" :xl="1"><input type="text" placeholder="Attribute Name" v-model="attr.sub_type" class="input"></el-col>
             <el-col :xs="4" :sm="4" :md="2" :xl="1">
-              <icon v-if="index === 0" name="plus" scale="2.5" @click.native="addAttribute({type_id: type.id, value: ''})"></icon>
+              <icon v-if="index === 0" name="plus" scale="2.5" @click.native="addAttribute({attribute_type_id: type.id, value: ''})"></icon>
               <icon v-else @click.native="removeAttribute(attr.id)" name="times" scale="2.5"></icon>
             </el-col>
           </el-row>
@@ -31,9 +31,9 @@
           <el-row v-for="(attr, index) in attributesFiltered(type.id)" :key="attr.id" type="flex" justify="center" class="form-item">
             <el-col :xs="4" :sm="4" :md="2" :xl="1"><icon v-if="index === 0" :name="type.icon" scale="2.5"></icon></el-col>
             <el-col :xs="10" :sm="10" :md="8" :xl="6"><input type="text" :placeholder="type.name" v-model="attr.value" class="input"></el-col>
-            <el-col :xs="4" :sm="4" :md="2" :xl="1"><input type="text" placeholder="Attribute Name" v-model="attr.genre" class="input"></el-col>
+            <el-col :xs="4" :sm="4" :md="2" :xl="1"><input type="text" placeholder="Attribute Name" v-model="attr.sub_type" class="input"></el-col>
             <el-col :xs="4" :sm="4" :md="2" :xl="1">
-              <icon v-if="index === 0" name="plus" scale="2.5" @click.native="addAttribute({type_id: type.id, value: ''})"></icon>
+              <icon v-if="index === 0" name="plus" scale="2.5" @click.native="addAttribute({attribute_type_id: type.id, value: ''})"></icon>
               <icon v-else @click.native="removeAttribute(attr.id)" name="times" scale="2.5"></icon>
             </el-col>
           </el-row>
@@ -87,25 +87,25 @@ export default {
       // Initialize empty attributes for all other attribute_types
       this.$store.commit('addAttribute', {
         id: '',
-        type_id: '4',
+        attribute_type_id: '4',
         value: '',
-        genre: 'Twitter',
+        sub_type: 'Twitter',
         verified: false,
         primary_of_type: false
       })
       this.$store.commit('addAttribute', {
         id: '',
-        type_id: '5',
+        attribute_type_id: '5',
         value: '',
-        genre: 'Personal',
+        sub_type: 'Personal',
         verified: false,
         primary_of_type: false
       })
       this.$store.commit('addAttribute', {
         id: '',
-        type_id: '6',
+        attribute_type_id: '6',
         value: '',
-        genre: 'Locker Combo',
+        sub_type: 'Locker Combo',
         verified: false,
         primary_of_type: false
       })
@@ -117,25 +117,25 @@ export default {
     // Initialize three empty attributes for the user to start with
     this.$store.commit('addAttribute', {
       id: '',
-      type_id: '1',
+      attribute_type_id: '1',
       value: '',
-      genre: 'Personal',
+      sub_type: 'Personal',
       verified: false,
       primary_of_type: false
     })
     this.$store.commit('addAttribute', {
       id: '',
-      type_id: '2',
+      attribute_type_id: '2',
       value: '',
-      genre: 'Work',
+      sub_type: 'Work',
       verified: false,
       primary_of_type: false
     })
     this.$store.commit('addAttribute', {
       id: '',
-      type_id: '3',
+      attribute_type_id: '3',
       value: '',
-      genre: 'Home',
+      sub_type: 'Home',
       verified: false,
       primary_of_type: false
     })

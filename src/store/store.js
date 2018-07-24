@@ -10,6 +10,7 @@ const config = {
   // }
 }
 const baseUrl = 'https://resplice.mocklab.io/api'
+// const baseUrl = 'http://localhost:4000/api'
 axios.defaults.headers.common['Authorization'] = null
 
 Vue.use(Vuex)
@@ -25,10 +26,11 @@ export default new Vuex.Store({
     user: {
       username: '',
       password: '',
-      user_basic: {
+      password_confirmation: 'Password123',
+      contact: {
         name: ''
       },
-      user_attributes: []
+      contact_attributes: []
     },
     contacts: null,
     contactCount: 0,
@@ -115,8 +117,8 @@ export default new Vuex.Store({
       return getters.getContactById(id).attributes
     },
     getFilteredAttributes: state => typeId => {
-      var attributes = state.user.user_attributes
-      return attributes.filter(attr => attr.type_id === typeId)
+      var attributes = state.user.contact_attributes
+      return attributes.filter(attr => attr.attribute_type_id === typeId)
     },
     getContactId: (state, getters) => id => {
       return getters.getContactById(id).id
@@ -149,7 +151,7 @@ export default new Vuex.Store({
       return state.user
     },
     getUserAttributes: state => {
-      return state.user.user_attributes
+      return state.user.contact_attributes
     },
     getAttributeTypes: state => {
       return state.attributeTypes
@@ -221,19 +223,19 @@ export default new Vuex.Store({
       state.searchState = payload
     },
     updateDOB: (state, payload) => {
-      state.user.user_basic.dob = payload
+      state.user.contact.dob = payload
     },
     updateName: (state, payload) => {
-      state.user.user_basic.name = payload
+      state.user.contact.name = payload
     },
     updateGender: (state, payload) => {
-      state.user.user_basic.gender = payload
+      state.user.contact.gender = payload
     },
     updateLanguage: (state, payload) => {
       state.user.lang = payload
     },
     updateProfilePic: (state, payload) => {
-      state.user.user_basic.profile_pic = payload
+      state.user.contact.profile_pic = payload
     },
     changeNameFormat: (state, payload) => {
       state.settings.nameFormat = payload
@@ -248,23 +250,23 @@ export default new Vuex.Store({
       }
     },
     sanitizeAttributes: state => {
-      var mod = state.user.user_attributes
+      var mod = state.user.contact_attributes
       for (var i = mod.length - 1; i >= 0; i--) {
         if (mod[i].value === '') {
           mod.splice(i, 1)
         }
       }
-      state.user.user_attributes = mod
+      state.user.contact_attributes = mod
     },
     addAttribute: (state, payload) => {
-      payload.id = state.user.user_attributes.length + 1
-      state.user.user_attributes.push(payload)
+      payload.id = state.user.contact_attributes.length + 1
+      state.user.contact_attributes.push(payload)
     },
     removeAttribute: (state, payload) => {
-      var attributes = state.user.user_attributes
-      var attr = state.user.user_attributes.find(attribute => attribute.id === payload)
+      var attributes = state.user.contact_attributes
+      var attr = state.user.contact_attributes.find(attribute => attribute.id === payload)
       var i = attributes.indexOf(attr)
-      state.user.user_attributes.splice(i, 1)
+      state.user.contact_attributes.splice(i, 1)
     },
     loadingDoneUser: state => {
       state.userLoading = false
@@ -331,7 +333,7 @@ export default new Vuex.Store({
         })
     },
     setUser: ({commit}, payload) => {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${payload.token}`
+      axios.defaults.headers.common['Authorization'] = payload.token
       commit('setCurrentUser', payload)
       commit('loadingDoneUser')
     },
@@ -358,7 +360,7 @@ export default new Vuex.Store({
         })
     },
     logout: ({commit}) => {
-      commit('setCurrentUser', {username: '', password: '', user_basic: {name: ''}, user_attributes: []})
+      commit('setCurrentUser', {username: '', password: '', password_confirmation: 'Password123', contact: {name: ''}, contact_attributes: []})
       commit('setContacts', null)
       commit('setLogin', false)
       commit('setGroups', null)
@@ -369,8 +371,8 @@ export default new Vuex.Store({
       axios.post(`${baseUrl}/sign_up`, payload, config)
         .then(response => {
           dispatch('setUser', response.data)
-          dispatch('setAllContacts', response.data.id)
-          dispatch('setAllGroups', response.data.id)
+          dispatch('setAllContacts')
+          // dispatch('setAllGroups', response.data.id)
           commit('setLogin', true)
         })
         .catch(e => {
