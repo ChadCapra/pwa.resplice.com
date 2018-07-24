@@ -295,7 +295,7 @@ export default {
       border-radius: 50%;
       height: 60px;
       width: 60px;
-      box-shadow: 0px 1px 10px 0px #0000004a;
+      box-shadow: 0px 1px 5px 0px #00000038;
       z-index: 10;
     }
   }
