@@ -25,10 +25,6 @@
     <meta name="msapplication-TileImage" content="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/msapplication-icon-144x144.png">
     <meta name="msapplication-TileColor" content="#2b5797">
     
-    <!-- Google Single Sign On -->
-    <meta name="google-signin-scope" content="profile email">
-    <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
-    
     <!-- Webpack JS & CSS -->
     <% for (var chunk of webpack.chunks) {
         for (var file of chunk.files) {
