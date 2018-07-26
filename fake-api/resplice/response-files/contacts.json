@@ -9,37 +9,41 @@
       {
         "id": "1",
         "contact_id": "1",
-        "attribute_group_id": "1",
-        "type": "personal",
+        "attribute_type_id": "1",
+        "attribute_type": "phone",
+        "sub_type": "personal",
         "value": "999-999-9999",
-        "verified": true,
+        "verified_at": true,
         "primary_of_type": false
       },
       {
         "id": "2",
         "contact_id": "1",
-        "attribute_group_id": "3",
-        "type": "personal",
+        "attribute_type_id": "3",
+        "attribute_type": "address",
+        "sub_type": "personal",
         "value": "1176 14th Ave SE Minneapolis, MN 55414",
-        "verified": true,
+        "verified_at": true,
         "primary_of_type": false
       },
       {
         "id": "3",
         "contact_id": "1",
-        "attribute_group_id": "1",
-        "type": "work",
+        "attribute_type_id": "1",
+        "attribute_type": "phone",
+        "sub_type": "work",
         "value": "555-555-5555",
-        "verified": true,
+        "verified_at": true,
         "primary_of_type": true
       },
       {
         "id": "4",
         "contact_id": "1",
-        "attribute_group_id": "2",
-        "type": "work",
+        "attribute_type_id": "2",
+        "attribute_type": "email",
+        "sub_type": "work",
         "value": "luke@rebels.com",
-        "verified": false,
+        "verified_at": false,
         "primary_of_type": false
       }
     ]
@@ -54,19 +58,21 @@
       {
         "id": "1",
         "contact_id": "5",
-        "attribute_group_id": "2",
-        "type": "work",
+        "attribute_type_id": "2",
+        "attribute_type": "email",
+        "sub_type": "work",
         "value": "shan@darkside.com",
-        "verified": false,
+        "verified_at": false,
         "primary_of_type": true
       },
       {
         "id": "2",
         "contact_id": "5",
-        "attribute_group_id": "4",
-        "type": "twitter",
+        "attribute_type_id": "4",
+        "attribute_type": "social",
+        "sub_type": "twitter",
         "value": "@bastillashan",
-        "verified": true,
+        "verified_at": true,
         "primary_of_type": true
       }
     ]
@@ -81,10 +87,11 @@
       {
         "id": "1",
         "contact_id": "2",
-        "attribute_group_id": "1",
-        "type": "personal",
+        "attribute_type_id": "1",
+        "attribute_type": "phone",
+        "sub_type": "personal",
         "value": "678-444-2345",
-        "verified": false,
+        "verified_at": false,
         "primary_of_type": true
       }
     ]
@@ -99,10 +106,11 @@
       {
         "id": "1",
         "contact_id": "3",
-        "attribute_group_id": "2",
-        "type": "work",
+        "attribute_type_id": "2",
+        "attribute_type": "email",
+        "sub_type": "work",
         "value": "han@heroes.com",
-        "verified": false,
+        "verified_at": false,
         "primary_of_type": true
       }
     ]
@@ -117,10 +125,11 @@
       {
         "id": "1",
         "contact_id": "4",
-        "attribute_group_id": "2",
-        "type": "personal",
+        "attribute_type_id": "2",
+        "attribute_type": "email",
+        "sub_type": "personal",
         "value": "revan@darkside.com",
-        "verified": false,
+        "verified_at": false,
         "primary_of_type": true
       }
     ]
@@ -135,10 +144,11 @@
       {
         "id": "1",
         "contact_id": "6",
-        "attribute_group_id": "3",
-        "type": "work",
+        "attribute_type_id": "3",
+        "attribute_type": "address",
+        "sub_type": "work",
         "value": "111 Saber Ln, Jabi Town, Coruscant, Core",
-        "verified": false,
+        "verified_at": false,
         "primary_of_type": true
       }
     ]
@@ -153,10 +163,11 @@
       {
         "id": "1",
         "contact_id": "7",
-        "attribute_group_id": "3",
-        "type": "personal",
+        "attribute_type_id": "3",
+        "attribute_type": "address",
+        "sub_type": "personal",
         "value": "5344 JarJar St, Inner City, Naboo, Mid Rim",
-        "verified": false,
+        "verified_at": false,
         "primary_of_type": true
       }
     ]
@@ -171,10 +182,11 @@
       {
         "id": "1",
         "contact_id": "8",
-        "attribute_group_id": "2",
-        "type": "personal",
+        "attribute_type_id": "2",
+        "attribute_type": "email",
+        "sub_type": "personal",
         "value": "obitheman@jtemple.com",
-        "verified": false,
+        "verified_at": false,
         "primary_of_type": true
       }
     ]
@@ -189,10 +201,11 @@
       {
         "id": "1",
         "contact_id": "9",
-        "attribute_group_id": "1",
-        "type": "work",
+        "attribute_type_id": "1",
+        "attribute_type": "phone",
+        "sub_type": "work",
         "value": "908-489-1564",
-        "verified": false,
+        "verified_at": false,
         "primary_of_type": true
       }
     ]
