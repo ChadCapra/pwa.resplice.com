@@ -1,9 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+// import store from './store/store.js'
 
 // Sign In Components
-import Signin from '@/signin/Signin'
-import SignUp from '@/signin/Signup'
+import AttribVerification from '@/signin/AttribVerification'
+import ForgotPassword from '@/signin/ForgotPassword'
+import LoginFlow from '@/signin/LoginFlow'
+import OneMatch from '@/signin/OneMatch'
+import ProfilePicUpload from '@/signin/ProfilePicUpload'
+import ResetPassword from '@/signin/ResetPassword'
+import SignIn from '@/signin/SignIn'
+import SignUp from '@/signin/SignUp'
 import Welcome from '@/signin/Welcome'
 
 // Contact Components
@@ -22,21 +29,21 @@ import Queue from '@/share/Queue'
 import Notif from '@/share/Notif'
 
 // Settings Components
-import Appearance from '@/settings/Appearance'
-import Language from '@/settings/Language'
+import AppearanceSettings from '@/settings/AppearanceSettings'
+import LanguageSettings from '@/settings/LanguageSettings'
 import NotifSettings from '@/settings/NotifSettings'
 import PrivacySafety from '@/settings/PrivacySafety'
 import UserProfile from '@/settings/UserProfile'
-import Settings from '@/settings/Settings'
-import Setting from '@/settings/Setting'
-import Static from '@/settings/Static'
+import SettingsPage from '@/settings/SettingsPage'
+import SettingPage from '@/settings/SettingPage'
+import SettingsStatic from '@/settings/SettingsStatic'
 
 // Skeleton Components
 import ComingSoon from '@/skeleton/ComingSoon'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -62,13 +69,13 @@ export default new Router({
         },
         {
           path: '/settings',
-          component: Settings
+          component: SettingsPage
         }
       ]
     },
     {
       path: '/settings',
-      component: Setting,
+      component: SettingPage,
       children: [
         {
           path: 'userprofile',
@@ -88,29 +95,61 @@ export default new Router({
         {
           path: 'appearance',
           name: 'Appearance',
-          component: Appearance
+          component: AppearanceSettings
         },
         {
           path: 'language',
           name: 'Language',
-          component: Language
+          component: LanguageSettings
         },
         {
           path: ':name',
           name: 'Information',
-          component: Static
+          component: SettingsStatic
         }
       ]
     },
     {
-      path: '/signin',
-      name: 'Signin',
-      component: Signin
-    },
-    {
-      path: '/signup',
-      name: 'SignUp',
-      component: SignUp
+      path: '/login',
+      name: 'Login',
+      component: LoginFlow,
+      children: [
+        {
+          path: '/signin',
+          name: 'Signin',
+          component: SignIn
+        },
+        {
+          path: '/signup',
+          name: 'SignUp',
+          component: SignUp
+        },
+        {
+          path: '/forgot-password',
+          name: 'ForgotPassword',
+          component: ForgotPassword
+        },
+        {
+          path: '/one-match',
+          name: 'OneMatch',
+          component: OneMatch
+        },
+        {
+          path: 'reset-password',
+          name: 'ResetPassword',
+          component: ResetPassword
+        },
+        {
+          path: '/verify',
+          name: 'AttribVerification',
+          component: AttribVerification
+        },
+        {
+          path: '/profile-upload',
+          name: 'ProfilePicUpload',
+          component: ProfilePicUpload
+        }
+      ]
     },
     {
       path: '/profile/:id',
@@ -155,3 +194,26 @@ export default new Router({
     }
   }
 })
+
+// router.beforeEach((to, from, next) => {
+//   if (!store.stateloggedIn) {
+//     switch (to.name) {
+//       case 'SignIn':
+//         next()
+//         break
+//       case 'SignUp':
+//         next()
+//         break
+//       case 'Welcome':
+//         next()
+//         break
+//       default:
+//         next(false)
+//         break
+//     }
+//   } else {
+//     next()
+//   }
+// })
+
+export default router
