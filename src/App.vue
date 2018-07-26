@@ -91,27 +91,35 @@ button, span {
 }
 
 .profile-pic-loading {
-    background: linear-gradient(271deg, #b4b7b6, #999999);
-    background-size: 400% 400%;
+  background: linear-gradient(271deg, #b4b7b6, #999999);
+  background-size: 400% 400%;
 
-    -webkit-animation: skeleton 1.5s ease infinite;
-    -moz-animation: skeleton 1.5s ease infinite;
-    animation: skeleton 1.5s ease infinite;
+  -webkit-animation: skeleton 1.5s ease infinite;
+  -moz-animation: skeleton 1.5s ease infinite;
+  animation: skeleton 1.5s ease infinite;
 
-    @-webkit-keyframes skeleton {
-      0%{background-position:0% 50%}
-      50%{background-position:100% 50%}
-      100%{background-position:0% 50%}
-    }
-    @-moz-keyframes skeleton {
-      0%{background-position:0% 50%}
-      50%{background-position:100% 50%}
-      100%{background-position:0% 50%}
-    }
-    @keyframes skeleton { 
-      0%{background-position:0% 50%}
-      50%{background-position:100% 50%}
-      100%{background-position:0% 50%}
-    }
+  @-webkit-keyframes skeleton {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
   }
+  @-moz-keyframes skeleton {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+  @keyframes skeleton { 
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+}
+
+// Custom Button Styles
+.white-btn {
+  // Use with el-button type="primary"
+  color:#1BBC98;
+  background-color: white;
+  border-radius: 5px;
+}
 </style>
