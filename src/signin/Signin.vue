@@ -6,95 +6,207 @@
           <div class="sign-logo"><img :src="logo" width="250" height="250" alt="Resplice Logo"></div>
         </el-col>
       </el-row>
-      <!-- Login form -->
-      <div class="form-login" v-show="isLogin">
+
+      <!-- Login Prompt -->
+      <div v-if="!bothAttribsFound" class="form-login">
         <el-row type="flex" justify="center">
           <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
-            <div class="sign-field"><el-input placeholder="Username" v-model="loginData.username">
-              <template slot="prepend"><icon name="user"></icon></template>
-            </el-input></div>
+            <div class="sign-field">
+              <el-input ref="email" type="email" placeholder="Enter Email" v-model="email" @focus="resetStyle($refs.email.$el.children[1])">
+                <template slot="prepend"><icon name="envelope"></icon></template>
+              </el-input>
+            </div>
           </el-col>
         </el-row>
         <el-row type="flex" justify="center">
           <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
-            <div class="sign-field"><el-input type="password" placeholder="Password" v-model="loginData.password">
-              <template slot="prepend"><icon name="lock"></icon></template>
+            <div class="sign-field"><el-input ref="phone" type="tel" placeholder="Enter Phone" v-model="phone" @focus="resetStyle($refs.phone.$el.children[1])">
+              <template slot="prepend"><icon name="phone" scale="1.2"></icon></template>
             </el-input></div>
-          </el-col>
-        </el-row>
-        <el-row type="flex" justify="center">
-            <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
-              <div class="sign-btn">
-                <el-button type="primary" plain @click="isLogin = false; initialState = true">Prev</el-button>
-                <el-button type="primary" @click="login">Login</el-button>
-              </div>
-            </el-col>
-          </el-row>
-      </div>
-      <div class="btns" v-show="initialState">
-        <el-row type="flex" justify="center">
-          <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
-            <div class="g-signin2" data-onsuccess="onSignIn" data-width="190" data-height="40" data-longtitle="true" data-theme="light"></div>
           </el-col>
         </el-row>
         <el-row type="flex" justify="center">
           <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
             <div class="sign-btn">
-              <el-button type="primary" plain @click="$router.push({ name: 'Welcome' })">Sign Up</el-button>
-              <el-button type="primary" @click="isLogin = true; initialState = false">Login</el-button>
+              <el-button type="primary" @click="validateInputs">Get Started</el-button>
             </div>
           </el-col>
         </el-row>
+      </div>
+
+      <!-- Password Prompt -->
+      <div v-else class="form-login">
+        <el-row type="flex" justify="center">
+          <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
+            <div class="sign-field"><el-input ref="password" type="password" placeholder="Enter Password" v-model="password" @focus="resetStyle($refs.password.$el.children[1])">
+              <template slot="prepend"><icon name="lock"></icon></template>
+            </el-input></div>
+          </el-col>
+        </el-row>
+        <el-row type="flex" justify="center">
+          <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
+            <div class="sign-btn">
+              <el-button type="primary" @click="validatePassword">Login</el-button>
+            </div>
+          </el-col>
+        </el-row>
+        <router-link to="/forgot-password">Forgot Password?</router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
   data () {
     return {
-      isLogin: false,
-      initialState: true,
       logo: require('../assets/RespliceLogoTempAlt.png'),
-      loginData: {
-        username: '',
-        password: ''
-      }
+      bothAttribsFound: false
     }
   },
   computed: {
+    ...mapGetters([
+      'getEmail',
+      'getPhone',
+      'getPassword',
+      'getMatchNumber'
+    ]),
+    email: {
+      get () {
+        return this.getEmail
+      },
+      set (value) {
+        this.setEmail(value)
+      }
+    },
+    phone: {
+      get () {
+        return this.getPhone
+      },
+      set (value) {
+        // Format phone number value here
+        this.setPhone(value)
+      }
+    },
+    password: {
+      get () {
+        return this.getPassword
+      },
+      set (value) {
+        this.setPassword(value)
+      }
+    },
     loading () {
       return this.$store.getters.getGroupsLoading
     }
   },
   methods: {
-    signUp () {
-      this.$alert('Welcome to Resplice, please click continue to enter your information', 'Sign Up Successful!', {
-        confirmButtonText: 'Continue',
-        callback: action => {
-          this.$message({
-            type: 'info',
-            message: `action: ${action}`
-          })
+    ...mapMutations([
+      'setEmail',
+      'setPhone',
+      'setPassword',
+      'setLogin'
+    ]),
+    ...mapActions([
+      'matchAttributes',
+      'signIn',
+      'setUser',
+      'setAllContacts'
+    ]),
+    checkAttribs () {
+      this.matchAttributes().then(() => {
+        switch (this.getMatchNumber) {
+          case 0:
+            this.$router.push({ name: 'SignUp' })
+            break
+          case 1:
+            this.$router.push({ name: 'OneMatch' })
+            break
+          case 2:
+            this.bothAttribsFound = true
+            break
+          default:
+            console.log('An Error has occured')
+            break
         }
       })
-      this.$router.push({ name: 'Welcome' })
     },
     login () {
-      this.$store.dispatch('login', this.loginData)
-      this.$router.push({ name: 'root' })
+      this.signIn().then((data) => {
+        this.setUser(data.user_object)
+        this.setAllContacts(data.contacts_list)
+        this.setLogin()
+        this.$router.push({ name: 'root' })
+      }).catch((error) => {
+        this.$notify({
+          title: 'Password Incorrect',
+          message: error,
+          type: 'error'
+        })
+      })
+    },
+    validateInputs () {
+      var email = this.$refs.email
+      var phone = this.$refs.phone
+
+      if (email.currentValue.length > 0 && phone.currentValue.length > 0) {
+        this.checkAttribs()
+      } else if (email.currentValue.length <= 0) {
+        this.$notify({
+          title: 'Email Required',
+          message: 'Please enter an email address',
+          type: 'error'
+        })
+        email.$el.children[1].style = 'border: 2px solid #ff0000ad;'
+      } else if (phone.currentValue.length <= 0) {
+        this.$notify({
+          title: 'Phone Number Required',
+          message: 'Please enter a phone number',
+          type: 'error'
+        })
+        phone.$el.children[1].style = 'border: 2px solid #ff0000ad;'
+      } else {
+        this.$notify({
+          title: 'Fields Required',
+          message: 'Please enter an email & a phone number',
+          type: 'error'
+        })
+        email.$el.children[1].style = 'border: 2px solid #ff0000ad;'
+        phone.$el.children[1].style = 'border: 2px solid #ff0000ad;'
+      }
+    },
+    validatePassword () {
+      var password = this.$refs.password
+
+      if (password.currentValue.length > 0) {
+        this.login()
+      } else {
+        this.$notify({
+          title: 'Password Required',
+          message: 'Please enter a password',
+          type: 'error'
+        })
+        password.$el.children[1].style = 'border: 2px solid #ff0000ad;'
+      }
+    },
+    resetStyle (inputField) {
+      inputField.style = ''
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .sign-field {
   padding: 5px;
 }
 .sign-btn {
   padding: 10px;
+  margin-top: 25px;
+  & .el-button {
+    border-radius: 5px;
+  }
 }
 .sign-logo {
   padding-top: 50px;
@@ -111,9 +223,14 @@ export default {
 .signin {
   padding-top: 10px;
 }
-.g-signin2 {
-  display: flex;
-  justify-content: center;
+
+.form-login {
+  & a {
+    color: white;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+  }
 }
 </style>
 

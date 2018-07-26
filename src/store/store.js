@@ -2,6 +2,9 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
+// Import Modules
+import signIn from './modules/signin'
+
 // Config for axios
 const config = {
   async: true
@@ -11,13 +14,12 @@ const config = {
 }
 const baseUrl = 'https://resplice.mocklab.io/api'
 // const baseUrl = 'http://localhost:4000/api'
-axios.defaults.headers.common['Authorization'] = null
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    loggedIn: true,
+    loggedIn: false,
     userLoading: true,
     contactsLoading: true,
     groupsLoading: true,
@@ -26,7 +28,7 @@ export default new Vuex.Store({
     user: {
       username: '',
       password: '',
-      password_confirmation: 'Password123',
+      password_confirmation: '',
       contact: {
         name: ''
       },
@@ -215,6 +217,9 @@ export default new Vuex.Store({
     changePassword: (state, payload) => {
       state.user.password = payload
     },
+    passwordConfirmation: (state, payload) => {
+      state.user.password_confirmation = payload
+    },
     changeNavIndex: (state, payload) => {
       state.navIndex.one = state.navIndex.two = state.navIndex.three = state.navIndex.four = state.navIndex.five = false
       state.navIndex[payload] = true
@@ -319,35 +324,15 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    login: ({commit, dispatch}, payload) => {
-      axios.post(`${baseUrl}/sign_in`, payload, config)
-        .then(response => {
-          console.log(response)
-          dispatch('setUser', response.data)
-          dispatch('setAllContacts')
-          dispatch('setAllGroups')
-          commit('setLogin', true)
-        })
-        .catch(e => {
-          console.log(e)
-        })
-    },
     setUser: ({commit}, payload) => {
-      axios.defaults.headers.common['Authorization'] = payload.token
       commit('setCurrentUser', payload)
       commit('loadingDoneUser')
     },
-    setAllContacts: ({commit}) => {
-      axios.get(`${baseUrl}/contacts`, config)
-        .then(response => {
-          commit('setContacts', response.data)
-          commit('buildSearchableAttributes')
-          commit('buildContactCount')
-          commit('loadingDoneContacts')
-        })
-        .catch(e => {
-          console.log(e)
-        })
+    setAllContacts: ({commit}, payload) => {
+      commit('setContacts', payload)
+      commit('buildSearchableAttributes')
+      commit('buildContactCount')
+      commit('loadingDoneContacts')
     },
     setAllGroups: ({commit}) => {
       axios.get(`${baseUrl}/groups`, config)
@@ -360,7 +345,7 @@ export default new Vuex.Store({
         })
     },
     logout: ({commit}) => {
-      commit('setCurrentUser', {username: '', password: '', password_confirmation: 'Password123', contact: {name: ''}, contact_attributes: []})
+      commit('setCurrentUser', {username: '', password: '', password_confirmation: '', contact: {name: ''}, contact_attributes: []})
       commit('setContacts', null)
       commit('setLogin', false)
       commit('setGroups', null)
@@ -437,9 +422,8 @@ export default new Vuex.Store({
           console.log(e)
         })
     }
+  },
+  modules: {
+    signIn
   }
-  // modules: {
-  //   contacts,
-  //   group
-  // }
 })
