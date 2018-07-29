@@ -52,7 +52,7 @@ export default {
   actions: {
     signIn: ({commit, state}) => {
       return new Promise((resolve, reject) => {
-        api.post('sign_in', {
+        api.post('/sign_in', {
           email: state.email,
           phone: state.phone,
           password: state.password
