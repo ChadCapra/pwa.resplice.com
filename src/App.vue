@@ -121,5 +121,25 @@ button, span {
   color:#1BBC98;
   background-color: white;
   border-radius: 5px;
+  font-size: 18px;
+}
+
+// Input Styles
+
+// Sign In Flow Input
+.signin-input {
+  outline: 0;
+  border: 0;
+  width: 100%;
+  background: transparent;
+  border-bottom: 2px solid #fff;
+  color: #fff;
+  font-size: 16px;
+  height: 45px;
+}
+.signin-input-title {
+  display: flex;
+  justify-content: flex-start;
+  margin: 0;
 }
 </style>
