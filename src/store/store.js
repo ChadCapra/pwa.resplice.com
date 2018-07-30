@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import axios from 'axios'
 
 // Import Modules
-import signIn from './modules/signin'
+import user from './modules/user'
 
 // Config for axios
 const config = {
@@ -12,8 +12,8 @@ const config = {
   //   console.log(`Loading: ${progressEvent}`)
   // }
 }
-const baseUrl = 'https://resplice.mocklab.io/api'
-// const baseUrl = 'http://localhost:4000/api'
+// const baseUrl = 'https://resplice.mocklab.io/api'
+const baseUrl = 'http://localhost:4000/api'
 
 Vue.use(Vuex)
 
@@ -115,7 +115,7 @@ export default new Vuex.Store({
     getContactById: state => id => {
       return state.contacts.find(contact => contact.id === id)
     },
-    getAttributes: (state, getters) => id => {
+    getContactAttributes: (state, getters) => id => {
       return getters.getContactById(id).attributes
     },
     getFilteredAttributes: state => typeId => {
@@ -151,9 +151,6 @@ export default new Vuex.Store({
     },
     getUserInfo: state => {
       return state.user
-    },
-    getUserAttributes: state => {
-      return state.user.contact_attributes
     },
     getAttributeTypes: state => {
       return state.attributeTypes
@@ -352,18 +349,18 @@ export default new Vuex.Store({
       commit('resetLoading')
       axios.defaults.headers.common['Authorization'] = null
     },
-    signUp: ({commit, dispatch}, payload) => {
-      axios.post(`${baseUrl}/sign_up`, payload, config)
-        .then(response => {
-          dispatch('setUser', response.data)
-          dispatch('setAllContacts')
-          // dispatch('setAllGroups', response.data.id)
-          commit('setLogin', true)
-        })
-        .catch(e => {
-          console.log(e)
-        })
-    },
+    // signUp: ({commit, dispatch}, payload) => {
+    //   axios.post(`${baseUrl}/sign_up`, payload, config)
+    //     .then(response => {
+    //       dispatch('setUser', response.data)
+    //       dispatch('setAllContacts')
+    //       dispatch('setAllGroups', response.data.id)
+    //       commit('setLogin', true)s
+    //     })
+    //     .catch(e => {
+    //       console.log(e)
+    //     })
+    // },
     submitAttributes: ({dispatch}, payload) => {
       axios.post(`${baseUrl}/suggest_username`, payload)
         .then(response => {
@@ -424,6 +421,6 @@ export default new Vuex.Store({
     }
   },
   modules: {
-    signIn
+    user
   }
 })

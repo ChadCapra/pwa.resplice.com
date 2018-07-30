@@ -2,25 +2,37 @@
   <div class="sign-up">
     <div class="top">
       <h1>Sign Up</h1>
-      <h2>Pick a username &amp; a password</h2>
+      <h2>Enter name, email, phone &amp; password</h2>
     </div>
     <div class="body">
       <el-row type="flex" justify="center">
         <el-col :xs="22" :sm="22" :md="16" :lg="8" :xl="8">
-          <h3 class="input-title">User Name</h3>
-          <input type="text" placeholder="User Name" class="input" v-model="userName">
+          <h3 class="input-title">Email Address</h3>
+          <input type="email" placeholder="your@email.com" class="input" v-model="signUp.email" required>
+        </el-col>
+      </el-row>
+      <el-row type="flex" justify="center">
+        <el-col :xs="22" :sm="22" :md="16" :lg="8" :xl="8">
+          <h3 class="input-title">Phone Number</h3>
+          <input type="tel" placeholder="(999) 999-9999" pattern="[0-9]" class="input" v-model="signUp.phone" required>
+        </el-col>
+      </el-row>
+      <el-row type="flex" justify="center">
+        <el-col :xs="22" :sm="22" :md="16" :lg="8" :xl="8">
+          <h3 class="input-title">Full Name</h3>
+          <input type="text" placeholder="Han Solo" class="input" v-model="signUp.name" required autofocus>
         </el-col>
       </el-row>
       <el-row type="flex" justify="center">
         <el-col :xs="22" :sm="22" :md="16" :lg="8" :xl="8">
           <h3 class="input-title">Password</h3>
-          <input type="password" placeholder="Password" class="input" v-model="password">
+          <input type="password" placeholder="Password" class="input" v-model="signUp.password" required>
         </el-col>
       </el-row>
       <el-row type="flex" justify="center">
         <el-col :xs="22" :sm="22" :md="16" :lg="8" :xl="8">
           <h3 class="input-title">Confirm Password</h3>
-          <input type="password" placeholder="Password" class="input" v-model="confirmPassword">
+          <input type="password" placeholder="Confirm Password" class="input" v-model="signUp.password_confirmation" required>
         </el-col>
       </el-row>
       <el-button class="sub-btn" @click="submit" type="primary">Sign Up</el-button>
@@ -32,24 +44,37 @@
 export default {
   data () {
     return {
-      userName: '',
-      password: '',
-      confirmPassword: ''
-    }
-  },
-  computed: {
-    user () {
-      return this.$store.getters.getUserInfo
+      signUp: {
+        email: '',
+        phone: '',
+        name: '',
+        password: '',
+        password_confirmation: ''
+      }
     }
   },
   methods: {
     submit () {
-      console.log(this.userName, this.password, this.confirmPassword)
-      this.$store.dispatch('changeUserName', this.userName)
-      this.$store.dispatch('changePassword', this.password)
-      this.$store.dispatch('signUp', this.user)
-      this.$router.push({name: 'Share'})
+      var passwordConfirmed = this.passwordConfirmation()
+      if (passwordConfirmed === 1) {
+        console.log('Passwords do not match')
+      } else {
+        this.$store.dispatch('signUp', this.signUp)
+          .then(() => {
+            this.$router.push({name: 'AttribVerification'})
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      }
+    },
+    passwordConfirmation () {
+      return this.signUp.password === this.signUp.password_confirmation ? this.signUp.password : 1
     }
+  },
+  mounted () {
+    this.signUp.email = this.$store.getters.getSignInData.email
+    this.signUp.phone = this.$store.getters.getSignInData.phone
   }
 }
 </script>

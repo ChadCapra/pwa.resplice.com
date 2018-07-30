@@ -10,12 +10,12 @@
 
 <script>
 export default {
-  name: 'app',
-  created () {
-    if (this.$store.state.loggedIn) {
-      this.$store.dispatch('login')
-    }
-  }
+  name: 'app'
+  // created () {
+  //   if (this.$store.state.loggedIn) {
+  //     this.$store.dispatch('login')
+  //   }
+  // }
 }
 </script>
 

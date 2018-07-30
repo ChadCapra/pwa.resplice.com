@@ -6,6 +6,9 @@
     <div class="body">
       <div v-if="sendingCode" class="send-code">
         <el-row type="flex" justify="center">
+          <p>Pick one of your attributes to verify your identity before resetting your password</p>
+        </el-row>
+        <el-row type="flex" justify="center">
           <el-col>Send code to<br><span>{{ email }}</span></el-col>
           <el-col><el-button class="white-btn" type="primary" @click="sendAttrib(email)">Send</el-button></el-col>
         </el-row>
@@ -16,10 +19,12 @@
       </div>
       <div v-else class="verify-code">
         <el-row type="flex" justify="center">
-          <el-col>We sent a code to {{ attribSent }}<br>Enter the code below to verify</el-col>
+          <el-col>We sent a code to <span>{{ attribSent }}</span><br><br>Enter the code below to verify</el-col>
+        </el-row>
+        <el-row type="flex" justify="center">
           <el-col><input ref="code" type="text" placeholder="CODE" required></el-col>
         </el-row>
-        <el-button class="white-btn" type="primary" @click="verifyCode"></el-button>
+        <el-button class="white-btn" type="primary" @click="verifyCode">Verify</el-button>
       </div>
     </div>
   </div>
@@ -37,9 +42,14 @@ export default {
   },
   computed: {
     ...mapGetters({
-      email: 'getEmail',
-      phone: 'getPhone'
-    })
+      signInData: 'getSignInData'
+    }),
+    email () {
+      return this.signInData.email
+    },
+    phone () {
+      return this.signInData.phone
+    }
   },
   methods: {
     ...mapActions([
@@ -49,6 +59,12 @@ export default {
     sendAttrib (attrib) {
       this.attribSent = attrib
       this.sendVerify(attrib)
+        .then(() => {
+          this.sendingCode = false
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
     verifyCode () {
       // Check if field has been filled out and change style w/ popup if not
@@ -73,7 +89,7 @@ export default {
     background-color: white;
     & h1 {
       font-size: 64px;
-      margin: 0;
+      margin: 10px 0;
     }
   }
   .body {

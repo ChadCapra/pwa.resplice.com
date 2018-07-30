@@ -9,17 +9,44 @@
       <p>Select the attributes you would like to share:</p>
     </div>
     <div class="body">
-      <el-button class="btn" type="primary" round @click="shareMinimalAttributes">Share Minimal Attributes</el-button>
-      <el-button class="btn" type="primary" round @click="shareDefaultAttributes">Share Default Attributes</el-button>
       <div class="attributes">
-        <div class="custom">
+        <!-- <div class="custom">
           <input type="checkbox" name="select" id="custom" class="checkbox" ref="allAttr" @click="checkAll">
           <span style="margin-left: 10px">Share all attributes</span>
-        </div>
+        </div> -->
         <div class="attribute" v-for="attr in attributes" :key="attr.id">
           <input type="checkbox" name="select" :id="attr.id" ref="attr" class="checkbox">
           <span style="margin-left: 10px">{{ attr.value }}</span>
         </div>
+      </div>
+      <div class="tags-edit" v-if="tagsEdit">
+        <div class="tag-showcase">
+          <el-tag
+            color="white"
+            closable
+            type="primary">
+            Tag One
+          </el-tag>
+          <el-tag color="white" closable>Tag Two</el-tag>
+          <el-tag color="white" closable>Tag Three</el-tag>
+        </div>
+        <div class="tag-list">
+          <p>Select a tag or create a new one</p>
+          <el-input
+            class="input-new-tag"
+            v-model="tagInput"
+            ref="saveTagInput"
+            size="mini"></el-input>
+          <el-button type="primary" v-if="tagInput.length > 0" @click="createTag">Create Tag {{ tagInput }}</el-button>
+          <div class="tag-select">
+            <div v-for="tag in tags" :key="tag.id">{{ tag.value }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="tags" v-else>
+        <el-tag color="white">Tag One</el-tag>
+        <el-tag color="white">Tag Two</el-tag>
+        <el-tag color="white">Tag Three</el-tag>
       </div>
     </div>
     <el-button class="share btn" type="primary" round @click="shareAttributes">Share</el-button>
@@ -51,7 +78,27 @@ export default {
   data () {
     return {
       sharedAttributes: [],
-      dialogVisible: false
+      dialogVisible: false,
+      tagsEdit: false,
+      tagInput: '',
+      tags: [
+        {
+          id: 1,
+          value: 'College Friends'
+        },
+        {
+          id: 2,
+          value: 'Home Contractors'
+        },
+        {
+          id: 3,
+          value: 'Annoying people in my lab group'
+        },
+        {
+          id: 4,
+          value: 'Neighbors to stay away from'
+        }
+      ]
     }
   },
   computed: {
@@ -134,6 +181,12 @@ export default {
       // API Call
       this.$store.dispatch('share')
       this.$router.push({name: 'root'})
+    },
+    createTag () {
+      this.tags.push({
+        id: this.tags.length + 1,
+        value: this.tagInput
+      })
     }
   }
 }
@@ -190,17 +243,6 @@ export default {
     left: calc(50% - 40px);
     margin: 0;
   }
-  .minimal, .default {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .minimal {
-    margin: 10px 0 15px 0;
-  }
-  .default {
-    margin: 15px 0 10px 0;
-  }
   .custom, .attribute {
     display: flex;
     justify-content: flex-start;
@@ -208,7 +250,7 @@ export default {
     margin-top: 25px;
   }
   .attribute {
-    margin-left: 30px;
+    margin-left: 10px;
   }
   .checkbox {
     position: relative;
@@ -239,6 +281,48 @@ export default {
       border-top-style: none;
       border-right-style: none;
     }
+  }
+  .tags, .tags-edit {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 25px;
+    padding: 10px;
+    & .el-tag {
+      margin-right: 10px;
+    }
+  }
+  .tags {
+    flex-wrap: wrap;
+    &:hover {
+      background-color: #DADADABF;
+      cursor: pointer;
+    }
+    transition: 0.3s all ease;
+  }
+  .tags-edit {
+    flex-direction: column;
+    border: 1px solid white;
+    text-align: left;
+    & .el-button {
+      color: #1BBC9B;
+      background-color: white;
+      width: 250px;
+      align-self: center;
+    }
+    & .el-input {
+      width: 250px;
+      align-self: center;
+    }
+  }
+  .tag-showcase {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .tag-list {
+    display: flex;
+    flex-direction: column;
   }
   .summary {
     display: flex;

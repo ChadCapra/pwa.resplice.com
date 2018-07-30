@@ -9,7 +9,7 @@
           <span>Contact</span>
         </el-col>
         <el-col :xs="6" :sm="4" :md="2" :lg="2" :xl="2" justify="center" style="display: flex; justify-content: flex-end;">
-          <el-button type="primary" size="medium">Invite</el-button>
+          <el-button type="primary" size="small" style="border-radius: 5px; font-size: 14px;">Share With</el-button>
         </el-col>
       </el-row>
     </el-header>

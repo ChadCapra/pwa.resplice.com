@@ -135,7 +135,7 @@ const router = new Router({
           component: OneMatch
         },
         {
-          path: 'reset-password',
+          path: '/reset-password',
           name: 'ResetPassword',
           component: ResetPassword
         },

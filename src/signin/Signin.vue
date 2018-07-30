@@ -1,5 +1,5 @@
 <template>
-  <div class="background">
+  <div class="background" v-loading.fullscreen.lock="loading">
     <div class="signin">
       <el-row type="flex" justify="center">
         <el-col :xs="20" :sm="20" :md="16" :lg="12" :xl="6">
@@ -57,94 +57,91 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
+
 export default {
   data () {
     return {
       logo: require('../assets/RespliceLogoTempAlt.png'),
-      bothAttribsFound: false
+      bothAttribsFound: false,
+      loading: false
     }
   },
   computed: {
-    ...mapGetters([
-      'getEmail',
-      'getPhone',
-      'getPassword',
-      'getMatchNumber'
-    ]),
+    signInData () {
+      return this.$store.getters.getSignInData
+    },
     email: {
       get () {
-        return this.getEmail
+        return this.signInData.email
       },
       set (value) {
-        this.setEmail(value)
+        this.$store.commit('setSignInEmail', value)
       }
     },
     phone: {
       get () {
-        return this.getPhone
+        return this.signInData.phone
       },
       set (value) {
-        // Format phone number value here
-        this.setPhone(value)
+        this.$store.commit('setSignInPhone', value)
       }
     },
     password: {
       get () {
-        return this.getPassword
+        return this.signInData.password
       },
       set (value) {
-        this.setPassword(value)
+        this.$store.commit('setSignInPassword', value)
       }
-    },
-    loading () {
-      return this.$store.getters.getGroupsLoading
     }
   },
   methods: {
-    ...mapMutations([
-      'setEmail',
-      'setPhone',
-      'setPassword',
-      'setLogin'
-    ]),
     ...mapActions([
       'matchAttributes',
-      'signIn',
-      'setUser',
-      'setAllContacts'
+      'signIn'
     ]),
     checkAttribs () {
-      this.matchAttributes().then(() => {
-        switch (this.getMatchNumber) {
-          case 0:
-            this.$router.push({ name: 'SignUp' })
-            break
-          case 1:
-            this.$router.push({ name: 'OneMatch' })
-            break
-          case 2:
-            this.bothAttribsFound = true
-            break
-          default:
-            console.log('An Error has occured')
-            break
-        }
-      })
+      this.loading = true
+      this.matchAttributes({ email: this.signInData.email, phone: this.signInData.phone })
+        .then((number) => {
+          console.log(number)
+          this.loading = false
+          switch (number) {
+            case 0:
+              this.$router.push({ name: 'SignUp' })
+              break
+            case 1:
+              this.$router.push({ name: 'OneMatch' })
+              break
+            case 2:
+              this.bothAttribsFound = true
+              break
+            default:
+              console.log('An Error has occured')
+              break
+          }
+        })
+        .catch(error => {
+          this.loading = false
+          console.log(error)
+        })
     },
     login () {
-      this.signIn().then((data) => {
-        this.setUser(data.user_object)
-        this.setAllContacts(data.contacts_list)
-        this.setLogin()
-        this.$router.push({ name: 'root' })
-      }).catch((error) => {
-        this.$notify({
-          title: 'Password Incorrect',
-          message: error,
-          type: 'error'
+      this.loading = true
+      this.signIn(this.signInData)
+        .then(() => {
+          this.loading = false
+          this.$router.push({ name: 'root' })
         })
-      })
+        .catch((error) => {
+          this.loading = false
+          this.$notify({
+            title: 'Password Incorrect',
+            message: error,
+            type: 'error'
+          })
+        })
     },
     validateInputs () {
       var email = this.$refs.email
