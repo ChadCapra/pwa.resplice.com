@@ -53,6 +53,7 @@ import 'vue-awesome/icons/info-circle'
 import 'vue-awesome/icons/question-circle'
 import 'vue-awesome/icons/balance-scale'
 import 'vue-awesome/icons/file'
+import 'vue-awesome/icons/upload'
 import Icon from 'vue-awesome/components/Icon'
 
 // Import vue-touch for phone gestures
