@@ -22,11 +22,11 @@ export default {
     getUserId: state => state.user_object.id,
     getUserAttributes: state => state.user_object.contact_attributes,
     getUser: state => state.user_object,
-    getPassword: state => state.user_object.password,
     getProfilePic: state => state.user_object.profile_pic,
     getThumbnail: state => state.user_object.thumbnail,
     getSignInData: state => state.signInData,
-    getLoggedIn: state => state.loggedIn
+    getLoggedIn: state => state.loggedIn,
+    getFilteredAttributes: state => typeId => state.user_object.contact_attributes.filter(attr => attr.attribute_type_id === typeId)
   },
   mutations: {
     setSignInEmail: (state, payload) => {
@@ -49,7 +49,32 @@ export default {
     },
     setUserLoadingDone: (state, payload) => {
       state.userLoading = payload
+    },
+    setProfilePic: (state, payload) => { // Used for testing
+      state.user_object.profile_pic = payload
+    },
+    setThumbnail: (state, payload) => { // Used for testing
+      state.user_object.thumbnail = payload
+    },
+    sanitizeAttributes: state => {
+      var mod = state.user.contact_attributes
+      for (var i = mod.length - 1; i >= 0; i--) {
+        if (mod[i].value === '') {
+          mod.splice(i, 1)
+        }
+      }
+      state.user.contact_attributes = mod
     }
+    // addAttribute: (state, payload) => {
+    //   payload.id = state.user.contact_attributes.length + 1
+    //   state.user.contact_attributes.push(payload)
+    // },
+    // removeAttribute: (state, payload) => {
+    //   var attributes = state.user.contact_attributes
+    //   var attr = state.user.contact_attributes.find(attribute => attribute.id === payload)
+    //   var i = attributes.indexOf(attr)
+    //   state.user.contact_attributes.splice(i, 1)
+    // }
   },
   actions: {
     signIn: ({commit, state}, signInData) => {
@@ -64,7 +89,7 @@ export default {
               commit('setUser', response.data.return_object.user_object)
               commit('setUserLoading', false)
               commit('setLogin', true)
-              resolve()
+              resolve(response.data.return_object.contact_list)
             } else {
               reject(errorCode)
             }
@@ -84,7 +109,7 @@ export default {
             api.defaults.headers.common['Authorization'] = response.data.return_object.user_object.token
             api.defaults.headers['Authorization'] = response.data.return_object.user_object.token
             commit('setUser', response.data.return_object.user_object)
-            resolve()
+            resolve(response.data.return_object.contact_list)
           })
           .catch(error => {
             console.log(error)

@@ -20,13 +20,12 @@ export default {
       return this.$store.getters.getGroupById(this.$route.params.id).name
     }
   },
-  mounted () {
-    this.$store.state.header.showBack = true
-    this.$store.state.header.text = this.groupName
+  created () {
+    this.$store.commit('setShowBack', true)
+    this.$store.commit('setHeaderText', this.groupName)
   },
   destroyed () {
-    this.$store.state.header.showBack = false
-    this.$store.state.header.text = 'Resplice'
+    this.$store.commit('setShowBack', false)
   }
 }
 </script>

@@ -1,8 +1,6 @@
 <template>
   <div class="share">
-    <!-- <div class="share-header" :class="{ 'fixed-header': showContacts }"> -->
     <div class="share-header">
-      <h1>Share Your Information</h1>
       <h3>Share info with an exisiting contact, username, phone number, email, or scan a contact's Recode to start sharing</h3>
       <!-- Search Bar -->
       <el-row class="search-header" type="flex" justify="center">
@@ -155,10 +153,7 @@ export default {
     }
   },
   created () {
-    this.$store.commit('removeHeader')
-  },
-  destroyed () {
-    this.$store.commit('addHeader')
+    this.$store.commit('setHeaderText', 'Share Your Information')
   }
 }
 </script>

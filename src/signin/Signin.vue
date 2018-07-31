@@ -63,11 +63,18 @@ export default {
   data () {
     return {
       logo: require('../assets/RespliceLogoTempAlt.png'),
-      bothAttribsFound: false,
-      loading: false
+      bothAttribsFound: false
     }
   },
   computed: {
+    loading: {
+      get () {
+        return this.$store.getters.getGlobalLoading
+      },
+      set (value) {
+        this.$store.commit('setGlobalLoading', value)
+      }
+    },
     signInData () {
       return this.$store.getters.getSignInData
     },
@@ -131,7 +138,6 @@ export default {
       this.loading = true
       this.signIn(this.signInData)
         .then(() => {
-          this.loading = false
           this.$router.push({ name: 'root' })
         })
         .catch((error) => {

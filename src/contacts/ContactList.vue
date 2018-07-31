@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import ListLoading from '@/skeleton/ListLoading.vue'
 
 export default {
@@ -56,18 +57,18 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      allContacts: 'getAllContacts',
+      filteredContacts: 'getFilteredContacts',
+      search: 'getSearchInput',
+      loading: 'getGlobalLoading'
+    }),
     contacts () {
       if (this.search) {
-        return this.$store.getters.getFilteredContacts(this.search)
+        return this.filteredContacts(this.search)
       } else {
-        return this.$store.getters.getContacts
+        return this.allContacts
       }
-    },
-    search () {
-      return this.$store.getters.getSearchInput
-    },
-    loading () {
-      return this.$store.getters.getContactsLoading
     }
   },
   methods: {
@@ -94,10 +95,14 @@ export default {
     }
   },
   created () {
-    this.$store.commit('showSearch')
+    this.$store.commit('setShowSearch', true)
+    this.$store.commit('setHeaderText', 'Resplice')
+  },
+  mounted () {
+    this.$store.commit('setGlobalLoading', false)
   },
   destroyed () {
-    this.$store.commit('removeSearch')
+    this.$store.commit('setShowSearch', false)
   }
 }
 </script>

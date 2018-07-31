@@ -60,18 +60,23 @@ export default {
     console.log(this.$route.params.name)
     switch (this.$route.params.name) {
       case 'support':
+        this.$store.commit('setSettingsHeaderText', 'Support')
         this.showSupport = true
         break
       case 'feedback':
+        this.$store.commit('setSettingsHeaderText', 'Feedback')
         this.showFeedback = true
         break
       case 'legal':
+        this.$store.commit('setSettingsHeaderText', 'Legal')
         this.showLegal = true
         break
       case 'about':
+        this.$store.commit('setSettingsHeaderText', 'About')
         this.showAbout = true
         break
       default:
+        this.$store.commit('setSettingsHeaderText', 'About')
         this.showAbout = true
         break
     }

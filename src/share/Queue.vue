@@ -27,6 +27,9 @@
 
 <script>
 export default {
+  created () {
+    this.$store.commit('setHeaderText', 'Queue')
+  }
 }
 </script>
 

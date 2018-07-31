@@ -1,11 +1,11 @@
 <template>
   <div>
     <el-row align="middle" justify="space-between">
-      <icon v-if="showBack" class="back-btn btn" name="arrow-left" scale="2" @click.native="$router.go(-1)"></icon>
+      <icon v-if="getShowBack" class="back-btn btn" name="arrow-left" scale="2" @click.native="$router.go(-1)"></icon>
       <transition name="fade" mode="out-in">
-        <span v-if="searchDisabled" class="header-text">{{ headerText }}</span>
+        <span v-if="searchDisabled" class="header-text">{{ getHeaderText }}</span>
       </transition>
-      <label v-if="showSearch" :data-state="search" for="search">
+      <label v-if="getShowSearch" :data-state="search" for="search">
         <input type="text" v-model="searchInput" placeholder="Search" @click="searchOn" @blur="searchOff"/>
         <icon name="search" aria-hidden="true"></icon>
       </label>
@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   data () {
     return {
@@ -33,15 +35,11 @@ export default {
     }
   },
   computed: {
-    showSearch () {
-      return this.$store.state.header.showSearch
-    },
-    showBack () {
-      return this.$store.state.header.showBack
-    },
-    headerText () {
-      return this.$store.state.header.text
-    },
+    ...mapGetters([
+      'getShowSearch',
+      'getShowBack',
+      'getHeaderText'
+    ]),
     searchInput: {
       get () {
         return this.searchText

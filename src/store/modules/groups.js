@@ -1,8 +1,14 @@
-import api from '@/utils/api'
+// import api from '@/utils/api'
 
 export default {
-  state: {},
-  getters: {},
+  state: {
+    groups: []
+  },
+  getters: {
+    getGroupContacts: state => memberIds => state.contacts.filter(contact => memberIds.includes(contact.id)),
+    getGroupById: state => id => state.groups.find(group => group.id === id),
+    getGroups: state => state.groups
+  },
   mutations: {},
   actions: {}
 }

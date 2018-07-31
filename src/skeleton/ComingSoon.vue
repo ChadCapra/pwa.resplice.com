@@ -6,6 +6,15 @@
   </div>
 </template>
 
+<script>
+export default {
+  created () {
+    this.$store.commit('setHeaderText', 'Resplice')
+  }
+}
+</script>
+
+
 <style lang="scss" scoped>
   .coming-soon {
     display: flex;

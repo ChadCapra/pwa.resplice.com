@@ -7,35 +7,35 @@
     <div class="body">
       <el-row type="flex" justify="center">
         <el-col :xs="22" :sm="22" :md="16" :lg="8" :xl="8">
-          <h3 class="input-title">Email Address</h3>
-          <input type="email" placeholder="your@email.com" class="input" v-model="signUp.email" required>
+          <h3 class="signin-input-title">Email Address</h3>
+          <input type="email" placeholder="your@email.com" class="signin-input" v-model="signUp.email" required>
         </el-col>
       </el-row>
       <el-row type="flex" justify="center">
         <el-col :xs="22" :sm="22" :md="16" :lg="8" :xl="8">
-          <h3 class="input-title">Phone Number</h3>
-          <input type="tel" placeholder="(999) 999-9999" pattern="[0-9]" class="input" v-model="signUp.phone" required>
+          <h3 class="signin-input-title">Phone Number</h3>
+          <input type="tel" placeholder="(999) 999-9999" pattern="[0-9]" class="signin-input" v-model="signUp.phone" required>
         </el-col>
       </el-row>
       <el-row type="flex" justify="center">
         <el-col :xs="22" :sm="22" :md="16" :lg="8" :xl="8">
-          <h3 class="input-title">Full Name</h3>
-          <input type="text" placeholder="Han Solo" class="input" v-model="signUp.name" required autofocus>
+          <h3 class="signin-input-title">Full Name</h3>
+          <input type="text" placeholder="Han Solo" class="signin-input" v-model="signUp.name" required autofocus>
         </el-col>
       </el-row>
       <el-row type="flex" justify="center">
         <el-col :xs="22" :sm="22" :md="16" :lg="8" :xl="8">
-          <h3 class="input-title">Password</h3>
-          <input type="password" placeholder="Password" class="input" v-model="signUp.password" required>
+          <h3 class="signin-input-title">Password</h3>
+          <input type="password" placeholder="Password" class="signin-input" v-model="signUp.password" required>
         </el-col>
       </el-row>
       <el-row type="flex" justify="center">
         <el-col :xs="22" :sm="22" :md="16" :lg="8" :xl="8">
-          <h3 class="input-title">Confirm Password</h3>
-          <input type="password" placeholder="Confirm Password" class="input" v-model="signUp.password_confirmation" required>
+          <h3 class="signin-input-title">Confirm Password</h3>
+          <input type="password" placeholder="Confirm Password" class="signin-input" v-model="signUp.password_confirmation" required>
         </el-col>
       </el-row>
-      <el-button class="sub-btn" @click="submit" type="primary">Sign Up</el-button>
+      <el-button class="white-btn" @click="submit" type="primary">Sign Up</el-button>
     </div>
   </div>
 </template>
@@ -60,7 +60,8 @@ export default {
         console.log('Passwords do not match')
       } else {
         this.$store.dispatch('signUp', this.signUp)
-          .then(() => {
+          .then((contacts) => {
+            this.$store.commit('setContacts', contacts)
             this.$router.push({name: 'AttribVerification'})
           })
           .catch(error => {
@@ -123,26 +124,6 @@ export default {
       font-size: 20px;
       margin: 5px;
     }
-  }
-  .input {
-    outline: 0;
-    border: 0;
-    height: 80%;
-    width: 100%;
-    background: transparent;
-    border-bottom: 2px solid #fff;
-    color: #fff;
-    font-size: 16px;
-    height: 45px;
-  }
-  .input-title {
-    display: flex;
-    justify-content: flex-start;
-    margin: 0;
-  }
-  .sub-btn {
-    background-color: #fff;
-    color: #1BBC9B;
   }
 </style>
 

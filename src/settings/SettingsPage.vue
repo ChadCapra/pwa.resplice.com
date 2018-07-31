@@ -122,7 +122,7 @@ export default {
     }
   },
   created () {
-    this.$store.state.header.showSearch = false
+    this.$store.commit('setHeaderText', 'Settings')
   }
 }
 </script>
