@@ -35,7 +35,7 @@
           <input type="password" placeholder="Confirm Password" class="signin-input" v-model="signUp.password_confirmation" required>
         </el-col>
       </el-row>
-      <el-button class="white-btn" @click="submit" type="primary">Sign Up</el-button>
+      <el-button v-loading="loading" class="white-btn" @click="submit" type="primary">Sign Up</el-button>
     </div>
   </div>
 </template>
@@ -53,12 +53,23 @@ export default {
       }
     }
   },
+  computed: {
+    loading: {
+      get () {
+        return this.$store.getters.getGlobalLoading
+      },
+      set (value) {
+        this.$store.commit('setGlobalLoading', value)
+      }
+    }
+  },
   methods: {
     submit () {
       var passwordConfirmed = this.passwordConfirmation()
       if (passwordConfirmed === 1) {
         console.log('Passwords do not match')
       } else {
+        this.loading = true
         this.$store.dispatch('signUp', this.signUp)
           .then((contacts) => {
             this.$store.commit('setContacts', contacts)

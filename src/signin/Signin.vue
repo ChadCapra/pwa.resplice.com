@@ -112,7 +112,6 @@ export default {
       this.loading = true
       this.matchAttributes({ email: this.signInData.email, phone: this.signInData.phone })
         .then((number) => {
-          console.log(number)
           this.loading = false
           switch (number) {
             case 0:
