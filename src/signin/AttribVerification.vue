@@ -53,8 +53,9 @@ export default {
       'verify'
     ]),
     verifyCodes () {
-      console.log(this.codes.phone, this.codes.email)
-      this.verify({ verification_tokens: { token_list: [this.codes.phone, this.codes.email] } })
+      const phoneCode = this.codes.phone.toUpperCase()
+      const emailCode = this.codes.email.toUpperCase()
+      this.verify({ verification_tokens: { token_list: [phoneCode, emailCode] } })
         .then(() => {
           console.log('Successfully Verified Attributes')
           this.$router.push({name: 'root'})
