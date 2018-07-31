@@ -110,6 +110,12 @@ button, span {
   }
 }
 
+@media screen and (max-width: 700px) {
+  .el-dialog {
+    width: 90%;
+  }
+}
+
 // Custom Button Styles
 .white-btn {
   // Use with el-button type="primary"
