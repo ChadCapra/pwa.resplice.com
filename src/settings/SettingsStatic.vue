@@ -57,7 +57,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.$route.params.name)
     switch (this.$route.params.name) {
       case 'support':
         this.$store.commit('setSettingsHeaderText', 'Support')

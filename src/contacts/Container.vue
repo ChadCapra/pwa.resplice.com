@@ -33,7 +33,7 @@ export default {
 <style scoped>
   .el-header {
     padding-top: 13px;
-    background-color: #32393d;
+    background-color: #32393D;
     /* display: flex;
     align-items: center; */
   }

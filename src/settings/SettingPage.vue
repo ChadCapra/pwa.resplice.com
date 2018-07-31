@@ -31,7 +31,7 @@ export default {
     padding-top: 13px;
     font-size: 28px;
     color: #FFFFFF;
-    background-color: #1BBC98;
+    background-color: #32393D;;
     & h1 {
         margin: 0;
     }
@@ -42,11 +42,11 @@ export default {
   }
   .exit-btn {
     float: left;
-    color: #FFFFFF;
+    color: #1BBC98;
     transition: all .30s ease;
     margin-left: 10px;
     &:hover {
-      color: #32393D;
+      color: #0BE8BA;
       cursor: pointer;
     }
   }
