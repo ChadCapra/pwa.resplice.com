@@ -11,9 +11,20 @@ export default {
       id: '',
       cid: '',
       name: '',
+      date_of_birth: '',
+      gender: '',
       profile_pic: '',
       thumbnail: '',
-      contact_attributes: []
+      contact_attributes: [
+        {
+          id: 1,
+          attribute_type_id: 1,
+          value: '218-591-0657',
+          sub_type: 'Personal',
+          verified_at: '',
+          primary_of_type: true
+        }
+      ]
     },
     loggedIn: false,
     userLoading: true
@@ -41,19 +52,28 @@ export default {
     setUser: (state, payload) => {
       state.user_object = payload
     },
-    setPassword: (state, payload) => {
-      state.user_object.password = payload
-    },
     setLogin: (state, payload) => {
       state.loggedIn = payload
     },
     setUserLoadingDone: (state, payload) => {
       state.userLoading = payload
     },
-    setProfilePic: (state, payload) => { // Used for testing
+    updatePassword: (state, payload) => {
+      state.user_object.password = payload
+    },
+    updateProfilePic: (state, payload) => { // Used for testing
       state.user_object.profile_pic = payload
     },
-    setThumbnail: (state, payload) => { // Used for testing
+    updateName: (state, payload) => {
+      state.user_object.name = payload
+    },
+    updateDOB: (state, payload) => {
+      state.user_object.date_of_birth = payload
+    },
+    updateGender: (state, payload) => {
+      state.user_object.gender = payload
+    },
+    updateThumbnail: (state, payload) => { // Used for testing
       state.user_object.thumbnail = payload
     },
     sanitizeAttributes: state => {
@@ -104,12 +124,10 @@ export default {
       return new Promise((resolve, reject) => {
         api.post('/sign_up', signUp)
           .then(response => {
-            console.log(response.data)
-            console.log(api.defaults.headers)
             api.defaults.headers.common['Authorization'] = response.data.return_object.user_object.token
             api.defaults.headers['Authorization'] = response.data.return_object.user_object.token
             commit('setUser', response.data.return_object.user_object)
-            resolve(response.data.return_object.contact_list)
+            resolve(response.data.return_object.contacts_list)
           })
           .catch(error => {
             console.log(error)
@@ -130,9 +148,48 @@ export default {
           })
       })
     },
-    updateUserValue: ({commit, state}, updatedValue) => {
+    createUserAttribute: ({commit, state}, attribute) => {
       return new Promise((resolve, reject) => {
-        api.put('/contacts', updatedValue)
+        api.post('/attribute', attribute)
+          .then(response => {
+            commit('setUser', response.data.return_object.user_object)
+            resolve()
+          })
+          .catch(error => {
+            console.log(error)
+            reject(error)
+          })
+      })
+    },
+    updateUserAttribute: ({commit, state}, updatedAttribute) => {
+      return new Promise((resolve, reject) => {
+        api.put('/attribute', updatedAttribute)
+          .then(response => {
+            commit('setUser', response.data.return_object.user_object)
+            resolve()
+          })
+          .catch(error => {
+            console.log(error)
+            reject(error)
+          })
+      })
+    },
+    deleteUserAttribute: ({commit}, attribute) => {
+      return new Promise((resolve, reject) => {
+        api.delete('/attribute', attribute)
+          .then(response => {
+            commit('setUser', response.data.return_object.user_object)
+            resolve()
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    updateUserValue: ({commit, state}, contactUpdates) => {
+      var contact = { contactUpdates }
+      return new Promise((resolve, reject) => {
+        api.put('/contacts', contact)
           .then(response => {
             commit('setUser', response.data.return_object.user_object)
             resolve()

@@ -3,42 +3,42 @@ export default {
     contact_list: [],
     attributeTypes: [
       {
-        id: '1',
+        id: 1,
         name: 'Phone',
         icon: 'phone',
         isUnique: true,
         attributes: []
       },
       {
-        id: '2',
+        id: 2,
         name: 'Email',
         icon: 'envelope',
         isUnique: true,
         attributes: []
       },
       {
-        id: '3',
+        id: 3,
         name: 'Address',
         icon: 'home',
         isUnique: true,
         attributes: []
       },
       {
-        id: '4',
+        id: 4,
         name: 'Social',
         icon: 'at',
         isUnique: true,
         attributes: []
       },
       {
-        id: '5',
+        id: 5,
         name: 'Website',
         icon: 'globe',
         isUnique: true,
         attributes: []
       },
       {
-        id: '6',
+        id: 6,
         name: 'Other',
         icon: 'paper-plane',
         isUnique: true,

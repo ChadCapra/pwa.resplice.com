@@ -1,5 +1,5 @@
 <template>
-  <div v-if="userLoading">
+  <div v-if="loading">
     <re-user-loading></re-user-loading>
   </div>
   <div v-else class="profile">
@@ -17,13 +17,11 @@
       <el-card>
         <div class="info-header" slot="header">Basic Information</div>
         <div class="info">
-          <el-input v-model="firstName" placeholder="First Name">
-            <template slot="prepend">First Name</template>
-          </el-input>
-        </div>
-        <div class="info">
-          <el-input v-model="lastName" placeholder="Last Name">
-            <template slot="prepend">Last Name</template>
+          <el-input
+            v-model="name"
+            placeholder="Full Name"
+            @input="updates.name = name; updates.status = true">
+            <template slot="prepend">Full Name</template>
           </el-input>
         </div>
         <div class="info">
@@ -31,7 +29,8 @@
             v-model="DOB"
             type="date"
             placeholder="Date of Birth"
-            value-format="yyyy/MM/dd">
+            value-format="yyyy/MM/dd"
+            @change="updates.DOB = DOB; updates.status = true">
             <template slot="prepend"><icon name="calender"></icon></template>
           </el-date-picker>
         </div>
@@ -40,13 +39,20 @@
             class="inline-input"
             v-model="gender"
             placeholder="Gender"
-            :fetch-suggestions="querySearch">
+            :fetch-suggestions="querySearch"
+            @input="updates.gender = gender; updates.status = true">
             <template slot="prepend">Gender</template>
           </el-autocomplete>
         </div>
+        <div v-show="updates.status" style="margin-top: 25px;">
+          <el-button type="danger" @click="cancelUpdates">Cancel</el-button>
+          <el-button type="primary" @click="saveUpdates">Save</el-button>
+        </div>
       </el-card>
+    </el-row>
 
       <!-- User Attributes -->
+    <el-row>
       <el-card>
         <div class="info-header" slot="header">Attributes</div>
         <div v-for="type in attributeTypes" :key="type.id" class="info">
@@ -55,23 +61,64 @@
               <icon :name="type.icon"></icon>
               <span>{{ type.name }}</span>
             </div>
-            <el-button type="primary" size="small" @click="addAttribute(type.id)">Add</el-button>
+            <el-button type="primary" size="small" @click="openAttributeAdd(type.id)">Add</el-button>
           </div>
-          <div v-for="info in userAttributesFiltered(type.id)" :key="info.id" class="info-content">
-            <el-input :value="info.value">
-            </el-input>
-            <el-select v-model="values[info.id]" placeholder="Select Type">
+          <div v-for="attr in userAttributesFiltered(type.id)" :key="attr.id" class="info-content" @click="openAttributeEdit(attr)">
+            <div>{{ attr.value }}</div>
+            <div class="info-content-subtype">
+              <span>{{ attr.sub_type }}</span>
+              <icon name="pencil-square" scale="2"></icon>
+            </div>
+            <!-- <el-select v-model="values[info.id]" placeholder="Select Type">
               <el-option
                 v-for="type in options"
                 :key="type.value"
                 :label="type.label"
                 :value="type.value">
               </el-option>
-            </el-select>
+            </el-select> -->
           </div>
         </div>
       </el-card>
     </el-row>
+
+    <el-dialog title="Editing Attribute" :visible.sync="showAttributeEdit">
+      <el-form :model="editingAttribute">
+        <el-form-item label="Attribute Value">
+          <el-input v-model="editingAttribute.value" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="Attribute Sub-Type">
+          <el-autocomplete
+            v-model="editingAttribute.sub_type"
+            placeholder="Select attribute type or enter your own"
+            :fetch-suggestions="querySearch">
+          </el-autocomplete>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="danger" @click="deleteAttribute">Delete</el-button>
+        <el-button type="primary" @click="saveAttribute">Update</el-button>
+      </span>
+    </el-dialog>
+
+    <el-dialog title="Adding Attribute" :visible.sync="showAttributeAdd">
+      <el-form :model="addingAttribute">
+        <el-form-item label="Attribute Value">
+          <el-input v-model="addingAttribute.value" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="Attribute Sub-Type">
+          <el-autocomplete
+            v-model="addingAttribute.sub_type"
+            placeholder="Select attribute type or enter your own"
+            :fetch-suggestions="querySearch">
+          </el-autocomplete>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="danger" @click="resetAddAttribute">Cancel</el-button>
+        <el-button type="primary" @click="addAttribute">Add</el-button>
+      </span>
+    </el-dialog>
 
     <!-- Cropping and upload modal -->
     <re-modal v-show="showPicModal" @close="showPicModal = false" :loading="loading" headerText="Crop Photo">
@@ -88,6 +135,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Modal from '@/skeleton/SlideModal.vue'
 import axios from 'axios'
 import UserLoading from '@/skeleton/UserLoading.vue'
@@ -100,8 +148,9 @@ export default {
   data () {
     return {
       showPicModal: false,
+      showAttributeEdit: false,
+      showAttributeAdd: false,
       swiped: false,
-      loading: false,
       genders: ['Male', 'Female', 'Pan', 'Tri'],
       options: [
         {
@@ -129,38 +178,50 @@ export default {
           label: 'Other'
         }
       ],
-      values: []
+      values: [],
+      updates: {
+        status: false,
+        initial: {
+          name: '',
+          DOB: '',
+          gender: ''
+        },
+        contact: {}
+      },
+      addingAttribute: {
+        attribute_type_id: '',
+        value: '',
+        sub_type: ''
+      },
+      editingAttribute: {}
     }
   },
   computed: {
-    userLoading () {
-      return this.$store.getters.getUserLoading
-    },
-    userData () {
-      return this.$store.getters.getUserInfo
-    },
-    attributeTypes () {
-      return this.$store.getters.getAttributeTypes
-    },
-    firstName: {
+    ...mapGetters({
+      globalLoading: 'getGlobalLoading',
+      userData: 'getUser',
+      attributeTypes: 'getAttributeTypes',
+      userAttributes: 'getUserAttributes'
+    }),
+    loading: {
       get () {
-        return this.$store.getters.getUserInfo.user_basic.first_name
+        return this.globalLoading
       },
       set (value) {
-        this.$store.commit('updateFirstName', value)
+        this.$store.commit('setGlobalLoading', value)
       }
     },
-    lastName: {
+    name: {
       get () {
-        return this.$store.getters.getUserInfo.user_basic.last_name
+        return this.userData.name
       },
       set (value) {
-        this.$store.commit('updateLastName', value)
+        this.$store.commit('updateName', value)
       }
     },
     DOB: {
       get () {
-        return this.$store.getters.getUserInfo.user_basic.dob
+        return this.userData.date_of_birth
       },
       set (value) {
         this.$store.commit('updateDOB', value)
@@ -168,7 +229,7 @@ export default {
     },
     gender: {
       get () {
-        return this.$store.getters.getUserInfo.user_basic.gender
+        return this.userData.gender
       },
       set (value) {
         this.$store.commit('updateGender', value)
@@ -176,17 +237,15 @@ export default {
     },
     profilePic: {
       get () {
-        return this.$store.getters.getUserInfo.user_basic.profile_pic
+        return this.userData.profile_pic
       },
       set (value) {
         this.$store.commit('updateProfilePic', value)
       }
-    },
-    fullName () {
-      return this.$store.getters.getUserInfo.user_basic.first_name + ' ' + this.$store.getters.getUserInfo.user_basic.last_name
     }
   },
   created () {
+    this.$store.commit('setSettingsHeaderText', 'User Profile')
     if (!this.profilePic) {
       this.$notify({
         title: 'Profile Picture',
@@ -195,29 +254,144 @@ export default {
         duration: 5000
       })
     }
-    this.$store.state.header.showSearch = false
-    this.$store.state.header.showBack = true
   },
-  destroyed () {
-    this.$store.state.header.showBack = false
+  mounted () {
+    this.updates.initial.name = this.name
+    this.updates.initial.DOB = this.DOB
+    this.updates.initial.gender = this.gender
   },
   methods: {
     userAttributesFiltered (typeId) {
-      var attributes = this.$store.getters.getUserAttributes
-      return attributes.filter(attr => attr.type_id === typeId)
+      return this.userAttributes.filter(attr => attr.attribute_type_id === typeId)
     },
-    addAttribute (type) {
-      this.$store.dispatch('pushAttribute', {
-        id: '',
-        type_id: type,
+    addAttribute () {
+      var send = {
+        attribute: {
+          sub_type: this.addingAttribute.sub_type,
+          value: this.addingAttribute.value
+        }
+      }
+      this.$store.dispatch('createUserAttribute', send)
+        .then(() => {
+          this.showAttributeAdd = false
+          this.$notify({
+            title: send.attribute.value,
+            message: 'Attribute Successfully Added',
+            type: 'success',
+            duration: 3000
+          })
+        })
+        .catch(error => {
+          console.log(error)
+          this.$notify({
+            title: send.attribute.value,
+            message: 'Attribute could not be added :(',
+            type: 'error',
+            duration: 3000
+          })
+          this.showAttributeAdd = false
+        })
+    },
+    openAttributeEdit (attr) {
+      this.editingAttribute = attr
+      this.showAttributeEdit = true
+    },
+    openAttributeAdd (typeId) {
+      this.addingAttribute.attribute_type_id = typeId
+      this.showAttributeAdd = true
+    },
+    saveAttribute () {
+      var send = {
+        attribute: {
+          id: this.editingAttribute.id,
+          sub_type: this.editingAttribute.sub_type,
+          value: this.editingAttribute.value
+        }
+      }
+      this.$store.dispatch('updateUserAttribute', send)
+        .then(() => {
+          this.showAttributeEdit = false
+          this.$notify({
+            title: send.attribute.value,
+            message: 'Attribute Successfully Updated',
+            type: 'success',
+            duration: 3000
+          })
+        })
+        .catch(error => {
+          console.log(error)
+          this.$notify({
+            title: send.attribute.value,
+            message: 'Attribute could not be updated :(',
+            type: 'error',
+            duration: 3000
+          })
+          this.showAttributeEdit = false
+        })
+    },
+    deleteAttribute () {
+      var send = {
+        attribute: {
+          id: this.editingAttribute.id,
+          value: this.editingAttribute.value
+        }
+      }
+      this.$store.dispatch('deleteUserAttribute', send)
+        .then(() => {
+          this.showAttributeEdit = false
+          this.$notify({
+            title: send.attribute.value,
+            message: 'Attribute Successfully Deleted',
+            type: 'success',
+            duration: 3000
+          })
+        })
+        .catch(error => {
+          console.log(error)
+          this.$notify({
+            title: send.attribute.value,
+            message: 'Attribute could not be deleted :(',
+            type: 'error',
+            duration: 3000
+          })
+          this.showAttributeEdit = false
+        })
+    },
+    resetAddAttribute () {
+      this.showAttributeAdd = false
+      this.addingAttribute = {
+        attribute_type_id: '',
         value: '',
-        genre: '',
-        verified: false,
-        primary_of_type: false
-      })
+        sub_type: ''
+      }
+    },
+    saveUpdates () {
+      this.$store.dispatch('updateUserValue', this.updates.contact)
+        .then(() => {
+          this.updates.status = false
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    cancelUpdates () {
+      this.name = this.updates.initial.name
+      this.DOB = this.updates.initial.DOB
+      this.gender = this.updates.initial.gender
+      this.updates.status = false
     },
     handleSwipe () {
       this.swiped = true
+    },
+    querySearch (queryString, cb) {
+      var genders = this.genders
+      var results = queryString ? genders.filter(this.createFilter(queryString)) : genders
+      cb(results)
+    },
+    createFilter (queryString) {
+      return gender => {
+        return (gender.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
+      }
     },
     getImg () {
       const input = this.$refs.upload
@@ -310,16 +484,6 @@ export default {
         this.$message.error('Profile picture cannot exceed 2MB')
       }
       return (isJPG || isPNG) && isLt2m
-    },
-    querySearch (queryString, cb) {
-      var genders = this.genders
-      var results = queryString ? genders.filter(this.createFilter(queryString)) : genders
-      cb(results)
-    },
-    createFilter (queryString) {
-      return gender => {
-        return (gender.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
-      }
     }
   }
 }
@@ -353,6 +517,22 @@ export default {
   }
   .info-content {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px;
+  }
+  .info-content-subtype {
+    display: flex;
+    align-items: center;
+    & .fa-icon {
+      color: #1BBC9B;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    & span {
+      margin-right: 25px;
+    }
   }
   .info-content-header {
     justify-content: space-between;
