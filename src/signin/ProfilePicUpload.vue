@@ -17,12 +17,12 @@
           <img v-else :src="picUrl" alt="User profile picture">
         </el-col>
       </el-row>
-      <el-button v-if="!uploaded" class="white-btn" @click="$router.push({name: 'root'})" type="primary">Skip</el-button>
-      <el-button v-else class="white-btn" @click="$router.push({name: 'root'})" type="primary">Finish</el-button>
+      <el-button v-if="!uploaded" class="white-btn" @click="$router.push({name: 'Share'})" type="primary">Skip</el-button>
+      <el-button v-else class="white-btn" @click="$router.push({name: 'Share'})" type="primary">Finish</el-button>
     </div>
 
     <!-- Cropping and upload modal -->
-    <re-modal v-show="showModal" @close="showModal = false" :loading="loading" headerText="Crop Photo">
+    <re-modal v-show="showModal" @close="showModal = false" v-loading="loading" headerText="Crop Photo">
       <vue-croppie
         ref="crop"
         :enable-orientation="true"
@@ -30,7 +30,7 @@
         :viewport="{width: 200, height: 200, type: 'circle'}"
         class="cropper"
         :enableResize="false"></vue-croppie>
-        <el-button type="primary" class="white-btn" @click="buildImage">Save</el-button>
+        <el-button type="primary" class="upload-btn" @click="buildImage">Save</el-button>
     </re-modal>
   </div>
 </template>
@@ -69,8 +69,6 @@ export default {
       if (!isJPG && !isPNG) {
         this.$message.error('Profile picture must be JPG or PNG format')
       }
-
-      console.log(isJPG || isPNG)
       return isJPG || isPNG
     },
     buildImage () {
@@ -103,15 +101,21 @@ export default {
         }
       }
       // Post request to Cloudinary
+      delete axios.defaults.headers.common['Authorization']
       axios.post(APIUrl, fd, config)
         .then(res => {
-          // Set profile picture in user state
-          // this.$store.dispatch('updateUserValue', {profile_pic: res.data.secure_url})
-          this.$store.commit('setProfilePic', res.data.secure_url)
-          // Cleanup
-          this.loading = false
-          this.showModal = false
-          this.$refs.crop.destroy()
+          // Update PIC URL in backend
+          // TODO: pull thumbnail URL from cloudinary
+          this.$store.dispatch('updateUserValue', {profile_pic: res.data.secure_url})
+            .then(() => {
+              // Cleanup
+              this.loading = false
+              this.showModal = false
+              this.$refs.crop.destroy()
+            })
+            .catch(error => {
+              console.log(error)
+            })
         })
         .catch(err => {
           if (err.message === 'Network Error') {
@@ -191,6 +195,17 @@ export default {
       box-shadow: 1px 1px 15px #00000042;
     }
     transition: 0.3s all ease;
+  }
+
+  .cropper {
+    margin-top: 25px;
+  }
+  .upload-btn {
+    position: fixed;
+    bottom: 10px;
+    right: calc(50% - 40px);
+    border-radius: 5px;
+    font-size: 18px;
   }
 </style>
 

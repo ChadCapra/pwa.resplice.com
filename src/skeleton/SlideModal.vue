@@ -38,7 +38,7 @@ export default {
   margin-top: -25px;
   padding: 25px 0;
   color: #FFFFFF;
-  background-color: #1BBC98;
+  background-color: #32393D;
   & h1 {
     margin: 0;
   }
@@ -47,8 +47,8 @@ export default {
   position: fixed;
   top: 1%;
   right: 2%;
+  color: #1BBC98;
   &:hover {
-    color: #32393D;
     cursor: pointer;
   }
 }

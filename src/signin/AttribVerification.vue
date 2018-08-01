@@ -58,7 +58,7 @@ export default {
       this.verify({ verification_tokens: { token_list: [phoneCode, emailCode] } })
         .then(() => {
           console.log('Successfully Verified Attributes')
-          this.$router.push({name: 'root'})
+          this.$router.push({name: 'ProfilePicUpload'})
         })
         .catch(error => {
           console.log('Error Validating Attributes, double check your codes', error)
