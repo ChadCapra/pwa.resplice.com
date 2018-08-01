@@ -152,8 +152,9 @@ export default {
       this.$router.push({name: 'Attributes'})
     }
   },
-  created () {
+  mounted () {
     this.$store.commit('setHeaderText', 'Share Your Information')
+    this.$store.commit('setGlobalLoading', false)
   }
 }
 </script>
