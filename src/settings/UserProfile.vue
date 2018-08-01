@@ -64,7 +64,7 @@
             <el-button type="primary" size="small" @click="openAttributeAdd(type.id)">Add</el-button>
           </div>
           <div v-for="attr in userAttributesFiltered(type.id)" :key="attr.id" class="info-content" @click="openAttributeEdit(attr)">
-            <div>{{ attr.value }}</div>
+            <div class="info-content-type">{{ attr.value }}</div>
             <div class="info-content-subtype">
               <span>{{ attr.sub_type }}</span>
               <icon name="pencil-square" scale="2"></icon>
@@ -121,7 +121,7 @@
     </el-dialog>
 
     <!-- Cropping and upload modal -->
-    <re-modal v-show="showPicModal" @close="showPicModal = false" :loading="loading" headerText="Crop Photo">
+    <re-modal v-show="showPicModal" @close="showPicModal = false" v-loading="uploading" headerText="Crop Photo">
       <vue-croppie
         ref="crop"
         :enable-orientation="true"
@@ -148,6 +148,7 @@ export default {
   data () {
     return {
       showPicModal: false,
+      uploading: false,
       showAttributeEdit: false,
       showAttributeAdd: false,
       swiped: false,
@@ -268,7 +269,8 @@ export default {
       var send = {
         attribute: {
           sub_type: this.addingAttribute.sub_type,
-          value: this.addingAttribute.value
+          value: this.addingAttribute.value,
+          attribute_type_id: this.addingAttribute.attribute_type_id
         }
       }
       this.$store.dispatch('createUserAttribute', send)
@@ -280,6 +282,7 @@ export default {
             type: 'success',
             duration: 3000
           })
+          this.resetAddAttribute()
         })
         .catch(error => {
           console.log(error)
@@ -289,6 +292,7 @@ export default {
             type: 'error',
             duration: 3000
           })
+          this.resetAddAttribute()
           this.showAttributeAdd = false
         })
     },
@@ -332,8 +336,7 @@ export default {
     deleteAttribute () {
       var send = {
         attribute: {
-          id: this.editingAttribute.id,
-          value: this.editingAttribute.value
+          id: this.editingAttribute.id
         }
       }
       this.$store.dispatch('deleteUserAttribute', send)
@@ -426,27 +429,31 @@ export default {
       })
     },
     upload (fd) {
-      const cloudName = 'capabit-solutions'
-      // var cl = new cloudinary.Cloudinary({cloud_name: 'capabit-solutions', api_key: '422859735239721', secure: true})
-      // console.log(cl.url('sample'))
-      const APIUrl = `https://api.cloudinary.com/v1_1/${cloudName}/upload`
+      const APIUrl = `https://api.cloudinary.com/v1_1/capabit-solutions/upload`
       // Config cloudinary API request
       const config = {
-        headers: {'X-Requested-With': 'XMLHttpRequest'},
-        async: true,
-        onUploadProgress: progressEvent => {
-          this.loading = true
-        }
+        headers: {'X-Requested-With': 'XMLHttpRequest'}
       }
       // Post request to Cloudinary
+      delete axios.defaults.headers.common['Authorization']
+      this.uploading = true
       axios.post(APIUrl, fd, config)
         .then(res => {
-          // Set profile picture in user state
-          this.profilePic = res.data.secure_url
-          // Cleanup
-          this.loading = false
-          this.showPicModal = false
-          this.$refs.crop.destroy()
+          // Update pic URL in backend
+          this.$store.dispatch('updateUserValue', {profile_pic: res.data.secure_url})
+            .then(() => {
+              this.uploading = false
+              this.showPicModal = false
+            })
+            .catch(error => {
+              console.log(error)
+            })
+          this.$notify({
+            title: 'Profile Picture',
+            message: 'Profile Picture Successfully Uploaded',
+            type: 'success',
+            duration: 3000
+          })
         })
         .catch(err => {
           if (err.message === 'Network Error') {
@@ -466,24 +473,20 @@ export default {
             console.log(err)
           }
           // Cleanup
-          this.loading = false
+          this.uploading = false
           this.showPicModal = false
-          this.$refs.crop.destroy()
+          // this.$refs.crop.destroy()
         })
     },
     beforeAvatarUpload (file) {
       // file verification before cropping
       const isJPG = file.type === 'image/jpeg'
       const isPNG = file.type === 'image/png'
-      const isLt2m = file.size / 1024 / 1024 < 2
 
       if (!isJPG && !isPNG) {
         this.$message.error('Avatar picture must be JPG or PNG format')
       }
-      if (!isLt2m) {
-        this.$message.error('Profile picture cannot exceed 2MB')
-      }
-      return (isJPG || isPNG) && isLt2m
+      return isJPG || isPNG
     }
   }
 }
