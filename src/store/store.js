@@ -17,6 +17,8 @@ export default new Vuex.Store({
         id: '',
         cid: '',
         name: '',
+        date_of_birth: '',
+        gender: '',
         profile_pic: '',
         thumbnail: '',
         contact_attributes: []

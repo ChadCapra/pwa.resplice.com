@@ -102,12 +102,10 @@ export default {
         api.post('/sign_in', signInData)
           .then(response => {
             var errorCode = 100
-            console.log(response)
             if (response.status === 200) {
               api.defaults.headers.common['Authorization'] = response.data.return_object.user_object.token
               api.defaults.headers['Authorization'] = response.data.return_object.user_object.token
               commit('setUser', response.data.return_object.user_object)
-              commit('setUserLoading', false)
               commit('setLogin', true)
               resolve(response.data.return_object.contact_list)
             } else {
@@ -115,7 +113,6 @@ export default {
             }
           })
           .catch(error => {
-            console.log(error)
             reject(error)
           })
       })
@@ -186,10 +183,10 @@ export default {
           })
       })
     },
-    updateUserValue: ({commit, state}, contactUpdates) => {
-      var contact = { contactUpdates }
+    updateUserValue: ({commit, state}, contact) => {
+      var contactUpdates = { contact }
       return new Promise((resolve, reject) => {
-        api.put('/contacts', contact)
+        api.put('/contact', contactUpdates)
           .then(response => {
             commit('setUser', response.data.return_object.user_object)
             resolve()
