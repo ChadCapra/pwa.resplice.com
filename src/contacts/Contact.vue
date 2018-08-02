@@ -22,10 +22,10 @@
           class="contact-img" 
           style="margin-right: 20px;" 
           :src="contact.thumbnail" 
-          :alt="contact.first_name"></v-touch>
+          :alt="lastName"></v-touch>
         <div class="name" ref="name">
-          <div class="f-name" v-if="contact.first_name">{{ contact.first_name }}</div>
-          <div class="l-name" v-if="contact.last_name">{{ contact.last_name }}</div>
+          <div class="f-name">{{ firstName }}</div>
+          <div class="l-name" v-if="lastName">{{ lastName }}</div>
         </div>
       </el-col>
     </el-row>
@@ -36,6 +36,14 @@
 <script>
 export default {
   props: ['contact', 'headVisible', 'selected', 'actions'],
+  computed: {
+    firstName () {
+      return this.$store.getters.getContactFirstName(this.contact.id)
+    },
+    lastName () {
+      return this.$store.getters.getContactLastName(this.contact.id)
+    }
+  },
   methods: {
     handleClick () {
       if (!this.actions) {
