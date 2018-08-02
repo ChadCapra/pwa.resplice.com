@@ -10,7 +10,7 @@
       <el-row type="flex" justify="center">
         <el-col>
           <p>Take a selfie<br>Or upload a picture</p>
-          <div v-if="picUrl.length >= 0" class="upload" @click="$refs.file.click()">
+          <div v-if="!uploaded" class="upload" @click="$refs.file.click()">
             <icon name="camera" scale="2"></icon>
             <input ref="file" type="file" accept="image/*" @change="cropImg">
           </div>
@@ -104,9 +104,12 @@ export default {
       delete axios.defaults.headers.common['Authorization']
       axios.post(APIUrl, fd, config)
         .then(res => {
-          // Update PIC URL in backend
-          // TODO: pull thumbnail URL from cloudinary
-          this.$store.dispatch('updateUserValue', {profile_pic: res.data.secure_url})
+          // Add Cloudinary Transformations & Update PIC URL in backend
+          const profilePicUrl = res.data.secure_url.replace('/upload/', '/upload/c_scale,w_200/')
+          const thumbnailUrl = res.data.secure_url.replace('/upload/', '/upload/c_scale,w_80/')
+          this.picUrl = profilePicUrl
+          this.uploaded = true
+          this.$store.dispatch('updateUserValue', {profile_pic: profilePicUrl, thumbnail: thumbnailUrl})
             .then(() => {
               // Cleanup
               this.loading = false

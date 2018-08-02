@@ -439,8 +439,10 @@ export default {
       this.uploading = true
       axios.post(APIUrl, fd, config)
         .then(res => {
-          // Update pic URL in backend
-          this.$store.dispatch('updateUserValue', {profile_pic: res.data.secure_url})
+          // Add Cloudinary Transformations & Update PIC URL in backend
+          const profilePicUrl = res.data.secure_url.replace('/upload/', '/upload/c_scale,w_200/')
+          const thumbnailUrl = res.data.secure_url.replace('/upload/', '/upload/c_scale,w_80/')
+          this.$store.dispatch('updateUserValue', {profile_pic: profilePicUrl, thumbnail: thumbnailUrl})
             .then(() => {
               this.uploading = false
               this.showPicModal = false
