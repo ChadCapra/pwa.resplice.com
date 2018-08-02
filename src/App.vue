@@ -125,6 +125,10 @@ button, span {
   font-size: 18px;
 }
 
+.el-button {
+  border-radius: 5px;
+}
+
 // Input Styles
 
 // Sign In Flow Input
