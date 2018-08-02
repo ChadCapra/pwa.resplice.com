@@ -107,7 +107,7 @@ export default {
               api.defaults.headers['Authorization'] = response.data.return_object.user_object.token
               commit('setUser', response.data.return_object.user_object)
               commit('setLogin', true)
-              resolve(response.data.return_object.contact_list)
+              resolve(response.data.return_object.contacts_list)
             } else {
               reject(errorCode)
             }
@@ -127,7 +127,6 @@ export default {
             resolve(response.data.return_object.contacts_list)
           })
           .catch(error => {
-            console.log(error)
             reject(error)
           })
       })
@@ -139,8 +138,6 @@ export default {
             resolve(response.data.matches)
           })
           .catch(error => {
-            console.log(error)
-            console.log('Cannot connect to server')
             reject(error)
           })
       })
@@ -153,7 +150,6 @@ export default {
             resolve()
           })
           .catch(error => {
-            console.log(error)
             reject(error)
           })
       })
@@ -166,7 +162,6 @@ export default {
             resolve()
           })
           .catch(error => {
-            console.log(error)
             reject(error)
           })
       })
@@ -192,7 +187,6 @@ export default {
             resolve()
           })
           .catch(error => {
-            console.log(error)
             reject(error)
           })
       })
@@ -208,7 +202,6 @@ export default {
             resolve()
           })
           .catch(error => {
-            console.log(error)
             reject(error)
           })
       })
