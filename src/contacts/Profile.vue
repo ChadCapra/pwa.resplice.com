@@ -9,17 +9,17 @@
           <span>Contact</span>
         </el-col>
         <el-col :xs="6" :sm="4" :md="2" :lg="2" :xl="2" justify="center" style="display: flex; justify-content: flex-end;">
-          <el-button type="primary" size="small" style="border-radius: 5px; font-size: 14px;">Share With</el-button>
+          <el-button type="primary" size="small" style="font-size: 14px;">Share With</el-button>
         </el-col>
       </el-row>
     </el-header>
     <el-main>
       <div class="profile">
         <el-row class="pro-pic">
-          <el-col :span="24"><img v-if="profilePic" :src='profilePic' alt="Profile Picture"><div v-else class="pic-placeholder"></div></el-col>
+          <el-col :span="24"><img v-if="contact.profile_pic" :src='contact.profile_pic' alt="Profile Picture"><div v-else class="pic-placeholder"></div></el-col>
         </el-row>
         <el-row>
-          <el-col style="color: #1BBC9B; font-size: 24px; margin-bottom: 20px;"><span v-if="firstName != null">{{ firstName }}</span><span v-if="lastName != null">{{ ' ' + lastName }}</span></el-col>
+          <el-col style="color: #1BBC9B; font-size: 24px; margin-bottom: 20px;"><span v-if="firstName">{{ firstName }}</span><span v-if="lastName">{{ ` ${lastName}` }}</span></el-col>
         </el-row>
         <el-row class="access" type="flex" justify="center">
           <el-col :xs="6" :sm="6" :md="4" :lg="4" :xl="4"><icon class="access-btn" name="phone" scale="2.5"></icon></el-col>
@@ -27,16 +27,19 @@
           <el-col :xs="6" :sm="6" :md="4" :lg="4" :xl="4"><icon class="access-btn" name="globe" scale="2.5"></icon></el-col>
           <el-col :xs="6" :sm="6" :md="4" :lg="4" :xl="4"><icon class="access-btn" name="ellipsis-h" scale="2.5"></icon></el-col>
         </el-row>
-        <el-row v-for="type in activeAttributeTypes" :key="type.id" class="info-row" type="flex" justify="center">
+        <el-row v-for="type in attributeTypes" :key="type.id" class="info-row" type="flex" justify="center">
           <el-card class="info-card">
             <div slot="header" class="info-card-header">
               {{ type.name }}
             </div>
-            <div v-for="info in type.attributes" :key="info.id" class="info-section text item">
-              <div class="info-type">{{ info.type }}</div>
-              <div class="info-item">
-                {{ info.value }}<icon class="info-action-icon" :name="getIconName(info.attribute_group_id)" scale="2" @click="executeAction"></icon>
+            <div v-for="attr in contactAttributesFiltered(type.id)" :key="attr.id" class="info-section">
+              <div v-if="attr.id > 0">
+                <div class="info-type">{{ attr.sub_type }}</div>
+                <div class="info-item">
+                  {{ attr.value }}<icon class="info-action-icon" :name="getIconName(attr.attribute_type_id)" scale="2" @click="executeAction"></icon>
+                </div>
               </div>
+              <div v-else class="info-request"><el-button type="primary" @click="requestAttribute(type.id)">Request Attribute <icon name="paper-plane"></icon></el-button></div>
             </div>
           </el-card>
         </el-row>
@@ -55,49 +58,35 @@ export default {
     }
   },
   computed: {
-    // Find a better way to do attributes, using getters and setters
-    attributes () {
-      return this.$store.getters.getAttributes(this.$route.params.id)
+    contact () {
+      return this.$store.getters.getContactById(this.$route.params.id)
     },
-    activeAttributeTypes () {
-      var types = this.$store.state.attributeTypes // get state attributeTypes
-      types.forEach(type => {
-        type.attributes = [] // reset state
-      })
-      this.attributes.forEach(a => { // push each attribute to a group.attributes array
-        types.find(element => element.id === a.attribute_group_id).attributes.push(a)
-      })
-      var activeTypes = [] // Create active types variable
-      types.forEach(type => {
-        if (type.attributes.length > 0) {
-          activeTypes.push(type) // Check which types have attributes in them and return them.
-        }
-      })
-      return activeTypes
-    },
-    id () {
-      return this.$store.getters.getContactId(this.$route.params.id)
+    contactAttributes () {
+      return this.$store.getters.getContactAttributes(this.contact.id)
     },
     firstName () {
-      return this.$store.getters.getContactFirst(this.$route.params.id)
+      return this.$store.getters.getContactFirstName(this.contact.id)
     },
     lastName () {
-      return this.$store.getters.getContactLast(this.$route.params.id)
+      return this.$store.getters.getContactLastName(this.contact.id)
     },
-    profilePic () {
-      return this.$store.getters.getContactProfilePic(this.$route.params.id)
+    attributeTypes () {
+      return this.$store.getters.getAttributeTypes
     }
   },
   methods: {
-    getIconName (agi) {
-      switch (agi) {
-        case '1':
+    contactAttributesFiltered (ati) {
+      return this.$store.getters.getContactAttributesFiltered(this.contact.id, ati)
+    },
+    getIconName (ati) {
+      switch (ati) {
+        case 1:
           return 'phone'
-        case '2':
+        case 2:
           return 'envelope'
-        case '3':
+        case 3:
           return 'home'
-        case '4':
+        case 4:
           return 'share'
         default:
           return 'mobile'
@@ -105,6 +94,9 @@ export default {
     },
     executeAction () {
       console.log('Action executed')
+    },
+    requestAttribute (ati) {
+      console.log(`Attribute type number ${ati} requested.`)
     }
   }
 }
@@ -174,6 +166,14 @@ export default {
   }
   .info-section {
     margin-bottom: 15px;
+  }
+  .info-request {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & .fa-icon {
+      margin-left: 15px;
+    }
   }
 </style>
 
