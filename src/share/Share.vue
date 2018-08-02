@@ -1,11 +1,11 @@
 <template>
   <div class="share">
     <div class="share-header">
-      <h3>Share info with an exisiting contact, username, phone number, email, or scan a contact's Recode to start sharing</h3>
+      <h3>Share info with an exsisting contact, username, phone number, email, or scan a contact's Recode to start sharing</h3>
       <!-- Search Bar -->
       <el-row class="search-header" type="flex" justify="center">
         <el-col :span="22">
-          <input class="search" type="text" placeholder="Enter Username, Name, Email, or Phone #" @focus="showContacts = true" v-model="searchInput">
+          <input class="search" type="te xt" placeholder="Enter Username, Name, Email, or Phone #" @focus="showContacts = true" v-model="searchInput">
           <button type="submit" class="search-btn"><icon scale="1.5" name="search"></icon></button>
         </el-col>
       </el-row>
@@ -16,9 +16,9 @@
         <el-row class="contact" v-for="contact in contacts" :key="contact.id" type="flex" justify="start">
           <el-col class="contact-inner" @click.native="select(contact.id)">
             <div v-if="findSelected(contact.id)" class="icon-checked"><icon name="check" scale="1.5"></icon></div>
-            <img v-else :src="contact.thumbnail" :alt="contact.first_name + ' ' + contact.last_name">
-            <div class="first-name">{{ contact.first_name }}</div>
-            <div class="last-name">{{ contact.last_name }}</div>
+            <img v-else :src="contact.thumbnail" :alt="lastName(contact.id)">
+            <div class="first-name">{{ firstName(contact.id) }}</div>
+            <div class="last-name">{{ lastName(contact.id) }}</div>
           </el-col>
         </el-row>
       </div>
@@ -85,6 +85,7 @@ export default {
         this.$store.commit('updateSearch', text)
       }
     },
+    lastName () {},
     contacts () {
       if (this.search) {
         return this.$store.getters.getFilteredContacts(this.search)
@@ -97,6 +98,12 @@ export default {
     }
   },
   methods: {
+    firstName (id) {
+      return this.$store.getters.getContactFirstName(id)
+    },
+    lastName (id) {
+      return this.$store.getters.getContactLastName(id)
+    },
     handlePlatform (id) {
       switch (id) {
         case 1:
