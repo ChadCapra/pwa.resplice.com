@@ -136,16 +136,18 @@ export default {
     login () {
       this.loading = true
       this.signIn(this.signInData)
-        .then(() => {
+        .then((contacts) => {
+          this.$store.commit('setContacts', contacts)
           this.$router.push({ name: 'root' })
         })
         .catch((error) => {
           this.loading = false
           this.$notify({
             title: 'Password Incorrect',
-            message: error,
+            message: 'Your password was incorrect please try again',
             type: 'error'
           })
+          console.log(error)
         })
     },
     validateInputs () {

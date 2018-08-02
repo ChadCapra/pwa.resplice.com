@@ -57,7 +57,6 @@ export default {
       const emailCode = this.codes.email.toUpperCase()
       this.verify({ verification_tokens: { token_list: [phoneCode, emailCode] } })
         .then(() => {
-          console.log('Successfully Verified Attributes')
           this.$router.push({name: 'ProfilePicUpload'})
         })
         .catch(error => {
