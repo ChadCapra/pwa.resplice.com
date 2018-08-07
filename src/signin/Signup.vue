@@ -73,6 +73,7 @@ export default {
         this.$store.dispatch('signUp', this.signUp)
           .then((contacts) => {
             this.$store.commit('setContacts', contacts)
+            this.$store.commit('buildSearchableAttributes')
             this.$router.push({name: 'AttribVerification'})
           })
           .catch(error => {

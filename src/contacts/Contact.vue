@@ -13,16 +13,26 @@
       </div>
       <el-col class="c-content" :xs="22" :sm="22" :md="22" :lg="12" :xl="12">
         <div v-if="selected" class="icon-checked"><icon name="check" scale="1.5"></icon></div>
-        <v-touch
-          v-else
-          tag="img"
-          @pan="picPan($event)"
-          @swiperight="picSwipe($event)"
-          :pan-options="{ direction: 'horizontal', threshold: 10 }"
-          class="contact-img" 
-          style="margin-right: 20px;" 
-          :src="contact.thumbnail" 
-          :alt="lastName"></v-touch>
+        <div v-else>
+          <v-touch
+            v-if="contact.thumbnail"
+            tag="img"
+            @pan="picPan($event)"
+            @swiperight="picSwipe($event)"
+            :pan-options="{ direction: 'horizontal', threshold: 10 }"
+            class="contact-img" 
+            style="margin-right: 20px;" 
+            :src="contact.thumbnail" 
+            :alt="lastName"></v-touch>
+          <v-touch
+            v-else
+            tag="div"
+            @pan="picPan($event)"
+            @swiperight="picSwipe($event)"
+            :pan-options="{ direction: 'horizontal', threshold: 10 }"
+            class="profile-pic-thumb-placeholder"
+            style="margin-right: 20px;">{{ letter }}</v-touch>
+        </div>
         <div class="name" ref="name">
           <div class="f-name">{{ firstName }}</div>
           <div class="l-name" v-if="lastName">{{ lastName }}</div>
@@ -42,6 +52,9 @@ export default {
     },
     lastName () {
       return this.$store.getters.getContactLastName(this.contact.id)
+    },
+    letter () {
+      return this.$store.getters.getContactLetter(this.contact.id)
     }
   },
   methods: {

@@ -138,6 +138,7 @@ export default {
       this.signIn(this.signInData)
         .then((contacts) => {
           this.$store.commit('setContacts', contacts)
+          this.$store.commit('buildSearchableAttributes')
           this.$router.push({ name: 'root' })
         })
         .catch((error) => {

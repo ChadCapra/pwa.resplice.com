@@ -16,7 +16,10 @@
         <el-row class="contact" v-for="contact in contacts" :key="contact.id" type="flex" justify="start">
           <el-col class="contact-inner" @click.native="select(contact.id)">
             <div v-if="findSelected(contact.id)" class="icon-checked"><icon name="check" scale="1.5"></icon></div>
-            <img v-else :src="contact.thumbnail" :alt="lastName(contact.id)">
+            <div v-else>
+              <img v-if="contact.thumbnail" :src="contact.thumbnail" :alt="lastName(contact.id)">
+              <div v-else class="profile-pic-thumb-share-placeholder">{{ letter(contact.id) }}</div>
+            </div>
             <div class="first-name">{{ firstName(contact.id) }}</div>
             <div class="last-name">{{ lastName(contact.id) }}</div>
           </el-col>
@@ -85,7 +88,6 @@ export default {
         this.$store.commit('updateSearch', text)
       }
     },
-    lastName () {},
     contacts () {
       if (this.search) {
         return this.$store.getters.getFilteredContacts(this.search)
@@ -103,6 +105,9 @@ export default {
     },
     lastName (id) {
       return this.$store.getters.getContactLastName(id)
+    },
+    letter (id) {
+      return this.$store.getters.getContactLetter(id)
     },
     handlePlatform (id) {
       switch (id) {
@@ -146,16 +151,17 @@ export default {
       this.selectedContacts.forEach(id => {
         sharedContacts.push(this.contacts.find(contact => contact.id === id))
       })
-      this.$store.dispatch('setSharingContacts', sharedContacts)
+      this.$store.commit('setSharingContacts', sharedContacts)
       this.$router.push({name: 'Attributes'})
     },
     closeText () {},
     shareWithAttribute () {
       var contact = {
-        id: null,
+        id: undefined,
+        name: undefined,
         attributes: [{ id: '1', value: this.search }]
       }
-      this.$store.dispatch('setSharingContacts', [contact])
+      this.$store.commit('setSharingContacts', [contact])
       this.$router.push({name: 'Attributes'})
     }
   },

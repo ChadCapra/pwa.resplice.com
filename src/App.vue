@@ -15,6 +15,23 @@ export default {
 </script>
 
 <style lang="scss">
+// Colors
+$purple: #BB6BD9;
+$green: #27AE60;
+$orange: #F2994A;
+$blue: #2D9CDB;
+$pink: #ED4B82;
+$sea-foam: #33AB9F;
+$red: #F6685E;
+$dark-purple: #8561C5;
+$sky-blue: #33C9DC;
+$colors: $purple, $green, $orange, $blue, $pink, $sea-foam, $red, $dark-purple, $sky-blue;
+
+
+// Select random color for profile pic backgrounds and tags
+$key: random(length($colors));
+$random: nth($colors, $key);
+
 *:focus {
   outline: 0;
 }
@@ -83,6 +100,27 @@ button, span {
     50%{background-position:100% 50%}
     100%{background-position:0% 50%}
   }
+}
+
+.profile-pic-placeholder, .profile-pic-thumb-placeholder, .profile-pic-thumb-share-placeholder {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: $random;
+  font-size: 94px;
+}
+.profile-pic-thumb-placeholder {
+  width: 80px;
+  height: 80px;
+  font-size: 48px;
+}
+.profile-pic-thumb-share-placeholder {
+  width: 50px;
+  height: 50px;
+  font-size: 36px;
 }
 
 .profile-pic-loading {

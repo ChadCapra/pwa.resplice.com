@@ -62,7 +62,7 @@
         </div>
         <div class="summary-contacts">
           <span>Contacts</span>
-          <p v-for="contact in sharingContacts" :key="contact.id">- {{ contact.first_name + ' ' + contact.last_name}}</p>
+          <p v-for="contact in sharingContacts" :key="contact.id">- {{ contact.name }}</p>
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -108,14 +108,17 @@ export default {
     sharingAttributes () {
       return this.$store.getters.getSharingAttributes
     },
+    sharingAttributeIds () {
+      return this.$store.getters.getSharingAttributeIds
+    },
     attributes () {
       return this.$store.getters.getUserAttributes
     },
     sharingInfo () {
-      if (this.sharingContacts[0].first_name === undefined && this.sharingContacts[0].last_name === undefined) {
+      if (!this.sharingContacts[0].name) {
         return this.sharingContacts[0].attributes[0].value
       } else {
-        return this.sharingContacts[0].first_name + ' ' + this.sharingContacts[0].last_name
+        return this.sharingContacts[0].name
       }
     }
   },
@@ -134,7 +137,7 @@ export default {
     addToSharedAttributes () {
       this.$refs.attr.forEach(attr => {
         if (attr.checked) {
-          this.sharedAttributes.push(this.attributes.find(attrib => attrib.id === attr.id))
+          this.sharedAttributes.push(this.attributes.find(attrib => attrib.id === parseInt(attr.id)))
         }
       })
     },
@@ -162,7 +165,7 @@ export default {
         })
       } else {
         this.addToSharedAttributes()
-        this.$store.dispatch('setSharingAttributes', this.sharedAttributes)
+        this.$store.commit('setSharingAttributes', this.sharedAttributes)
         this.sharedAttributes = []
         this.dialogVisible = true
       }
@@ -178,9 +181,22 @@ export default {
     },
     share () {
       this.dialogVisible = false
+      var send = {
+        share_request: {
+          email_or_phone: this.sharingContacts[0].attributes[0].value,
+          attribute_ids: this.sharingAttributeIds
+        }
+      }
       // API Call
-      this.$store.dispatch('share')
-      this.$router.push({name: 'root'})
+      this.$store.dispatch('shareWithAttribute', send)
+        .then((contactList) => {
+          this.$store.commit('setContacts', contactList)
+          this.$store.commit('buildSearchableAttributes')
+          this.$router.push({name: 'root'})
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
     createTag () {
       this.tags.push({

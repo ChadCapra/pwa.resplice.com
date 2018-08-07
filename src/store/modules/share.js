@@ -13,7 +13,14 @@ export default {
   },
   getters: {
     getSharingContacts: state => state.sharing.contacts,
-    getSharingAttributes: state => state.sharing.attributes
+    getSharingAttributes: state => state.sharing.attributes,
+    getSharingAttributeIds: state => {
+      var attributeIds = []
+      state.sharing.attributes.forEach(attr => {
+        attributeIds.push(attr.id)
+      })
+      return attributeIds
+    }
   },
   mutations: {
     setSharingContacts: (state, payload) => {
@@ -28,17 +35,20 @@ export default {
     }
   },
   actions: {
-    share: ({ commit }, payload) => {
-      api.post('/share', payload)
-        .then(response => {
-          console.log(response.data)
-        })
-        .catch(error => {
-          console.log(error)
-        })
-      // Cleanup
-      commit('setSharingContacts', [])
-      commit('setSharingAttributes', [])
+    share: ({ commit }, shareRequest) => {
+      return new Promise((resolve, reject) => {
+        api.post('/share', shareRequest)
+          .then(response => {
+            resolve(response.data.return_object.contacts_list)
+            console.log(response.data)
+            // Cleanup
+            commit('setSharingContacts', [])
+            commit('setSharingAttributes', [])
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
     }
   }
 }

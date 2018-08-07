@@ -9,14 +9,14 @@
           <span>Contact</span>
         </el-col>
         <el-col :xs="6" :sm="4" :md="2" :lg="2" :xl="2" justify="center" style="display: flex; justify-content: flex-end;">
-          <el-button type="primary" size="small" style="font-size: 14px;">Share With</el-button>
+          <el-button type="primary" size="small" style="font-size: 14px;" @click="share">Share With</el-button>
         </el-col>
       </el-row>
     </el-header>
     <el-main>
       <div class="profile">
         <el-row class="pro-pic">
-          <el-col :span="24"><img v-if="contact.profile_pic" :src='contact.profile_pic' alt="Profile Picture"><div v-else class="pic-placeholder"></div></el-col>
+          <el-col class="pro-pic-col" :span="24"><img v-if="contact.profile_pic" :src='contact.profile_pic' alt="Profile Picture"><div v-else class="profile-pic-placeholder">{{ letter }}</div></el-col>
         </el-row>
         <el-row>
           <el-col style="color: #1BBC9B; font-size: 24px; margin-bottom: 20px;"><span v-if="firstName">{{ firstName }}</span><span v-if="lastName">{{ ` ${lastName}` }}</span></el-col>
@@ -70,6 +70,9 @@ export default {
     lastName () {
       return this.$store.getters.getContactLastName(this.contact.id)
     },
+    letter () {
+      return this.$store.getters.getContactLetter(this.contact.id)
+    },
     attributeTypes () {
       return this.$store.getters.getAttributeTypes
     }
@@ -97,6 +100,10 @@ export default {
     },
     requestAttribute (ati) {
       console.log(`Attribute type number ${ati} requested.`)
+    },
+    share () {
+      this.$store.commit('setSharingContacts', [this.contact])
+      this.$router.push({name: 'Attributes'})
     }
   }
 }
@@ -136,6 +143,11 @@ export default {
   .pro-pic {
     height: 10vh;
     margin: 15px;
+  }
+  .pro-pic-col {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
   }
   .info-row {
     margin-top: 15px;

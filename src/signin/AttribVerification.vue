@@ -9,7 +9,7 @@
           <el-col>We sent a code to <span>{{ userPhone }}</span><br>Enter the code below to verify</el-col>
         </el-row>
         <el-row type="flex" justify="center">
-          <el-col><input v-model="codes.phone" ref="code" type="text" placeholder="CODE" required></el-col>
+          <el-col><input v-model="codes.phone" ref="code" class="signin-input" type="text" placeholder="CODE" required></el-col>
         </el-row>
       </div>
       <div class="verify-code">
@@ -17,7 +17,7 @@
           <el-col>We sent a code to <span>{{ userEmail }}</span><br>Enter the code below to verify</el-col>
         </el-row>
         <el-row type="flex" justify="center">
-          <el-col><input v-model="codes.email" ref="code" type="text" placeholder="CODE" required></el-col>
+          <el-col><input v-model="codes.email" ref="code" class="signin-input" type="text" placeholder="CODE" required></el-col>
         </el-row>
       </div>
       <el-button class="white-btn" type="primary" @click="verifyCodes">Verify</el-button>
@@ -81,9 +81,9 @@ export default {
     background-color: white;
     & h1 {
       font-size: 64px;
-      margin: 10px 0;
     }
   }
+  // Add media query for smaller phones lowering font size
   .body {
     color: white;
     padding: 5px;
@@ -101,6 +101,10 @@ export default {
     & input {
       margin-top: 25px;
     }
+  }
+  .signin-input {
+    width: 75px;
+    text-align: center;
   }
 </style>
 

@@ -55,6 +55,7 @@ export default {
     },
     getContactFirstName: (state, getters) => id => getters.getContactById(id).name.split(' ', 1).join(' '),
     getContactLastName: (state, getters) => id => getters.getContactById(id).name.split(' ').slice(1).join(' '),
+    getContactLetter: (state, getters) => id => getters.getContactById(id).name.charAt(0),
     getContactProfilePicture: (state, getters) => id => getters.getContactById(id).profile_pic,
     getContactThumbnail: (state, getters) => id => getters.getContactById(id).thumbnail,
     getFilteredContacts: state => text => state.contact_list.filter(contact => (contact.searchableAttributes.includes(text))),
@@ -67,7 +68,7 @@ export default {
     buildSearchableAttributes: state => {
       var contacts = state.contact_list
       for (var i = 0; i < contacts.length; ++i) {
-        contacts[i].searchableAttributes = `${contacts[i].first_name}${contacts[i].last_name}`.toLowerCase()
+        contacts[i].searchableAttributes = `${contacts[i].name}`.toLowerCase()
       }
     },
     setTypeNotUnique: (state, payload) => {
