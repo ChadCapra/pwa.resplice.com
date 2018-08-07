@@ -35,20 +35,29 @@ export default {
     }
   },
   actions: {
-    share: ({ commit }, shareRequest) => {
-      return new Promise((resolve, reject) => {
-        api.post('/share', shareRequest)
-          .then(response => {
-            resolve(response.data.return_object.contacts_list)
-            console.log(response.data)
-            // Cleanup
-            commit('setSharingContacts', [])
-            commit('setSharingAttributes', [])
-          })
-          .catch(error => {
-            reject(error)
-          })
-      })
-    }
+    shareWithAttribute: ({ commit }, shareRequest) => new Promise((resolve, reject) => {
+      api.post('/share', shareRequest)
+        .then(response => {
+          resolve(response.data.return_object.contacts_list)
+          console.log(response.data)
+          // Cleanup
+          commit('clearSharing')
+        })
+        .catch(error => {
+          reject(error)
+        })
+    }),
+    shareWithId: ({commit}, shareIds) => new Promise((resolve, reject) => {
+      api.post('/share/contacts', shareIds)
+        .then(response => {
+          resolve(response.data.return_object.contacts_list)
+          console.log(response.data)
+          // Cleanup
+          commit('clearSharing')
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
   }
 }
