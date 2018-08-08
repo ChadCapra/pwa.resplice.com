@@ -102,6 +102,7 @@ export default {
       console.log(`Attribute type number ${ati} requested.`)
     },
     share () {
+      this.$store.commit('setSharingType', 1)
       this.$store.commit('setSharingContacts', [this.contact])
       this.$router.push({name: 'Attributes'})
     }

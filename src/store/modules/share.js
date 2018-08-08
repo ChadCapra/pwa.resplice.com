@@ -6,10 +6,73 @@ export default {
       contacts: [],
       attributes: []
     },
-    pending: {
-      incoming: [],
-      outgoing: []
-    }
+    queue: {
+      incoming: [
+        {
+          id: 2,
+          // Can be share, attribute, update, or group
+          share_type: 'attribute',
+          contact_id: 2,
+          contact_name: 'Darth Revan',
+          attribute_type_id: 2,
+          timestamp: '10 Seconds Ago' // need to change to server timestamp and calculate in getter
+        },
+        {
+          id: 1,
+          // Can be share, attribute, update, or group
+          share_type: 'share',
+          contact_id: 1,
+          contact_name: 'Bastilla Shan',
+          attribute_type_id: undefined,
+          timestamp: '2 Hours Ago' // need to change to server timestamp and calculate in getter
+        },
+        {
+          id: 3,
+          // Can be share, attribute, update, or group
+          share_type: 'update',
+          contact_id: 4,
+          contact_name: 'Obi-wan Kenobi',
+          attribute_type_id: 2,
+          timestamp: '10 Minutes Ago' // need to change to server timestamp and calculate in getter
+        },
+        {
+          id: 4,
+          // Can be share, attribute, update, or group
+          share_type: 'group',
+          group_id: 1,
+          contact_name: 'Jedi Knights',
+          attribute_type_id: 1,
+          timestamp: '5 Days Ago' // need to change to server timestamp and calculate in getter
+        }
+      ],
+      outgoing: [
+        {
+          id: 1,
+          share_type: 'ping',
+          contact_id: 7,
+          contact_name: 'Han Solo',
+          timestamp: '10 Minutes Ago'
+        },
+        {
+          id: 2,
+          share_type: 'ping',
+          contact_id: 5,
+          contact_name: 'Darth Vader',
+          timestamp: '1 Day Ago'
+        },
+        {
+          id: 3,
+          share_type: 'ping',
+          contact_id: 6,
+          contact_name: 'Obi-wan Kenobi',
+          timestamp: '22 Hours Ago'
+        }
+      ]
+    },
+    // 0 (default) - share with attribute
+    // 1 - share with user id
+    // 2 - share with qr code link
+    sharingType: 0
   },
   getters: {
     getSharingContacts: state => state.sharing.contacts,
@@ -20,7 +83,16 @@ export default {
         attributeIds.push(attr.id)
       })
       return attributeIds
-    }
+    },
+    getSharingContactIds: state => {
+      var contactIds = []
+      state.sharing.contacts.forEach(contact => {
+        contactIds.push(contact.id)
+      })
+      return contactIds
+    },
+    getSharingType: state => state.sharingType,
+    getQueue: state => state.queue
   },
   mutations: {
     setSharingContacts: (state, payload) => {
@@ -29,9 +101,13 @@ export default {
     setSharingAttributes: (state, payload) => {
       state.sharing.attributes = payload
     },
+    setSharingType: (state, payload) => {
+      state.sharingType = payload
+    },
     clearSharing: state => {
       state.sharing.attributes = []
       state.sharing.contacts = []
+      state.sharingType = 0
     }
   },
   actions: {

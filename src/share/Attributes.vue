@@ -74,6 +74,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   data () {
     return {
@@ -102,18 +104,14 @@ export default {
     }
   },
   computed: {
-    sharingContacts () {
-      return this.$store.getters.getSharingContacts
-    },
-    sharingAttributes () {
-      return this.$store.getters.getSharingAttributes
-    },
-    sharingAttributeIds () {
-      return this.$store.getters.getSharingAttributeIds
-    },
-    attributes () {
-      return this.$store.getters.getUserAttributes
-    },
+    ...mapGetters({
+      sharingContacts: 'getSharingContacts',
+      sharingAttributes: 'getSharingAttributes',
+      sharingAttributeIds: 'getSharingAttributeIds',
+      sharingContactIds: 'getSharingContactIds',
+      attributes: 'getUserAttributes',
+      sharingType: 'getSharingType'
+    }),
     sharingInfo () {
       if (!this.sharingContacts[0].name) {
         return this.sharingContacts[0].attributes[0].value
@@ -181,22 +179,47 @@ export default {
     },
     share () {
       this.dialogVisible = false
-      var send = {
-        share_request: {
-          email_or_phone: this.sharingContacts[0].attributes[0].value,
-          attribute_ids: this.sharingAttributeIds
-        }
+      var send = {}
+      // Check if sharingType is with attributes, user ids, or both, or qr code link
+      switch (this.sharingType) {
+        case 0:
+          send = {
+            share_request: {
+              email_or_phone: this.sharingContacts[0].attributes[0].value,
+              attribute_ids: this.sharingAttributeIds
+            }
+          }
+          this.$store.dispatch('shareWithAttribute', send)
+            .then((contactList) => {
+              this.$store.commit('setContacts', contactList)
+              this.$store.commit('buildSearchableAttributes')
+              this.$router.push({name: 'root'})
+            })
+            .catch(error => {
+              console.log(error)
+            })
+          break
+        case 1:
+          send = {
+            share_request: {
+              contact_ids: this.sharingContactIds,
+              attribute_ids: this.sharingAttributeIds
+            }
+          }
+          this.$store.dispatch('shareWithId', send)
+            .then((contactList) => {
+              this.$store.commit('setContacts', contactList)
+              this.$store.commit('buildSearchableAttributes')
+              this.$router.push({name: 'root'})
+            })
+            .catch(error => {
+              console.log(error)
+            })
+          break
+        default:
+          console.log('Could not share your information')
+          break
       }
-      // API Call
-      this.$store.dispatch('shareWithAttribute', send)
-        .then((contactList) => {
-          this.$store.commit('setContacts', contactList)
-          this.$store.commit('buildSearchableAttributes')
-          this.$router.push({name: 'root'})
-        })
-        .catch(error => {
-          console.log(error)
-        })
     },
     createTag () {
       this.tags.push({
@@ -204,6 +227,9 @@ export default {
         value: this.tagInput
       })
     }
+  },
+  destroyed () {
+    this.$store.commit('updateSearch', '')
   }
 }
 </script>

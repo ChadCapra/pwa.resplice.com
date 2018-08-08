@@ -1,7 +1,7 @@
 <template>
   <div class="share">
     <div class="share-header">
-      <h3>Share info with an exsisting contact, username, phone number, email, or scan a contact's Recode to start sharing</h3>
+      <h3>Share info with an existing contact, phone number, email, or scan a contact's Recode to start sharing</h3>
       <!-- Search Bar -->
       <el-row class="search-header" type="flex" justify="center">
         <el-col :span="22">
