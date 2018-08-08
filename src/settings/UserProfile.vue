@@ -26,11 +26,11 @@
         </div>
         <div class="info">
           <el-date-picker
-            v-model="DOB"
+            v-model="dob"
             type="date"
             placeholder="Date of Birth"
             value-format="yyyy/MM/dd"
-            @change="updates.DOB = DOB; updates.status = true">
+            @change="updates.dob = dob; updates.status = true">
             <template slot="prepend"><icon name="calender"></icon></template>
           </el-date-picker>
         </div>
@@ -184,7 +184,7 @@ export default {
         status: false,
         initial: {
           name: '',
-          DOB: '',
+          dob: '',
           gender: ''
         },
         contact: {}
@@ -220,7 +220,7 @@ export default {
         this.$store.commit('updateName', value)
       }
     },
-    DOB: {
+    dob: {
       get () {
         return this.userData.date_of_birth
       },
@@ -258,7 +258,7 @@ export default {
   },
   mounted () {
     this.updates.initial.name = this.name
-    this.updates.initial.DOB = this.DOB
+    this.updates.initial.dob = this.dob
     this.updates.initial.gender = this.gender
   },
   methods: {
@@ -379,7 +379,7 @@ export default {
     },
     cancelUpdates () {
       this.name = this.updates.initial.name
-      this.DOB = this.updates.initial.DOB
+      this.dob = this.updates.initial.dob
       this.gender = this.updates.initial.gender
       this.updates.status = false
     },
