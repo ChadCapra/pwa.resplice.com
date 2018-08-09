@@ -10,7 +10,7 @@ export default {
       incoming: [
         {
           id: 2,
-          // Can be share, attribute, update, or group
+          // Can be general, attribute, update, or group
           share_type: 'attribute',
           contact_id: 2,
           contact_name: 'Darth Revan',
@@ -19,8 +19,8 @@ export default {
         },
         {
           id: 1,
-          // Can be share, attribute, update, or group
-          share_type: 'share',
+          // Can be general, attribute, update, or group
+          share_type: 'general',
           contact_id: 1,
           contact_name: 'Bastilla Shan',
           attribute_type_id: undefined,
@@ -28,7 +28,7 @@ export default {
         },
         {
           id: 3,
-          // Can be share, attribute, update, or group
+          // Can be general, attribute, update, or group
           share_type: 'update',
           contact_id: 4,
           contact_name: 'Obi-wan Kenobi',
@@ -37,11 +37,11 @@ export default {
         },
         {
           id: 4,
-          // Can be share, attribute, update, or group
+          // Can be general, attribute, update, or group
           share_type: 'group',
           group_id: 1,
           contact_name: 'Jedi Knights',
-          attribute_type_id: 1,
+          attribute_type_id: undefined,
           timestamp: '5 Days Ago' // need to change to server timestamp and calculate in getter
         }
       ],
@@ -108,6 +108,12 @@ export default {
       state.sharing.attributes = []
       state.sharing.contacts = []
       state.sharingType = 0
+    },
+    setOutgoing: (state, payload) => {
+      state.queue.outgoing = payload
+    },
+    setIncoming: (state, payload) => {
+      state.queue.incoming = payload
     }
   },
   actions: {
@@ -119,9 +125,7 @@ export default {
           // Cleanup
           commit('clearSharing')
         })
-        .catch(error => {
-          reject(error)
-        })
+        .catch(error => { reject(error) })
     }),
     shareWithId: ({commit}, shareIds) => new Promise((resolve, reject) => {
       api.post('/share/contacts', shareIds)
@@ -131,9 +135,31 @@ export default {
           // Cleanup
           commit('clearSharing')
         })
-        .catch(error => {
-          reject(error)
+        .catch(error => { reject(error) })
+    }),
+    ping: ({commit}, id) => new Promise((resolve, reject) => {
+      api.put('/request', id)
+        .then(response => {
+          commit('setOutgoing', response.data.return_object.outgoing)
+          resolve()
         })
+        .catch(error => { reject(error) })
+    }),
+    requestAttrib: ({commit}, request) => new Promise((resolve, reject) => {
+      api.post('/request', request)
+        .then(response => {
+          commit('setOutgoing', response.data.return_object.outgoing)
+          resolve()
+        })
+        .catch(error => { reject(error) })
+    }),
+    requestAttribUpdate: ({commit}, request) => new Promise((resolve, reject) => {
+      api.post('/request/update', request)
+        .then(response => {
+          commit('setOutgoing', response.data.return_object.outgoing)
+          resolve()
+        })
+        .catch(error => { reject(error) })
     })
   }
 }

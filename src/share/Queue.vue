@@ -49,8 +49,10 @@ export default {
       // Go to share page if share_type isnt group
       // Otherwise accept group invite
     },
-    pingRequest () {
-      // Resend notification to requested contact
+    pingRequest (request) {
+      this.$store.dispatch('ping', request.id)
+        .then(() => { console.log('User was reminded') })
+        .catch(error => { console.log(error) })
     },
     getBtnText (shareType) {
       if (shareType === 'group') {
@@ -72,21 +74,17 @@ export default {
             return 'Requested a social media account'
           case 5:
             return 'Requested a website'
-          case 6:
-            return 'Requested another attribute'
           default:
             return 'Requested another attribute'
         }
-      } else if (request.share_type === 'share') {
+      } else if (request.share_type === 'general') {
         return 'Requested some information'
       } else if (request.share_type === 'update') {
         return 'Requested an update to an attribute'
       } else if (request.share_type === 'group') {
         return 'Requested you to join the group'
-      } else if (request.share_type === 'ping') {
-        return 'Remind them to share something back'
       } else {
-        return 'Requested some information'
+        return 'Remind them to share something back'
       }
     }
   },

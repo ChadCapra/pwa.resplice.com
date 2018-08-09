@@ -69,14 +69,6 @@
               <span>{{ attr.sub_type }}</span>
               <icon name="pencil-square" scale="2"></icon>
             </div>
-            <!-- <el-select v-model="values[info.id]" placeholder="Select Type">
-              <el-option
-                v-for="type in options"
-                :key="type.value"
-                :label="type.label"
-                :value="type.value">
-              </el-option>
-            </el-select> -->
           </div>
         </div>
       </el-card>

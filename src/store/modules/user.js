@@ -97,87 +97,84 @@ export default {
     // }
   },
   actions: {
-    signIn: ({commit, state}, signInData) => {
-      return new Promise((resolve, reject) => {
-        api.post('/sign_in', signInData)
-          .then(response => {
-            var errorCode = 100
-            if (response.status === 200) {
-              api.defaults.headers.common['Authorization'] = response.data.return_object.user_object.token
-              api.defaults.headers['Authorization'] = response.data.return_object.user_object.token
-              commit('setUser', response.data.return_object.user_object)
-              commit('setLogin', true)
-              resolve(response.data.return_object.contacts_list)
-            } else {
-              reject(errorCode)
-            }
-          })
-          .catch(error => {
-            reject(error)
-          })
-      })
-    },
-    signUp: ({commit}, signUp) => {
-      return new Promise((resolve, reject) => {
-        api.post('/sign_up', signUp)
-          .then(response => {
+    signIn: ({commit, state}, signInData) => new Promise((resolve, reject) => {
+      api.post('/sign_in', signInData)
+        .then(response => {
+          var errorCode = 100
+          if (response.status === 200) {
             api.defaults.headers.common['Authorization'] = response.data.return_object.user_object.token
             api.defaults.headers['Authorization'] = response.data.return_object.user_object.token
-            commit('setUser', response.data.return_object.user_object)
-            resolve(response.data.return_object.contacts_list)
-          })
-          .catch(error => {
-            reject(error)
-          })
-      })
-    },
-    matchAttributes: ({commit, state}, signInData) => {
-      return new Promise((resolve, reject) => {
-        api.post('/login_attempt', signInData)
-          .then(response => {
-            resolve(response.data.matches)
-          })
-          .catch(error => {
-            reject(error)
-          })
-      })
-    },
-    createUserAttribute: ({commit, state}, attribute) => {
-      return new Promise((resolve, reject) => {
-        api.post('/attribute', attribute)
-          .then(response => {
-            commit('setUser', response.data.return_object.user_object)
+            commit('setLogin', true)
             resolve()
-          })
-          .catch(error => {
-            reject(error)
-          })
-      })
-    },
-    updateUserAttribute: ({commit, state}, updatedAttribute) => {
-      return new Promise((resolve, reject) => {
-        api.put('/attribute', updatedAttribute)
-          .then(response => {
-            commit('setUser', response.data.return_object.user_object)
-            resolve()
-          })
-          .catch(error => {
-            reject(error)
-          })
-      })
-    },
-    deleteUserAttribute: ({commit}, attribute) => {
-      return new Promise((resolve, reject) => {
-        api.delete('/attribute', attribute)
-          .then(response => {
-            commit('setUser', response.data.return_object.user_object)
-            resolve()
-          })
-          .catch(error => {
-            reject(error)
-          })
-      })
-    },
+          } else {
+            reject(errorCode)
+          }
+        })
+        .catch(error => {
+          reject(error)
+        })
+    }),
+    signUp: ({commit}, signUp) => new Promise((resolve, reject) => {
+      api.post('/sign_up', signUp)
+        .then(response => {
+          api.defaults.headers.common['Authorization'] = response.data.return_object.user_object.token
+          api.defaults.headers['Authorization'] = response.data.return_object.user_object.token
+          commit('setUser', response.data.return_object.user_object)
+          resolve(response.data.return_object.contacts_list)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    }),
+    refresh: ({commit, state}) => new Promise((resolve, reject) => {
+      api.get('/contact')
+        .then(response => {
+          commit('setUser', response.data.return_object.user_object)
+          resolve(response.data.return_object.contacts_list)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    }),
+    matchAttributes: ({commit, state}, signInData) => new Promise((resolve, reject) => {
+      api.post('/login_attempt', signInData)
+        .then(response => {
+          resolve(response.data.matches)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    }),
+    createUserAttribute: ({commit, state}, attribute) => new Promise((resolve, reject) => {
+      api.post('/attribute', attribute)
+        .then(response => {
+          commit('setUser', response.data.return_object.user_object)
+          resolve()
+        })
+        .catch(error => {
+          reject(error)
+        })
+    }),
+    updateUserAttribute: ({commit, state}, updatedAttribute) => new Promise((resolve, reject) => {
+      api.put('/attribute', updatedAttribute)
+        .then(response => {
+          commit('setUser', response.data.return_object.user_object)
+          resolve()
+        })
+        .catch(error => {
+          reject(error)
+        })
+    }),
+    deleteUserAttribute: ({commit}, attribute) => new Promise((resolve, reject) => {
+      api.delete('/attribute', attribute)
+        .then(response => {
+          commit('setUser', response.data.return_object.user_object)
+          resolve()
+        })
+        .catch(error => {
+          reject(error)
+        })
+    }),
     updateUserValue: ({commit, state}, contact) => {
       var contactUpdates = { contact }
       return new Promise((resolve, reject) => {
@@ -191,20 +188,15 @@ export default {
           })
       })
     },
-    sendVerify: (attrib) => {
-      // Call API to verify attribute
-    },
-    verify: ({commit}, codes) => {
-      return new Promise((resolve, reject) => {
-        api.post('/verify', codes)
-          .then(response => {
-            commit('setUser', response.data.return_object.user_object)
-            resolve()
-          })
-          .catch(error => {
-            reject(error)
-          })
-      })
-    }
+    verify: ({commit}, codes) => new Promise((resolve, reject) => {
+      api.post('/verify', codes)
+        .then(response => {
+          commit('setUser', response.data.return_object.user_object)
+          resolve()
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
   }
 }

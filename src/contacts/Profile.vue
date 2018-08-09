@@ -99,7 +99,18 @@ export default {
       console.log('Action executed')
     },
     requestAttribute (ati) {
-      console.log(`Attribute type number ${ati} requested.`)
+      this.$store.dispatch('requestAttrib', {attribute_type_id: ati, recipient_id: this.contact.id})
+        .then(() => {
+          console.log('Attribute Requested')
+        })
+        .catch(error => { console.log(error) })
+    },
+    requestAttributeUpdate (ati) {
+      this.$store.dispatch('requestAttribUpdate', {})
+        .then(() => {
+          console.log('Attribute Update Requested')
+        })
+        .catch(error => { console.log(error) })
     },
     share () {
       this.$store.commit('setSharingType', 1)
