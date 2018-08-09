@@ -97,9 +97,16 @@ export default {
   created () {
     this.$store.commit('setShowSearch', true)
     this.$store.commit('setHeaderText', 'Resplice')
-  },
-  mounted () {
-    this.$store.commit('setGlobalLoading', false)
+    this.$store.dispatch('refresh')
+      .then(contacts => {
+        this.$store.commit('setContacts', contacts)
+        this.$store.commit('buildSearchableAttributes')
+        this.$store.commit('setGlobalLoading', false)
+        console.log('Refreshed app')
+      })
+      .catch(error => {
+        console.log(error)
+      })
   },
   destroyed () {
     this.$store.commit('setShowSearch', false)
