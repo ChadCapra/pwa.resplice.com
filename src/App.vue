@@ -10,7 +10,19 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  created () {
+    const ls = window.localStorage
+    // Check for stored user information
+    if (ls.getItem('id') && ls.getItem('token')) {
+      // If user is offline, check token expiry load cached state
+      // Otherwise, try to login with stored info
+      // this.$store.dispatch('tokenLogin', ls)
+      console.log(ls)
+    } else {
+      // Otherwise if no stored information redirect to signin page
+    }
+  }
 }
 </script>
 

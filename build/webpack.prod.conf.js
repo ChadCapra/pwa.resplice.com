@@ -105,7 +105,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       staticFileGlobs: ['dist/**/*.{js,html,css}'],
       minify: true,
       stripPrefix: 'dist/',
-      runtimeCaching: [ // TODO: Include api URL when api is live
+      runtimeCaching: [
         {
           urlPattern: /^https:\/\/fonts\.googleapis\.com\//,
           handler: 'cacheFirst'
@@ -114,6 +114,17 @@ const webpackConfig = merge(baseWebpackConfig, {
           urlPattern: /^https:\/\/fonts\.gstatic\.com\//,
           handler: 'cacheFirst'
         },
+        {
+          urlPattern: /^https:\/\/api\.resplice\.com\//,
+          handler: 'networkFirst'
+        },
+        {
+          urlPattern: /^https:\/\/res\.cloudinary\.com\//,
+          handler: 'fastest'
+        }
+      ],
+      importScripts: [
+        { chunkName: 'sw' }
       ]
     })
   ]

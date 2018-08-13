@@ -1,4 +1,5 @@
 import api from '@/utils/api'
+import jwtDecode from 'jwt-decode'
 
 export default {
   state: {
@@ -26,6 +27,7 @@ export default {
         }
       ]
     },
+    jwt: {},
     loggedIn: false,
     userLoading: true
   },
@@ -37,7 +39,8 @@ export default {
     getThumbnail: state => state.user_object.thumbnail,
     getSignInData: state => state.signInData,
     getLoggedIn: state => state.loggedIn,
-    getFilteredAttributes: state => typeId => state.user_object.contact_attributes.filter(attr => attr.attribute_type_id === typeId)
+    getFilteredAttributes: state => typeId => state.user_object.contact_attributes.filter(attr => attr.attribute_type_id === typeId),
+    getJWT: state => state.jwt
   },
   mutations: {
     setSignInEmail: (state, payload) => {
@@ -84,7 +87,7 @@ export default {
         }
       }
       state.user.contact_attributes = mod
-    }
+    },
     // addAttribute: (state, payload) => {
     //   payload.id = state.user.contact_attributes.length + 1
     //   state.user.contact_attributes.push(payload)
@@ -94,21 +97,33 @@ export default {
     //   var attr = state.user.contact_attributes.find(attribute => attribute.id === payload)
     //   var i = attributes.indexOf(attr)
     //   state.user.contact_attributes.splice(i, 1)
-    // }
+    // },
+    parseJWT: (state, payload) => {
+      state.jwt = jwtDecode(payload.slice(9))
+      api.defaults.headers.common['Authorization'] = payload
+      api.defaults.headers['Authorization'] = payload
+      window.localStorage.setItem('token', payload)
+      window.localStorage.setItem('id', state.jwt.sub)
+    }
   },
   actions: {
     signIn: ({commit, state}, signInData) => new Promise((resolve, reject) => {
       api.post('/sign_in', signInData)
         .then(response => {
-          var errorCode = 100
-          if (response.status === 200) {
-            api.defaults.headers.common['Authorization'] = response.data.return_object.user_object.token
-            api.defaults.headers['Authorization'] = response.data.return_object.user_object.token
-            commit('setLogin', true)
-            resolve()
-          } else {
-            reject(errorCode)
-          }
+          commit('parseJWT', response.data.return_object.user_object.token)
+          commit('setLogin', true)
+          resolve()
+        })
+        .catch(error => {
+          reject(error)
+        })
+    }),
+    tokenLogin: ({commit, state}, localStorage) => new Promise((resolve, reject) => {
+      api.post('/sign_in/token', localStorage)
+        .then(response => {
+          commit('parseJWT', response.data.return_object.user_object.token)
+          commit('setLogin', true)
+          resolve()
         })
         .catch(error => {
           reject(error)
@@ -117,8 +132,7 @@ export default {
     signUp: ({commit}, signUp) => new Promise((resolve, reject) => {
       api.post('/sign_up', signUp)
         .then(response => {
-          api.defaults.headers.common['Authorization'] = response.data.return_object.user_object.token
-          api.defaults.headers['Authorization'] = response.data.return_object.user_object.token
+          commit('parseJWT', response.data.return_object.user_object.token)
           commit('setUser', response.data.return_object.user_object)
           resolve(response.data.return_object.contacts_list)
         })

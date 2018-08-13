@@ -5,7 +5,7 @@
   "display": "standalone",
   "background_color": "#1BBC9B",
   "theme_color": "#1BBC9B",
-  "description" : "The live address book that never lets you get out of date information for your friends and family.",
+  "description" : "The live address book that never has out of date information.",
   "icons": [
     {
       "src": "/static/img/icons/android-chrome-192x192.png",
