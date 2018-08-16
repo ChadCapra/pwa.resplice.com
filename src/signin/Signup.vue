@@ -14,7 +14,7 @@
       <el-row type="flex" justify="center">
         <el-col :xs="22" :sm="22" :md="16" :lg="8" :xl="8">
           <h3 class="signin-input-title">Phone Number</h3>
-          <input type="tel" placeholder="(999) 999-9999" pattern="[0-9]" class="signin-input" v-model="signUp.phone" required>
+          <input type="tel" placeholder="(999) 999-9999" pattern="[0-9]" class="signin-input" v-model="signUp.phone" v-mask="'(###) ###-####'" required>
         </el-col>
       </el-row>
       <el-row type="flex" justify="center">

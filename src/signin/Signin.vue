@@ -12,17 +12,17 @@
         <el-row type="flex" justify="center">
           <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
             <div class="sign-field">
-              <el-input ref="email" type="email" placeholder="Enter Email" v-model="email" @focus="resetStyle($refs.email.$el.children[1])">
-                <template slot="prepend"><icon name="envelope"></icon></template>
-              </el-input>
+              <icon name="envelope" scale="1.5"></icon>
+              <el-input ref="email" type="email" placeholder="Enter Email" v-model="email" @focus="resetStyle($refs.email.$el.children[0])" class="email-input"></el-input>
             </div>
           </el-col>
         </el-row>
         <el-row type="flex" justify="center">
           <el-col :xs="20" :sm="20" :md="16" :lg="6" :xl="6">
-            <div class="sign-field"><el-input ref="phone" type="tel" placeholder="Enter Phone" v-model="phone" @focus="resetStyle($refs.phone.$el.children[1])">
-              <template slot="prepend"><icon name="phone" scale="1.2"></icon></template>
-            </el-input></div>
+            <div class="sign-field">
+              <icon name="phone" scale="1.8"></icon>
+              <input ref="phone" type="tel" placeholder="(999) 999-9999" v-model="phone" v-mask="'(###) ###-####'" @focus="resetStyle($refs.phone)" class="phone-input">
+          </div>
           </el-col>
         </el-row>
         <el-row type="flex" justify="center">
@@ -91,7 +91,7 @@ export default {
         return this.signInData.phone
       },
       set (value) {
-        this.$store.commit('setSignInPhone', value)
+        this.$store.commit('setSignInPhone', value.replace(/[^A-Z0-9]/ig, ''))
       }
     },
     password: {
@@ -153,7 +153,7 @@ export default {
       var email = this.$refs.email
       var phone = this.$refs.phone
 
-      if (email.currentValue.length > 0 && phone.currentValue.length > 0) {
+      if (email.currentValue.length > 0 && phone.value.length > 0) {
         this.checkAttribs()
       } else if (email.currentValue.length <= 0) {
         this.$notify({
@@ -161,22 +161,22 @@ export default {
           message: 'Please enter an email address',
           type: 'error'
         })
-        email.$el.children[1].style = 'border: 2px solid #ff0000ad;'
-      } else if (phone.currentValue.length <= 0) {
+        email.$el.children[0].style = 'border: 2px solid #ff0000ad;'
+      } else if (phone.value.length <= 0) {
         this.$notify({
           title: 'Phone Number Required',
           message: 'Please enter a phone number',
           type: 'error'
         })
-        phone.$el.children[1].style = 'border: 2px solid #ff0000ad;'
+        phone.style = 'border: 2px solid #ff0000ad;'
       } else {
         this.$notify({
           title: 'Fields Required',
           message: 'Please enter an email & a phone number',
           type: 'error'
         })
-        email.$el.children[1].style = 'border: 2px solid #ff0000ad;'
-        phone.$el.children[1].style = 'border: 2px solid #ff0000ad;'
+        email.$el.children[0].style = 'border: 2px solid #ff0000ad;'
+        phone.style = 'border: 2px solid #ff0000ad;'
       }
     },
     validatePassword () {
@@ -202,7 +202,12 @@ export default {
 
 <style lang="scss" scoped>
 .sign-field {
+  display: flex;
+  align-items: center;
   padding: 5px;
+  & .fa-icon {
+    color: #1BBC98;
+  }
 }
 .sign-btn {
   padding: 10px;
@@ -234,6 +239,13 @@ export default {
     bottom: 10px;
     right: 10px;
   }
+}
+
+.phone-input {
+  width: 100%;
+}
+.email-input {
+  margin-left: 10px; 
 }
 </style>
 
