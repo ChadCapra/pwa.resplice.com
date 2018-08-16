@@ -92,7 +92,7 @@ export default {
       if (this.search) {
         return this.$store.getters.getFilteredContacts(this.search)
       } else {
-        return this.$store.getters.getContacts
+        return this.$store.getters.getAllContacts
       }
     },
     search () {
