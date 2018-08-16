@@ -4,16 +4,15 @@
       <h1>Attributes</h1>
       <h2>Sharing with 
         <span v-if="sharingContacts.length === 1">{{ sharingInfo }}</span>
-        <span v-else>{{ sharingContacts.length }} people</span>
+        <span v-else @click="expand">{{ sharingContacts.length }} people <icon ref="arrow" name="sort-down" scale="2"></icon></span>
+        <div v-if="expanded">
+          <div v-for="contact in sharingContacts" :key="contact.id">{{ contact.name }}</div>
+        </div>
       </h2>
       <p>Select the attributes you would like to share:</p>
     </div>
     <div class="body">
       <div class="attributes">
-        <!-- <div class="custom">
-          <input type="checkbox" name="select" id="custom" class="checkbox" ref="allAttr" @click="checkAll">
-          <span style="margin-left: 10px">Share all attributes</span>
-        </div> -->
         <div class="attribute" v-for="attr in attributes" :key="attr.id">
           <input type="checkbox" name="select" :id="attr.id" ref="attr" class="checkbox">
           <span style="margin-left: 10px">{{ attr.value }}</span>
@@ -83,6 +82,7 @@ export default {
       dialogVisible: false,
       tagsEdit: false,
       tagInput: '',
+      expanded: false,
       tags: [
         {
           id: 1,
@@ -226,6 +226,17 @@ export default {
         id: this.tags.length + 1,
         value: this.tagInput
       })
+    },
+    expand () {
+      if (this.expanded) {
+        this.$refs.arrow.$el.classList.remove('expanded-icon')
+        this.$refs.arrow.$el.classList.add('collapse-icon')
+        this.expanded = false
+      } else {
+        this.$refs.arrow.$el.classList.remove('collapse-icon')
+        this.$refs.arrow.$el.classList.add('expanded-icon')
+        this.expanded = true
+      }
     }
   },
   destroyed () {
@@ -261,7 +272,7 @@ export default {
     margin: 0;
   }
   h2 {
-    font-size: 36px;
+    font-size: 32px;
     margin: 5px;
   }
   @media screen and (max-width: 350px){
@@ -377,5 +388,22 @@ export default {
     font-weight: 500;
     color:#1BBC9B;
     text-decoration: underline;
+  }
+
+  .expanded-icon {
+    animation: rotate-down 0.3s ease-out forwards;
+  }
+  .collapse-icon {
+    animation: rotate-up 0.3s ease-in forwards;
+  }
+
+  @keyframes rotate-down {
+    from { transform: rotateX(0deg); }
+    to { transform: rotateX(180deg); }
+  }
+
+  @keyframes rotate-up {
+    from { transform: rotateX(180deg); }
+    to { transform: rotateX(0deg); }
   }
 </style>
