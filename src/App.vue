@@ -197,4 +197,17 @@ button, span {
   justify-content: flex-start;
   margin: 0;
 }
+.phone-input {
+  outline: 1px;
+  border: 1px solid #dcdfe6;
+  color: #606266;
+  height: 40px;
+  font-size: inherit;
+  line-height: 40px;
+  width: 179px;
+  border-radius: 5px;
+  padding: 0 15px;
+  margin-left: 10px;
+  box-sizing: border-box;
+}
 </style>
