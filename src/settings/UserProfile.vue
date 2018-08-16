@@ -39,7 +39,7 @@
             class="inline-input"
             v-model="gender"
             placeholder="Gender"
-            :fetch-suggestions="querySearch"
+            :fetch-suggestions="queryGender"
             @input="updates.gender = gender; updates.status = true">
             <template slot="prepend">Gender</template>
           </el-autocomplete>
@@ -64,11 +64,16 @@
             <el-button type="primary" size="small" @click="openAttributeAdd(type.id)">Add</el-button>
           </div>
           <div v-for="attr in userAttributesFiltered(type.id)" :key="attr.id" class="info-content" @click="openAttributeEdit(attr)">
-            <div class="info-content-type">{{ attr.value }}</div>
-            <div class="info-content-subtype">
-              <span>{{ attr.sub_type }}</span>
-              <icon name="pencil-square" scale="2"></icon>
+            <div class="info-content-text">
+              <div class="info-content-subtype">
+                <span>{{ attr.sub_type }}</span>
+                <el-tooltip v-if="attr.verified_at" class="item" effect="dark" content="Attribute Verified" placement="top">
+                  <icon class="verify-icon" name="check-circle"></icon>
+                </el-tooltip>
+              </div>
+              <div class="info-content-type">{{ attr.value }}</div>
             </div>
+            <icon name="pencil-square" scale="1.5"></icon>
           </div>
         </div>
       </el-card>
@@ -77,18 +82,36 @@
     <el-dialog title="Editing Attribute" :visible.sync="showAttributeEdit">
       <el-form :model="editingAttribute">
         <el-form-item label="Attribute Value">
-          <el-input v-model="editingAttribute.value" auto-complete="off"></el-input>
+          <input v-if="editingAttribute.attribute_type_id === 1" v-model="editingAttribute.value" v-mask="'(###) ###-####'" auto-complete="off" class="phone-input">
+          <el-input v-else-if="editingAttribute.attribute_type_id === 5" placeholder="Website Url" v-model="addingAttribute.value">
+            <el-select v-model="websiteType" slot="prepend" placeholder="Select">
+              <el-option label="https://" value="https://"></el-option>
+              <el-option label="http://" value="http://"></el-option>
+            </el-select>
+          </el-input>
+          <el-input v-else v-model="editingAttribute.value" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="Attribute Sub-Type">
           <el-autocomplete
             v-model="editingAttribute.sub_type"
-            placeholder="Select attribute type or enter your own"
-            :fetch-suggestions="querySearch">
+            placeholder="Enter Attribute Type"
+            :fetch-suggestions="queryAttributeOptions">
           </el-autocomplete>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button type="danger" @click="deleteAttribute">Delete</el-button>
+        <el-popover
+          placement="top"
+          width="160"
+          v-model="visible2">
+          <p>Are you sure you want to delete this?</p>
+          <div style="text-align: right; margin: 0">
+            <el-button size="mini" type="text" @click="visible2 = false">cancel</el-button>
+            <el-button type="primary" size="mini" @click="deleteAttribute">confirm</el-button>
+          </div>
+          <el-button slot="reference" type="danger">Delete</el-button>
+        </el-popover>
+        <el-button v-if="!editingAttribute.verified_at" type="primary" @click="verifyAttribute">Verify</el-button>
         <el-button type="primary" @click="saveAttribute">Update</el-button>
       </span>
     </el-dialog>
@@ -96,13 +119,20 @@
     <el-dialog title="Adding Attribute" :visible.sync="showAttributeAdd">
       <el-form :model="addingAttribute">
         <el-form-item label="Attribute Value">
-          <el-input v-model="addingAttribute.value" auto-complete="off"></el-input>
+          <input v-if="addingAttribute.attribute_type_id === 1" v-model="addingAttribute.value" v-mask="'(###) ###-####'" auto-complete="off" class="phone-input">
+          <el-input v-else-if="addingAttribute.attribute_type_id === 5" placeholder="Website Url" v-model="addingAttribute.value">
+            <el-select v-model="websiteType" slot="prepend" placeholder="Select">
+              <el-option label="https://" value="https://"></el-option>
+              <el-option label="http://" value="http://"></el-option>
+            </el-select>
+          </el-input>
+          <el-input v-else v-model="addingAttribute.value" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="Attribute Sub-Type">
           <el-autocomplete
             v-model="addingAttribute.sub_type"
-            placeholder="Select attribute type or enter your own"
-            :fetch-suggestions="querySearch">
+            placeholder="Enter Attribute Type"
+            :fetch-suggestions="queryAttributeOptions">
           </el-autocomplete>
         </el-form-item>
       </el-form>
@@ -143,33 +173,17 @@ export default {
       uploading: false,
       showAttributeEdit: false,
       showAttributeAdd: false,
+      visible2: false,
       swiped: false,
-      genders: ['Male', 'Female', 'Pan', 'Tri'],
+      websiteType: undefined,
+      genders: [{ value: 'Male' }, { value: 'Female' }, { value: 'Pan' }, { value: 'Tri' }],
       options: [
-        {
-          value: 'personal',
-          label: 'Personal'
-        },
-        {
-          value: 'home',
-          label: 'Home'
-        },
-        {
-          value: 'work',
-          label: 'Work'
-        },
-        {
-          value: 'mobile',
-          label: 'Mobile'
-        },
-        {
-          value: 'main',
-          label: 'Main'
-        },
-        {
-          value: 'other',
-          label: 'Other'
-        }
+        { value: 'Personal' },
+        { value: 'Home' },
+        { value: 'Work' },
+        { value: 'Mobile' },
+        { value: 'Main' },
+        { value: 'Other' }
       ],
       values: [],
       updates: {
@@ -182,7 +196,7 @@ export default {
         contact: {}
       },
       addingAttribute: {
-        attribute_type_id: '',
+        attribute_type_id: undefined,
         value: '',
         sub_type: ''
       },
@@ -331,6 +345,7 @@ export default {
           id: this.editingAttribute.id
         }
       }
+      this.visible2 = false
       this.$store.dispatch('deleteUserAttribute', send)
         .then(() => {
           this.showAttributeEdit = false
@@ -355,10 +370,13 @@ export default {
     resetAddAttribute () {
       this.showAttributeAdd = false
       this.addingAttribute = {
-        attribute_type_id: '',
+        attribute_type_id: undefined,
         value: '',
         sub_type: ''
       }
+    },
+    verifyAttribute () {
+      console.log('Verifying Attribute')
     },
     saveUpdates () {
       this.$store.dispatch('updateUserValue', this.updates.contact)
@@ -378,15 +396,19 @@ export default {
     handleSwipe () {
       this.swiped = true
     },
-    querySearch (queryString, cb) {
+    queryGender (queryString, cb) {
       var genders = this.genders
       var results = queryString ? genders.filter(this.createFilter(queryString)) : genders
+      console.log(results)
+      cb(results)
+    },
+    queryAttributeOptions (queryString, cb) {
+      var attributeOptions = this.options
+      var results = queryString ? attributeOptions.filter(this.createFilter(queryString)) : attributeOptions
       cb(results)
     },
     createFilter (queryString) {
-      return gender => {
-        return (gender.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
-      }
+      return (item) => (item.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
     },
     getImg () {
       const input = this.$refs.upload
@@ -495,6 +517,12 @@ export default {
     justify-content: center;
     margin-bottom: 20px;
   }
+  .fa-icon {
+    color: #1BBC9B;
+    &:hover {
+      cursor: pointer;
+    }
+  }
   .avatar-container {
     display: flex;
     justify-content: center;
@@ -518,26 +546,25 @@ export default {
     align-items: center;
     margin: 15px;
   }
+  .info-content-text {
+    display: flex;
+    flex-direction: column;
+  }
   .info-content-subtype {
+    text-transform: capitalize;
     display: flex;
     align-items: center;
-    & .fa-icon {
-      color: #1BBC9B;
-      &:hover {
-        cursor: pointer;
-      }
-    }
     & span {
-      margin-right: 25px;
+      opacity: 0.7;
+    }
+    & .fa-icon {
+      margin-left: 10px;
     }
   }
   .info-content-header {
     justify-content: space-between;
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
-  }
-  .info-content .el-input, .info-content .el-select {
     margin-bottom: 10px;
   }
   .info {
@@ -586,5 +613,10 @@ export default {
     color: #1BBC9B;
     margin-left: 90px;
     top: 170px;
+  }
+
+  .dialog-footer {
+    display: flex;
+    justify-content: space-between;
   }
 </style>
