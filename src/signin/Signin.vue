@@ -91,7 +91,7 @@ export default {
         return this.signInData.phone
       },
       set (value) {
-        this.$store.commit('setSignInPhone', value.replace(/[^A-Z0-9]/ig, ''))
+        this.$store.commit('setSignInPhone', value.replace(/[^0-9]/ig, ''))
       }
     },
     password: {
