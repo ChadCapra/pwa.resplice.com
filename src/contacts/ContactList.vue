@@ -102,7 +102,6 @@ export default {
         this.$store.commit('setContacts', contacts)
         this.$store.commit('buildSearchableAttributes')
         this.$store.commit('setGlobalLoading', false)
-        console.log('Refreshed app')
       })
       .catch(error => {
         console.log(error)
