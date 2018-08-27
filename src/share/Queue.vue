@@ -120,6 +120,9 @@ export default {
     height: 100%;
     border-top: solid 5px #1BBC98;
     border-bottom: solid 5px #1BBC98;
+    &:hover {
+      cursor: pointer;
+    }
   }
   .item-active {
     background-color: #FFFFFF;

@@ -119,11 +119,11 @@ export default {
         })
     }),
     tokenLogin: ({commit, state}, localStorage) => new Promise((resolve, reject) => {
-      api.post('/sign_in/token', localStorage)
+      commit('parseJWT', localStorage.getItem('token'))
+      api.get('/contact')
         .then(response => {
-          commit('parseJWT', response.data.return_object.user_object.token)
-          commit('setLogin', true)
-          resolve()
+          commit('setUser', response.data.return_object.user_object)
+          resolve(response.data.return_object.contacts_list)
         })
         .catch(error => {
           reject(error)

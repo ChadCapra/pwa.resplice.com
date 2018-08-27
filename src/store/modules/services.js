@@ -11,7 +11,10 @@ export default {
     settings: {
       headerText: '',
       nameFormat: 'First Last',
-      showRecentlyContacted: true
+      showRecentlyContacted: true,
+      useData: false,
+      groupAttributeShare: false,
+      pushNotifications: true
     },
     navIndex: {
       one: true,
@@ -37,7 +40,8 @@ export default {
     getMapLocations: state => state.map.locations,
     getMapLoading: state => state.map.loading,
     getGlobalLoading: state => state.globalLoading,
-    getSettingsHeaderText: state => state.settings.headerText
+    getSettingsHeaderText: state => state.settings.headerText,
+    getSettings: state => state.settings
   },
   mutations: {
     setGlobalLoading: (state, payload) => {
@@ -73,30 +77,47 @@ export default {
     },
     setSettingsHeaderText: (state, payload) => {
       state.settings.headerText = payload
+    },
+    setNameFormat: (state, payload) => {
+      state.settings.nameFormat = payload
+    },
+    setShowRecentlyContacted: (state, payload) => {
+      state.settings.showRecentlyContacted = payload
+    },
+    setUseData: (state, payload) => {
+      state.settings.useData = payload
+    },
+    setGroupAttributeShare: (state, payload) => {
+      state.settings.groupAttributeShare = payload
+    },
+    setPushNotifications: (state, payload) => {
+      state.settings.pushNotifications = payload
     }
   },
   actions: {
-    buildMap: ({ commit }, locations) => {
+    buildMap: ({ commit }, locations) => new Promise((resolve, reject) => {
       // Sends a list of ids to server to get back lat and lng locations array
       api.post('/map', locations)
         .then(response => {
           commit('setMapLocations', response.data)
           commit('setMapLoading', false)
+          resolve()
         })
         .catch(error => {
           commit('setMapLoading', false)
-          console.log(error)
+          reject(error)
         })
-    },
-    feedbackSubmit: (feedbackData) => {
+    }),
+    feedbackSubmit: (feedbackData) => new Promise((resolve, reject) => {
       api.post('/feedback', feedbackData)
         .then(response => {
           console.log(feedbackData)
           console.log(response)
+          resolve()
         })
         .catch(e => {
-          console.log(e)
+          reject(e)
         })
-    }
+    })
   }
 }

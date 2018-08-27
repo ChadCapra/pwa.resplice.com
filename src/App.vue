@@ -17,10 +17,18 @@ export default {
     if (ls.getItem('id') && ls.getItem('token')) {
       // If user is offline, check token expiry load cached state
       // Otherwise, try to login with stored info
-      // this.$store.dispatch('tokenLogin', ls)
-      console.log(ls)
+      this.$store.dispatch('tokenLogin', ls)
+        .then(contacts => {
+          this.$store.commit('setContacts', contacts)
+          this.$store.commit('buildSearchableAttributes')
+          this.$store.commit('setGlobalLoading', false)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     } else {
       // Otherwise if no stored information redirect to signin page
+      this.$router.push({name: 'Signin'})
     }
   }
 }
@@ -114,6 +122,13 @@ button, span {
   }
 }
 
+@for $i from 1 through length($colors) {
+  .profile-pic-thumb-placeholder:nth-of-type(n) {
+    background-color: nth($colors, random(length($colors)));
+  }
+}
+
+
 .profile-pic-placeholder, .profile-pic-thumb-placeholder, .profile-pic-thumb-share-placeholder {
   width: 200px;
   height: 200px;
@@ -121,7 +136,6 @@ button, span {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  background-color: $random;
   font-size: 94px;
 }
 .profile-pic-thumb-placeholder {

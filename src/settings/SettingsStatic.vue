@@ -15,7 +15,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="Feedback Description">
-          <el-checkbox label="Send us your device information" name="information"></el-checkbox>
+          <el-checkbox ref="deviceCheck" label="Send us your device information" name="information"></el-checkbox>
         </el-form-item>
         <el-form-item label="Feedback Description">
           <el-input type="textarea" v-model="feedback.desc"></el-input>
@@ -44,16 +44,19 @@ export default {
       showLegal: false,
       showAbout: false,
       feedback: {
-        type: [],
+        type: '',
         desc: '',
-        device: navigator.userAgent
+        device: {}
       }
     }
   },
   methods: {
     feedbackSubmit () {
+      if (this.$refs.deviceCheck.$el.control.checked) {
+        this.feedback.device = navigator
+      }
       this.$store.dispatch('feedbackSubmit', this.feedback)
-      this.$router.push({path: '/settings'})
+      // this.$router.push({path: '/settings'})
     }
   },
   mounted () {
