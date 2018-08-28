@@ -25,6 +25,20 @@ export default {
           verified_at: '',
           primary_of_type: true
         }
+      ],
+      tags: [
+        {
+          id: 1,
+          value: 'Friends'
+        },
+        {
+          id: 2,
+          value: 'Coworkers'
+        },
+        {
+          id: 3,
+          value: 'Roommates'
+        }
       ]
     },
     jwt: {},
@@ -34,6 +48,7 @@ export default {
   getters: {
     getUserId: state => state.user_object.id,
     getUserAttributes: state => state.user_object.contact_attributes,
+    getUserTags: state => state.user_object.tags,
     getUser: state => state.user_object,
     getProfilePic: state => state.user_object.profile_pic,
     getThumbnail: state => state.user_object.thumbnail,
@@ -88,16 +103,6 @@ export default {
       }
       state.user.contact_attributes = mod
     },
-    // addAttribute: (state, payload) => {
-    //   payload.id = state.user.contact_attributes.length + 1
-    //   state.user.contact_attributes.push(payload)
-    // },
-    // removeAttribute: (state, payload) => {
-    //   var attributes = state.user.contact_attributes
-    //   var attr = state.user.contact_attributes.find(attribute => attribute.id === payload)
-    //   var i = attributes.indexOf(attr)
-    //   state.user.contact_attributes.splice(i, 1)
-    // },
     parseJWT: (state, payload) => {
       state.jwt = jwtDecode(payload.slice(9))
       api.defaults.headers.common['Authorization'] = payload

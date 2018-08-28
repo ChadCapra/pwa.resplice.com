@@ -18,14 +18,11 @@
           <span style="margin-left: 10px">{{ attr.value }}</span>
         </div>
       </div>
-      <div class="tags-edit" v-if="tagsEdit">
+
+      <!-- Tags -->
+      <!-- <el-card class="tags-edit" v-if="tagsEdit">
         <div class="tag-showcase">
-          <el-tag
-            color="white"
-            closable
-            type="primary">
-            Tag One
-          </el-tag>
+          <el-tag color="white" closable>Tag One</el-tag>
           <el-tag color="white" closable>Tag Two</el-tag>
           <el-tag color="white" closable>Tag Three</el-tag>
         </div>
@@ -41,13 +38,46 @@
             <div v-for="tag in tags" :key="tag.id">{{ tag.value }}</div>
           </div>
         </div>
-      </div>
-      <div class="tags" v-else>
-        <el-tag color="white">Tag One</el-tag>
-        <el-tag color="white">Tag Two</el-tag>
-        <el-tag color="white">Tag Three</el-tag>
+      </el-card>
+      <div class="tags" v-else @click="tagsEdit = true;">
+        <el-tag color="white" closeable>Tag One</el-tag>
+        <el-tag color="white" closable>Tag Two</el-tag>
+        <el-tag color="white" closable>Tag Three</el-tag>
+      </div> -->
+      <div class="tags">
+        <el-tag
+          v-for="tag in tags"
+          :key="tag.value"
+          class="tag"
+          closable
+          :disable-transitions="false"
+          @close="deleteTag(tag)">
+          {{ tag.value }}
+        </el-tag>
+        <el-autocomplete
+          class="input-new-tag"
+          v-if="inputVisible"
+          v-model="tagInput"
+          :fetch-suggestions="tagSearch"
+          placeholder="Enter Tag Name"
+          ref="tagInput"
+          size="small"
+          @keyup.enter.native="createTag"
+          @select="createTag"
+        ></el-autocomplete>
+        <!-- <el-input
+          class="input-new-tag"
+          v-if="inputVisible"
+          v-model="tagInput"
+          ref="tagInput"
+          size="small"
+          @keyup.enter.native="createTag"
+          @blur="createTag"
+        ></el-input> -->
+        <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
       </div>
     </div>
+
     <el-button class="share btn" type="primary" round @click="shareAttributes">Share</el-button>
     <el-dialog
       title="Sharing Summary"
@@ -80,27 +110,10 @@ export default {
     return {
       sharedAttributes: [],
       dialogVisible: false,
-      tagsEdit: false,
       tagInput: '',
+      inputVisible: false,
       expanded: false,
-      tags: [
-        {
-          id: 1,
-          value: 'College Friends'
-        },
-        {
-          id: 2,
-          value: 'Home Contractors'
-        },
-        {
-          id: 3,
-          value: 'Annoying people in my lab group'
-        },
-        {
-          id: 4,
-          value: 'Neighbors to stay away from'
-        }
-      ]
+      tags: []
     }
   },
   computed: {
@@ -110,7 +123,8 @@ export default {
       sharingAttributeIds: 'getSharingAttributeIds',
       sharingContactIds: 'getSharingContactIds',
       attributes: 'getUserAttributes',
-      sharingType: 'getSharingType'
+      sharingType: 'getSharingType',
+      savedTags: 'getUserTags'
     }),
     sharingInfo () {
       if (!this.sharingContacts[0].name) {
@@ -121,17 +135,6 @@ export default {
     }
   },
   methods: {
-    checkAll () {
-      if (this.$refs.allAttr.checked) {
-        this.$refs.attr.forEach(attr => {
-          attr.checked = true
-        })
-      } else {
-        this.$refs.attr.forEach(attr => {
-          attr.checked = false
-        })
-      }
-    },
     addToSharedAttributes () {
       this.$refs.attr.forEach(attr => {
         if (attr.checked) {
@@ -168,8 +171,6 @@ export default {
         this.dialogVisible = true
       }
     },
-    shareMinimalAttributes () {},
-    shareDefaultAttributes () {},
     handleClose () {
       this.$notify({
         title: 'Sharing',
@@ -221,11 +222,27 @@ export default {
           break
       }
     },
-    createTag () {
-      this.tags.push({
-        id: this.tags.length + 1,
-        value: this.tagInput
+    showInput () {
+      this.inputVisible = true
+      this.$nextTick(() => {
+        this.$refs.tagInput.$refs.input.focus()
       })
+    },
+    createTag (item) {
+      if (this.tagInput) {
+        this.tags.push({value: this.tagInput})
+      }
+      this.inputVisible = false
+      this.tagInput = ''
+    },
+    deleteTag (tag) {
+      this.tags.splice(this.tags.indexOf(tag), 1)
+    },
+    tagSearch (string, cb) {
+      var results = string ? this.savedTags.filter((tag) => {
+        return tag.value.toLowerCase().indexOf(string.toLowerCase()) === 0
+      }) : this.savedTags
+      cb(results)
     },
     expand () {
       if (this.expanded) {
@@ -335,22 +352,19 @@ export default {
       border-right-style: none;
     }
   }
-  .tags, .tags-edit {
+  .tags {
     display: flex;
     justify-content: flex-start;
     margin-top: 25px;
     padding: 10px;
-    & .el-tag {
-      margin-right: 10px;
-    }
+  }
+  .tag {
+    margin: 0px 10px 10px 0px;
+    background-color: white;
+    color: #1BBC9B;
   }
   .tags {
     flex-wrap: wrap;
-    &:hover {
-      background-color: #DADADABF;
-      cursor: pointer;
-    }
-    transition: 0.3s all ease;
   }
   .tags-edit {
     flex-direction: column;
