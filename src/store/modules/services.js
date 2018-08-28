@@ -14,7 +14,8 @@ export default {
       showRecentlyContacted: true,
       useData: false,
       groupAttributeShare: false,
-      pushNotifications: true
+      pushNotifications: true,
+      lang: 'English'
     },
     navIndex: {
       one: true,
@@ -92,6 +93,9 @@ export default {
     },
     setPushNotifications: (state, payload) => {
       state.settings.pushNotifications = payload
+    },
+    setLanguage: (state, payload) => {
+      state.settings.lang = payload
     }
   },
   actions: {
