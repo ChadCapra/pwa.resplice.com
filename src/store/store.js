@@ -21,7 +21,8 @@ export default new Vuex.Store({
         gender: '',
         profile_pic: '',
         thumbnail: '',
-        contact_attributes: []
+        contact_attributes: [],
+        tags: []
       })
       commit('setContacts', [])
       commit('setLogin', false)
