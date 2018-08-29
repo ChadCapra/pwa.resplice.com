@@ -16,7 +16,7 @@
     <el-main>
       <div class="profile">
         <el-row class="pro-pic">
-          <el-col class="pro-pic-col" :span="24"><img v-if="contact.profile_pic" :src='contact.profile_pic' alt="Profile Picture"><div v-else class="profile-pic-placeholder">{{ letter }}</div></el-col>
+          <el-col class="pro-pic-col" :span="24"><img v-if="contact.profile_pic" :src='contact.profile_pic' alt="Profile Picture"><div v-else class="profile-pic-placeholder"><canvas width="200" height="200" :id="'avatar' + contact.id"></canvas></div></el-col>
         </el-row>
         <el-row>
           <el-col style="color: #1BBC9B; font-size: 24px; margin-bottom: 20px;"><span v-if="firstName">{{ firstName }}</span><span v-if="lastName">{{ ` ${lastName}` }}</span></el-col>
@@ -117,6 +117,9 @@ export default {
       this.$store.commit('setSharingContacts', [this.contact])
       this.$router.push({name: 'Attributes'})
     }
+  },
+  mounted () {
+    window.jdenticon.update('#avatar' + this.contact.id, this.contact.name)
   }
 }
 </script>

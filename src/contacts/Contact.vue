@@ -31,7 +31,7 @@
             @swiperight="picSwipe($event)"
             :pan-options="{ direction: 'horizontal', threshold: 10 }"
             class="profile-pic-thumb-placeholder"
-            style="margin-right: 20px;">{{ letter }}</v-touch>
+            style="margin-right: 20px;"><canvas class="avatar" width="80" height="80" :id="'avatar' + contact.id"></canvas></v-touch>
         </div>
         <div class="name" ref="name">
           <div class="f-name">{{ firstName }}</div>
@@ -55,6 +55,9 @@ export default {
     },
     letter () {
       return this.$store.getters.getContactLetter(this.contact.id)
+    },
+    avatar () {
+      return window.jdenticon.toSvg(this.contact.name, 80)
     }
   },
   methods: {
@@ -97,6 +100,9 @@ export default {
         e.style.transform = 'translateX( 0px )'
       }
     }
+  },
+  mounted () {
+    window.jdenticon.update('#avatar' + this.contact.id, this.contact.name)
   }
 }
 </script>
