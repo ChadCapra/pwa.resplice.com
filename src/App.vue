@@ -18,8 +18,9 @@ export default {
       // If user is offline, check token expiry load cached state
       // Otherwise, try to login with stored info
       this.$store.dispatch('tokenLogin', ls)
-        .then(contacts => {
-          this.$store.commit('setContacts', contacts)
+        .then(returnObject => {
+          this.$store.commit('setQueue', returnObject.requests_object)
+          this.$store.commit('setContacts', returnObject.contacts_list)
           this.$store.commit('buildSearchableAttributes')
           this.$store.commit('setGlobalLoading', false)
         })
@@ -122,11 +123,11 @@ button, span {
   }
 }
 
-@for $i from 1 through length($colors) {
-  .profile-pic-thumb-placeholder:nth-of-type(n) {
-    background-color: nth($colors, random(length($colors)));
-  }
-}
+// @for $i from 1 through length($colors) {
+//   .profile-pic-thumb-placeholder:nth-of-type(n) {
+//     background-color: nth($colors, random(length($colors)));
+//   }
+// }
 
 
 .profile-pic-placeholder, .profile-pic-thumb-placeholder, .profile-pic-thumb-share-placeholder {

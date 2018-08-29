@@ -128,7 +128,7 @@ export default {
       api.get('/contact')
         .then(response => {
           commit('setUser', response.data.return_object.user_object)
-          resolve(response.data.return_object.contacts_list)
+          resolve(response.data.return_object)
         })
         .catch(error => {
           reject(error)
@@ -149,7 +149,7 @@ export default {
       api.get('/contact')
         .then(response => {
           commit('setUser', response.data.return_object.user_object)
-          resolve(response.data.return_object.contacts_list)
+          resolve(response.data.return_object)
         })
         .catch(error => {
           reject(error)

@@ -98,8 +98,9 @@ export default {
     this.$store.commit('setShowSearch', true)
     this.$store.commit('setHeaderText', 'Resplice')
     this.$store.dispatch('refresh')
-      .then(contacts => {
-        this.$store.commit('setContacts', contacts)
+      .then(returnObject => {
+        this.$store.commit('setQueue', returnObject.requests_object)
+        this.$store.commit('setContacts', returnObject.contacts_list)
         this.$store.commit('buildSearchableAttributes')
         this.$store.commit('setGlobalLoading', false)
       })

@@ -109,11 +109,8 @@ export default {
       state.sharing.contacts = []
       state.sharingType = 0
     },
-    setOutgoing: (state, payload) => {
-      state.queue.outgoing = payload
-    },
-    setIncoming: (state, payload) => {
-      state.queue.incoming = payload
+    setQueue: (state, payload) => {
+      state.queue = payload
     }
   },
   actions: {
