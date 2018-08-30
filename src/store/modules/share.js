@@ -15,7 +15,7 @@ export default {
           contact_id: 2,
           contact_name: 'Darth Revan',
           attribute_type_id: 2,
-          timestamp: '10 Seconds Ago' // need to change to server timestamp and calculate in getter
+          timestamp: '2018-08-27T17:30:02+00:00'
         },
         {
           id: 1,
@@ -24,7 +24,7 @@ export default {
           contact_id: 1,
           contact_name: 'Bastilla Shan',
           attribute_type_id: undefined,
-          timestamp: '2 Hours Ago' // need to change to server timestamp and calculate in getter
+          timestamp: '2018-08-28T17:30:02+00:00'
         },
         {
           id: 3,
@@ -33,7 +33,7 @@ export default {
           contact_id: 4,
           contact_name: 'Obi-wan Kenobi',
           attribute_type_id: 2,
-          timestamp: '10 Minutes Ago' // need to change to server timestamp and calculate in getter
+          timestamp: '2018-08-30T14:30:02+00:00'
         },
         {
           id: 4,
@@ -42,7 +42,7 @@ export default {
           group_id: 1,
           contact_name: 'Jedi Knights',
           attribute_type_id: undefined,
-          timestamp: '5 Days Ago' // need to change to server timestamp and calculate in getter
+          timestamp: '2018-08-30T12:30:02+00:00'
         }
       ],
       outgoing: [
@@ -51,21 +51,21 @@ export default {
           share_type: 'ping',
           contact_id: 7,
           contact_name: 'Han Solo',
-          timestamp: '10 Minutes Ago'
+          timestamp: '2018-08-30T17:30:02+00:00'
         },
         {
           id: 2,
           share_type: 'ping',
           contact_id: 5,
           contact_name: 'Darth Vader',
-          timestamp: '1 Day Ago'
+          timestamp: '2018-08-30T17:30:02+00:00'
         },
         {
           id: 3,
           share_type: 'ping',
           contact_id: 6,
           contact_name: 'Obi-wan Kenobi',
-          timestamp: '22 Hours Ago'
+          timestamp: '2018-08-30T17:30:02+00:00'
         }
       ]
     },

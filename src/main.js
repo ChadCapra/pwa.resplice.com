@@ -70,6 +70,9 @@ import VueQrReader from 'vue-qrcode-reader'
 // Import vue mask to mask input values
 import VueMask from 'v-mask'
 
+// Import moment library
+import VueMoment from 'vue-moment'
+
 // Import Vue.js App component, router component, and VueX for state management
 import App from './App'
 import router from './router'
@@ -80,6 +83,7 @@ Vue.use(VueQrReader, {name: 'qrcode-reader'})
 Vue.use(VueCroppie)
 Vue.use(VueTouch, {name: 'v-touch'})
 Vue.use(VueMask)
+Vue.use(VueMoment)
 Vue.use(ElementUI, {locale})
 Vue.component('icon', Icon)
 /* eslint-disable no-new */

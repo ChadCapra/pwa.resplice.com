@@ -8,7 +8,7 @@
     <!-- My Queue -->
     <div v-if="!tab" class="my-requests">
       <el-card v-for="request in queue.incoming" :key="request.id" class="request">
-        <div class="timestamp">{{ request.timestamp }}</div>
+        <div class="timestamp">{{ request.timestamp | moment('from', 'now') }}</div>
         <div class="name">{{ request.contact_name }}</div>
         <div class="message">{{ getMessage(request) }}</div>
         <el-button type="danger" class="request-btn-ignore" @click="ignoreRequest(request)">Ignore</el-button>
@@ -19,7 +19,7 @@
     <!-- Other's Requests -->
     <div v-if="tab" class="others-requests">
       <el-card v-for="request in queue.outgoing" :key="request.id" class="request">
-        <div class="timestamp">{{ request.timestamp }}</div>
+        <div class="timestamp">{{ request.timestamp | moment('from', 'now') }}</div>
         <div class="name">{{ request.contact_name }}</div>
         <div class="message">{{ getMessage(request) }}</div>
         <el-button type="primary" class="request-btn-ping" @click="pingRequest(request)">Remind</el-button>
