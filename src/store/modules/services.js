@@ -115,9 +115,9 @@ export default {
     feedbackSubmit: (feedbackData) => new Promise((resolve, reject) => {
       api.post('/feedback', feedbackData)
         .then(response => {
-          console.log(feedbackData)
-          console.log(response)
-          resolve()
+          // console.log(feedbackData)
+          // console.log(response)
+          resolve(response)
         })
         .catch(e => {
           reject(e)

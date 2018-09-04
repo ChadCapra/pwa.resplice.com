@@ -118,7 +118,7 @@ export default {
       api.post('/share', shareRequest)
         .then(response => {
           resolve(response.data.return_object.contacts_list)
-          console.log(response.data)
+          // console.log(response.data)
           // Cleanup
           commit('clearSharing')
         })
@@ -128,7 +128,7 @@ export default {
       api.post('/share/contacts', shareIds)
         .then(response => {
           resolve(response.data.return_object.contacts_list)
-          console.log(response.data)
+          // console.log(response.data)
           // Cleanup
           commit('clearSharing')
         })

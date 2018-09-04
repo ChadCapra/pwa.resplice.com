@@ -112,7 +112,7 @@ export default {
     }
   },
   actions: {
-    signIn: ({commit, state}, signInData) => new Promise((resolve, reject) => {
+    signIn: ({commit}, signInData) => new Promise((resolve, reject) => {
       api.post('/sign_in', signInData)
         .then(response => {
           commit('parseJWT', response.data.return_object.user_object.token)
@@ -123,7 +123,7 @@ export default {
           reject(error)
         })
     }),
-    tokenLogin: ({commit, state}, localStorage) => new Promise((resolve, reject) => {
+    tokenLogin: ({commit}, localStorage) => new Promise((resolve, reject) => {
       commit('parseJWT', localStorage.getItem('token'))
       api.get('/contact')
         .then(response => {
@@ -145,7 +145,7 @@ export default {
           reject(error)
         })
     }),
-    refresh: ({commit, state}) => new Promise((resolve, reject) => {
+    refresh: ({commit}) => new Promise((resolve, reject) => {
       api.get('/contact')
         .then(response => {
           commit('setUser', response.data.return_object.user_object)
@@ -155,7 +155,7 @@ export default {
           reject(error)
         })
     }),
-    matchAttributes: ({commit, state}, signInData) => new Promise((resolve, reject) => {
+    matchAttributes: (signInData) => new Promise((resolve, reject) => {
       api.post('/login_attempt', signInData)
         .then(response => {
           resolve(response.data.matches)
@@ -164,7 +164,7 @@ export default {
           reject(error)
         })
     }),
-    createUserAttribute: ({commit, state}, attribute) => new Promise((resolve, reject) => {
+    createUserAttribute: ({commit}, attribute) => new Promise((resolve, reject) => {
       api.post('/attribute', attribute)
         .then(response => {
           commit('setUser', response.data.return_object.user_object)
@@ -174,7 +174,7 @@ export default {
           reject(error)
         })
     }),
-    updateUserAttribute: ({commit, state}, updatedAttribute) => new Promise((resolve, reject) => {
+    updateUserAttribute: ({commit}, updatedAttribute) => new Promise((resolve, reject) => {
       api.put('/attribute', updatedAttribute)
         .then(response => {
           commit('setUser', response.data.return_object.user_object)
@@ -194,7 +194,7 @@ export default {
           reject(error)
         })
     }),
-    updateUserValue: ({commit, state}, contact) => {
+    updateUserValue: ({commit}, contact) => {
       var contactUpdates = { contact }
       return new Promise((resolve, reject) => {
         api.put('/contact', contactUpdates)

@@ -1,0 +1,21 @@
+{
+  "name": "Resplice",
+  "short_name": "Resplice",
+  "description" : "The live address book that never has out of date information.",
+  "icons": [
+    {
+      "src": "/img/icons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/icons/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#32393D",
+  "theme_color": "#1BBC9B"
+}
