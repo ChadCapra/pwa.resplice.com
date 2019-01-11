@@ -1,0 +1,29 @@
+.sign-in {
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.sign-up-link {
+  margin-bottom: 15px;
+  text-align: center;
+  max-width: 50%;
+}
+
+.forgot-password-link {
+  align-self: flex-end;
+}
+
+h2 {
+  font-size: 36px;
+  margin: 0px;
+}
+
+a {
+  color: #1bbc9b;
+  font-weight: bold;
+}

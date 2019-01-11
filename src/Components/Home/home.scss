@@ -1,0 +1,16 @@
+.home {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.home-header {
+  flex: 1;
+}
+
+.home-body {
+  padding-top: 10px;
+  flex-grow: 1;
+  overflow-y: scroll;
+}

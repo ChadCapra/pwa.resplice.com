@@ -1,0 +1,130 @@
+{
+  "login": {
+    "phone_or_email": "marcusvirg345@gmail.com",
+    "password": "*******"
+  },
+  "login_confirmation": {
+    "auth_token": "asdaJHDS&23428asd"
+  },
+  "forgot_password": {
+    "phone_or_email": "marcusvirg345@gmail.com"
+  },
+  "forgot_password_confirmation": {
+    "phone_or_email": "marcusvirg345@gmail.com",
+    "password_expiry_seconds": 600,
+    "verify_phone_or_email_token": "a33ce0d2-bf0b-4f59-b62a-f91c3a322f95"
+  },
+  "verify_password_reset": {
+    "verify_phone_or_email_token": "a33ce0d2-bf0b-4f59-b62a-f91c3a322f95",
+    "verification_code": "764837",
+    "zip_code": 55414,
+    "dob": "08/13/1996"
+  },
+  "verify_password_reset_confirmation": {
+    "auth_token": "asdaJHDS&23428asd",
+    "reset_password_token": "d563f6f8-af66-4fed-8ea3-ead2a3704bb9"
+  },
+  "reset_password": {
+    "reset_password_token": "d563f6f8-af66-4fed-8ea3-ead2a3704bb9",
+    "password": "*******"
+  },
+  "reset_password_confirmation": {
+    "auth_token": "lnskfjn8u34534KJNKJSFN"
+  },
+  "registration": {
+    "full_name": "Marcus Virginia",
+    "phone_or_email": "marcusvirg345@gmail.com",
+    "password": "mypass123"
+  },
+  "registration_confirmation": {
+    "phone_or_email": "marcusvirg345@gmail.com",
+    "registration_expiry_seconds": 600,
+    "uuid": "a33ce0d2-bf0b-4f59-b62a-f91c3a322f95"
+  },
+  "verify_registration": {
+    "uuid": "d563f6f8-af66-4fed-8ea3-ead2a3704bb9",
+    "verification_code": "764837"
+  },
+  "verify_registration_confirmation": {
+    "verified_at": "01/01/2018",
+    "auth_token": "asdaJHDS&23428asd"
+  },
+  "add_attributes": {
+    "home_phone": "2185910657",
+    "email": "marcusvirg@yahoo.com",
+    "street_address": "1234 road lane",
+    "twitter": "marcusvirg"
+  },
+  "add_attributes_confirmation": {
+    "auth_token": "asdaJHDS&23428asd",
+    "attributes_updated": 4
+  },
+  "add_avatar": {
+    "blob": "011111010101101000010101"
+  },
+  "add_avatar_confirmation": {
+    "avatar_url": "https://avatarurl.com"
+  },
+  "get_user_profile": {
+    "auth_token": "asdaJHDS&23428asd"
+  },
+  "user_profile": {
+    "name": "Marcus Virginia",
+    "attributes": [
+      {
+        "id": 12312,
+        "type": "phone",
+        "sub_type": "Home Phone",
+        "value": "21345345",
+        "verified?": true
+      },
+      {
+        "id": 12312,
+        "type": "email",
+        "sub_type": "Work Email",
+        "value": "marcus@yahoo.com",
+        "verified?": false
+      }
+    ]
+  },
+  "get_contacts": {
+    "auth_token": "asdaJHDS&23428asd"
+  },
+  "contacts": [
+    {
+      "id": 125,
+      "name": "Darth Revan",
+      "attributes": [
+        {
+          "id": 12312,
+          "type": "phone",
+          "sub_type": "Home Phone",
+          "value": "21345345",
+          "verified?": true
+        },
+        {
+          "id": 12312,
+          "type": "email",
+          "sub_type": "Work Email",
+          "value": "marcus@yahoo.com",
+          "verified?": false
+        }
+      ]
+    }
+  ],
+  "get_groups": {
+    "auth_token": "asdaJHDS&23428asd"
+  },
+  "groups": [
+    {
+      "id": 12312,
+      "name": "group1",
+      "member_count": 50
+    },
+    {
+      "id": 122,
+      "name": "group2",
+      "member_count": 25
+    }
+  ]
+}

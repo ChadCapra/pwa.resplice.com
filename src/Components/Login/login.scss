@@ -1,0 +1,26 @@
+.login-header {
+  background-color: #1bbc9b;
+  height: 185px;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  width: 100vw;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  h1 {
+    font-size: 52px;
+    font-weight: normal;
+  }
+  h2 {
+    font-weight: normal;
+  }
+}
+
+.help-icon {
+  position: fixed;
+  bottom: 2.5px;
+  right: 2.5px;
+}
