@@ -39,14 +39,14 @@ export default class ReUserProfile extends Component {
           attrs={[
             {
               id: 1,
-              icon: <MdPhone color="#1BBC9B" fontSize="2.5rem" />,
+              icon: <MdPhone color="#C4C4C4" fontSize="2.5rem" />,
               name: 'Mobile',
               value: '(223) 262-0950',
               verified: true
             },
             {
               id: 2,
-              icon: <MdPhone color="#1BBC9B" fontSize="2.5rem" />,
+              icon: <MdPhone color="#C4C4C4" fontSize="2.5rem" />,
               name: 'Work',
               value: '(987) 234-4564',
               verified: false
