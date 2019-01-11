@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import ReactSwipe from 'react-swipe'
+import { swiped } from '../../actions'
 
 import ReExit from '../Util/ReExit'
 import SwipeNav from '../Header/SwipeNav'
@@ -9,13 +11,11 @@ import ReUserSettings from './ReUserSettings'
 
 import './profile.scss'
 
-export default class ReUser extends Component {
+class ReUser extends Component {
   constructor(props) {
     super(props)
     this.swipe = React.createRef()
   }
-
-  onSlideChange(idx) {}
 
   render() {
     return (
@@ -28,9 +28,9 @@ export default class ReUser extends Component {
         <ReactSwipe
           className="swipe-nav"
           swipeOptions={{
-            startSlide: 2,
+            startSlide: 1,
             continuous: false,
-            callback: idx => this.onSlideChange(idx)
+            callback: idx => this.props.swiped(idx)
           }}
           ref={this.swipe}
         >
@@ -48,3 +48,8 @@ export default class ReUser extends Component {
     )
   }
 }
+
+export default connect(
+  null,
+  { swiped }
+)(ReUser)

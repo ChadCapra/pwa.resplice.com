@@ -1,11 +1,12 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import Columns from 'react-bulma-components/lib/components/columns'
 
-const SwipeNav = ({ menus, active }) => {
+const SwipeNav = ({ menus, activeIndex }) => {
   return (
     <Columns breakpoint="mobile" gapless>
       {menus.map((menu, idx) => {
-        if (idx === active) {
+        if (idx === activeIndex) {
           return (
             <Columns.Column key={idx} className="swipe-nav-item">
               <div>{menu}</div>
@@ -25,4 +26,8 @@ const SwipeNav = ({ menus, active }) => {
   )
 }
 
-export default SwipeNav
+const mapStateToProps = state => {
+  return { activeIndex: state.utils.swipeIndex }
+}
+
+export default connect(mapStateToProps)(SwipeNav)

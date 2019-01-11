@@ -16,8 +16,8 @@ export default class UserAttributeCard extends Component {
   renderAttributes = () => {
     const { attrs } = this.props
     return attrs.map(attr => (
-      <div>
-        <Columns className="card-attribute" key={attr.id} breakpoint="mobile">
+      <div key={attr.id}>
+        <Columns className="card-attribute" breakpoint="mobile">
           <Columns.Column size={1}>{attr.icon}</Columns.Column>
           <Columns.Column className="card-attribute-text">
             <span className="card-attribute-text-name">{attr.name}</span>

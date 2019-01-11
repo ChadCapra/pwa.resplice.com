@@ -3,10 +3,12 @@ import { reducer as formReducer } from 'redux-form'
 import loginReducer from './loginReducer'
 import contactReducer from './contactReducer'
 import userReducer from './userReducer'
+import utilReducer from './utilReducer'
 
 export default combineReducers({
   login: loginReducer,
   contacts: contactReducer,
   user: userReducer,
-  form: formReducer
+  form: formReducer,
+  utils: utilReducer
 })

@@ -1,5 +1,12 @@
 import api from '../api'
-import { SIGN_IN, SIGN_OUT, FETCH_CONTACTS, VERIFY, REGISTER } from './types'
+import {
+  SIGN_IN,
+  SIGN_OUT,
+  FETCH_CONTACTS,
+  VERIFY,
+  REGISTER,
+  SWIPED
+} from './types'
 
 export const signIn = formValues => {
   return {
@@ -38,4 +45,11 @@ export const fetchContacts = () => async dispatch => {
   const response = await api.get('/users')
 
   dispatch({ type: FETCH_CONTACTS, payload: response.data })
+}
+
+export const swiped = idx => {
+  return {
+    type: SWIPED,
+    payload: idx
+  }
 }
