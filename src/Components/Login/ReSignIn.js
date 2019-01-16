@@ -24,7 +24,7 @@ class ReSignIn extends Component {
         <img
           src={require('../../assets/resplice_logo_alt.svg')}
           alt="Resplice Logo"
-          width="100px"
+          width="80px"
         />
         <h2>Resplice</h2>
       </div>
