@@ -3,13 +3,17 @@ import {
   SIGN_IN,
   SIGN_OUT,
   FETCH_CONTACTS,
+  FETCH_CONTACT,
   VERIFY,
   REGISTER,
   SWIPED,
-  FETCH_ATTRIBUTES
+  FETCH_ATTRIBUTES,
+  FETCH_CONTACT_ATTRIBUTES,
+  FETCH_TYPES,
+  FETCH_PROFILE
 } from './types'
 
-import { attributes } from './mockData'
+import { attributes, contact, attributeTypes, user } from './mockData'
 
 export const signIn = formValues => {
   return {
@@ -57,24 +61,43 @@ export const swiped = idx => {
   }
 }
 
+export const fetchAttributeTypes = () => {
+  return {
+    type: FETCH_TYPES,
+    payload: attributeTypes
+  }
+}
+
+export const fetchUserProfile = () => {
+  return {
+    type: FETCH_PROFILE,
+    payload: user
+  }
+}
+
 // export const fetch_my_attributes = async dispatch => {
-//   const response = await api.get('/attributes')
+//   const response = await api.get('/user/attributes')
 
 //   dispatch({ type: FETCH_ATTRIBUTES, payload: response.data })
 // }
 
-export const fetch_my_attributes = () => {
+export const fetchMyAttributes = () => {
   return {
     type: FETCH_ATTRIBUTES,
     payload: attributes
   }
 }
 
-// export const buildCollections = attributes => {
-//   const collections = []
-//   attributes.forEach(attr => collections[attr.collection].push(attr))
-//   return {
-//     type: COLLECTIONS,
-//     payload: collections
-//   }
-// }
+export const fetchContact = () => {
+  return {
+    type: FETCH_CONTACT,
+    payload: contact.profile
+  }
+}
+
+export const fetchContactAttributes = () => {
+  return {
+    type: FETCH_CONTACT_ATTRIBUTES,
+    payload: contact.attributes
+  }
+}
