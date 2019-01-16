@@ -5,6 +5,12 @@
   align-items: center;
 }
 
+.icon-right {
+  & svg {
+    cursor: pointer;
+  }
+}
+
 .swipe-nav-item {
   display: flex;
   flex-direction: column;

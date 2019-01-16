@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 import Level from 'react-bulma-components/lib/components/level'
 import Icon from 'react-bulma-components/lib/components/icon'
-import MdPhone from 'react-ionicons/lib/MdCall'
 import MdAddCircle from 'react-ionicons/lib/MdAddCircle'
 
 import ProfilePic from './ProfilePic'
@@ -13,7 +13,7 @@ import { ReactComponent as Shield } from '../../assets/Copper_3.svg'
 
 import './profile.scss'
 
-export default class ReUserProfile extends Component {
+class ReUserProfile extends Component {
   state = {
     showCreateModal: false
   }
@@ -21,15 +21,28 @@ export default class ReUserProfile extends Component {
   openCreateModal = () => this.setState({ showCreateModal: true })
   closeCreateModal = () => this.setState({ showCreateModal: false })
 
+  renderAttributeCards = () => {
+    return Object.keys(this.props.collections).map((col, idx) => {
+      return (
+        <UserAttributeCard
+          key={idx}
+          header={col}
+          attrs={this.props.collections[col]}
+        />
+      )
+    })
+  }
+
   render() {
+    const { name, contactsNum, shares } = this.props.profile
     return (
       <div className="user-profile">
         <ProfilePic />
-        <h1 className="user-profile-name">Bastilla Shan</h1>
+        <h1 className="user-profile-name">{name}</h1>
         <Level breakpoint="mobile" className="profile-stats">
           <Level.Item>
             <div className="profile-stat">
-              <span className="stat">8</span>
+              <span className="stat">{contactsNum}</span>
               <span className="stat-text">Contacts</span>
             </div>
           </Level.Item>
@@ -40,30 +53,12 @@ export default class ReUserProfile extends Component {
           </Level.Item>
           <Level.Item>
             <div className="profile-stat">
-              <span className="stat">25</span>
+              <span className="stat">{shares}</span>
               <span className="stat-text">Shares</span>
             </div>
           </Level.Item>
         </Level>
-        <UserAttributeCard
-          header="Phone"
-          attrs={[
-            {
-              id: 1,
-              icon: <MdPhone color="#C4C4C4" fontSize="2.5rem" />,
-              name: 'Mobile',
-              value: '(223) 262-0950',
-              verified: true
-            },
-            {
-              id: 2,
-              icon: <MdPhone color="#C4C4C4" fontSize="2.5rem" />,
-              name: 'Work',
-              value: '(987) 234-4564',
-              verified: false
-            }
-          ]}
-        />
+        {this.renderAttributeCards()}
         <div className="profile-add">
           <MdAddCircle
             color="#1BBC9B"
@@ -82,3 +77,12 @@ export default class ReUserProfile extends Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    profile: state.user.profile,
+    collections: state.attributes.collections
+  }
+}
+
+export default connect(mapStateToProps)(ReUserProfile)

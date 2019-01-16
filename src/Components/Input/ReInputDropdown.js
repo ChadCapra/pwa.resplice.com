@@ -11,7 +11,7 @@ const ReInputDropdown = ({ input, label, name, options }) => {
         {options.map(option => {
           return (
             <option key={option.id} value={option.value}>
-              {option.text}
+              {option.name}
             </option>
           )
         })}

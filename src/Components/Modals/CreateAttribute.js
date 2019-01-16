@@ -5,8 +5,13 @@ import { connect } from 'react-redux'
 import ReInput from '../Input/ReInput'
 import ReInputDropdown from '../Input/ReInputDropdown'
 import ReInputCombo from '../Input/ReInputCombo'
+import ReButton from '../Buttons/ReButton'
 
 class createAttribute extends Component {
+  state = {
+    attrType: this.props.attrTypes[0]
+  }
+
   onSubmit = formValues => {
     console.log('Submitted', formValues)
   }
@@ -15,19 +20,29 @@ class createAttribute extends Component {
     return (
       <>
         <Field name="attribute_name" label="Name" component={ReInput} />
-        <Field name="attribute_value" label="Value" component={ReInput} />
+        {this.state.attrType.parts.map((part, idx) => {
+          return (
+            <Field key={idx} name={part} label={part} component={ReInput} />
+          )
+        })}
         <Field
           name="attribute_collection"
           label="Collection"
           dataList={this.props.collectionsList}
+          listName="collections"
           component={ReInputCombo}
         />
       </>
     )
   }
 
+  handleTypeChange = (e, value) => {
+    this.setState({
+      attrType: this.props.attrTypes.find(type => type.value === value)
+    })
+  }
+
   render() {
-    console.log(this.props)
     return (
       <form
         onSubmit={this.props.handleSubmit(this.onSubmit)}
@@ -39,21 +54,20 @@ class createAttribute extends Component {
             label="What would you like to add?"
             options={this.props.attrTypes}
             component={ReInputDropdown}
+            onChange={this.handleTypeChange}
           />
           {this.props.dirty && this.renderFields()}
         </div>
+        <ReButton type="primary" text="Add" width="250px" />
       </form>
     )
   }
 }
 
 const mapStateToProps = state => {
-  const collectionsList = []
-  for (let col of state.attributes.collections.keys()) collectionsList.push(col)
-
   return {
     attrTypes: state.attributes.types,
-    collectionsList
+    collectionsList: Object.keys(state.attributes.collections)
   }
 }
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import ReactSwipe from 'react-swipe'
-import { swiped, fetch_my_attributes } from '../../actions'
+import { swiped, fetchMyAttributes, fetchUserProfile } from '../../actions'
 
 import ReExit from '../Util/ReExit'
 import SwipeNav from '../Header/SwipeNav'
@@ -18,7 +18,8 @@ class ReUser extends Component {
   }
 
   componentWillMount() {
-    this.props.fetch_my_attributes()
+    this.props.fetchUserProfile()
+    this.props.fetchMyAttributes()
   }
 
   render() {
@@ -55,5 +56,5 @@ class ReUser extends Component {
 
 export default connect(
   null,
-  { swiped, fetch_my_attributes }
+  { swiped, fetchMyAttributes, fetchUserProfile }
 )(ReUser)

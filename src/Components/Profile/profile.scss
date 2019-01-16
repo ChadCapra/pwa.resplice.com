@@ -1,7 +1,9 @@
 .swipe-nav-item-container {
   padding-top: 125px;
   padding-bottom: 15px;
-  min-height: calc(100vh - 140px);
+  //height: 100vh;
+  max-height: calc(100vh - 140px);
+  overflow: auto;
 }
 
 .profile-pic {
@@ -13,6 +15,8 @@
 .pic {
   height: 150px;
   width: 150px;
+  background-position: center;
+  background-size: cover;
   background-color: lightgray;
   border-radius: 50%;
   position: relative;
@@ -102,9 +106,8 @@
   position: absolute;
   bottom: 5px;
   right: 5px;
-  width: 70px;
-  height: 70px;
-  background-color: transparent;
+  background-color: white;
+  border-radius: 50%;
   & svg {
     cursor: pointer;
     filter: drop-shadow(1px 1px 5px #00000005);

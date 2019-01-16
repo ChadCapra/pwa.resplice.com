@@ -3,6 +3,8 @@
   max-width: 575px;
   border-radius: 10px;
   box-shadow: 1px 1px 15px #0000001a;
+  padding-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .card-header {
@@ -36,8 +38,4 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.card-input {
-  margin-bottom: 12px;
 }
