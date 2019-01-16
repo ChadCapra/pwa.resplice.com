@@ -7,7 +7,7 @@ const ReContactProfile = ({ match }) => {
   return (
     <div>
       <MdClose />
-      <SwipeNav menus={['Shares', 'Contact', 'Updates']} active={1} />
+      <SwipeNav menus={['Shares', 'Contact', 'Updates']} />
     </div>
   )
 }

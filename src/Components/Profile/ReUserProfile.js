@@ -1,15 +1,26 @@
 import React, { Component } from 'react'
+
 import Level from 'react-bulma-components/lib/components/level'
 import Icon from 'react-bulma-components/lib/components/icon'
 import MdPhone from 'react-ionicons/lib/MdCall'
+import MdAddCircle from 'react-ionicons/lib/MdAddCircle'
 
 import ProfilePic from './ProfilePic'
 import UserAttributeCard from '../Cards/UserAttributeCard'
+import ReModal from '../Modals/ReModal'
+import CreateAttribute from '../Modals/CreateAttribute'
 import { ReactComponent as Shield } from '../../assets/Copper_3.svg'
 
 import './profile.scss'
 
 export default class ReUserProfile extends Component {
+  state = {
+    showCreateModal: false
+  }
+
+  openCreateModal = () => this.setState({ showCreateModal: true })
+  closeCreateModal = () => this.setState({ showCreateModal: false })
+
   render() {
     return (
       <div className="user-profile">
@@ -53,6 +64,20 @@ export default class ReUserProfile extends Component {
             }
           ]}
         />
+        <div className="profile-add">
+          <MdAddCircle
+            color="#1BBC9B"
+            fontSize="4rem"
+            onClick={this.openCreateModal}
+          />
+        </div>
+        <ReModal
+          show={this.state.showCreateModal}
+          close={this.closeCreateModal}
+          modal={{ closeOnBlur: true }}
+        >
+          <CreateAttribute />
+        </ReModal>
       </div>
     )
   }

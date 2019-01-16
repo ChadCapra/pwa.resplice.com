@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 import Columns from 'react-bulma-components/lib/components/columns'
 import Icon from 'react-bulma-components/lib/components/icon'
 import MdSearch from 'react-ionicons/lib/MdSearch'
@@ -9,7 +10,13 @@ import SwipeNav from './SwipeNav'
 import './header.scss'
 
 export default class ReHeader extends Component {
+  state = {
+    navigateToUser: false
+  }
   render() {
+    if (this.state.navigateToUser) {
+      return <Redirect push to="/profile" />
+    }
     return (
       <div className="home-header">
         <Columns breakpoint="mobile" gapless style={{ marginBottom: '0.5rem' }}>
@@ -23,7 +30,11 @@ export default class ReHeader extends Component {
           </Columns.Column>
           <Columns.Column size={2} className="icon-right">
             <Icon size="large">
-              <MdAlbums color="#1bbc9b" fontSize="2.5rem" />
+              <MdAlbums
+                color="#1bbc9b"
+                fontSize="2.5rem"
+                onClick={() => this.setState({ navigateToUser: true })}
+              />
             </Icon>
           </Columns.Column>
         </Columns>

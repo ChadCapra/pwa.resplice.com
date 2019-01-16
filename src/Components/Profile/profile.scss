@@ -1,6 +1,7 @@
 .swipe-nav-item-container {
   padding-top: 125px;
   padding-bottom: 15px;
+  min-height: calc(100vh - 140px);
 }
 
 .profile-pic {
@@ -64,4 +65,52 @@
 .stat-text {
   font-size: 24px;
   color: rgba(0, 0, 0, 0.5);
+}
+
+.re-update {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #e5e5e5;
+  margin-left: 25px;
+  padding: 15px 0;
+  color: rgba(0, 0, 0, 0.5);
+  max-width: 500px;
+}
+
+.update-text-name {
+  font-size: 24px;
+  color: #32393d;
+}
+
+.update-text-item {
+  color: #32393d;
+  font-size: 18px;
+}
+
+.update-btns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 15px;
+  margin-top: 25px;
+}
+
+.profile-add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 70px;
+  height: 70px;
+  background-color: transparent;
+  & svg {
+    cursor: pointer;
+    filter: drop-shadow(1px 1px 5px #00000005);
+  }
+  & svg:hover {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
 }

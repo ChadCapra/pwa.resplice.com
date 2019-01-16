@@ -27,6 +27,12 @@
     font-size: 14px;
   }
 
+  &--big {
+    color: white;
+    background-color: #1bbc9b;
+    height: 70px;
+  }
+
   &:hover {
     background-color: #53d4b9;
     box-shadow: 0 1px 5px #0000004f;

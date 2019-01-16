@@ -7,7 +7,7 @@ class ReGroupList extends Component {
     this.props.fetchContacts()
   }
   renderContactList() {
-    return this.props.contacts.map(contact => {
+    return this.props.contacts.list.map(contact => {
       return <div key={contact.id}>{contact.name}</div>
     })
   }

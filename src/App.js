@@ -1,10 +1,10 @@
 import React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-import ReHome from './Components/Home/ReHome'
-import ReLogin from './Components/Login/ReLogin'
-import ReContactProfile from './Components/Profile/ReContactProfile'
-import ReUser from './Components/Profile/ReUser'
+import ReHome from './components/Home/ReHome'
+import ReLogin from './components/Login/ReLogin'
+import ReContactProfile from './components/Profile/ReContactProfile'
+import ReUser from './components/Profile/ReUser'
 import './App.scss'
 
 const App = () => {

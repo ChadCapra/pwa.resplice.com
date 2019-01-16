@@ -1,9 +1,14 @@
 import { FETCH_CONTACTS } from '../actions/types'
 
-export default (state = [], action) => {
+const INITIAL_STATE = {
+  list: [],
+  profile: {}
+}
+
+export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case FETCH_CONTACTS:
-      return action.payload
+      return { ...state, list: action.payload }
     default:
       return state
   }

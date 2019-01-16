@@ -24,6 +24,7 @@
   justify-content: center;
   align-items: flex-start;
   padding-left: 20px;
+  cursor: pointer;
 }
 
 .card-attribute-text-name {
@@ -37,11 +38,6 @@
   align-items: center;
 }
 
-.card-add {
-  margin-top: 10px;
-  padding: 2px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-top: 1px solid #e5e5e5;
+.card-input {
+  margin-bottom: 12px;
 }

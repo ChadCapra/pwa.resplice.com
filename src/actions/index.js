@@ -5,8 +5,11 @@ import {
   FETCH_CONTACTS,
   VERIFY,
   REGISTER,
-  SWIPED
+  SWIPED,
+  FETCH_ATTRIBUTES
 } from './types'
+
+import { attributes } from './mockData'
 
 export const signIn = formValues => {
   return {
@@ -53,3 +56,25 @@ export const swiped = idx => {
     payload: idx
   }
 }
+
+// export const fetch_my_attributes = async dispatch => {
+//   const response = await api.get('/attributes')
+
+//   dispatch({ type: FETCH_ATTRIBUTES, payload: response.data })
+// }
+
+export const fetch_my_attributes = () => {
+  return {
+    type: FETCH_ATTRIBUTES,
+    payload: attributes
+  }
+}
+
+// export const buildCollections = attributes => {
+//   const collections = []
+//   attributes.forEach(attr => collections[attr.collection].push(attr))
+//   return {
+//     type: COLLECTIONS,
+//     payload: collections
+//   }
+// }

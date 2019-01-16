@@ -1,4 +1,10 @@
+.modal-content {
+  height: 65%;
+}
+
 .modal-children {
+  max-width: 600px;
+  height: 100%;
   background-color: white;
   padding: 10px;
 }

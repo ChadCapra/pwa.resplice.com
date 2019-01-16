@@ -7,7 +7,6 @@ const ReInput = ({
   placeholder,
   type,
   label,
-  code,
   meta: { touched, error, warning }
 }) => {
   return (
