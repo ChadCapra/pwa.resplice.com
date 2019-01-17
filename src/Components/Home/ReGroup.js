@@ -1,7 +1,7 @@
 import React from 'react'
 
-const ReGroups = () => {
+const ReGroup = () => {
   return <div>Group Page</div>
 }
 
-export default ReGroups
+export default ReGroup

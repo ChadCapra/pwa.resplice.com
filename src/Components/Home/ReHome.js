@@ -15,7 +15,7 @@ class ReHome extends Component {
         <div className="home-body">
           <ReactSwipe
             className="swipe-nav"
-            swipeOptions={{ continuous: false }}
+            swipeOptions={{ startSlide: 0, continuous: false }}
           >
             <div>
               <ReContactList />
