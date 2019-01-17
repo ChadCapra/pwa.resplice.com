@@ -3,7 +3,9 @@ export const user = {
   avatar:
     'https://res.cloudinary.com/capabit-solutions/image/upload/v1529002384/Resplice/lydkw9phbpozik3t8bus.png',
   contactsNum: 8,
-  shares: 205
+  shares: 205,
+  qrCode:
+    'https://res.cloudinary.com/capabit-solutions/image/upload/v1547702491/Resplice/frame.png'
 }
 
 export const attributes = [

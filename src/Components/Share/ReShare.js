@@ -17,7 +17,7 @@ class ReShare extends Component {
       <div className="share">
         <div className="share-header">
           <ReExit />
-          <SwipeNav menus={['QR Code', 'Share', 'Camera']} />
+          <SwipeNav menus={['QR Code', 'Share', 'Scan']} />
         </div>
 
         <ReactSwipe
