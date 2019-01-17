@@ -7,6 +7,7 @@ import ReHome from './components/Home/ReHome'
 import ReLogin from './components/Login/ReLogin'
 import ReContactProfile from './components/Profile/ReContactProfile'
 import ReUser from './components/Profile/ReUser'
+import ReShare from './components/Share/ReShare'
 import './App.scss'
 
 class App extends Component {
@@ -23,6 +24,7 @@ class App extends Component {
             <Route path="/login" component={ReLogin} />
             <Route path="/contact/:id" exact component={ReContactProfile} />
             <Route path="/profile" exact component={ReUser} />
+            <Route path="/share" exact component={ReShare} />
           </>
         </Router>
       </div>
