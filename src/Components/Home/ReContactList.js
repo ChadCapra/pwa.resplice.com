@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchContacts } from '../../actions'
 
-import ReContact from './ReContact'
+import ReContact from '../Contact/ReContact'
 
 class ReContactList extends Component {
   componentDidMount() {
