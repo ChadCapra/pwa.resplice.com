@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetchAttributeTypes } from './actions'
+import { fetchAttributeTypes, fetchUserProfile } from './actions'
 
 import ReHome from './components/Home/ReHome'
 import ReLogin from './components/Login/ReLogin'
@@ -13,6 +13,7 @@ import './App.scss'
 class App extends Component {
   componentWillMount() {
     this.props.fetchAttributeTypes()
+    this.props.fetchUserProfile()
   }
 
   render() {
@@ -34,5 +35,5 @@ class App extends Component {
 
 export default connect(
   null,
-  { fetchAttributeTypes }
+  { fetchAttributeTypes, fetchUserProfile }
 )(App)
