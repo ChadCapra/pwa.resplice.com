@@ -22,6 +22,7 @@ class ReUserProfile extends Component {
   closeCreateModal = () => this.setState({ showCreateModal: false })
 
   renderAttributeCards = () => {
+    // TODO: change this to use AttributeCardList component
     return Object.keys(this.props.collections).map((col, idx) => {
       return (
         <UserAttributeCard
@@ -81,7 +82,7 @@ class ReUserProfile extends Component {
 const mapStateToProps = state => {
   return {
     profile: state.user.profile,
-    collections: state.attributes.collections
+    collections: state.user.collections
   }
 }
 
