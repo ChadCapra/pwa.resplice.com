@@ -45,7 +45,7 @@ class RePlusFAB extends Component {
 
     return (
       <div className="fab" onClick={() => this.setState({ toRoute: true })}>
-        <MdAdd color="white" fontSize="4rem" />
+        <MdAdd color="white" fontSize="2.5em" />
       </div>
     )
   }
