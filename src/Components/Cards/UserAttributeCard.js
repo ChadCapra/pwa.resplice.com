@@ -34,7 +34,7 @@ class UserAttributeCard extends Component {
           <Columns className="card-attribute" breakpoint="mobile">
             <Columns.Column className="card-icon" size={1}>
               <RenderIcon
-                icon={attrType.actions[0].icon}
+                icon={attrType.actions[0].action_icon}
                 color="#1BBC9B"
                 fontSize="2.5rem"
               />
@@ -79,7 +79,7 @@ class UserAttributeCard extends Component {
     return (
       <div className="card">
         <div className="card-header">{header}</div>
-        {this.renderAttributes()}
+        {this.props.types.length > 0 && this.renderAttributes()}
       </div>
     )
   }

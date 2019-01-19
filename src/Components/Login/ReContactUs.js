@@ -21,7 +21,7 @@ class ReContactUs extends Component {
   renderHeader() {
     return (
       <div className="login-header">
-        <h1>Verify</h1>
+        <h1>Contact Us</h1>
       </div>
     )
   }
@@ -72,9 +72,7 @@ const validate = values => {
   return errors
 }
 
-const ContactUs = reduxForm({
-  form: 'verify',
+export default reduxForm({
+  form: 'contactUs',
   validate
 })(ReContactUs)
-
-export default ContactUs

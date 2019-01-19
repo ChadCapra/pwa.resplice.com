@@ -14,16 +14,38 @@ import './verify.scss'
 class ReVerify extends Component {
   state = {
     canceled: false,
-    verified: false
+    verifying: false,
+    verified: false,
+    verifyFailed: false
   }
 
   onSubmit = () => {
     this.setState({ canceled: true })
   }
 
-  onChange = (e, code) => {
-    if (code.toString().length === 6 && this.props.register) {
-      this.props.verifyAttribute(code, this.props.register)
+  codeNormalizer = code => {
+    if (!code) return code
+
+    const onlyNums = code.replace(/[^\d]/g, '')
+    return onlyNums.length > 3
+      ? `${onlyNums.slice(0, 3)}-${onlyNums.slice(3)}`
+      : onlyNums
+  }
+
+  onChange = async (e, code) => {
+    if (code.length === 7 && this.props.register) {
+      this.setState({ verifying: true })
+
+      try {
+        await this.props.verifyAttribute(
+          code.replace(/[^\d]/g, ''),
+          this.props.register
+        )
+        this.setState({ verified: true })
+      } catch (err) {
+        console.log(err.response)
+        this.setState({ verifyFailed: true, verifying: false })
+      }
     }
   }
 
@@ -49,9 +71,9 @@ class ReVerify extends Component {
             name="code"
             placeholder="Code"
             label="Code"
-            type="text"
             onChange={this.onChange}
             component={ReInputCode}
+            normalize={this.codeNormalizer}
           />
           <a href="/">Resend Code</a>
         </div>
@@ -92,7 +114,7 @@ const validate = values => {
   const errors = {}
   if (!values.code) {
     errors.code = 'You must enter your verification code'
-  } else if (values.code.toString().length !== 6) {
+  } else if (values.code.toString().length !== 7) {
     errors.code = 'The code must be 6 digits long'
   }
   return errors

@@ -6,24 +6,12 @@ import Icon from 'react-bulma-components/lib/components/icon'
 
 import ProfilePic from './ProfilePic'
 import UserAttributeCard from '../Cards/UserAttributeCard'
+import AttributeCardList from '../Cards/AttributeCardList'
 import { ReactComponent as Shield } from '../../assets/Copper_3.svg'
 
 import './profile.scss'
 
 class ReUserProfile extends Component {
-  renderAttributeCards = () => {
-    // TODO: change this to use AttributeCardList component
-    return Object.keys(this.props.collections).map((col, idx) => {
-      return (
-        <UserAttributeCard
-          key={idx}
-          header={col}
-          attrs={this.props.collections[col]}
-        />
-      )
-    })
-  }
-
   render() {
     const { name, contactsNum, shares } = this.props.profile
     return (
@@ -49,7 +37,7 @@ class ReUserProfile extends Component {
             </div>
           </Level.Item>
         </Level>
-        {this.renderAttributeCards()}
+        <AttributeCardList user Component={UserAttributeCard} />
       </div>
     )
   }
@@ -57,8 +45,7 @@ class ReUserProfile extends Component {
 
 const mapStateToProps = state => {
   return {
-    profile: state.user.profile,
-    collections: state.user.collections
+    profile: state.user.profile
   }
 }
 

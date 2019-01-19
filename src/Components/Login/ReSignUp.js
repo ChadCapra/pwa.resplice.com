@@ -17,6 +17,7 @@ import './signup.scss'
 
 class ReSignUp extends Component {
   state = {
+    isRegistering: false,
     registerSuccess: false,
     passStrength: {
       percent: 0,
@@ -25,9 +26,15 @@ class ReSignUp extends Component {
   }
 
   onSubmit = async formValues => {
-    await this.props.register(formValues)
+    this.setState({ isRegistering: true })
 
-    this.setState({ registerSuccess: true })
+    try {
+      await this.props.register(formValues)
+      this.setState({ registerSuccess: true })
+    } catch (err) {
+      console.log(err.response.data.errors.phone_or_email)
+      this.setState({ isRegistering: false })
+    }
   }
 
   determineStrength = (e, pass) => {
@@ -78,7 +85,7 @@ class ReSignUp extends Component {
 
         <div className="inputs">
           <Field
-            name="full_name"
+            name="name"
             placeholder="Enter Name"
             label="Full Name"
             type="text"
@@ -86,8 +93,8 @@ class ReSignUp extends Component {
           />
           <Field
             name="phone_or_email"
-            type="text"
-            label="Phone Number or Email"
+            type="email"
+            label="Email"
             component={ReInput}
           />
           <Field
@@ -104,7 +111,12 @@ class ReSignUp extends Component {
           />
         </div>
 
-        <ReButton type="primary" text="Sign Up" width="200px" />
+        <ReButton
+          type="primary"
+          text="Sign Up"
+          width="200px"
+          loading={this.state.isRegistering}
+        />
       </form>
     )
   }
