@@ -5,12 +5,9 @@
   flex-direction: column;
 }
 
-.home-header {
-  flex: 1;
-}
-
 .home-body {
-  padding-top: 10px;
   flex-grow: 1;
   overflow-y: scroll;
+  height: 100%;
+  width: 100%;
 }

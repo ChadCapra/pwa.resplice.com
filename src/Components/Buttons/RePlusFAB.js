@@ -3,22 +3,23 @@ import { Redirect } from 'react-router-dom'
 
 import Columns from 'react-bulma-components/lib/components/columns'
 import MdAddCircle from 'react-ionicons/lib/MdAddCircle'
+import MdAdd from 'react-ionicons/lib/MdAdd'
 import MdMap from 'react-ionicons/lib/MdMap'
 import MdText from 'react-ionicons/lib/MdText'
 import MdMail from 'react-ionicons/lib/MdMail'
 
-import './sharefab.scss'
+import './button.scss'
 
 // React Hooks state
 // const [count, setCount] = useState(0)
 
-class ReShareFAB extends Component {
+class RePlusFAB extends Component {
   state = {
-    toShare: false
+    toRoute: false
   }
 
   render() {
-    const { selected } = this.props
+    const { selected, route } = this.props
     if (selected) {
       return (
         <div className="fab-menu">
@@ -38,20 +39,16 @@ class ReShareFAB extends Component {
           </Columns>
         </div>
       )
-    } else if (this.state.toShare) {
-      return <Redirect push to="/share" />
+    } else if (this.state.toRoute) {
+      return <Redirect push to={route} />
     }
 
     return (
-      <div className="fab">
-        <MdAddCircle
-          color="#1bbc9b"
-          fontSize="4rem"
-          onClick={() => this.setState({ toShare: true })}
-        />
+      <div className="fab" onClick={() => this.setState({ toRoute: true })}>
+        <MdAdd color="white" fontSize="4rem" />
       </div>
     )
   }
 }
 
-export default ReShareFAB
+export default RePlusFAB

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import MdCall from 'react-ionicons/lib/MdCall'
+// import MdCall from 'react-ionicons/lib/MdCall'
 import MdMail from 'react-ionicons/lib/MdMail'
 import ReContact from '../Contact/ReContact'
 

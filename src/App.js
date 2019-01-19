@@ -10,8 +10,11 @@ import {
 import ReHome from './components/Home/ReHome'
 import ReLogin from './components/Login/ReLogin'
 import ReContactProfile from './components/Profile/ReContactProfile'
+import ReCreateAttribute from './components/Profile/ReCreateAttribute'
 import ReUser from './components/Profile/ReUser'
 import ReShare from './components/Share/ReShare'
+import ReCreateGroup from './components/Groups/ReCreateGroup'
+
 import './App.scss'
 
 class App extends Component {
@@ -30,7 +33,13 @@ class App extends Component {
             <Route path="/login" component={ReLogin} />
             <Route path="/contact/:id" exact component={ReContactProfile} />
             <Route path="/profile" exact component={ReUser} />
+            <Route
+              path="/profile/add-attribute"
+              exact
+              component={ReCreateAttribute}
+            />
             <Route path="/share" exact component={ReShare} />
+            <Route path="/group/create" exact component={ReCreateGroup} />
           </>
         </Router>
       </div>

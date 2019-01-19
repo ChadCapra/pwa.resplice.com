@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import ReButton from '../Buttons/ReButton'
+import AttributeCardList from '../Cards/AttributeCardList'
+import AttributeSelectCard from '../Cards/AttributeSelectCard'
 
 class ReShareCode extends Component {
   render() {
     const { qrCode } = this.props
+    const pin = 362096
     return (
       <div className="qr-code">
         <h1 className="qr-code-header">Ask to Scan Code</h1>
@@ -13,7 +15,11 @@ class ReShareCode extends Component {
           className="qr-code-container"
           style={{ backgroundImage: `url(${qrCode})` }}
         />
-        <ReButton type="primary" text="Download Code" width="300px" />
+        <div className="qr-code-pin">{`${pin
+          .toString()
+          .substring(0, 3)}-${pin.toString().substring(3)}`}</div>
+        <h1 className="qr-code-header">Select Attributes to Share</h1>
+        <AttributeCardList user Component={AttributeSelectCard} />
       </div>
     )
   }

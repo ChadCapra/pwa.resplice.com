@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import ReactSwipe from 'react-swipe'
+import { swiped } from '../../actions'
 
-import ReHeader from '../Header/ReHeader'
+import ReHeader from '../Header/ReHomeHeader'
 import ReContactList from './ReContactList'
 import ReGroupList from './ReGroupList'
-import ReShareFAB from '../ShareFAB/ReShareFAB'
+
 import './home.scss'
 
 class ReHome extends Component {
@@ -15,20 +17,29 @@ class ReHome extends Component {
         <div className="home-body">
           <ReactSwipe
             className="swipe-nav"
-            swipeOptions={{ startSlide: 0, continuous: false }}
+            swipeOptions={{
+              startSlide: 0,
+              continuous: false,
+              callback: idx => this.props.swiped(idx)
+            }}
           >
-            <div>
+            <div
+              className="swipe-nav-item-container"
+              style={{ transform: 'none' }}
+            >
               <ReContactList />
             </div>
-            <div>
+            <div className="swipe-nav-item-container">
               <ReGroupList />
             </div>
           </ReactSwipe>
-          <ReShareFAB selected={false} />
         </div>
       </div>
     )
   }
 }
 
-export default ReHome
+export default connect(
+  null,
+  { swiped }
+)(ReHome)

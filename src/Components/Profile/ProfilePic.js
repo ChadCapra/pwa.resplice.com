@@ -15,7 +15,7 @@ class ProfilePic extends Component {
         >
           <MdUpload
             color="#1bbc9b"
-            fontSize="2.5rem"
+            fontSize="2.5em"
             className="pic-upload-icon"
           />
         </div>

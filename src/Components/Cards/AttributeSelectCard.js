@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Columns from 'react-bulma-components/lib/components/columns'
 
 import RenderIcon from '../Util/RenderIcon'
+import ReCheckbox from '../Input/ReCheckbox'
 
 import './card.scss'
 
@@ -34,7 +35,10 @@ class AttributeSelectCard extends Component {
               <span>{this.combineAttrValues(attr.values)}</span>
             </Columns.Column>
             <Columns.Column size={2} className="card-attribute-icon">
-              CB
+              <ReCheckbox
+                onCheck={() => console.log('Checked')}
+                onUncheck={() => console.log('Unchecked')}
+              />
             </Columns.Column>
           </Columns>
         </div>
@@ -47,6 +51,7 @@ class AttributeSelectCard extends Component {
     return (
       <div className="card">
         <div className="card-header">{header}</div>
+        {this.renderAttributes()}
       </div>
     )
   }

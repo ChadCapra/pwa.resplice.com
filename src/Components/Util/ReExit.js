@@ -14,14 +14,12 @@ class ReExit extends Component {
     if (this.state.exit) return <Redirect push to="/" />
 
     return (
-      <div className="re-exit">
-        <MdClose
-          color="#1bbc9b"
-          fontSize="2.5em"
-          className="re-exit-icon"
-          onClick={() => this.setState({ exit: true })}
-        />
-      </div>
+      <MdClose
+        color="#1bbc9b"
+        fontSize="2.5em"
+        className="re-exit-icon"
+        onClick={() => this.setState({ exit: true })}
+      />
     )
   }
 }

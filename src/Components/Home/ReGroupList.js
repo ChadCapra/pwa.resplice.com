@@ -1,11 +1,13 @@
 import React from 'react'
 
 import ComingSoon from '../Util/ComingSoon'
+import RePlusFAB from '../Buttons/RePlusFAB'
 
 const ReGroupList = () => {
   return (
-    <div>
+    <div style={{ height: '100%' }}>
       <ComingSoon name="Groups" />
+      <RePlusFAB selected={false} route="/share" />
     </div>
   )
 }

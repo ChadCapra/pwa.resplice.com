@@ -8,6 +8,7 @@ import SwipeNav from '../Header/SwipeNav'
 import ReShareCamera from './ReShareCamera'
 import ReShareList from './ReShareList'
 import ReShareCode from './ReShareCode'
+import ReHeader from '../Header/ReHeader'
 
 import './share.scss'
 
@@ -15,29 +16,27 @@ class ReShare extends Component {
   render() {
     return (
       <div className="share">
-        <div className="share-header">
-          <ReExit />
-          <SwipeNav menus={['QR Code', 'Share', 'Scan']} />
+        <ReHeader menus={['QR Code', 'Updates', 'Profile']} />
+        <div className="share-body">
+          <ReactSwipe
+            className="swipe-nav"
+            swipeOptions={{
+              startSlide: 1,
+              continuous: false,
+              callback: idx => this.props.swiped(idx)
+            }}
+          >
+            <div className="swipe-nav-item-container">
+              <ReShareCode />
+            </div>
+            <div className="swipe-nav-item-container">
+              <ReShareList />
+            </div>
+            <div className="swipe-nav-item-container">
+              <ReShareCamera />
+            </div>
+          </ReactSwipe>
         </div>
-
-        <ReactSwipe
-          className="swipe-nav"
-          swipeOptions={{
-            startSlide: 1,
-            continuous: false,
-            callback: idx => this.props.swiped(idx)
-          }}
-        >
-          <div className="swipe-nav-item-container">
-            <ReShareCode />
-          </div>
-          <div className="swipe-nav-item-container">
-            <ReShareList />
-          </div>
-          <div className="swipe-nav-item-container">
-            <ReShareCamera />
-          </div>
-        </ReactSwipe>
       </div>
     )
   }
