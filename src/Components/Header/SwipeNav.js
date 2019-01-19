@@ -4,7 +4,7 @@ import Columns from 'react-bulma-components/lib/components/columns'
 
 const SwipeNav = ({ menus, activeIndex }) => {
   return (
-    <Columns breakpoint="mobile" gapless>
+    <Columns breakpoint="mobile" gapless className="swipe-nav-container">
       {menus.map((menu, idx) => {
         if (idx === activeIndex) {
           return (

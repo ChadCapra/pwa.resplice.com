@@ -24,12 +24,21 @@
   }
 }
 
+.swipe-nav-container {
+  border-bottom: 1px solid #00000015;
+}
+
 .swipe-nav-item {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid #00000015;
+
+  cursor: pointer;
+  border-radius: 50px;
+  &:hover {
+    background-color: #e5e5e545;
+  }
 }
 
 .swipe-nav-active,
