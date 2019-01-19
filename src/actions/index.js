@@ -9,11 +9,11 @@ import {
   SWIPED,
   FETCH_ATTRIBUTES,
   FETCH_CONTACT_ATTRIBUTES,
-  FETCH_TYPES,
+  FETCH_SETTINGS,
   FETCH_PROFILE
 } from './types'
 
-import { attributes, contact, attributeTypes, user } from './mockData'
+import { attributes, contact, user } from './mockData'
 
 export const signIn = formValues => {
   return {
@@ -61,11 +61,13 @@ export const swiped = idx => {
   }
 }
 
-export const fetchAttributeTypes = () => {
-  return {
-    type: FETCH_TYPES,
-    payload: attributeTypes
-  }
+export const fetchSettings = () => async dispatch => {
+  const response = await api.get('/settings')
+
+  dispatch({
+    type: FETCH_SETTINGS,
+    payload: response.data
+  })
 }
 
 export const fetchUserProfile = () => {
@@ -81,7 +83,7 @@ export const fetchUserProfile = () => {
 //   dispatch({ type: FETCH_ATTRIBUTES, payload: response.data })
 // }
 
-export const fetchMyAttributes = () => {
+export const fetchUserAttributes = () => {
   return {
     type: FETCH_ATTRIBUTES,
     payload: attributes

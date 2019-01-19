@@ -11,7 +11,7 @@ export const user = {
 export const attributes = [
   {
     id: 1,
-    attributeTypeId: 1,
+    attributeTypeId: 10,
     collection: 'Phones',
     name: 'Mobile',
     values: {
@@ -23,7 +23,7 @@ export const attributes = [
   },
   {
     id: 2,
-    attributeTypeId: 2,
+    attributeTypeId: 20,
     collection: 'Emails',
     name: 'Work',
     values: {
@@ -33,7 +33,7 @@ export const attributes = [
   },
   {
     id: 3,
-    attributeTypeId: 2,
+    attributeTypeId: 20,
     collection: 'Emails',
     name: 'Personal',
     values: {
@@ -43,7 +43,7 @@ export const attributes = [
   },
   {
     id: 4,
-    attributeTypeId: 3,
+    attributeTypeId: 30,
     collection: 'Addresses',
     name: 'Home',
     values: {
@@ -57,7 +57,7 @@ export const attributes = [
   },
   {
     id: 5,
-    attributeTypeId: 4,
+    attributeTypeId: 40,
     collection: 'Social',
     name: 'Instagram',
     values: {
@@ -67,7 +67,7 @@ export const attributes = [
   },
   {
     id: 6,
-    attributeTypeId: 4,
+    attributeTypeId: 40,
     collection: 'Social',
     name: 'LinkedIn',
     values: {
