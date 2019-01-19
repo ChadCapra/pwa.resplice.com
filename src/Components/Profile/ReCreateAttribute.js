@@ -7,6 +7,7 @@ import ReInputDropdown from '../Input/ReInputDropdown'
 import ReInputCombo from '../Input/ReInputCombo'
 import ReButton from '../Buttons/ReButton'
 import ReHeader from '../Header/ReHeader'
+import ReInputPhone from '../Input/ReInputPhone'
 
 class ReCreateAttribute extends Component {
   state = {
@@ -66,6 +67,7 @@ class ReCreateAttribute extends Component {
                 component={ReInputDropdown}
                 onChange={this.handleTypeChange}
               />
+              <ReInputPhone />
               {this.state.typeSelected && this.renderFields()}
             </div>
             <ReButton type="primary" text="Add" width="250px" />

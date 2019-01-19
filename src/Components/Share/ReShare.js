@@ -3,8 +3,6 @@ import { connect } from 'react-redux'
 import ReactSwipe from 'react-swipe'
 import { swiped } from '../../actions'
 
-import ReExit from '../Util/ReExit'
-import SwipeNav from '../Header/SwipeNav'
 import ReShareCamera from './ReShareCamera'
 import ReShareList from './ReShareList'
 import ReShareCode from './ReShareCode'

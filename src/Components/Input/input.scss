@@ -2,7 +2,7 @@
   outline: 0;
   border: 0;
   background: #e5e5e5;
-  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   text-align: left;
   height: 40px;
@@ -92,6 +92,30 @@
 .input-warning-text {
   color: #e5bd37;
   font-size: 14px;
+}
+
+.react-tel-input input[type='tel'] {
+  outline: 0 !important;
+  border: 0 !important;
+  background: #e5e5e5 !important;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 10px !important;
+  text-align: left;
+  height: 40px !important;
+  width: calc(100% - 15px) !important;
+  max-width: 500px;
+  margin: 10px 0px;
+  font-size: 24px !important;
+  padding-left: 15px;
+
+  &::placeholder {
+    font-style: italic;
+    text-align: left;
+  }
+
+  &--error {
+    border: 1px solid #fc3769;
+  }
 }
 
 .checkbox,
