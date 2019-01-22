@@ -107,7 +107,7 @@ class ReVerify extends Component {
 }
 
 const mapStateToProps = state => {
-  return { register: state.login.register }
+  return { register: state.auth.register }
 }
 
 const validate = values => {
