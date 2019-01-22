@@ -18,7 +18,9 @@ import {
   VERIFY_PASSWORD_RESET_FAILURE,
   RESET_PASSWORD,
   RESET_PASSWORD_SUCCESS,
-  RESET_PASSWORD_FAILURE
+  RESET_PASSWORD_FAILURE,
+  AUTHORIZE,
+  NONE
 } from './types'
 
 export const signIn = formValues => async dispatch => {
@@ -29,6 +31,9 @@ export const signIn = formValues => async dispatch => {
     dispatch({ type: SIGN_IN_SUCCESS, payload: response.data })
     // Set auth header on axios instance
     api.defaults.headers.common['Authorization'] = response.data.auth_token
+    // Set auth token and uuid in browser storage
+    localStorage.setItem('auth_token', response.data.auth_token)
+    localStorage.setItem('uuid', response.data.uuid)
   } catch (err) {
     dispatch({ type: SIGN_IN_FAILURE, payload: err.response })
   }
@@ -36,8 +41,10 @@ export const signIn = formValues => async dispatch => {
 
 export const signOut = () => {
   // TODO: cleanup caches and other data
-  // Remove auth header on axios instance
+  // Remove auth header on axios instance and items in storage
   api.defaults.headers.common['Authorization'] = null
+  localStorage.removeItem('auth_token')
+  localStorage.removeItem('uuid')
   return {
     type: SIGN_OUT
   }
@@ -68,6 +75,9 @@ export const verifyAttribute = (
     dispatch({ type: VERIFY_SUCCESS, payload: response.data })
     // Set auth header on axios instance
     api.defaults.headers.common['Authorization'] = response.data.auth_token
+    // Set auth token and uuid in browser storage
+    localStorage.setItem('auth_token', response.data.auth_token)
+    localStorage.setItem('uuid', response.data.uuid)
   } catch (err) {
     dispatch({ type: VERIFY_FAILURE, payload: err.response })
   }
@@ -110,4 +120,15 @@ export const resetPassword = newPassword => async dispatch => {
   } catch (err) {
     dispatch({ type: RESET_PASSWORD_FAILURE, payload: err.response })
   }
+}
+
+export const checkAuth = () => {
+  let authToken = localStorage.getItem('auth_token')
+  // let uuid = localStorage.getItem('uuid')
+  if (authToken) {
+    // Set auth header on axios instance
+    api.defaults.headers.common['Authorization'] = authToken
+    return { type: AUTHORIZE }
+  }
+  return { type: NONE }
 }

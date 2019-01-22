@@ -5,14 +5,16 @@ import contactReducer from './contactReducer'
 import userReducer from './userReducer'
 import attributesReducer from './attributesReducer'
 import utilReducer from './utilReducer'
+import groupReducer from './groupReducer'
 
 export default combineReducers({
   auth: authReducer,
-  contacts: contactReducer,
   user: userReducer,
-  form: formReducer,
+  contacts: contactReducer,
+  groups: groupReducer,
+  attributes: attributesReducer,
   utils: utilReducer,
-  attributes: attributesReducer
+  form: formReducer
 })
 
 // Reducer Case Pattern

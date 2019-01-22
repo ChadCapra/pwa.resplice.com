@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetchSettings, fetchUserProfile, fetchUserAttributes } from './actions'
+import {
+  fetchUserProfile,
+  fetchUserAttributes,
+  fetchContactList
+} from './actions'
 
 import ReHome from './components/Home/ReHome'
 import ReLogin from './components/Login/ReLogin'
@@ -14,6 +18,14 @@ import ReCreateGroup from './components/Groups/ReCreateGroup'
 import './App.scss'
 
 class App extends Component {
+  componentWillMount() {
+    this.props.fetchContactList()
+    this.props
+      .fetchUserProfile()
+      .then(() => this.props.fetchUserAttributes())
+      .catch(err => console.log(err))
+  }
+
   render() {
     return (
       <div className="App">
@@ -39,5 +51,5 @@ class App extends Component {
 
 export default connect(
   null,
-  { fetchSettings, fetchUserProfile, fetchUserAttributes }
+  { fetchUserProfile, fetchUserAttributes, fetchContactList }
 )(App)

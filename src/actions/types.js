@@ -3,6 +3,7 @@ export const SIGN_IN = 'SIGN_IN'
 export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS'
 export const SIGN_IN_FAILURE = 'SIGN_IN_FAILURE'
 export const SIGN_OUT = 'SIGN_OUT'
+export const AUTHORIZE = 'AUTHORIZE'
 
 export const REGISTER = 'REGISTER'
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
@@ -71,6 +72,7 @@ export const BUILD_COLLECTIONS = 'BUILD_COLLECTIONS'
 
 // Normal Types
 export const SWIPED = 'SWIPED'
+export const NONE = 'NONE'
 
 export const FETCH_SETTINGS = 'FETCH_SETTINGS'
 export const FETCH_SETTINGS_SUCCESS = 'FETCH_SETTINGS_SUCCESS'

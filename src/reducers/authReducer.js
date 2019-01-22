@@ -7,7 +7,8 @@ import {
   REGISTER_FAILURE,
   VERIFY,
   VERIFY_SUCCESS,
-  VERIFY_FAILURE
+  VERIFY_FAILURE,
+  AUTHORIZE
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -22,7 +23,7 @@ export default (state = INITIAL_STATE, action) => {
     case SIGN_IN:
       return { ...state, loading: true }
     case SIGN_IN_SUCCESS:
-      return { ...state, register: action.payload }
+      return { ...state, register: action.payload, isAuthorized: true }
     case SIGN_IN_FAILURE:
       return { ...state, loading: false, error: action.payload.status }
     case REGISTER:
@@ -34,9 +35,11 @@ export default (state = INITIAL_STATE, action) => {
     case VERIFY:
       return { ...state, loading: true }
     case VERIFY_SUCCESS:
-      return { ...state, verify: action.payload }
+      return { ...state, verify: action.payload, isAuthorized: true }
     case VERIFY_FAILURE:
       return { ...state, loading: false, error: action.payload.status }
+    case AUTHORIZE:
+      return { ...state, isAuthorized: true }
     default:
       return state
   }
