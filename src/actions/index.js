@@ -1,58 +1,22 @@
 import api from '../api'
 import {
-  SIGN_IN,
-  SIGN_OUT,
-  FETCH_CONTACTS,
-  FETCH_CONTACT,
-  VERIFY,
-  REGISTER,
   SWIPED,
-  FETCH_ATTRIBUTES,
-  FETCH_CONTACT_ATTRIBUTES,
   FETCH_SETTINGS,
-  FETCH_PROFILE
+  FETCH_SETTINGS_SUCCESS,
+  FETCH_SETTINGS_FAILURE
 } from './types'
 
-import { attributes, contact, user } from './mockData'
+// Async Action Pattern
+// export const name = param => async dispatch => {
+//   dispatch({ type: TYPE })
 
-export const signIn = formValues => {
-  return {
-    type: SIGN_IN,
-    payload: formValues
-  }
-}
-
-export const register = formValues => async dispatch => {
-  const response = await api.post('/register', formValues)
-
-  dispatch({ type: REGISTER, payload: response.data })
-}
-
-export const signOut = () => {
-  return {
-    type: SIGN_OUT
-  }
-}
-
-export const verifyAttribute = (
-  verification_token,
-  { uuid }
-) => async dispatch => {
-  const response = await api.post('/verify_registration', {
-    uuid,
-    verification_token
-  })
-
-  dispatch({ type: VERIFY, payload: response.data })
-  // Set auth header on axios instance
-  api.defaults.headers.common['Authorization'] = response.data.auth_token
-}
-
-export const fetchContacts = () => async dispatch => {
-  const response = await api.get('/users')
-
-  dispatch({ type: FETCH_CONTACTS, payload: response.data })
-}
+//   try {
+//     const response = await api
+//     dispatch({ type: TYPE_SUCCESS, payload: response.data })
+//   } catch (err) {
+//     dispatch({ type: TYPE_FAILURE, payload: err })
+//   }
+// }
 
 export const swiped = idx => {
   return {
@@ -62,44 +26,18 @@ export const swiped = idx => {
 }
 
 export const fetchSettings = () => async dispatch => {
-  const response = await api.get('/settings')
+  dispatch({ type: FETCH_SETTINGS })
 
-  dispatch({
-    type: FETCH_SETTINGS,
-    payload: response.data
-  })
-}
-
-export const fetchUserProfile = () => {
-  return {
-    type: FETCH_PROFILE,
-    payload: user
+  try {
+    const response = await api.get('/settings')
+    dispatch({ type: FETCH_SETTINGS_SUCCESS, payload: response.data })
+  } catch (err) {
+    dispatch({ type: FETCH_SETTINGS_FAILURE, payload: err })
   }
 }
 
-// export const fetch_my_attributes = async dispatch => {
-//   const response = await api.get('/user/attributes')
-
-//   dispatch({ type: FETCH_ATTRIBUTES, payload: response.data })
-// }
-
-export const fetchUserAttributes = () => {
-  return {
-    type: FETCH_ATTRIBUTES,
-    payload: attributes
-  }
-}
-
-export const fetchContact = () => {
-  return {
-    type: FETCH_CONTACT,
-    payload: contact.profile
-  }
-}
-
-export const fetchContactAttributes = () => {
-  return {
-    type: FETCH_CONTACT_ATTRIBUTES,
-    payload: contact.attributes
-  }
-}
+export * from './AuthActions'
+export * from './AttributeActions'
+export * from './ContactActions'
+export * from './GroupActions'
+export * from './UserActions'
