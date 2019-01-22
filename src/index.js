@@ -5,7 +5,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import reduxThunk from 'redux-thunk'
 
 import './index.css'
-import App from './App'
+import Secure from './Secure'
 import reducers from './reducers'
 import * as serviceWorker from './serviceWorker'
 
@@ -17,7 +17,7 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Secure />
   </Provider>,
   document.querySelector('#root')
 )

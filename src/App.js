@@ -14,12 +14,6 @@ import ReCreateGroup from './components/Groups/ReCreateGroup'
 import './App.scss'
 
 class App extends Component {
-  componentWillMount() {
-    this.props.fetchSettings()
-    this.props.fetchUserProfile()
-    this.props.fetchUserAttributes()
-  }
-
   render() {
     return (
       <div className="App">
