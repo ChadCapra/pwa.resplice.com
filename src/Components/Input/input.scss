@@ -102,7 +102,7 @@
   border-radius: 10px !important;
   text-align: left;
   height: 40px !important;
-  width: calc(100% - 15px) !important;
+  width: 100% !important;
   max-width: 500px;
   margin: 10px 0px;
   font-size: 24px !important;
@@ -127,4 +127,9 @@
 
 .checkbox {
   background-color: #e5e5e5;
+}
+
+.code-verifying {
+  position: absolute;
+  right: 0;
 }

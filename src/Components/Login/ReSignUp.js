@@ -8,8 +8,10 @@ import HelpCircle from 'react-ionicons/lib/MdHelpCircle'
 
 import ReInput from '../Input/ReInput'
 import ReInputPassword from '../Input/ReInputPassword'
+import ReInputPhone from '../Input/ReInputPhone'
 import ReButton from '../Buttons/ReButton'
 import StatusBar from '../Util/StatusBar'
+import ReNotification from '../Modals/ReNotification'
 
 import './login.scss'
 import './form.scss'
@@ -17,24 +19,29 @@ import './signup.scss'
 
 class ReSignUp extends Component {
   state = {
-    isRegistering: false,
-    registerSuccess: false,
     passStrength: {
       percent: 0,
       color: '#e5bd37'
-    }
+    },
+    showErrors: true
   }
 
-  onSubmit = async formValues => {
-    this.setState({ isRegistering: true })
-
-    try {
-      await this.props.register(formValues)
-      this.setState({ registerSuccess: true })
-    } catch (err) {
-      console.log(err.response.data.errors.phone_or_email)
-      this.setState({ isRegistering: false })
+  onSubmit = async ({ email_value, phone_value, name, password }) => {
+    const registration = {
+      name,
+      phone_details: {
+        country_code: '',
+        phone_number: phone_value,
+        extension: ''
+      },
+      phone_verify_method: 'SMS',
+      email_details: {
+        email: email_value
+      },
+      password
     }
+
+    this.props.register(registration)
   }
 
   determineStrength = (e, pass) => {
@@ -91,8 +98,9 @@ class ReSignUp extends Component {
             type="text"
             component={ReInput}
           />
+          <Field name="phone_value" label="Phone" component={ReInputPhone} />
           <Field
-            name="phone_or_email"
+            name="email_value"
             type="email"
             label="Email"
             component={ReInput}
@@ -115,19 +123,25 @@ class ReSignUp extends Component {
           type="primary"
           text="Sign Up"
           width="200px"
-          loading={this.state.isRegistering}
+          loading={this.props.loading}
         />
       </form>
     )
   }
 
   render() {
-    if (this.state.registerSuccess) {
+    if (this.props.registerValues) {
       return <Redirect to="/login/verify" />
     }
 
     return (
       <div className="sign-up">
+        {this.props.authError && this.state.showErrors && (
+          <ReNotification
+            type="danger"
+            close={() => this.setState({ showErrors: false })}
+          >{`${this.props.authError} error`}</ReNotification>
+        )}
         {this.renderHeader()}
         {this.renderForm()}
 
@@ -141,16 +155,27 @@ class ReSignUp extends Component {
 
 const validate = values => {
   const errors = {}
-  if (!values.full_name) {
-    errors.full_name = 'Your full name is required'
+  if (!values.name) {
+    errors.name = 'Your full name is required'
   }
-  if (!values.phone_or_email) {
-    errors.phone_or_email = 'You must enter a phone number or an email address'
+  if (!values.phone_value) {
+    errors.phone_value = 'You must enter a phone number'
+  }
+  if (!values.email_value) {
+    errors.email_value = 'You must enter an email address'
   }
   if (!values.password) {
     errors.password = 'You must enter a password'
   }
   return errors
+}
+
+const mapStateToProps = state => {
+  return {
+    loading: state.auth.loading,
+    registerValues: state.auth.register,
+    authError: state.auth.error
+  }
 }
 
 const signUpForm = reduxForm({
@@ -159,6 +184,6 @@ const signUpForm = reduxForm({
 })(ReSignUp)
 
 export default connect(
-  null,
+  mapStateToProps,
   { register }
 )(signUpForm)

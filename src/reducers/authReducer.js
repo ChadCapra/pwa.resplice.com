@@ -15,7 +15,8 @@ const INITIAL_STATE = {
   loading: false,
   error: null,
   isAuthorized: false,
-  register: null
+  register: null,
+  verify: null
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -29,13 +30,18 @@ export default (state = INITIAL_STATE, action) => {
     case REGISTER:
       return { ...state, loading: true }
     case REGISTER_SUCCESS:
-      return { ...state, register: action.payload }
+      return { ...state, loading: false, register: action.payload }
     case REGISTER_FAILURE:
       return { ...state, loading: false, error: action.payload.status }
     case VERIFY:
       return { ...state, loading: true }
     case VERIFY_SUCCESS:
-      return { ...state, verify: action.payload, isAuthorized: true }
+      return {
+        ...state,
+        loading: false,
+        verify: action.payload,
+        isAuthorized: true
+      }
     case VERIFY_FAILURE:
       return { ...state, loading: false, error: action.payload.status }
     case AUTHORIZE:

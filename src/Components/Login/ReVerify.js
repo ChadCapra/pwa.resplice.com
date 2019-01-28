@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
-import { verifyAttribute } from '../../actions'
+import { verifyAttributes } from '../../actions'
 
 import ReInputCode from '../Input/ReInputCode'
 import ReButton from '../Buttons/ReButton'
@@ -16,7 +16,9 @@ class ReVerify extends Component {
     canceled: false,
     verifying: false,
     verified: false,
-    verifyFailed: false
+    verifyFailed: false,
+    phone_verify_token: null,
+    email_verify_token: null
   }
 
   onSubmit = () => {
@@ -32,21 +34,43 @@ class ReVerify extends Component {
       : onlyNums
   }
 
-  onChange = async (e, code) => {
-    if (code.length === 7 && this.props.register) {
-      this.setState({ verifying: true })
-
-      try {
-        await this.props.verifyAttribute(
-          code.replace(/[^\d]/g, ''),
+  onPhoneChange = (e, code) => {
+    if (code.length === 7) {
+      this.setState({ phone_verify_token: code }, () => {
+        if (
+          this.state.phone_verify_token &&
+          this.state.email_verify_token &&
           this.props.register
-        )
-        this.setState({ verified: true })
-      } catch (err) {
-        console.log(err.response)
-        this.setState({ verifyFailed: true, verifying: false })
-      }
+        ) {
+          this.verify()
+        }
+      })
     }
+  }
+
+  onEmailChange = (e, code) => {
+    if (code.length === 7) {
+      this.setState({ email_verify_token: code }, () => {
+        if (
+          this.state.phone_verify_token &&
+          this.state.email_verify_token &&
+          this.props.register
+        ) {
+          console.log('verifying')
+          this.verify()
+        }
+      })
+    }
+  }
+
+  verify = () => {
+    const verifyObject = {
+      uuid: this.props.register.uuid,
+      phone_verify_token: this.state.phone_verify_token.replace(/[^\d]/g, ''),
+      email_verify_token: this.state.email_verify_token.replace(/[^\d]/g, '')
+    }
+    console.log(verifyObject)
+    this.props.verifyAttributes(verifyObject)
   }
 
   renderHeader() {
@@ -61,22 +85,36 @@ class ReVerify extends Component {
     return (
       <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="form">
         <p>
-          We sent a code to your attribute
+          We sent a code to your attributes
           <br />
           Enter the code below to verify
         </p>
 
         <div className="inputs">
           <Field
-            name="code"
+            name="phone_verify_token"
             placeholder="Code"
-            label="Code"
-            onChange={this.onChange}
+            label="Phone"
+            onChange={this.onPhoneChange}
             component={ReInputCode}
             normalize={this.codeNormalizer}
+            verifying={this.props.verifying}
+            autoFocus
+          />
+          <a href="/">Resend Code</a>
+          <Field
+            name="email_verify_token"
+            placeholder="Code"
+            label="Email"
+            onChange={this.onEmailChange}
+            component={ReInputCode}
+            normalize={this.codeNormalizer}
+            verifying={this.props.verifying}
           />
           <a href="/">Resend Code</a>
         </div>
+
+        <a href="/">Phone does not accept text (Call Me)</a>
 
         <ReButton
           type="secondary"
@@ -90,7 +128,7 @@ class ReVerify extends Component {
 
   render() {
     if (this.state.canceled) return <Redirect to="/login/signin" />
-    if (this.state.verified) return <Redirect to="/" />
+    if (this.props.verified) return <Redirect to="/" />
 
     return (
       <div className="re-verify">
@@ -107,15 +145,26 @@ class ReVerify extends Component {
 }
 
 const mapStateToProps = state => {
-  return { register: state.auth.register }
+  return {
+    register: state.auth.register,
+    isAuthorized: state.auth.isAuthorized,
+    verifying: state.auth.loading,
+    verified: state.auth.verify
+  }
 }
 
 const validate = values => {
   const errors = {}
-  if (!values.code) {
-    errors.code = 'You must enter your verification code'
-  } else if (values.code.toString().length !== 7) {
+  if (!values.phone_verify_token) {
+    errors.phone_verify_token = 'You must enter your verification code'
+  } else if (values.phone_verify_token.toString().length !== 7) {
     errors.code = 'The code must be 6 digits long'
+  }
+
+  if (!values.email_verify_token) {
+    errors.email_verify_token = 'You must enter your verification code'
+  } else if (values.email_verify_token.toString().length !== 7) {
+    errors.email_verify_token = 'The code must be 6 digits long'
   }
   return errors
 }
@@ -127,5 +176,5 @@ const Verify = reduxForm({
 
 export default connect(
   mapStateToProps,
-  { verifyAttribute }
+  { verifyAttributes }
 )(Verify)

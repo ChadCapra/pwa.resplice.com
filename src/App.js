@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import {
   fetchUserProfile,
@@ -8,7 +8,6 @@ import {
 } from './actions'
 
 import ReHome from './components/Home/ReHome'
-import ReLogin from './components/Login/ReLogin'
 import ReContactProfile from './components/Profile/ReContactProfile'
 import ReCreateAttribute from './components/Profile/ReCreateAttribute'
 import ReUser from './components/Profile/ReUser'
@@ -32,7 +31,6 @@ class App extends Component {
         <Router>
           <>
             <Route path="/" exact component={ReHome} />
-            <Route path="/login" component={ReLogin} />
             <Route path="/contact/:id" exact component={ReContactProfile} />
             <Route path="/profile" exact component={ReUser} />
             <Route
@@ -49,7 +47,9 @@ class App extends Component {
   }
 }
 
-export default connect(
-  null,
-  { fetchUserProfile, fetchUserAttributes, fetchContactList }
-)(App)
+export default withRouter(
+  connect(
+    null,
+    { fetchUserProfile, fetchUserAttributes, fetchContactList }
+  )(App)
+)

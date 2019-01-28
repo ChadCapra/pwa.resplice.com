@@ -12,7 +12,7 @@ const renderIcon = ({ touched, error, verifying }) => {
     ((error && (
       <MdClose className="re-input-icon" color="#fc3769" fontSize="2.5rem" />
     )) ||
-      (verifying && <Ripple />) || (
+      (verifying && <Ripple className="code-verifying" />) || (
         <MdCheck className="re-input-icon" color="#1bbc9b" fontSize="2.5rem" />
       ))
   )
@@ -36,7 +36,6 @@ const ReInputCode = ({
           pattern="[0-9]*"
           maxLength="7"
           placeholder={placeholder}
-          autoFocus
         />
         {renderIcon({ touched, error, verifying })}
         {touched &&

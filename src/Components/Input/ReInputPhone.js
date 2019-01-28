@@ -3,7 +3,7 @@ import PhoneInput from 'react-phone-input-2'
 
 import './input.scss'
 
-const ReInputPhone = ({ input, label }) => {
+const ReInputPhone = ({ input, label, meta: { touched, error, warning } }) => {
   return (
     <div className="re-input-container">
       <label className="re-input-label">{label}</label>
@@ -11,8 +11,11 @@ const ReInputPhone = ({ input, label }) => {
         {...input}
         id="phone-input"
         defaultCountry={'us'}
-        onChange={val => console.log(val)}
+        disableAreaCodes={true}
       />
+      {touched &&
+        ((error && <span className="input-error-text">{error}</span>) ||
+          (warning && <span className="input-warning-text">{warning}</span>))}
     </div>
   )
 }

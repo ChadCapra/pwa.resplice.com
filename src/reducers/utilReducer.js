@@ -21,6 +21,7 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_SETTINGS_SUCCESS:
       return {
         ...state,
+        loading: false,
         registrationExpirySec: action.payload.registration_expiry_seconds
       }
     case FETCH_SETTINGS_FAILURE:

@@ -30,21 +30,22 @@ export const signIn = formValues => async dispatch => {
     const response = await api.post('/signin', formValues)
     dispatch({ type: SIGN_IN_SUCCESS, payload: response.data })
     // Set auth header on axios instance
-    api.defaults.headers.common['Authorization'] = response.data.auth_token
+    api.defaults.headers.common['auth_token'] = response.data.auth_token
+    api.defaults.headers.common['user_id'] = response.data.user_id
     // Set auth token and uuid in browser storage
     localStorage.setItem('auth_token', response.data.auth_token)
-    localStorage.setItem('uuid', response.data.uuid)
+    localStorage.setItem('user_id', response.data.user_id)
   } catch (err) {
     dispatch({ type: SIGN_IN_FAILURE, payload: err.response })
   }
 }
 
 export const signOut = () => {
-  // TODO: cleanup caches and other data
+  // TODO: cleanup service worker caches and other data
   // Remove auth header on axios instance and items in storage
   api.defaults.headers.common['Authorization'] = null
   localStorage.removeItem('auth_token')
-  localStorage.removeItem('uuid')
+  localStorage.removeItem('user_id')
   return {
     type: SIGN_OUT
   }
@@ -61,23 +62,19 @@ export const register = formValues => async dispatch => {
   }
 }
 
-export const verifyAttribute = (
-  verification_token,
-  { uuid }
-) => async dispatch => {
+export const verifyAttributes = verifyObject => async dispatch => {
   dispatch({ type: VERIFY })
 
   try {
-    const response = await api.post('/verify_registration', {
-      uuid,
-      verification_token
-    })
+    const response = await api.post('/verify_registration', verifyObject)
+
     dispatch({ type: VERIFY_SUCCESS, payload: response.data })
     // Set auth header on axios instance
-    api.defaults.headers.common['Authorization'] = response.data.auth_token
+    api.defaults.headers.common['auth_token'] = response.data.auth_token
+    api.defaults.headers.common['user_id'] = response.data.user_id
     // Set auth token and uuid in browser storage
     localStorage.setItem('auth_token', response.data.auth_token)
-    localStorage.setItem('uuid', response.data.uuid)
+    localStorage.setItem('user_id', response.data.user_id)
   } catch (err) {
     dispatch({ type: VERIFY_FAILURE, payload: err.response })
   }
@@ -122,13 +119,15 @@ export const resetPassword = newPassword => async dispatch => {
   }
 }
 
-export const checkAuth = () => {
+export const checkAuth = () => async dispatch => {
   let authToken = localStorage.getItem('auth_token')
-  // let uuid = localStorage.getItem('uuid')
-  if (authToken) {
+  let userId = localStorage.getItem('user_id')
+  if (authToken && userId) {
     // Set auth header on axios instance
-    api.defaults.headers.common['Authorization'] = authToken
-    return { type: AUTHORIZE }
+    api.defaults.headers.common['auth_token'] = authToken
+    api.defaults.headers.common['user_id'] = userId
+    dispatch({ type: AUTHORIZE })
+  } else {
+    dispatch({ type: NONE })
   }
-  return { type: NONE }
 }

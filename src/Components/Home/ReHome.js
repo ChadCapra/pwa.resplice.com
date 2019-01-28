@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import ReactSwipe from 'react-swipe'
 import { swiped } from '../../actions'
 
@@ -39,7 +40,9 @@ class ReHome extends Component {
   }
 }
 
-export default connect(
-  null,
-  { swiped }
-)(ReHome)
+export default withRouter(
+  connect(
+    null,
+    { swiped }
+  )(ReHome)
+)

@@ -26,14 +26,15 @@ const PrivateRoute = ({ component: Component, authorized, ...rest }) => {
 }
 
 class Secure extends Component {
+  state = { loading: true }
   componentWillMount() {
-    // Component fetches frontend settings and then checks for auth_token
+    // Component checks for auth_token and then fetches frontend settings
     this.props.fetchSettings()
-    this.props.checkAuth()
+    this.props.checkAuth().then(() => this.setState({ loading: false }))
   }
 
   render() {
-    if (this.props.loading) {
+    if (this.state.loading) {
       return <GlobalLoading />
     }
 
@@ -53,7 +54,7 @@ class Secure extends Component {
 }
 
 const mapStateToProps = state => {
-  return { isAuthorized: state.auth.isAuthorized, loading: state.utils.loading }
+  return { isAuthorized: state.auth.isAuthorized }
 }
 
 export default connect(
