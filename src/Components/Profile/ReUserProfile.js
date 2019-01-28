@@ -13,7 +13,7 @@ import './profile.scss'
 
 class ReUserProfile extends Component {
   render() {
-    const { name, contactsNum, shares } = this.props.profile
+    const { name, unique_contacts, total_shares } = this.props.profile
     return (
       <div className="user-profile">
         <ProfilePic />
@@ -21,7 +21,7 @@ class ReUserProfile extends Component {
         <Level breakpoint="mobile" className="profile-stats">
           <Level.Item>
             <div className="profile-stat">
-              <span className="stat">{contactsNum}</span>
+              <span className="stat">{unique_contacts}</span>
               <span className="stat-text">Contacts</span>
             </div>
           </Level.Item>
@@ -32,7 +32,7 @@ class ReUserProfile extends Component {
           </Level.Item>
           <Level.Item>
             <div className="profile-stat">
-              <span className="stat">{shares}</span>
+              <span className="stat">{total_shares}</span>
               <span className="stat-text">Shares</span>
             </div>
           </Level.Item>
