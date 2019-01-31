@@ -1,15 +1,7 @@
-import React from 'react'
-import MdClose from 'react-ionicons/lib/MdClose'
+import React, { Component } from 'react'
 
-import SwipeNav from '../Header/SwipeNav'
-
-const ReContactProfile = ({ match }) => {
-  return (
-    <div>
-      <MdClose />
-      <SwipeNav menus={['Shares', 'Contact', 'Updates']} />
-    </div>
-  )
+export default class ReContactProfile extends Component {
+  render() {
+    return <div>Contact Profile</div>
+  }
 }
-
-export default ReContactProfile
