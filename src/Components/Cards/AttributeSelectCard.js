@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Columns from 'react-bulma-components/lib/components/columns'
 
-import RenderIcon from '../Util/RenderIcon'
+import ActionIcon from '../Util/ActionIcon'
 import ReCheckbox from '../Input/ReCheckbox'
 
 import './card.scss'
@@ -18,21 +18,25 @@ class AttributeSelectCard extends Component {
     const { attrs } = this.props
     return attrs.map((attr, idx) => {
       const attrType = this.props.types.find(
-        el => el.id === attr.attributeTypeId
+        el => el.id === attr.attribute_type_id
       )
       return (
         <div key={attr.id}>
-          <Columns className="card-attribute" breakpoint="mobile">
+          <Columns
+            className="card-attribute"
+            breakpoint="mobile"
+            multiline={false}
+          >
             <Columns.Column className="card-icon" size={1}>
-              <RenderIcon
-                icon={attrType.actions[0].icon}
-                color="#C4C4C4"
-                fontSize="2.5rem"
+              <ActionIcon
+                name={attrType.actions[0].action_icon}
+                fill="#C4C4C4"
+                width="2.5em"
               />
             </Columns.Column>
             <Columns.Column className="card-attribute-text">
               <span className="card-attribute-text-name">{attr.name}</span>
-              <span>{this.combineAttrValues(attr.values)}</span>
+              <span>{this.combineAttrValues(attr.details)}</span>
             </Columns.Column>
             <Columns.Column size={2} className="card-attribute-icon">
               <ReCheckbox
