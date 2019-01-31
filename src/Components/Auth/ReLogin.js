@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 import { login } from '../../actions'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 import Icon from 'react-bulma-components/lib/components/icon'
 import HelpCircle from 'react-ionicons/lib/MdHelpCircle'
@@ -62,12 +62,19 @@ class ReLogin extends Component {
           </a>
         </div>
 
-        <ReButton type="primary" text="Login" width="200px" />
+        <ReButton
+          type="primary"
+          text="Login"
+          width="200px"
+          loading={this.props.loading}
+        />
       </form>
     )
   }
 
   render() {
+    if (this.props.loginObject) return <Redirect push to="/" />
+
     return (
       <div className="sign-in">
         {this.renderHeader()}
@@ -102,12 +109,16 @@ const validate = formValues => {
   return errors
 }
 
+const mapStateToProps = state => {
+  return { loading: state.auth.loading, loginObject: state.auth.register }
+}
+
 const loginForm = reduxForm({
   form: 'signIn',
   validate
 })(ReLogin)
 
 export default connect(
-  null,
+  mapStateToProps,
   { login }
 )(loginForm)

@@ -24,7 +24,12 @@ export default (state = INITIAL_STATE, action) => {
     case LOGIN:
       return { ...state, loading: true }
     case LOGIN_SUCCESS:
-      return { ...state, register: action.payload, isAuthorized: true }
+      return {
+        ...state,
+        loading: false,
+        register: action.payload,
+        isAuthorized: true
+      }
     case LOGIN_FAILURE:
       return { ...state, loading: false, error: action.payload.status }
     case REGISTER:
