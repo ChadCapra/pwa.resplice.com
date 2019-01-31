@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import { fetchSettings, checkAuth } from './actions'
 
 import App from './App'
-import ReAuth from './components/Login/ReAuth'
+import ReAuth from './components/Auth/ReAuth'
 import GlobalLoading from './components/Loading/GlobalLoading'
 
 const PrivateRoute = ({ component: Component, authorized, ...rest }) => {
