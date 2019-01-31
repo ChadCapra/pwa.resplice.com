@@ -1,0 +1,31 @@
+.modal-content {
+  height: 65%;
+}
+
+.modal-children {
+  max-width: 600px;
+  min-height: 100%;
+  background-color: white;
+  padding: 10px;
+}
+
+.notification-container {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 10;
+}
+
+.notification {
+}
+
+@keyframes slideDown {
+  0%,
+  100% {
+    transform: translateY(-50px);
+  }
+  10%,
+  90% {
+    transform: translateY(0px);
+  }
+}

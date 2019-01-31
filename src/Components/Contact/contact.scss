@@ -1,0 +1,28 @@
+.contact,
+.char-avatar,
+.contact-name {
+  display: flex;
+}
+
+.avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-position: center;
+  background-size: cover;
+  background-color: #e5e5e5;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin: 5px 15px;
+}
+
+.contact-name {
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.contact-group {
+  opacity: 0.5;
+}

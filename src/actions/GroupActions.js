@@ -1,0 +1,31 @@
+import api from '../api'
+import {
+  FETCH_GROUP_LIST,
+  FETCH_GROUP_LIST_SUCCESS,
+  FETCH_GROUP_LIST_FAILURE,
+  FETCH_GROUP,
+  FETCH_GROUP_SUCCESS,
+  FETCH_GROUP_FAILURE
+} from './types'
+
+export const fetchGroupList = () => async dispatch => {
+  dispatch({ type: FETCH_GROUP_LIST })
+
+  try {
+    const response = await api.get('/groups')
+    dispatch({ type: FETCH_GROUP_LIST_SUCCESS, payload: response.data })
+  } catch (err) {
+    dispatch({ type: FETCH_GROUP_LIST_FAILURE, payload: err.response })
+  }
+}
+
+export const fetchGroup = ({ id }) => async dispatch => {
+  dispatch({ type: FETCH_GROUP })
+
+  try {
+    const response = await api.get(`/groups/${id}`)
+    dispatch({ type: FETCH_GROUP_SUCCESS, payload: response.data })
+  } catch (err) {
+    dispatch({ type: FETCH_GROUP_FAILURE, payload: err.response })
+  }
+}

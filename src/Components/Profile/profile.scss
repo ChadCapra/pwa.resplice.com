@@ -1,0 +1,110 @@
+.profile-pic {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  position: relative;
+  background-color: #e5e5e5;
+}
+
+.pic {
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+}
+
+.pic-upload-icon {
+  position: absolute;
+  top: -5px;
+  right: 10px;
+}
+
+.user,
+.create-attribute {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-body,
+.create-attribute-body {
+  flex-grow: 1;
+  overflow-y: scroll;
+  height: 100%;
+  width: 100%;
+}
+
+.user-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.user-profile-name {
+  text-align: center;
+}
+
+.profile-stats {
+  height: 100px;
+  width: 100%;
+  max-width: 575px;
+}
+
+.profile-stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.stat {
+  font-size: 36px;
+  color: #1bbc9b;
+}
+
+.stat-text {
+  font-size: 24px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.re-update {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #e5e5e5;
+  margin-left: 25px;
+  padding: 15px 0;
+  color: rgba(0, 0, 0, 0.5);
+  max-width: 500px;
+}
+
+.update-text-name {
+  font-size: 24px;
+  color: #32393d;
+}
+
+.update-text-item {
+  color: #32393d;
+  font-size: 18px;
+}
+
+.update-btns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 15px;
+  margin-top: 25px;
+}
+
+.create-attribute-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0 15px 0;
+}
