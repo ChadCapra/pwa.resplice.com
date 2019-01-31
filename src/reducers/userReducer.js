@@ -4,7 +4,8 @@ import {
   FETCH_PROFILE_FAILURE,
   FETCH_ATTRIBUTES,
   FETCH_ATTRIBUTES_SUCCESS,
-  FETCH_ATTRIBUTES_FAILURE
+  FETCH_ATTRIBUTES_FAILURE,
+  ADD_ATTRIBUTE_SUCCESS
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -35,6 +36,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, collections }
     case FETCH_ATTRIBUTES_FAILURE:
       return { ...state, loading: false, error: action.payload }
+    case ADD_ATTRIBUTE_SUCCESS:
+      return { ...state, collections: action.payload }
     default:
       return state
   }

@@ -14,12 +14,17 @@ import {
   SHARE_ATTRIBUTES_FAILURE
 } from './types'
 
-export const addAttribute = attribute => async dispatch => {
+export const addAttribute = attribute => async (dispatch, getState) => {
   dispatch({ type: ADD_ATTRIBUTE })
 
   try {
+    console.log(attribute)
     const response = await api.post('/user/add_attribute', attribute)
-    dispatch({ type: ADD_ATTRIBUTE_SUCCESS, payload: response.data })
+    const {
+      user: { collections }
+    } = getState()
+    collections[response.data.collection].push(response.data)
+    dispatch({ type: ADD_ATTRIBUTE_SUCCESS, payload: collections })
   } catch (err) {
     dispatch({ type: ADD_ATTRIBUTE_FAILURE, payload: err.response })
   }

@@ -19,8 +19,7 @@ import {
 const INITIAL_STATE = {
   loading: false,
   error: null,
-  types: [],
-  attribute: null
+  types: []
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -41,7 +40,7 @@ export default (state = INITIAL_STATE, action) => {
     case ADD_ATTRIBUTE_SUCCESS:
       return { ...state, loading: false }
     case ADD_ATTRIBUTE_FAILURE:
-      return { ...state, loading: false, error: action.payload.status }
+      return { ...state, loading: false, error: action.payload }
     case EDIT_ATTRIBUTE:
       return { ...state, loading: true }
     case EDIT_ATTRIBUTE_SUCCESS:
