@@ -81,7 +81,7 @@ class ReLogin extends Component {
         {this.renderForm()}
 
         <div className="sign-up-link">
-          <Link to="/login/signup">
+          <Link to="/auth/signup">
             Don't have an account?
             <br />
             Sign up here!
