@@ -17,6 +17,10 @@ class ReUser extends Component {
     this.swipe = React.createRef()
   }
 
+  componentWillMount() {
+    this.props.swiped(1)
+  }
+
   render() {
     return (
       <div className="user">
