@@ -18,7 +18,7 @@ class ReShareCode extends Component {
         <div className="qr-code-pin">{`${pin
           .toString()
           .substring(0, 3)}-${pin.toString().substring(3)}`}</div>
-        <h1 className="qr-code-header">Select Attributes to Share</h1>
+        <h1 className="qr-code-header">Auto Share Attributes</h1>
         <AttributeCardList user Component={AttributeSelectCard} />
       </div>
     )

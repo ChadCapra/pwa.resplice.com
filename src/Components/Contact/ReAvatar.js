@@ -1,22 +1,20 @@
 import React from 'react'
+import Identicon from 'react-identicons'
 
 import './contact.scss'
 
-const ReAvatar = ({ avatar, name }) => {
+const ReAvatar = ({ avatar, uuid }) => {
   if (avatar) {
     return (
       <div className="avatar" style={{ backgroundImage: `url(${avatar})` }} />
     )
   } else {
-    return <div className="char-avatar">{parseName(name)}</div>
+    return (
+      <div className="avatar">
+        <Identicon string={uuid} size={30} />
+      </div>
+    )
   }
-}
-
-const parseName = name => {
-  const names = name.split(' ')
-  const firstName = names[0]
-  const secondName = names[1]
-  return (firstName[0] + (secondName[0] || '')).toUpperCase()
 }
 
 export default ReAvatar
