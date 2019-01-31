@@ -1,8 +1,8 @@
 import api from '../api'
 import {
-  SIGN_IN,
-  SIGN_IN_SUCCESS,
-  SIGN_IN_FAILURE,
+  LOGIN,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
   SIGN_OUT,
   REGISTER,
   REGISTER_SUCCESS,
@@ -23,12 +23,12 @@ import {
   NONE
 } from './types'
 
-export const signIn = formValues => async dispatch => {
-  dispatch({ type: SIGN_IN })
+export const login = formValues => async dispatch => {
+  dispatch({ type: LOGIN })
 
   try {
-    const response = await api.post('/signin', formValues)
-    dispatch({ type: SIGN_IN_SUCCESS, payload: response.data })
+    const response = await api.post('/login', formValues)
+    dispatch({ type: LOGIN_SUCCESS, payload: response.data })
     // Set auth header on axios instance
     api.defaults.headers.common['auth_token'] = response.data.auth_token
     api.defaults.headers.common['user_id'] = response.data.user_id
@@ -36,7 +36,7 @@ export const signIn = formValues => async dispatch => {
     localStorage.setItem('auth_token', response.data.auth_token)
     localStorage.setItem('user_id', response.data.user_id)
   } catch (err) {
-    dispatch({ type: SIGN_IN_FAILURE, payload: err.response })
+    dispatch({ type: LOGIN_FAILURE, payload: err.response })
   }
 }
 

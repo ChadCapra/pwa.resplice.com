@@ -1,7 +1,7 @@
 // Auth types
-export const SIGN_IN = 'SIGN_IN'
-export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS'
-export const SIGN_IN_FAILURE = 'SIGN_IN_FAILURE'
+export const LOGIN = 'LOGIN'
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+export const LOGIN_FAILURE = 'LOGIN_FAILURE'
 export const SIGN_OUT = 'SIGN_OUT'
 export const AUTHORIZE = 'AUTHORIZE'
 

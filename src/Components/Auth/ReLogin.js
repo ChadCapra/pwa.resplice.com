@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
-import { signIn } from '../../actions'
+import { login } from '../../actions'
 import { Link } from 'react-router-dom'
 
 import Icon from 'react-bulma-components/lib/components/icon'
@@ -13,9 +13,15 @@ import './signin.scss'
 import './login.scss'
 import './form.scss'
 
-class ReSignIn extends Component {
-  onSubmit = formValues => {
-    this.props.signIn(formValues)
+class ReLogin extends Component {
+  onSubmit = ({ attribute, password }) => {
+    const login = {
+      email_details: {
+        email: attribute
+      },
+      password
+    }
+    this.props.login(login)
   }
 
   renderHeader() {
@@ -96,12 +102,12 @@ const validate = formValues => {
   return errors
 }
 
-const signInForm = reduxForm({
+const loginForm = reduxForm({
   form: 'signIn',
   validate
-})(ReSignIn)
+})(ReLogin)
 
 export default connect(
   null,
-  { signIn }
-)(signInForm)
+  { login }
+)(loginForm)
