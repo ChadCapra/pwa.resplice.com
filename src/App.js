@@ -8,7 +8,7 @@ import {
 } from './actions'
 
 import ReHome from './components/Home/ReHome'
-import ReContactProfile from './components/Profile/ReContactProfile'
+import ReContact from './components/Profile/ReContact'
 import ReCreateAttribute from './components/Profile/ReCreateAttribute'
 import ReUser from './components/Profile/ReUser'
 import ReShare from './components/Share/ReShare'
@@ -31,7 +31,7 @@ class App extends Component {
         <Router>
           <>
             <Route path="/" exact component={ReHome} />
-            <Route path="/contact/:id" exact component={ReContactProfile} />
+            <Route path="/contact/:id" exact component={ReContact} />
             <Route path="/profile" exact component={ReUser} />
             <Route
               path="/profile/add-attribute"

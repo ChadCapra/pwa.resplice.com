@@ -11,6 +11,10 @@ import ReHeader from '../Header/ReHeader'
 import './share.scss'
 
 class ReShare extends Component {
+  componentWillMount() {
+    this.props.swiped(1)
+  }
+
   render() {
     return (
       <div className="share">

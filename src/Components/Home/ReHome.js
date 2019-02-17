@@ -11,6 +11,9 @@ import ReGroupList from './ReGroupList'
 import './home.scss'
 
 class ReHome extends Component {
+  componentWillMount() {
+    this.props.swiped(0)
+  }
   render() {
     return (
       <div className="home">

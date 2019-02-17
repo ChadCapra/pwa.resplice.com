@@ -7,7 +7,7 @@ import MdVerif from 'react-ionicons/lib/MdDoneAll'
 import ReInputCard from '../Input/ReInputCard'
 import ReButton from '../Buttons/ReButton'
 import ReDropdown from '../Util/ReDropdown'
-import RenderIcon from '../Util/RenderIcon'
+import ActionIcon from '../Util/ActionIcon'
 
 import './card.scss'
 
@@ -41,10 +41,10 @@ class UserAttributeCard extends Component {
             multiline={false}
           >
             <Columns.Column className="card-icon" size={1}>
-              <RenderIcon
-                icon={attrType.actions[0].action_icon}
-                color="#C4C4C4"
-                fontSize="2.5rem"
+              <ActionIcon
+                name={attrType.actions[0].action_icon}
+                fill="#C4C4C4"
+                width="2.5em"
               />
             </Columns.Column>
             <Columns.Column

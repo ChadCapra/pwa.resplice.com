@@ -1,7 +1,7 @@
 import {
-  SIGN_IN,
-  SIGN_IN_SUCCESS,
-  SIGN_IN_FAILURE,
+  LOGIN,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
   REGISTER,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
@@ -21,11 +21,16 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case SIGN_IN:
+    case LOGIN:
       return { ...state, loading: true }
-    case SIGN_IN_SUCCESS:
-      return { ...state, register: action.payload, isAuthorized: true }
-    case SIGN_IN_FAILURE:
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        register: action.payload,
+        isAuthorized: true
+      }
+    case LOGIN_FAILURE:
       return { ...state, loading: false, error: action.payload.status }
     case REGISTER:
       return { ...state, loading: true }

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
-import { signIn } from '../../actions'
-import { Link } from 'react-router-dom'
+import { login } from '../../actions'
+import { Link, Redirect } from 'react-router-dom'
 
 import Icon from 'react-bulma-components/lib/components/icon'
 import HelpCircle from 'react-ionicons/lib/MdHelpCircle'
@@ -13,9 +13,15 @@ import './signin.scss'
 import './login.scss'
 import './form.scss'
 
-class ReSignIn extends Component {
-  onSubmit = formValues => {
-    this.props.signIn(formValues)
+class ReLogin extends Component {
+  onSubmit = ({ attribute, password }) => {
+    const login = {
+      email_details: {
+        email: attribute
+      },
+      password
+    }
+    this.props.login(login)
   }
 
   renderHeader() {
@@ -56,19 +62,26 @@ class ReSignIn extends Component {
           </a>
         </div>
 
-        <ReButton type="primary" text="Login" width="200px" />
+        <ReButton
+          type="primary"
+          text="Login"
+          width="200px"
+          loading={this.props.loading}
+        />
       </form>
     )
   }
 
   render() {
+    if (this.props.loginObject) return <Redirect push to="/" />
+
     return (
       <div className="sign-in">
         {this.renderHeader()}
         {this.renderForm()}
 
         <div className="sign-up-link">
-          <Link to="/login/signup">
+          <Link to="/auth/signup">
             Don't have an account?
             <br />
             Sign up here!
@@ -96,12 +109,16 @@ const validate = formValues => {
   return errors
 }
 
-const signInForm = reduxForm({
+const mapStateToProps = state => {
+  return { loading: state.auth.loading, loginObject: state.auth.register }
+}
+
+const loginForm = reduxForm({
   form: 'signIn',
   validate
-})(ReSignIn)
+})(ReLogin)
 
 export default connect(
-  null,
-  { signIn }
-)(signInForm)
+  mapStateToProps,
+  { login }
+)(loginForm)

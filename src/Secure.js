@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import { fetchSettings, checkAuth } from './actions'
 
 import App from './App'
-import ReLogin from './components/Login/ReLogin'
+import ReAuth from './components/Auth/ReAuth'
 import GlobalLoading from './components/Loading/GlobalLoading'
 
 const PrivateRoute = ({ component: Component, authorized, ...rest }) => {
@@ -19,7 +19,7 @@ const PrivateRoute = ({ component: Component, authorized, ...rest }) => {
     <Route
       {...rest}
       render={props =>
-        authorized ? <Component {...props} /> : <Redirect to="/login/signin" />
+        authorized ? <Component {...props} /> : <Redirect to="/auth/signin" />
       }
     />
   )
@@ -41,7 +41,7 @@ class Secure extends Component {
     return (
       <Router>
         <Switch>
-          <Route path="/login" component={ReLogin} />
+          <Route path="/auth" component={ReAuth} />
           <PrivateRoute
             path="/"
             component={App}

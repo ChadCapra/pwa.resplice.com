@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-import ReSignIn from './ReSignIn'
+import ReSignIn from './ReLogin'
 import ReSignUp from './ReSignUp'
 import ReVerify from './ReVerify'
 // import ReContactUs from './ReContactUs'

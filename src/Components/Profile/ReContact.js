@@ -3,29 +3,21 @@ import { connect } from 'react-redux'
 import ReactSwipe from 'react-swipe'
 import { swiped } from '../../actions'
 
-import ReUserProfile from './ReUserProfile'
-import ReUserUpdates from './ReUserUpdates'
-import ReUserSettings from './ReUserSettings'
-import RePlusFAB from '../Buttons/RePlusFAB'
+import ReContactProfile from './ReContactProfile'
+import ReContactShares from './ReContactShares'
+import ReContactUpdates from './ReContactUpdates'
 import ReHeader from '../Header/ReHeader'
 
-import './profile.scss'
-
-class ReUser extends Component {
-  constructor(props) {
-    super(props)
-    this.swipe = React.createRef()
-  }
-
+class ReContact extends Component {
   componentWillMount() {
     this.props.swiped(1)
   }
 
   render() {
     return (
-      <div className="user">
-        <ReHeader menus={['Settings', 'Updates', 'Profile']} />
-        <div className="user-body">
+      <div className="contact-container">
+        <ReHeader menus={['Share', 'Contact', 'Updates']} />
+        <div className="contact-body">
           <ReactSwipe
             className="swipe-nav"
             swipeOptions={{
@@ -33,17 +25,15 @@ class ReUser extends Component {
               continuous: false,
               callback: idx => this.props.swiped(idx)
             }}
-            ref={this.swipe}
           >
             <div className="swipe-nav-item-container">
-              <ReUserSettings />
+              <ReContactShares />
             </div>
             <div className="swipe-nav-item-container">
-              <ReUserUpdates />
+              <ReContactProfile />
             </div>
             <div className="swipe-nav-item-container">
-              <ReUserProfile />
-              <RePlusFAB route="/profile/add-attribute" />
+              <ReContactUpdates />
             </div>
           </ReactSwipe>
         </div>
@@ -55,4 +45,4 @@ class ReUser extends Component {
 export default connect(
   null,
   { swiped }
-)(ReUser)
+)(ReContact)

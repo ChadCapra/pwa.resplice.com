@@ -5,25 +5,16 @@
 }
 
 .avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-position: center;
   background-size: cover;
   background-color: #e5e5e5;
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  margin: 5px 15px 5px 0;
-}
-
-.char-avatar {
-  width: 50px;
-  height: 50px;
-  background-color: #1bbc9b;
-  border-radius: 50%;
-  justify-content: center;
-  align-items: center;
   margin: 5px 15px;
-  color: white;
-  font-weight: bold;
 }
 
 .contact-name {
