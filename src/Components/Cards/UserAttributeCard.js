@@ -24,7 +24,7 @@ class UserAttributeCard extends Component {
   }
 
   copyToClipboard = details => {
-    this.combineAttrValues(details)
+    console.log(`Copying: ${this.combineAttrValues(details)}`)
   }
 
   renderAttributes = () => {
@@ -33,6 +33,7 @@ class UserAttributeCard extends Component {
       const attrType = this.props.types.find(
         el => el.id === attr.attribute_type_id
       )
+      console.log(attrs)
       return (
         <div key={attr.id}>
           <Columns

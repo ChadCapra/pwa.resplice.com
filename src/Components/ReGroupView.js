@@ -1,7 +1,7 @@
 import React from 'react'
 
-const ReGroup = () => {
+const ReGroupView = () => {
   return <div>Group Page</div>
 }
 
-export default ReGroup
+export default ReGroupView

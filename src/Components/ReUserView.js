@@ -1,25 +1,31 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import ReactSwipe from 'react-swipe'
-import { swiped } from '../../actions'
+import { swiped } from '../actions'
 
-import ReShareCamera from './ReShareCamera'
-import ReShareList from './ReShareList'
-import ReShareCode from './ReShareCode'
-import ReHeader from '../Header/ReHeader'
+import ReUserProfile from './Profile/ReUserProfile'
+import ReUserUpdates from './Profile/ReUserUpdates'
+import ReUserSettings from './Profile/ReUserSettings'
+import RePlusFAB from './Buttons/RePlusFAB'
+import ReHeader from './Header/ReHeader'
 
-import './share.scss'
+import './Profile/profile.scss'
 
-class ReShare extends Component {
+class ReUserView extends Component {
+  constructor(props) {
+    super(props)
+    this.swipe = React.createRef()
+  }
+
   componentWillMount() {
     this.props.swiped(1)
   }
 
   render() {
     return (
-      <div className="share">
-        <ReHeader menus={['QR Code', 'Updates', 'Profile']} />
-        <div className="share-body">
+      <div className="user">
+        <ReHeader menus={['Settings', 'Updates', 'Profile']} />
+        <div className="user-body">
           <ReactSwipe
             className="swipe-nav"
             swipeOptions={{
@@ -27,15 +33,17 @@ class ReShare extends Component {
               continuous: false,
               callback: idx => this.props.swiped(idx)
             }}
+            ref={this.swipe}
           >
             <div className="swipe-nav-item-container">
-              <ReShareCode />
+              <ReUserSettings />
             </div>
             <div className="swipe-nav-item-container">
-              <ReShareList />
+              <ReUserUpdates />
             </div>
             <div className="swipe-nav-item-container">
-              <ReShareCamera />
+              <ReUserProfile />
+              <RePlusFAB route="/profile/add-attribute" />
             </div>
           </ReactSwipe>
         </div>
@@ -47,4 +55,4 @@ class ReShare extends Component {
 export default connect(
   null,
   { swiped }
-)(ReShare)
+)(ReUserView)

@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import ReactSwipe from 'react-swipe'
-import { swiped } from '../../actions'
+import { swiped } from '../actions'
 
-import ReContactProfile from './ReContactProfile'
-import ReContactShares from './ReContactShares'
-import ReContactUpdates from './ReContactUpdates'
-import ReHeader from '../Header/ReHeader'
+import ReContactProfile from './Profile/ReContactProfile'
+import ReContactShares from './Profile/ReContactShares'
+import ReContactUpdates from './Profile/ReContactUpdates'
+import ReHeader from './Header/ReHeader'
 
-class ReContact extends Component {
+class ReContactView extends Component {
   componentWillMount() {
     this.props.swiped(1)
   }
@@ -45,4 +45,4 @@ class ReContact extends Component {
 export default connect(
   null,
   { swiped }
-)(ReContact)
+)(ReContactView)

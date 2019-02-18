@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import ReContact from '../Contact/ReContact'
+import ReContact from './ReContact'
 import RePlusFAB from '../Buttons/RePlusFAB'
 
 class ReContactList extends Component {

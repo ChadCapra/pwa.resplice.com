@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ReAlert from '../Util/ReAlert'
+import ReNotification from '../Util/ReNotification'
 import ReUpdate from './ReUpdate'
 
 export default class ReUserUpdates extends Component {
@@ -42,12 +42,9 @@ export default class ReUserUpdates extends Component {
   render() {
     return (
       <div className="user-updates">
-        <ReAlert
-          text1="Missing"
-          text2="Security Questions"
-          btnText="Fix Now"
-          type="primary"
-        />
+        <ReNotification title="Missing" btnText="Fix Now" type="primary">
+          Security Questions
+        </ReNotification>
         <div>{this.renderUpdates()}</div>
       </div>
     )

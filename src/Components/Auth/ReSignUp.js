@@ -11,7 +11,7 @@ import ReInputPassword from '../Input/ReInputPassword'
 import ReInputPhone from '../Input/ReInputPhone'
 import ReButton from '../Buttons/ReButton'
 import StatusBar from '../Util/StatusBar'
-import ReNotification from '../Modals/ReNotification'
+import ReAlert from '../Modals/ReAlert'
 
 import './login.scss'
 import './form.scss'
@@ -131,16 +131,16 @@ class ReSignUp extends Component {
 
   render() {
     if (this.props.registerValues) {
-      return <Redirect to="/login/verify" />
+      return <Redirect to="/auth/verify" />
     }
 
     return (
       <div className="sign-up">
         {this.props.authError && this.state.showErrors && (
-          <ReNotification
+          <ReAlert
             type="danger"
             close={() => this.setState({ showErrors: false })}
-          >{`${this.props.authError} error`}</ReNotification>
+          >{`${this.props.authError} error`}</ReAlert>
         )}
         {this.renderHeader()}
         {this.renderForm()}

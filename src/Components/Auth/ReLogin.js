@@ -9,6 +9,7 @@ import HelpCircle from 'react-ionicons/lib/MdHelpCircle'
 
 import ReInput from '../Input/ReInput'
 import ReButton from '../Buttons/ReButton'
+import ReAlert from '../Modals/ReAlert'
 import './signin.scss'
 import './login.scss'
 import './form.scss'
@@ -79,6 +80,11 @@ class ReLogin extends Component {
       <div className="sign-in">
         {this.renderHeader()}
         {this.renderForm()}
+        {this.props.errors && (
+          <ReAlert type="danger" title="Error">
+            Invalid username/password combo
+          </ReAlert>
+        )}
 
         <div className="sign-up-link">
           <Link to="/auth/signup">
@@ -110,7 +116,11 @@ const validate = formValues => {
 }
 
 const mapStateToProps = state => {
-  return { loading: state.auth.loading, loginObject: state.auth.register }
+  return {
+    loading: state.auth.loading,
+    loginObject: state.auth.register,
+    errors: state.auth.error
+  }
 }
 
 const loginForm = reduxForm({

@@ -1,0 +1,35 @@
+.home {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.home-body {
+  flex-grow: 1;
+  overflow-y: scroll;
+  height: 100%;
+  width: 100%;
+}
+
+.swipe-nav {
+  height: 100%;
+  width: 100%;
+
+  & > div {
+    height: 100%;
+  }
+}
+
+// .swipe-nav-item-container {
+//   padding-top: 125px;
+//   padding-bottom: 15px;
+//   max-height: calc(100vh - 140px);
+//   min-height: calc(100vh - 140px);
+//   overflow: auto;
+// }
+
+.swipe-nav-item-container {
+  overflow: auto;
+  height: 100%;
+}

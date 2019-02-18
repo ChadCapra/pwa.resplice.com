@@ -7,12 +7,13 @@ import {
   fetchContactList
 } from './actions'
 
-import ReHome from './components/Home/ReHome'
-import ReContact from './components/Profile/ReContact'
+import ReHomeView from './components/ReHomeView'
+import ReContactView from './components/ReContactView'
 import ReCreateAttribute from './components/Profile/ReCreateAttribute'
-import ReUser from './components/Profile/ReUser'
-import ReShare from './components/Share/ReShare'
+import ReUserView from './components/ReUserView'
+import ReShare from './components/ReShareView'
 import ReCreateGroup from './components/Groups/ReCreateGroup'
+import ReGroupView from './components/ReGroupView'
 
 import './App.scss'
 
@@ -30,16 +31,17 @@ class App extends Component {
       <div className="App">
         <Router>
           <>
-            <Route path="/" exact component={ReHome} />
-            <Route path="/contact/:id" exact component={ReContact} />
-            <Route path="/profile" exact component={ReUser} />
+            <Route path="/" exact component={ReHomeView} />
+            <Route path="/contact/:id" component={ReContactView} />
+            <Route path="/profile" exact component={ReUserView} />
             <Route
               path="/profile/add-attribute"
               exact
               component={ReCreateAttribute}
             />
-            <Route path="/share" exact component={ReShare} />
-            <Route path="/group/create" exact component={ReCreateGroup} />
+            <Route path="/share" component={ReShare} />
+            <Route path="/group/create" component={ReCreateGroup} />
+            <Route path="/group/:id" component={ReGroupView} />
           </>
         </Router>
       </div>

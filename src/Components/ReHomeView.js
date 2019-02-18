@@ -2,15 +2,15 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import ReactSwipe from 'react-swipe'
-import { swiped } from '../../actions'
+import { swiped } from '../actions'
 
-import ReHeader from '../Header/ReHomeHeader'
-import ReContactList from './ReContactList'
-import ReGroupList from './ReGroupList'
+import ReHeader from './Header/ReHomeHeader'
+import ReContactList from './Contacts/ReContactList'
+import ReGroupList from './Groups/ReGroupList'
 
-import './home.scss'
+import './views.scss'
 
-class ReHome extends Component {
+class ReHomeView extends Component {
   componentWillMount() {
     this.props.swiped(0)
   }
@@ -47,5 +47,5 @@ export default withRouter(
   connect(
     null,
     { swiped }
-  )(ReHome)
+  )(ReHomeView)
 )

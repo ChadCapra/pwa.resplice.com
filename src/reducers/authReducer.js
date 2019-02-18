@@ -8,7 +8,10 @@ import {
   VERIFY,
   VERIFY_SUCCESS,
   VERIFY_FAILURE,
-  AUTHORIZE
+  AUTHORIZE,
+  FETCH_PROFILE_FAILURE,
+  FETCH_CONTACT_LIST_FAILURE,
+  FETCH_ATTRIBUTES_FAILURE
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -31,13 +34,13 @@ export default (state = INITIAL_STATE, action) => {
         isAuthorized: true
       }
     case LOGIN_FAILURE:
-      return { ...state, loading: false, error: action.payload.status }
+      return { ...state, loading: false, error: action.payload }
     case REGISTER:
       return { ...state, loading: true }
     case REGISTER_SUCCESS:
       return { ...state, loading: false, register: action.payload }
     case REGISTER_FAILURE:
-      return { ...state, loading: false, error: action.payload.status }
+      return { ...state, loading: false, error: action.payload }
     case VERIFY:
       return { ...state, loading: true }
     case VERIFY_SUCCESS:
@@ -51,6 +54,14 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, loading: false, error: action.payload.status }
     case AUTHORIZE:
       return { ...state, isAuthorized: true }
+    case FETCH_PROFILE_FAILURE ||
+      FETCH_CONTACT_LIST_FAILURE ||
+      FETCH_ATTRIBUTES_FAILURE:
+      if (action.payload.status === 401) {
+        return { ...state, isAuthorized: false }
+      } else {
+        return state
+      }
     default:
       return state
   }
