@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
-import { login } from '../../actions'
+import { login, removeError } from '../../actions'
 import { Link, Redirect } from 'react-router-dom'
 
 import Icon from 'react-bulma-components/lib/components/icon'
@@ -81,7 +81,11 @@ class ReLogin extends Component {
         {this.renderHeader()}
         {this.renderForm()}
         {this.props.errors && (
-          <ReAlert type="danger" title="Error">
+          <ReAlert
+            type="danger"
+            title="Error"
+            close={() => this.props.removeError()}
+          >
             Invalid username/password combo
           </ReAlert>
         )}
@@ -130,5 +134,5 @@ const loginForm = reduxForm({
 
 export default connect(
   mapStateToProps,
-  { login }
+  { login, removeError }
 )(loginForm)

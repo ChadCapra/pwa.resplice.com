@@ -12,17 +12,19 @@ import ReContactView from './components/ReContactView'
 import ReCreateAttribute from './components/Profile/ReCreateAttribute'
 import ReUserView from './components/ReUserView'
 import ReShare from './components/ReShareView'
-import ReCreateGroup from './components/Groups/ReCreateGroup'
+import ReCreateGroup from './components/Group/ReCreateGroup'
 import ReGroupView from './components/ReGroupView'
 
 import './App.scss'
 
 class App extends Component {
   componentWillMount() {
-    this.props.fetchContactList()
     this.props
       .fetchUserProfile()
-      .then(() => this.props.fetchUserAttributes())
+      .then(() => {
+        this.props.fetchContactList()
+        this.props.fetchUserAttributes()
+      })
       .catch(err => console.log(err))
   }
 

@@ -6,8 +6,8 @@ import Button from 'react-bulma-components/lib/components/button'
 
 import './modal.scss'
 
-const ReNotification = ({ type, children, close }) => {
-  // setTimeout(() => close(), 6000)
+const ReAlert = ({ close, type, children }) => {
+  setTimeout(() => close(), 6000)
   return ReactDOM.createPortal(
     <div className="alert-container">
       <Notification color={type}>
@@ -19,4 +19,4 @@ const ReNotification = ({ type, children, close }) => {
   )
 }
 
-export default ReNotification
+export default ReAlert

@@ -27,21 +27,17 @@ class ReDropdown extends Component {
     if (userAttribute) {
       return (
         <div className="drop-down">
-          <div className="drop-down-item">
+          <div className="drop-down-item" onClick={() => edit()}>
             <div className="drop-down-icon">
               <MdCreate color="#1bbc9b" />
             </div>
-            <div className="drop-down-text" onClick={() => edit()}>
-              Edit
-            </div>
+            <div className="drop-down-text">Edit</div>
           </div>
-          <div className="drop-down-item">
+          <div className="drop-down-item" onClick={() => copy()}>
             <div className="drop-down-icon">
               <MdClipboard color="#1bbc9b" />
             </div>
-            <div className="drop-down-text" onClick={() => copy()}>
-              Copy to Clipboard
-            </div>
+            <div className="drop-down-text">Copy to Clipboard</div>
           </div>
         </div>
       )

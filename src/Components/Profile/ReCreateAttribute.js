@@ -53,7 +53,7 @@ class ReCreateAttribute extends Component {
           <Field
             name="collection"
             label="Collection"
-            dataList={this.props.collectionsList}
+            dataList={this.props.collectionList}
             listName="collections"
             component={ReInputCombo}
           />
@@ -78,7 +78,7 @@ class ReCreateAttribute extends Component {
           <Field
             name="collection"
             label="Collection"
-            dataList={this.props.collectionsList}
+            dataList={this.props.collectionList}
             listName="collections"
             component={ReInputCombo}
           />
@@ -136,7 +136,7 @@ class ReCreateAttribute extends Component {
 const mapStateToProps = state => {
   return {
     attrTypes: state.attributes.types,
-    collectionsList: Object.keys(state.user.collections),
+    collectionList: Object.keys(state.user.collections),
     loading: state.attributes.loading
   }
 }

@@ -5,8 +5,8 @@ import ReactSwipe from 'react-swipe'
 import { swiped } from '../actions'
 
 import ReHeader from './Header/ReHomeHeader'
-import ReContactList from './Contacts/ReContactList'
-import ReGroupList from './Groups/ReGroupList'
+import ReContactList from './Contact/ReContactList'
+import ReGroupList from './Group/ReGroupList'
 
 import './views.scss'
 

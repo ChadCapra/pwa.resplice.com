@@ -11,7 +11,8 @@ import {
   AUTHORIZE,
   FETCH_PROFILE_FAILURE,
   FETCH_CONTACT_LIST_FAILURE,
-  FETCH_ATTRIBUTES_FAILURE
+  FETCH_ATTRIBUTES_FAILURE,
+  REMOVE_ERROR
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -62,6 +63,8 @@ export default (state = INITIAL_STATE, action) => {
       } else {
         return state
       }
+    case REMOVE_ERROR:
+      return { ...state, error: null }
     default:
       return state
   }

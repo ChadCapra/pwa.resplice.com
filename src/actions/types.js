@@ -71,6 +71,7 @@ export const SHARE_ATTRIBUTES_FAILURE = 'SHARE_ATTRIBUTES_FAILURE'
 // Normal Types
 export const SWIPED = 'SWIPED'
 export const NONE = 'NONE'
+export const REMOVE_ERROR = 'REMOVE_ERROR'
 
 export const FETCH_SETTINGS = 'FETCH_SETTINGS'
 export const FETCH_SETTINGS_SUCCESS = 'FETCH_SETTINGS_SUCCESS'

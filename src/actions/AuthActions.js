@@ -20,6 +20,7 @@ import {
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAILURE,
   AUTHORIZE,
+  REMOVE_ERROR,
   NONE
 } from './types'
 
@@ -129,5 +130,11 @@ export const checkAuth = () => async dispatch => {
     dispatch({ type: AUTHORIZE })
   } else {
     dispatch({ type: NONE })
+  }
+}
+
+export const removeError = () => {
+  return {
+    type: REMOVE_ERROR
   }
 }

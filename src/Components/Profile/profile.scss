@@ -108,3 +108,18 @@
   align-items: center;
   padding: 20px 0 15px 0;
 }
+
+.edit-attribute {
+  text-align: center;
+}
+
+.edit-attribute-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-attribute-type {
+  color: rgba(0, 0, 0, 0.5);
+}
