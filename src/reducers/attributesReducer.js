@@ -10,10 +10,7 @@ import {
   EDIT_ATTRIBUTE_FAILURE,
   DELETE_ATTRIBUTE,
   DELETE_ATTRIBUTE_SUCCESS,
-  DELETE_ATTRIBUTE_FAILURE,
-  SHARE_ATTRIBUTES,
-  SHARE_ATTRIBUTES_SUCCESS,
-  SHARE_ATTRIBUTES_FAILURE
+  DELETE_ATTRIBUTE_FAILURE
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -52,12 +49,6 @@ export default (state = INITIAL_STATE, action) => {
     case DELETE_ATTRIBUTE_SUCCESS:
       return { ...state, loading: false }
     case DELETE_ATTRIBUTE_FAILURE:
-      return { ...state, loading: false, error: action.payload.status }
-    case SHARE_ATTRIBUTES:
-      return { ...state, loading: true }
-    case SHARE_ATTRIBUTES_SUCCESS:
-      return { ...state, loading: false }
-    case SHARE_ATTRIBUTES_FAILURE:
       return { ...state, loading: false, error: action.payload.status }
     default:
       return state

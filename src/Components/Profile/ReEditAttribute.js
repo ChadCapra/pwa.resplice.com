@@ -17,7 +17,9 @@ class ReEditAttribute extends Component {
         ...formValues
       }
     }
-    this.props.editAttribute(attributeEdit).then(() => this.props.onEdit())
+    this.props
+      .editAttribute(attributeEdit, this.props.attribute)
+      .then(() => this.props.onEdit())
   }
 
   formatLabel(label) {

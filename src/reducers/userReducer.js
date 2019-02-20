@@ -5,7 +5,9 @@ import {
   FETCH_ATTRIBUTES,
   FETCH_ATTRIBUTES_SUCCESS,
   FETCH_ATTRIBUTES_FAILURE,
-  ADD_ATTRIBUTE_SUCCESS
+  ADD_ATTRIBUTE_SUCCESS,
+  EDIT_ATTRIBUTE_SUCCESS,
+  DELETE_ATTRIBUTE_SUCCESS
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -37,6 +39,10 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_ATTRIBUTES_FAILURE:
       return { ...state, loading: false, error: action.payload }
     case ADD_ATTRIBUTE_SUCCESS:
+      return { ...state, collections: action.payload }
+    case EDIT_ATTRIBUTE_SUCCESS:
+      return { ...state, collections: action.payload }
+    case DELETE_ATTRIBUTE_SUCCESS:
       return { ...state, collections: action.payload }
     default:
       return state

@@ -8,17 +8,13 @@ import {
   EDIT_ATTRIBUTE_FAILURE,
   DELETE_ATTRIBUTE,
   DELETE_ATTRIBUTE_SUCCESS,
-  DELETE_ATTRIBUTE_FAILURE,
-  SHARE_ATTRIBUTES,
-  SHARE_ATTRIBUTES_SUCCESS,
-  SHARE_ATTRIBUTES_FAILURE
+  DELETE_ATTRIBUTE_FAILURE
 } from './types'
 
 export const addAttribute = attribute => async (dispatch, getState) => {
   dispatch({ type: ADD_ATTRIBUTE })
 
   try {
-    console.log(attribute)
     const response = await api.post('/user/add_attribute', attribute)
     const {
       user: { collections }
@@ -30,12 +26,28 @@ export const addAttribute = attribute => async (dispatch, getState) => {
   }
 }
 
-export const editAttribute = attribute => async dispatch => {
+export const editAttribute = (attribute, prevAttribute) => async (
+  dispatch,
+  getState
+) => {
   dispatch({ type: EDIT_ATTRIBUTE })
 
+  // I eventually may want to keep an attribute array in state
+  // and rebuild collections on create or edit
+  // instead of editing the collections object
   try {
     const response = await api.post('/user/edit_attribute', attribute)
-    dispatch({ type: EDIT_ATTRIBUTE_SUCCESS, payload: response.data })
+    const {
+      user: { collections }
+    } = getState()
+    const attrIdx = collections[prevAttribute.collection].findIndex(
+      attr => attr.id === prevAttribute.id
+    )
+    collections[prevAttribute.collection].splice(attrIdx, 1)
+    collections[response.data.collection]
+      ? collections[response.data.collection].push(response.data)
+      : (collections[response.data.collection] = [response.data])
+    dispatch({ type: EDIT_ATTRIBUTE_SUCCESS, payload: collections })
   } catch (err) {
     dispatch({ type: EDIT_ATTRIBUTE_FAILURE, payload: err.response })
   }
@@ -49,16 +61,5 @@ export const deleteAttribute = ({ id }) => async dispatch => {
     dispatch({ type: DELETE_ATTRIBUTE_SUCCESS })
   } catch (err) {
     dispatch({ type: DELETE_ATTRIBUTE_FAILURE, payload: err.response })
-  }
-}
-
-export const shareAttributes = shares => async dispatch => {
-  dispatch({ type: SHARE_ATTRIBUTES })
-
-  try {
-    await api.post('/sharing/share_attributes', shares)
-    dispatch({ type: SHARE_ATTRIBUTES_SUCCESS })
-  } catch (err) {
-    dispatch({ type: SHARE_ATTRIBUTES_FAILURE, payload: err.response })
   }
 }
