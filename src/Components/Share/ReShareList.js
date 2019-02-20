@@ -11,17 +11,15 @@ class ReShareList extends Component {
   state = {
     showMenu: false,
     query: '',
+    queryType: '',
     shareList: [
       {
-        id: 1,
         value: '2185910657'
       },
       {
-        id: 2,
         value: 'macewinduMF'
       },
       {
-        id: 3,
         value: 'lukesky@rebels.com'
       }
     ],
@@ -49,6 +47,49 @@ class ReShareList extends Component {
       }
     ]
   }
+
+  handleAttrClick = () => {
+    if (this.state.queryType === 'email') {
+      const shareList = [...this.state.shareList]
+      shareList.push({ value: this.state.query, email: this.state.query })
+      this.setState({ showMenu: false, shareList, query: '' })
+    } else if (this.state.queryType === 'phone') {
+      const shareList = [...this.state.shareList]
+      shareList.push({
+        value: this.state.query,
+        country_code: '',
+        phone_number: this.state.query,
+        extension: ''
+      })
+      this.setState({ showMenu: false, shareList, query: '' })
+    }
+  }
+
+  removeFromShareList = idx => {
+    const shareList = [...this.state.shareList]
+    shareList.splice(idx, 1)
+    this.setState({ shareList })
+  }
+
+  handleContactClick = id => {
+    console.log(id)
+  }
+
+  handleInputChange = value => {
+    let numsOnly = /^[0-9]+$/
+    // eslint-disable-next-line
+    let email = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    if (email.test(value)) {
+      this.setState({ queryType: 'email' })
+    } else if (numsOnly.test(value) && value.length > 6) {
+      this.setState({ queryType: 'phone' })
+    } else {
+      this.setState({ queryType: '' })
+    }
+
+    this.setState({ query: value })
+  }
+
   render() {
     return (
       <div className="share-list">
@@ -56,22 +97,29 @@ class ReShareList extends Component {
         <div className="share-list-input-container">
           <ReInputCustom
             onFocus={() => this.setState({ showMenu: true })}
-            onBlur={() => this.setState({ showMenu: false })}
-            onChange={e => this.setState({ query: e.target.value })}
+            onChange={e => this.handleInputChange(e.target.value)}
+            value={this.state.query}
           />
           {this.state.showMenu && (
             <ReShareDropdown
               query={this.state.query}
-              contacts={this.state.contacts}
+              queryType={this.state.queryType}
+              handleAttrClick={this.handleAttrClick}
+              handleContactClick={this.handleContactClick}
+              close={() => this.setState({ showMenu: false })}
             />
           )}
         </div>
         <div className="share-list-container">
-          {this.state.shareList.map(item => {
+          {this.state.shareList.map((item, idx) => {
             return (
-              <div className="share-list-item" key={item.id}>
+              <div className="share-list-item" key={idx}>
                 <div>{item.value}</div>
-                <MdClose fontSize="2em" color="#1BBC9B" />
+                <MdClose
+                  fontSize="2em"
+                  color="#1BBC9B"
+                  onClick={() => this.removeFromShareList(idx)}
+                />
               </div>
             )
           })}

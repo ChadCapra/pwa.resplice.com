@@ -6,6 +6,7 @@ import userReducer from './userReducer'
 import attributesReducer from './attributesReducer'
 import utilReducer from './utilReducer'
 import groupReducer from './groupReducer'
+import shareReducer from './shareReducer'
 
 export default combineReducers({
   auth: authReducer,
@@ -13,6 +14,7 @@ export default combineReducers({
   contacts: contactReducer,
   groups: groupReducer,
   attributes: attributesReducer,
+  shares: shareReducer,
   utils: utilReducer,
   form: formReducer
 })

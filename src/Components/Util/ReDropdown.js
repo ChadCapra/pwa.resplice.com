@@ -7,11 +7,11 @@ import MdCreate from 'react-ionicons/lib/MdCreate'
 
 class ReDropdown extends Component {
   componentWillMount() {
-    // add event listener for clicks outside of the dropdown
+    // add event listener for clicks on the page
     document.addEventListener('click', this.handleClick, false)
   }
   componentWillUnmount() {
-    // remove event listener for clicks outside of the dropdown
+    // remove event listener for clicks on the page
     document.removeEventListener('click', this.handleClick, false)
   }
 
