@@ -18,7 +18,7 @@ class ReShareView extends Component {
   render() {
     return (
       <div className="share">
-        <ReHeader menus={['QR Code', 'Updates', 'Profile']} />
+        <ReHeader menus={['QR Code', 'Share', 'Scan']} />
         <div className="share-body">
           <ReactSwipe
             className="swipe-nav"
