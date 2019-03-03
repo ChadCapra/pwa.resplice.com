@@ -27,6 +27,7 @@
   align-items: flex-start;
   padding-left: 20px;
   cursor: pointer;
+  word-break: break-word;
 }
 
 .card-attribute-text-name {
@@ -38,4 +39,29 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.card-verify {
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 50%;
+  color: white;
+  height: 32px;
+  width: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.green-border {
+  border: 3px solid #1bbc9b;
+  color: #1bbc9b;
+}
+.red-border {
+  border: 3px solid hsl(348, 69%, 63%);
+  color: hsl(348, 69%, 63%);
+}
+.yellow-border {
+  border: 3px solid hsl(48, 78%, 49%);
+  color: hsl(48, 78%, 49%);
 }

@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Columns from 'react-bulma-components/lib/components/columns'
 
-import MdVerif from 'react-ionicons/lib/MdDoneAll'
-
+import CardVerify from './CardVerify'
 import ReInputCard from '../Input/ReInputCard'
 import ReButton from '../Buttons/ReButton'
 import ReDropdown from '../Util/ReDropdown'
@@ -39,6 +38,14 @@ class UserAttributeCard extends Component {
     document.body.removeChild(el)
   }
 
+  handleVerifiedClick = () => {
+    console.log('Verified was clicked')
+  }
+  handleUnverifiedClick = () => {
+    console.log('Unverified was clicked')
+  }
+  handlePendingClick = () => {}
+
   renderAttributes = () => {
     const { attrs } = this.props
     return attrs.map((attr, idx) => {
@@ -61,6 +68,7 @@ class UserAttributeCard extends Component {
             </Columns.Column>
             <Columns.Column
               className="card-attribute-text"
+              size={7}
               onClick={() => this.setState({ showDropDownIdx: idx })}
             >
               <span className="card-attribute-text-name">{attr.name}</span>
@@ -77,22 +85,21 @@ class UserAttributeCard extends Component {
                 />
               )}
             </Columns.Column>
-            <Columns.Column size={2} className="card-attribute-icon">
-              {attr.verified_at && <MdVerif color="#1BBC9B" fontSize="2rem" />}
+            <Columns.Column size={1} className="card-attribute-icon">
+              {attr.verified_at && (
+                <CardVerify
+                  type="verified"
+                  handleClick={this.handleVerifiedClick}
+                />
+              )}
               {!attr.verified_at && (
-                <ReButton text="Resend" type="small" width="70px" />
+                <CardVerify
+                  type="unverified"
+                  handleClick={this.handleUnverifiedClick}
+                />
               )}
             </Columns.Column>
           </Columns>
-          {!attr.verified_at && (
-            <Columns breakpoint="mobile">
-              <Columns.Column size={1} />
-              <Columns.Column className="card-input">
-                <ReInputCard placeholder="Enter Verify Code" />
-              </Columns.Column>
-              <Columns.Column size={2} />
-            </Columns>
-          )}
         </div>
       )
     })
