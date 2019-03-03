@@ -1,30 +1,14 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 
 import MdMail from 'react-ionicons/lib/MdMail'
 import MdCall from 'react-ionicons/lib/MdCall'
 import ReContact from '../Contact/ReContact'
+import MdClose from 'react-ionicons/lib/MdClose'
 
 import './share.scss'
 
 class ReShareDropdown extends Component {
-  // componentWillMount() {
-  //   // remove event listener for clicks on the page
-  //   document.addEventListener('click', this.handleClick, false)
-  // }
-  // componentWillUnmount() {
-  //   // remove event listener for clicks on the page
-  //   document.removeEventListener('click', this.handleClick, false)
-  // }
-
-  // handleClick = e => {
-  //   if (!ReactDOM.findDOMNode(this).contains(e.target)) {
-  //     // the click was outside of the dropdown, so handle closing here
-  //     this.props.close()
-  //   }
-  // }
-
   renderType = queryType => {
     if (queryType === 'phone') {
       return <MdCall fontSize="2.5em" color="#1BBC9B" />
@@ -46,6 +30,16 @@ class ReShareDropdown extends Component {
 
     return (
       <div className="share-dropdown">
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <MdClose
+            style={{ margin: '0 0 10px 0', cursor: 'pointer' }}
+            color="#1bbc9b"
+            fontSize="1.5em"
+            className="re-exit-icon"
+            onClick={this.props.close}
+          />
+        </div>
+
         <div className="dropdown-query">
           {this.renderType(queryType)}
           <div className="dropdown-query-text" onClick={handleAttrClick}>

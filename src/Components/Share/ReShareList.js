@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { buildShare } from '../../actions'
 
 import ReInputCustom from '../Input/ReInputCustom'
 import ReButton from '../Buttons/ReButton'
@@ -96,7 +98,10 @@ class ReShareList extends Component {
         <h1 className="share-list-header">Add by Phone, Email, or Contact</h1>
         <div className="share-list-input-container">
           <ReInputCustom
-            onFocus={() => this.setState({ showMenu: true })}
+            onFocus={() => {
+              console.log('loading')
+              this.setState({ showMenu: true })
+            }}
             onChange={e => this.handleInputChange(e.target.value)}
             value={this.state.query}
           />
@@ -131,4 +136,7 @@ class ReShareList extends Component {
   }
 }
 
-export default ReShareList
+export default connect(
+  null,
+  { buildShare }
+)(ReShareList)

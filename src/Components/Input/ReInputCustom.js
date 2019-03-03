@@ -2,7 +2,14 @@ import React from 'react'
 
 import './input.scss'
 
-const ReInput = ({ placeholder, label, onFocus, onBlur, onChange, value }) => {
+const ReInputCustom = ({
+  placeholder,
+  label,
+  onFocus,
+  onBlur,
+  onChange,
+  value
+}) => {
   return (
     <div className="re-input-container">
       <label className="re-input-label">{label}</label>
@@ -18,4 +25,4 @@ const ReInput = ({ placeholder, label, onFocus, onBlur, onChange, value }) => {
   )
 }
 
-export default ReInput
+export default ReInputCustom
