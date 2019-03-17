@@ -6,7 +6,7 @@
     "axios": "^0.18.0",
     "lodash": "^4.17.11",
     "node-sass": "^4.11.0",
-    "npm": "^6.6.0",
+    "prop-types": "^15.7.2",
     "react": "^16.8.2",
     "react-bulma-components": "^3.0.1-2",
     "react-dom": "^16.8.2",
@@ -27,7 +27,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "styleguide": "styleguidist server",
+    "styleguide:build": "styleguidist build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -37,5 +39,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "react-styleguidist": "^9.0.4"
+  }
 }
