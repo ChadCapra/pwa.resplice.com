@@ -5,7 +5,7 @@ import './button.scss'
 /**
  * Primary Button for Resplice. Used on forms, in modals, etc.
  */
-const ReButton = ({ type, text, loading, width, onClick }) => {
+const ReButton = ({ type, text, loading, width = '300px', onClick }) => {
   if (loading) {
     return (
       <button style={{ width }} className={`btn btn--${type} btn--loading`}>
@@ -23,8 +23,14 @@ const ReButton = ({ type, text, loading, width, onClick }) => {
 }
 
 ReButton.propTypes = {
-  type: PropTypes.string.isRequired,
+  /**
+   * The type of button, can be primary or secondary.
+   */
+  type: PropTypes.oneOf(['primary', 'secondary', 'small']).isRequired,
   text: PropTypes.string.isRequired,
+  /**
+   * Indicates loading state.
+   */
   loading: PropTypes.bool,
   width: PropTypes.string,
   onClick: PropTypes.func
