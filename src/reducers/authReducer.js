@@ -12,7 +12,8 @@ import {
   FETCH_PROFILE_FAILURE,
   FETCH_CONTACT_LIST_FAILURE,
   FETCH_ATTRIBUTES_FAILURE,
-  REMOVE_ERROR
+  REMOVE_ERROR,
+  LOGOUT
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -36,6 +37,8 @@ export default (state = INITIAL_STATE, action) => {
       }
     case LOGIN_FAILURE:
       return { ...state, loading: false, error: action.payload }
+    case LOGOUT:
+      return { ...state, isAuthorized: false }
     case REGISTER:
       return { ...state, loading: true }
     case REGISTER_SUCCESS:

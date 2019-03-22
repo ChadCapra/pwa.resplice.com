@@ -11,7 +11,8 @@ import ReHomeView from './components/ReHomeView'
 import ReContactView from './components/ReContactView'
 import ReCreateAttribute from './components/Profile/ReCreateAttribute'
 import ReUserView from './components/ReUserView'
-import ReShare from './components/ReShareView'
+import ReShareView from './components/ReShareView'
+import ReShareAttributes from './components/Share/ReShareAttributes'
 import ReCreateGroup from './components/Group/ReCreateGroup'
 import ReGroupView from './components/ReGroupView'
 
@@ -41,7 +42,8 @@ class App extends Component {
               exact
               component={ReCreateAttribute}
             />
-            <Route path="/share" component={ReShare} />
+            <Route path="/share" exact component={ReShareView} />
+            <Route path="/share/attributes" component={ReShareAttributes} />
             <Route path="/group/create" component={ReCreateGroup} />
             <Route path="/group/:id" component={ReGroupView} />
           </>

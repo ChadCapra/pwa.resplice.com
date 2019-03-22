@@ -19,14 +19,25 @@ class ReShareDropdown extends Component {
     }
   }
 
+  renderContacts = () => {
+    if (this.props.contacts.length <= 0) {
+      return <div style={{ textAlign: 'center' }}>No Contacts</div>
+    }
+    this.props.contacts.map(contact => {
+      return (
+        <div
+          className="dropdown-result"
+          key={contact.id}
+          onClick={() => this.props.handleContactClick(contact.id)}
+        >
+          <ReContact contact={contact} />
+        </div>
+      )
+    })
+  }
+
   render() {
-    const {
-      query,
-      queryType,
-      contacts,
-      handleAttrClick,
-      handleContactClick
-    } = this.props
+    const { query, queryType, handleAttrClick } = this.props
 
     return (
       <div className="share-dropdown">
@@ -46,17 +57,7 @@ class ReShareDropdown extends Component {
             {query}
           </div>
         </div>
-        {contacts.map(contact => {
-          return (
-            <div
-              className="dropdown-result"
-              key={contact.id}
-              onClick={() => handleContactClick(contact.id)}
-            >
-              <ReContact contact={contact} />
-            </div>
-          )
-        })}
+        {this.renderContacts()}
       </div>
     )
   }

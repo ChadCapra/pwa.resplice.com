@@ -3,7 +3,7 @@ import {
   LOGIN,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
-  SIGN_OUT,
+  LOGOUT,
   REGISTER,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
@@ -41,14 +41,15 @@ export const login = formValues => async dispatch => {
   }
 }
 
-export const signOut = () => {
+export const logout = () => {
   // TODO: cleanup service worker caches and other data
   // Remove auth header on axios instance and items in storage
-  api.defaults.headers.common['Authorization'] = null
+  api.defaults.headers.common['auth_token'] = null
+  api.defaults.headers.common['user_id'] = null
   localStorage.removeItem('auth_token')
   localStorage.removeItem('user_id')
   return {
-    type: SIGN_OUT
+    type: LOGOUT
   }
 }
 

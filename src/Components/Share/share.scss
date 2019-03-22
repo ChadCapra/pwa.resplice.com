@@ -29,6 +29,23 @@
   text-align: center;
 }
 
+.share-list {
+  height: 100%;
+  overflow: auto;
+  justify-content: flex-start;
+}
+
+.share-list-footer {
+  position: fixed;
+  bottom: 0;
+  padding: 15px 0;
+  width: 95%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+}
+
 .share-list-input-container {
   width: 90%;
   max-width: 500px;
@@ -46,11 +63,98 @@
   justify-content: space-between;
   border-bottom: 1px solid #e5e5e5;
   margin-left: 25px;
-  & svg {
-    margin-right: 10px;
-  }
   padding-bottom: 5px;
   margin-bottom: 10px;
+}
+
+.share-list-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: #1bbc9b;
+  margin-right: 15px;
+}
+
+.share-list-close {
+  margin-right: 15px;
+}
+
+.share-attributes {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.share-attributes-header,
+.share-attributes-expnd-header {
+  flex: 0 0 65px;
+  display: flex;
+  max-width: 800px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+.share-attributes-expnd-header {
+  justify-content: center;
+  & span {
+    color: #1bbc9b;
+    font-size: 36px;
+  }
+
+  & p {
+    font-size: 18px;
+    margin: 0;
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  & svg {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+  }
+}
+.share-attributes-body {
+  overflow: auto;
+  flex: 1 1;
+}
+.share-attributes-footer {
+  flex: 0 0 70px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.share-attributes-icons {
+  display: flex;
+  align-items: center;
+  & div {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #1bbc9b;
+    margin: 0 8px;
+  }
+}
+
+.share-attributes-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  & span {
+    color: #1bbc9b;
+    font-size: 24px;
+  }
+
+  & p {
+    margin: 0;
+    color: rgba(0, 0, 0, 0.5);
+  }
 }
 
 .qr-code-container {

@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import ReactSwipe from 'react-swipe'
 import { swiped } from '../actions'
 
-import ReShareCamera from './Share/ReShareCamera'
 import ReShareList from './Share/ReShareList'
 import ReShareCode from './Share/ReShareCode'
 import ReHeader from './Header/ReHeader'
@@ -12,30 +11,27 @@ import './Share/share.scss'
 
 class ReShareView extends Component {
   componentWillMount() {
-    this.props.swiped(1)
+    this.props.swiped(0)
   }
 
   render() {
     return (
       <div className="share">
-        <ReHeader menus={['QR Code', 'Share', 'Scan']} />
+        <ReHeader menus={['Share', 'QR Code']} />
         <div className="share-body">
           <ReactSwipe
             className="swipe-nav"
             swipeOptions={{
-              startSlide: 1,
+              startSlide: 0,
               continuous: false,
               callback: idx => this.props.swiped(idx)
             }}
           >
             <div className="swipe-nav-item-container">
-              <ReShareCode />
-            </div>
-            <div className="swipe-nav-item-container">
               <ReShareList />
             </div>
             <div className="swipe-nav-item-container">
-              <ReShareCamera />
+              <ReShareCode />
             </div>
           </ReactSwipe>
         </div>

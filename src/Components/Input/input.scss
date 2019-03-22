@@ -118,15 +118,15 @@
   }
 }
 
-.checkbox,
-.checkbox-checked {
+.checkbox {
   height: 35px;
   width: 35px;
   border-radius: 5px;
+  background-color: #e5e5e5;
 }
 
-.checkbox {
-  background-color: #e5e5e5;
+.checkbox.checked {
+  background-color: #1bbc9b;
 }
 
 .code-verifying {

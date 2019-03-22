@@ -16,7 +16,7 @@ class AttributeSelectCard extends Component {
 
   renderAttributes = () => {
     const { attrs } = this.props
-    return attrs.map((attr, idx) => {
+    return attrs.map(attr => {
       const attrType = this.props.types.find(
         el => el.id === attr.attribute_type_id
       )
@@ -39,10 +39,7 @@ class AttributeSelectCard extends Component {
               <span>{this.combineAttrValues(attr.details)}</span>
             </Columns.Column>
             <Columns.Column size={2} className="card-attribute-icon">
-              <ReCheckbox
-                onCheck={() => console.log('Checked')}
-                onUncheck={() => console.log('Unchecked')}
-              />
+              <ReCheckbox onClick={() => console.log('Clicked')} />
             </Columns.Column>
           </Columns>
         </div>
