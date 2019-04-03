@@ -6,7 +6,8 @@ import {
   ADD_CONTACTS_TO_SHARES,
   ADD_PHONES_TO_SHARES,
   ADD_EMAILS_TO_SHARES,
-  BUILD_SHARE_LIST
+  BUILD_SHARE_LIST,
+  TOGGLE_ATTRIBUTE_SHARE_LIST
 } from './types'
 
 export const shareAttributes = attributes => async (dispatch, getState) => {
@@ -33,4 +34,8 @@ export const buildShare = (list, contact_ids, phones, emails) => dispatch => {
   dispatch({ type: ADD_CONTACTS_TO_SHARES, payload: contact_ids })
   dispatch({ type: ADD_PHONES_TO_SHARES, payload: phones })
   dispatch({ type: ADD_EMAILS_TO_SHARES, payload: emails })
+}
+
+export const toggleAttributeToShares = attribute => {
+  return { type: TOGGLE_ATTRIBUTE_SHARE_LIST, payload: attribute }
 }

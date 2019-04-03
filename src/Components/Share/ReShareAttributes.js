@@ -11,25 +11,31 @@ import ReButton from '../Buttons/ReButton'
 class ReShareAttributes extends Component {
   state = {
     expandedShareList: false,
-    back: false,
-    confirmation: false,
+    goBack: false,
+    goTags: false,
     list: Object.values(this.props.shareList).flat()
   }
 
   renderListPreview = () => {
     const { list } = this.state
+    console.log(list)
     return (
       <div className="share-attributes-icons">
-        <div>{list[0]}</div>
+        {/* <div>{list[0]}</div>
         <div>{list[1]}</div>
         <div>{list[2]}</div>
-        <div>{list[3]}</div>
+        <div>{list[3]}</div> */}
+        <div>{1}</div>
+        <div>{2}</div>
+        <div>{3}</div>
+        <div>{4}</div>
       </div>
     )
   }
 
   render() {
-    if (this.state.back) return <Redirect to="/share" />
+    if (this.state.goBack) return <Redirect push to="/share" />
+    if (this.state.goTags) return <Redirect push to="/share/tags" />
     return (
       <div className="share-attributes">
         {this.state.expandedShareList ? (
@@ -66,14 +72,23 @@ class ReShareAttributes extends Component {
               </div>
             </div>
             <div className="share-attributes-body">
-              <AttributeCardList Component={AttributeSelectCard} />
-              body
+              <AttributeCardList ListComponent={AttributeSelectCard} user />
             </div>
           </>
         )}
         <div className="share-attributes-footer">
-          <ReButton type="secondary" text="Back" width="175px" />
-          <ReButton type="primary" text="Continue" width="175px" />
+          <ReButton
+            type="secondary"
+            text="Back"
+            width="175px"
+            onClick={() => this.setState({ goBack: true })}
+          />
+          <ReButton
+            type="primary"
+            text="Continue"
+            width="175px"
+            onClick={() => this.setState({ goTags: true })}
+          />
         </div>
       </div>
     )

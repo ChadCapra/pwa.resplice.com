@@ -37,7 +37,7 @@ class ReUserProfile extends Component {
             </div>
           </Level.Item>
         </Level>
-        <AttributeCardList user Component={UserAttributeCard} />
+        <AttributeCardList user ListComponent={UserAttributeCard} />
       </div>
     )
   }

@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 
 class AttributeCardList extends Component {
   render() {
-    const { collections, Component } = this.props
+    const { collections, ListComponent } = this.props
     return Object.keys(collections).map((col, idx) => {
-      return <Component key={idx} header={col} attrs={collections[col]} />
+      return <ListComponent key={idx} header={col} attrs={collections[col]} />
     })
   }
 }
