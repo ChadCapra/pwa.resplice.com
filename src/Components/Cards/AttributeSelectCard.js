@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Columns from 'react-bulma-components/lib/components/columns'
+import { toggleAttributeToShares } from '../../actions'
 
 import ActionIcon from '../Util/ActionIcon'
 import ReCheckbox from '../Input/ReCheckbox'
@@ -12,6 +13,21 @@ class AttributeSelectCard extends Component {
     return Object.values(values).reduce((accum, value) => {
       return accum.concat(' ', value)
     }, '')
+  }
+
+  handleAttributeSelect = attribute => {
+    this.props.toggleAttributeToShares({
+      attribute_id: attribute.id,
+      expires_at: null
+    })
+  }
+
+  checkAttributes = id => {
+    if (
+      this.props.attribute_shares.findIndex(as => as.attribute_id === id) >= 0
+    )
+      return true
+    else return false
   }
 
   renderAttributes = () => {
@@ -39,7 +55,10 @@ class AttributeSelectCard extends Component {
               <span>{this.combineAttrValues(attr.details)}</span>
             </Columns.Column>
             <Columns.Column size={2} className="card-attribute-icon">
-              <ReCheckbox onClick={() => console.log('Clicked')} />
+              <ReCheckbox
+                onClick={() => this.handleAttributeSelect(attr)}
+                checked={this.checkAttributes(attr.id)}
+              />
             </Columns.Column>
           </Columns>
         </div>
@@ -59,7 +78,13 @@ class AttributeSelectCard extends Component {
 }
 
 const mapStateToProps = state => {
-  return { types: state.attributes.types }
+  return {
+    types: state.attributes.types,
+    attribute_shares: state.shares.attribute_shares
+  }
 }
 
-export default connect(mapStateToProps)(AttributeSelectCard)
+export default connect(
+  mapStateToProps,
+  { toggleAttributeToShares }
+)(AttributeSelectCard)

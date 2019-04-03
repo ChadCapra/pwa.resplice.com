@@ -19,7 +19,7 @@ class ReShareCode extends Component {
           .toString()
           .substring(0, 3)}-${pin.toString().substring(3)}`}</div>
         <h1 className="qr-code-header">Auto Share Attributes</h1>
-        <AttributeCardList user Component={AttributeSelectCard} />
+        <AttributeCardList user ListComponent={AttributeSelectCard} />
       </div>
     )
   }
