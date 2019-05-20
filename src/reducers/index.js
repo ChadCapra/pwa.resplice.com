@@ -9,7 +9,7 @@ import groupReducer from './groupReducer'
 import shareReducer from './shareReducer'
 
 export default combineReducers({
-  auth: authReducer,
+  authState: authReducer,
   user: userReducer,
   contacts: contactReducer,
   groups: groupReducer,

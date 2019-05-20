@@ -12,14 +12,14 @@ import App from './App'
 import ReAuth from './components/Auth/ReAuth'
 import GlobalLoading from './components/Loading/GlobalLoading'
 
-const PrivateRoute = ({ component: Component, authorized, ...rest }) => {
+const PrivateRoute = ({ authorized, ...rest }) => {
   // Check if user is authorized and then render the App component
   // Otherwise redirect to signin
   return (
     <Route
       {...rest}
       render={props =>
-        authorized ? <Component {...props} /> : <Redirect to="/auth/signin" />
+        authorized ? <App {...props} /> : <Redirect to="/auth/signin" />
       }
     />
   )
@@ -42,11 +42,7 @@ class Secure extends Component {
       <Router>
         <Switch>
           <Route path="/auth" component={ReAuth} />
-          <PrivateRoute
-            path="/"
-            component={App}
-            authorized={this.props.isAuthorized}
-          />
+          <PrivateRoute path="/" authorized={this.props.isAuthorized} />
         </Switch>
       </Router>
     )
@@ -54,7 +50,7 @@ class Secure extends Component {
 }
 
 const mapStateToProps = state => {
-  return { isAuthorized: state.auth.isAuthorized }
+  return { isAuthorized: state.authState.isAuthorized }
 }
 
 export default connect(

@@ -15,7 +15,7 @@ export const fetchUserProfile = () => async dispatch => {
     const response = await api.get('/user/profile')
     dispatch({ type: FETCH_PROFILE_SUCCESS, payload: response.data })
   } catch (err) {
-    dispatch({ type: FETCH_PROFILE_FAILURE, payload: err.response })
+    dispatch({ type: FETCH_PROFILE_FAILURE, payload: err })
   }
 }
 
@@ -26,6 +26,6 @@ export const fetchUserAttributes = () => async dispatch => {
     const response = await api.get('/user/attributes')
     dispatch({ type: FETCH_ATTRIBUTES_SUCCESS, payload: response.data })
   } catch (err) {
-    dispatch({ type: FETCH_ATTRIBUTES_FAILURE, payload: err.reponse })
+    dispatch({ type: FETCH_ATTRIBUTES_FAILURE, payload: err })
   }
 }
