@@ -2,8 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
-import { offline } from '@redux-offline/redux-offline'
-import offlineConfig from '@redux-offline/redux-offline/lib/defaults'
+// import { offline } from '@redux-offline/redux-offline'
+// import offlineConfig from '@redux-offline/redux-offline/lib/defaults'
 import reduxThunk from 'redux-thunk'
 
 import './index.css'
@@ -14,7 +14,7 @@ import * as serviceWorker from './serviceWorker'
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(
   reducers,
-  composeEnhancers(applyMiddleware(reduxThunk), offline(offlineConfig))
+  composeEnhancers(applyMiddleware(reduxThunk))
 )
 
 ReactDOM.render(

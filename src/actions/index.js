@@ -30,15 +30,7 @@ export const fetchSettings = () => async dispatch => {
 
   try {
     const response = await api.get('/settings')
-    dispatch({
-      type: FETCH_SETTINGS_SUCCESS,
-      payload: response.data,
-      meta: {
-        offline: {
-          effect: {}
-        }
-      }
-    })
+    dispatch({ type: FETCH_SETTINGS_SUCCESS, payload: response.data })
   } catch (err) {
     dispatch({ type: FETCH_SETTINGS_FAILURE, payload: err })
   }

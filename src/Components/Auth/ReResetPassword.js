@@ -2,9 +2,7 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
-import { register } from '../../actions'
-import Icon from 'react-bulma-components/lib/components/icon'
-import HelpCircle from 'react-ionicons/lib/MdHelpCircle'
+import { forgotPassword } from '../../actions'
 
 import ReInput from '../Input/ReInput'
 import ReInputPassword from '../Input/ReInputPassword'
@@ -17,7 +15,7 @@ import './login.scss'
 import './form.scss'
 import './signup.scss'
 
-class ReSignUp extends Component {
+class ReResetPassword extends Component {
   state = {
     passStrength: {
       percent: 0,
@@ -26,15 +24,8 @@ class ReSignUp extends Component {
     showErrors: true
   }
 
-  onSubmit = async ({ email, phone, name, password }) => {
-    const registration = {
-      name,
-      phone,
-      email,
-      password
-    }
-
-    this.props.register(registration)
+  onSubmit = ({ email, phone, password }) => {
+    this.props.forgotPassword({ email, phone, password })
   }
 
   determineStrength = (e, pass) => {
@@ -69,7 +60,7 @@ class ReSignUp extends Component {
   renderHeader() {
     return (
       <div className="login-header">
-        <h1>Welcome!</h1>
+        <h1>Reset Password</h1>
       </div>
     )
   }
@@ -78,26 +69,19 @@ class ReSignUp extends Component {
     return (
       <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="form">
         <p>
-          Signing up is easy!
+          Forgot Password?
           <br />
-          Just tell us a couple of things so we can get you all signed up.
+          No problem, just fill out the form below
         </p>
 
         <div className="inputs">
-          <Field
-            name="name"
-            placeholder="Enter Name"
-            label="Full Name"
-            type="text"
-            component={ReInput}
-          />
           <Field name="phone" label="Phone" component={ReInputPhone} />
           <Field name="email" type="email" label="Email" component={ReInput} />
           <Field
             name="password"
             type="password"
-            placeholder="Enter Password"
-            label="Password"
+            placeholder="Enter New Password"
+            label="New Password"
             onChange={this.determineStrength}
             component={ReInputPassword}
           />
@@ -109,8 +93,8 @@ class ReSignUp extends Component {
 
         <ReButton
           type="primary"
-          text="Sign Up"
-          width="200px"
+          text="Reset Password"
+          width="250px"
           loading={this.props.loading}
         />
       </form>
@@ -118,12 +102,12 @@ class ReSignUp extends Component {
   }
 
   render() {
-    if (this.props.registerValues) {
-      return <Redirect to="/auth/verify" />
+    if (this.props.resetPasswordObj) {
+      return <Redirect to="/auth/signin" />
     }
 
     return (
-      <div className="sign-up">
+      <div className="sign-in">
         {this.props.authError && this.state.showErrors && (
           <ReAlert
             type="danger"
@@ -132,10 +116,6 @@ class ReSignUp extends Component {
         )}
         {this.renderHeader()}
         {this.renderForm()}
-
-        <Icon size="large" className="help-icon">
-          <HelpCircle color="#1bbc9b" fontSize="2.5rem" />
-        </Icon>
       </div>
     )
   }
@@ -143,9 +123,6 @@ class ReSignUp extends Component {
 
 const validate = values => {
   const errors = {}
-  if (!values.name) {
-    errors.name = 'Your full name is required'
-  }
   if (!values.phone) {
     errors.phone = 'You must enter a phone number'
   }
@@ -161,17 +138,17 @@ const validate = values => {
 const mapStateToProps = state => {
   return {
     loading: state.authState.loading,
-    registerValues: state.authState.register,
+    resetPasswordObj: state.authState.resetPassword,
     authError: state.authState.error
   }
 }
 
-const signUpForm = reduxForm({
-  form: 'signUp',
+const resetPasswordForm = reduxForm({
+  form: 'resetPassword',
   validate
-})(ReSignUp)
+})(ReResetPassword)
 
 export default connect(
   mapStateToProps,
-  { register }
-)(signUpForm)
+  { forgotPassword }
+)(resetPasswordForm)

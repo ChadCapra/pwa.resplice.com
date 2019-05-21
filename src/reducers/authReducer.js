@@ -5,6 +5,12 @@ import {
   REGISTER,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
+  RESET_PASSWORD,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAILURE,
+  FORGOT_PASSWORD,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAILURE,
   VERIFY,
   VERIFY_SUCCESS,
   VERIFY_FAILURE,
@@ -21,6 +27,7 @@ const INITIAL_STATE = {
   error: null,
   isAuthorized: false,
   register: null,
+  resetPassword: null,
   verify: null
 }
 
@@ -44,6 +51,18 @@ export default (state = INITIAL_STATE, action) => {
     case REGISTER_SUCCESS:
       return { ...state, loading: false, register: action.payload }
     case REGISTER_FAILURE:
+      return { ...state, loading: false, error: action.payload }
+    case RESET_PASSWORD:
+      return { ...state, loading: true }
+    case RESET_PASSWORD_SUCCESS:
+      return { ...state, loading: false, resetPassword: action.payload }
+    case RESET_PASSWORD_FAILURE:
+      return { ...state, loading: false, error: action.payload }
+    case FORGOT_PASSWORD:
+      return { ...state, loading: true }
+    case FORGOT_PASSWORD_SUCCESS:
+      return { ...state, loading: false, resetPassword: action.payload }
+    case FORGOT_PASSWORD_FAILURE:
       return { ...state, loading: false, error: action.payload }
     case VERIFY:
       return { ...state, loading: true }

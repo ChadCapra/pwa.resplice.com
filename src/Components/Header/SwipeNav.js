@@ -27,7 +27,7 @@ const SwipeNav = ({ menus, activeIndex }) => {
 }
 
 const mapStateToProps = state => {
-  return { activeIndex: state.utils.swipeIndex }
+  return { activeIndex: state.utilState.swipeIndex }
 }
 
 export default connect(mapStateToProps)(SwipeNav)

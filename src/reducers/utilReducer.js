@@ -6,7 +6,8 @@ import {
 } from '../actions/types'
 
 const INITIAL_STATE = {
-  loading: false,
+  loading: true,
+  offline: false,
   error: null,
   swipeIndex: 0,
   registrationExpirySec: null
@@ -25,7 +26,7 @@ export default (state = INITIAL_STATE, action) => {
         registrationExpirySec: action.payload.registration_expiry_seconds
       }
     case FETCH_SETTINGS_FAILURE:
-      return { ...state, loading: false, error: action.payload }
+      return { ...state, loading: false, offline: true, error: action.payload }
     default:
       return state
   }

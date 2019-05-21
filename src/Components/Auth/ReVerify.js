@@ -34,29 +34,29 @@ class ReVerify extends Component {
       : onlyNums
   }
 
-  onPhoneChange = (e, code) => {
-    if (code.length === 7) {
-      this.setState({ phone_verify_token: code }, () => {
-        if (
-          this.state.phone_verify_token &&
-          this.state.email_verify_token &&
-          this.props.register
-        ) {
-          this.verify()
-        }
-      })
-    }
-  }
+  // onPhoneChange = (e, code) => {
+  //   if (code.length === 7) {
+  //     this.setState({ phone_verify_token: code }, () => {
+  //       if (
+  //         this.state.phone_verify_token &&
+  //         this.state.email_verify_token &&
+  //         this.props.register.data
+  //       ) {
+  //         this.verify()
+  //       }
+  //     })
+  //   }
+  // }
 
-  onEmailChange = (e, code) => {
+  onFieldChange = (e, code) => {
+    console.log(e)
     if (code.length === 7) {
       this.setState({ email_verify_token: code }, () => {
         if (
           this.state.phone_verify_token &&
           this.state.email_verify_token &&
-          this.props.register
+          this.props.register.data
         ) {
-          console.log('verifying')
           this.verify()
         }
       })
@@ -65,11 +65,10 @@ class ReVerify extends Component {
 
   verify = () => {
     const verifyObject = {
-      uuid: this.props.register.uuid,
+      uuid: this.props.register.data.uuid,
       phone_verify_token: this.state.phone_verify_token.replace(/[^\d]/g, ''),
       email_verify_token: this.state.email_verify_token.replace(/[^\d]/g, '')
     }
-    console.log(verifyObject)
     this.props.verifyAttributes(verifyObject)
   }
 
@@ -95,7 +94,7 @@ class ReVerify extends Component {
             name="phone_verify_token"
             placeholder="Code"
             label="Phone"
-            onChange={this.onPhoneChange}
+            onChange={this.onFieldChange}
             component={ReInputCode}
             normalize={this.codeNormalizer}
             verifying={this.props.verifying}
@@ -106,15 +105,13 @@ class ReVerify extends Component {
             name="email_verify_token"
             placeholder="Code"
             label="Email"
-            onChange={this.onEmailChange}
+            onChange={this.onFieldChange}
             component={ReInputCode}
             normalize={this.codeNormalizer}
             verifying={this.props.verifying}
           />
           <a href="/">Resend Code</a>
         </div>
-
-        <a href="/">Phone does not accept text (Call Me)</a>
 
         <ReButton
           type="secondary"
@@ -127,7 +124,7 @@ class ReVerify extends Component {
   }
 
   render() {
-    if (this.state.canceled) return <Redirect to="/login/signin" />
+    if (this.state.canceled) return <Redirect to="/auth/signin" />
     if (this.props.verified) return <Redirect to="/" />
 
     return (
@@ -146,10 +143,10 @@ class ReVerify extends Component {
 
 const mapStateToProps = state => {
   return {
-    register: state.auth.register,
-    isAuthorized: state.auth.isAuthorized,
-    verifying: state.auth.loading,
-    verified: state.auth.verify
+    register: state.authState.register,
+    isAuthorized: state.authState.isAuthorized,
+    verifying: state.authState.loading,
+    verified: state.authState.verify
   }
 }
 
@@ -158,7 +155,7 @@ const validate = values => {
   if (!values.phone_verify_token) {
     errors.phone_verify_token = 'You must enter your verification code'
   } else if (values.phone_verify_token.toString().length !== 7) {
-    errors.code = 'The code must be 6 digits long'
+    errors.phone_verify_token = 'The code must be 6 digits long'
   }
 
   if (!values.email_verify_token) {

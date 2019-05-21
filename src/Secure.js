@@ -11,6 +11,7 @@ import { fetchSettings, checkAuth } from './actions'
 import App from './App'
 import ReAuth from './components/Auth/ReAuth'
 import GlobalLoading from './components/Loading/GlobalLoading'
+import Offline from './components/Util/Offline'
 
 const PrivateRoute = ({ authorized, ...rest }) => {
   // Check if user is authorized and then render the App component
@@ -26,16 +27,19 @@ const PrivateRoute = ({ authorized, ...rest }) => {
 }
 
 class Secure extends Component {
-  state = { loading: true }
   componentWillMount() {
     // Component checks for auth_token and then fetches frontend settings
+    this.props.checkAuth()
     this.props.fetchSettings()
-    this.props.checkAuth().then(() => this.setState({ loading: false }))
   }
 
   render() {
-    if (this.state.loading) {
+    if (this.props.loading) {
       return <GlobalLoading />
+    }
+
+    if (this.props.offline) {
+      return <Offline />
     }
 
     return (
@@ -50,7 +54,11 @@ class Secure extends Component {
 }
 
 const mapStateToProps = state => {
-  return { isAuthorized: state.authState.isAuthorized }
+  return {
+    isAuthorized: state.authState.isAuthorized,
+    loading: state.utilState.loading,
+    offline: state.utilState.offline
+  }
 }
 
 export default connect(

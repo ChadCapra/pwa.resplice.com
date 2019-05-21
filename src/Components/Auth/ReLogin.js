@@ -17,9 +17,7 @@ import './form.scss'
 class ReLogin extends Component {
   onSubmit = ({ attribute, password }) => {
     const login = {
-      email_details: {
-        email: attribute
-      },
+      phone_or_email: attribute,
       password
     }
     this.props.login(login)
@@ -58,9 +56,9 @@ class ReLogin extends Component {
             label="Password"
             component={ReInput}
           />
-          <a href="resplice.com" className="forgot-password-link">
+          <Link to="/auth/reset-password" className="forgot-password-link">
             Forgot Password?
-          </a>
+          </Link>
         </div>
 
         <ReButton
@@ -121,9 +119,9 @@ const validate = formValues => {
 
 const mapStateToProps = state => {
   return {
-    loading: state.auth.loading,
-    loginObject: state.auth.register,
-    errors: state.auth.error
+    loading: state.authState.loading,
+    loginObject: state.authState.register,
+    errors: state.authState.error
   }
 }
 

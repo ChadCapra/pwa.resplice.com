@@ -4,9 +4,10 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import ReSignIn from './ReLogin'
 import ReSignUp from './ReSignUp'
 import ReVerify from './ReVerify'
+import ReResetPassword from './ReResetPassword'
 // import ReContactUs from './ReContactUs'
 
-const Login = ({ match }) => {
+const ReAuth = ({ match }) => {
   return (
     <>
       <Router>
@@ -14,6 +15,10 @@ const Login = ({ match }) => {
           <Route path={`${match.path}/signin`} component={ReSignIn} />
           <Route path={`${match.path}/signup`} component={ReSignUp} />
           <Route path={`${match.path}/verify`} component={ReVerify} />
+          <Route
+            path={`${match.path}/reset-password`}
+            component={ReResetPassword}
+          />
           {/* <Route path={`${match.path}/contact`} component={ReContactUs} /> */}
         </>
       </Router>
@@ -21,4 +26,4 @@ const Login = ({ match }) => {
   )
 }
 
-export default Login
+export default ReAuth

@@ -13,6 +13,7 @@ import {
 const INITIAL_STATE = {
   loading: false,
   error: null,
+  last_requested: null,
   profile: {},
   updates: [],
   collections: {}
@@ -23,14 +24,19 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_PROFILE:
       return { ...state, loading: true }
     case FETCH_PROFILE_SUCCESS:
-      return { ...state, loading: false, profile: action.payload }
+      return {
+        ...state,
+        loading: false,
+        last_requested: action.payload.request_at,
+        profile: action.payload.data
+      }
     case FETCH_PROFILE_FAILURE:
-      return { ...state, loading: false, error: action.payload }
+      return { ...state, loading: false, error: action.payload.data }
     case FETCH_ATTRIBUTES:
       return { ...state, loading: true }
     case FETCH_ATTRIBUTES_SUCCESS:
       const collections = {}
-      action.payload.forEach(attr => {
+      action.payload.data.forEach(attr => {
         collections[attr.collection]
           ? collections[attr.collection].push(attr)
           : (collections[attr.collection] = [attr])
@@ -39,11 +45,11 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_ATTRIBUTES_FAILURE:
       return { ...state, loading: false, error: action.payload }
     case ADD_ATTRIBUTE_SUCCESS:
-      return { ...state, collections: action.payload }
+      return { ...state, collections: action.payload.data }
     case EDIT_ATTRIBUTE_SUCCESS:
-      return { ...state, collections: action.payload }
+      return { ...state, collections: action.payload.data }
     case DELETE_ATTRIBUTE_SUCCESS:
-      return { ...state, collections: action.payload }
+      return { ...state, collections: action.payload.data }
     default:
       return state
   }

@@ -15,7 +15,7 @@ export default combineReducers({
   groups: groupReducer,
   attributes: attributesReducer,
   shares: shareReducer,
-  utils: utilReducer,
+  utilState: utilReducer,
   form: formReducer
 })
 
