@@ -76,10 +76,13 @@ export const ADD_CONTACTS_TO_SHARES = 'ADD_CONTACT_TO_SHARES'
 export const ADD_PHONES_TO_SHARES = 'ADD_ATTRIBUTE_TO_SHARE'
 export const ADD_EMAILS_TO_SHARES = 'ADD_EMAILS_TO_SHARES'
 
-// Normal Types
+// Util Types
 export const SWIPED = 'SWIPED'
-export const NONE = 'NONE'
 export const REMOVE_ERROR = 'REMOVE_ERROR'
+
+export const LOAD = 'LOAD'
+export const LOAD_SUCCESS = 'LOAD_SUCCESS'
+export const LOAD_FAILURE = 'LOAD_FAILURE'
 
 export const FETCH_SETTINGS = 'FETCH_SETTINGS'
 export const FETCH_SETTINGS_SUCCESS = 'FETCH_SETTINGS_SUCCESS'

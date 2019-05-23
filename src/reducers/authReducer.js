@@ -14,6 +14,9 @@ import {
   VERIFY,
   VERIFY_SUCCESS,
   VERIFY_FAILURE,
+  VERIFY_PASSWORD_RESET,
+  VERIFY_PASSWORD_RESET_SUCCESS,
+  VERIFY_PASSWORD_RESET_FAILURE,
   AUTHORIZE,
   FETCH_PROFILE_FAILURE,
   FETCH_CONTACT_LIST_FAILURE,
@@ -75,12 +78,23 @@ export default (state = INITIAL_STATE, action) => {
       }
     case VERIFY_FAILURE:
       return { ...state, loading: false, error: action.payload.status }
+    case VERIFY_PASSWORD_RESET:
+      return { ...state, loading: true }
+    case VERIFY_PASSWORD_RESET_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        verify: action.payload,
+        isAuthorized: true
+      }
+    case VERIFY_PASSWORD_RESET_FAILURE:
+      return { ...state, loading: false, error: action.payload.status }
     case AUTHORIZE:
       return { ...state, isAuthorized: true }
     case FETCH_PROFILE_FAILURE ||
       FETCH_CONTACT_LIST_FAILURE ||
       FETCH_ATTRIBUTES_FAILURE:
-      if (action.payload.status === 401) {
+      if (action.payload.response.status === 401) {
         return { ...state, isAuthorized: false }
       } else {
         return state

@@ -2,68 +2,51 @@ import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 import { login, removeError } from '../../actions'
-import { Link, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
+import ReAuthHeader from './ReAuthHeader'
+import ReInput from '../Input/ReInput'
+import ReButton from '../Buttons/ReButton'
+import ReInputPhone from '../Input/ReInputPhone'
 import Icon from 'react-bulma-components/lib/components/icon'
 import HelpCircle from 'react-ionicons/lib/MdHelpCircle'
 
-import ReInput from '../Input/ReInput'
-import ReButton from '../Buttons/ReButton'
-import ReAlert from '../Modals/ReAlert'
-import './signin.scss'
-import './login.scss'
-import './form.scss'
-
 class ReLogin extends Component {
-  onSubmit = ({ attribute, password }) => {
+  onSubmit = ({ phone, email }) => {
     const login = {
-      phone_or_email: attribute,
-      password
+      phone,
+      email
     }
     this.props.login(login)
-  }
-
-  renderHeader() {
-    return (
-      <div className="login-header">
-        <img
-          src={require('../../assets/resplice_logo_alt.svg')}
-          alt="Resplice Logo"
-          width="80px"
-        />
-        <h2>Resplice</h2>
-      </div>
-    )
   }
 
   renderForm() {
     return (
       <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="form">
-        <p>Welcome to the world's most accurate contact directory!</p>
+        <p>
+          Welcome to Resplice, the world's most accurate contact directory!{' '}
+          <br />
+          Start by entering your phone and email
+        </p>
 
         <div className="inputs">
           <Field
-            name="attribute"
-            placeholder="Enter Attribute"
-            label="Phone Number/Email"
+            name="phone"
             type="text"
-            component={ReInput}
+            label="Mobile Phone"
+            component={ReInputPhone}
           />
           <Field
-            name="password"
-            type="password"
-            placeholder="Enter Password"
-            label="Password"
+            name="email"
+            type="email"
+            label="Email Address"
             component={ReInput}
           />
-          <Link to="/auth/reset-password" className="forgot-password-link">
-            Forgot Password?
-          </Link>
         </div>
 
         <ReButton
           type="primary"
-          text="Login"
+          text="Start"
           width="200px"
           loading={this.props.loading}
         />
@@ -72,32 +55,18 @@ class ReLogin extends Component {
   }
 
   render() {
-    if (this.props.loginObject) return <Redirect push to="/" />
+    if (this.props.loginObject) return <Redirect push to="/auth/verify" />
 
     return (
-      <div className="sign-in">
-        {this.renderHeader()}
+      <div className="login">
+        <ReAuthHeader logo>
+          <h2>Resplice</h2>
+        </ReAuthHeader>
         {this.renderForm()}
-        {this.props.errors && (
-          <ReAlert
-            type="danger"
-            title="Error"
-            close={() => this.props.removeError()}
-          >
-            Invalid username/password combo
-          </ReAlert>
-        )}
 
-        <div className="sign-up-link">
-          <Link to="/auth/signup">
-            Don't have an account?
-            <br />
-            Sign up here!
-          </Link>
-          <Icon size="large" className="help-icon">
-            <HelpCircle color="#1bbc9b" fontSize="2.5rem" />
-          </Icon>
-        </div>
+        <Icon size="large" className="help-icon">
+          <HelpCircle color="#1bbc9b" fontSize="2.5rem" />
+        </Icon>
       </div>
     )
   }
@@ -106,12 +75,12 @@ class ReLogin extends Component {
 const validate = formValues => {
   const errors = {}
 
-  if (!formValues.attribute) {
-    errors.attribute = 'You must enter a phone number or an email'
+  if (!formValues.phone) {
+    errors.phone = 'You must enter a valid phone number'
   }
 
-  if (!formValues.password) {
-    errors.password = 'You must enter a password'
+  if (!formValues.email) {
+    errors.email = 'You must enter a valid email address'
   }
 
   return errors
@@ -126,7 +95,7 @@ const mapStateToProps = state => {
 }
 
 const loginForm = reduxForm({
-  form: 'signIn',
+  form: 'login',
   validate
 })(ReLogin)
 

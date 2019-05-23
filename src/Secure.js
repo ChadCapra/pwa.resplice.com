@@ -6,7 +6,7 @@ import {
   Switch
 } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetchSettings, checkAuth } from './actions'
+import { loadApplication } from './actions'
 
 import App from './App'
 import ReAuth from './components/Auth/ReAuth'
@@ -28,9 +28,8 @@ const PrivateRoute = ({ authorized, ...rest }) => {
 
 class Secure extends Component {
   componentWillMount() {
-    // Component checks for auth_token and then fetches frontend settings
-    this.props.checkAuth()
-    this.props.fetchSettings()
+    // Component loads app, checks for auth_token and then fetches data
+    this.props.loadApplication()
   }
 
   render() {
@@ -63,5 +62,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchSettings, checkAuth }
+  { loadApplication }
 )(Secure)

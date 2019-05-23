@@ -15,8 +15,9 @@ const INITIAL_STATE = {
   error: null,
   last_requested: null,
   profile: {},
-  updates: [],
-  collections: {}
+  attributes: [],
+  collections: {},
+  updates: []
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -41,7 +42,12 @@ export default (state = INITIAL_STATE, action) => {
           ? collections[attr.collection].push(attr)
           : (collections[attr.collection] = [attr])
       })
-      return { ...state, collections }
+      return {
+        ...state,
+        loading: false,
+        attributes: action.payload.data,
+        collections
+      }
     case FETCH_ATTRIBUTES_FAILURE:
       return { ...state, loading: false, error: action.payload }
     case ADD_ATTRIBUTE_SUCCESS:

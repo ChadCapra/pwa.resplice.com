@@ -19,9 +19,7 @@ import {
   RESET_PASSWORD,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAILURE,
-  AUTHORIZE,
-  REMOVE_ERROR,
-  NONE
+  REMOVE_ERROR
 } from './types'
 
 export const login = formValues => async dispatch => {
@@ -93,17 +91,11 @@ export const forgotPassword = formValues => async dispatch => {
   }
 }
 
-export const verifyPasswordReset = (
-  verification_token,
-  { uuid }
-) => async dispatch => {
+export const verifyPasswordReset = verifyObject => async dispatch => {
   dispatch({ type: VERIFY_PASSWORD_RESET })
 
   try {
-    const response = await api.post('/verify_password_reset', {
-      uuid,
-      verification_token
-    })
+    const response = await api.post('/verify_forgot_password', verifyObject)
     dispatch({ type: VERIFY_PASSWORD_RESET_SUCCESS, payload: response.data })
   } catch (err) {
     dispatch({ type: VERIFY_PASSWORD_RESET_FAILURE, payload: err.response })
@@ -118,19 +110,6 @@ export const resetPassword = formValues => async dispatch => {
     dispatch({ type: RESET_PASSWORD_SUCCESS, payload: response.data })
   } catch (err) {
     dispatch({ type: RESET_PASSWORD_FAILURE, payload: err.response })
-  }
-}
-
-export const checkAuth = () => {
-  let authToken = localStorage.getItem('access_key')
-  let userUuid = localStorage.getItem('user_uuid')
-  if (authToken && userUuid) {
-    // Set auth header on axios instance
-    api.defaults.headers.common['access_key'] = authToken
-    api.defaults.headers.common['user_uuid'] = userUuid
-    return { type: AUTHORIZE }
-  } else {
-    return { type: NONE }
   }
 }
 

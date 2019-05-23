@@ -10,11 +10,11 @@ import shareReducer from './shareReducer'
 
 export default combineReducers({
   authState: authReducer,
-  user: userReducer,
-  contacts: contactReducer,
-  groups: groupReducer,
-  attributes: attributesReducer,
-  shares: shareReducer,
+  userState: userReducer,
+  contactState: contactReducer,
+  groupState: groupReducer,
+  attributeState: attributesReducer,
+  shareState: shareReducer,
   utilState: utilReducer,
   form: formReducer
 })
