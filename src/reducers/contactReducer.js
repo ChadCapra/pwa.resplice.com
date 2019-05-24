@@ -10,9 +10,8 @@ import {
 const INITIAL_STATE = {
   loading: false,
   error: null,
-  list: [],
-  profile: {},
-  collections: {}
+  last_requested: null,
+  contacts: []
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -37,7 +36,7 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_CONTACT_LIST:
       return { ...state, loading: true }
     case FETCH_CONTACT_LIST_SUCCESS:
-      return { ...state, loading: false, list: action.payload }
+      return { ...state, loading: false, contacts: action.payload }
     case FETCH_CONTACT_LIST_FAILURE:
       return { ...state, loading: false, error: action.payload }
     default:

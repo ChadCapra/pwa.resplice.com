@@ -26,8 +26,8 @@ class UserAttributeCard extends Component {
     }, '')
   }
 
-  copyToClipboard = details => {
-    const text = this.combineAttrValues(details)
+  copyToClipboard = value => {
+    const text = this.combineAttrValues(value)
     let el = document.createElement('textarea')
     el.value = text
     el.setAttribute('readonly', '')
@@ -47,13 +47,11 @@ class UserAttributeCard extends Component {
   handlePendingClick = () => {}
 
   renderAttributes = () => {
-    const { attrs } = this.props
+    const { attrs, types } = this.props
     return attrs.map((attr, idx) => {
-      const attrType = this.props.types.find(
-        el => el.id === attr.attribute_type_id
-      )
+      const attrType = types.find(el => el.id === attr.attribute_type_id)
       return (
-        <div key={attr.id}>
+        <div key={attr.uuid}>
           <Columns
             className="card-attribute"
             breakpoint="mobile"
@@ -61,7 +59,7 @@ class UserAttributeCard extends Component {
           >
             <Columns.Column className="card-icon" size={1}>
               <ActionIcon
-                name={attrType.actions[0].action_icon}
+                name={attrType.actions[0].icon}
                 fill="#C4C4C4"
                 width="2.5em"
               />
@@ -72,12 +70,12 @@ class UserAttributeCard extends Component {
               onClick={() => this.setState({ showDropDownIdx: idx })}
             >
               <span className="card-attribute-text-name">{attr.name}</span>
-              <span>{this.combineAttrValues(attr.details)}</span>
+              <span>{this.combineAttrValues(attr.value)}</span>
               {idx === this.state.showDropDownIdx && (
                 <ReDropdown
                   items={[]}
                   userAttribute
-                  copy={() => this.copyToClipboard(attr.details)}
+                  copy={() => this.copyToClipboard(attr.value)}
                   edit={() =>
                     this.setState({ currentAttr: attr, showEditModal: true })
                   }
@@ -134,7 +132,7 @@ class UserAttributeCard extends Component {
 }
 
 const mapStateToProps = state => {
-  return { types: state.attributes.types }
+  return { types: state.attributeState.types }
 }
 
 export default connect(mapStateToProps)(UserAttributeCard)

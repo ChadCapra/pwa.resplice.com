@@ -28,7 +28,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         error: null,
-        types: action.payload.attribute_types
+        types: action.payload.data.attribute_types
       }
     case FETCH_SETTINGS_FAILURE:
       return { ...state, loading: false, error: action.payload.status }

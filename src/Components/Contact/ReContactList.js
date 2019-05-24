@@ -14,8 +14,8 @@ class ReContactList extends Component {
     }
   }
   renderContactList() {
-    if (this.props.contacts.list.length > 0) {
-      return this.props.contacts.list.map(contact => {
+    if (this.props.contacts.length > 0) {
+      return this.props.contacts.map(contact => {
         return <ReContact key={contact.id} contact={contact} />
       })
     } else {
@@ -34,7 +34,7 @@ class ReContactList extends Component {
 
 const mapStateToProps = state => {
   return {
-    contacts: state.contacts
+    contacts: state.contactState.contacts
   }
 }
 

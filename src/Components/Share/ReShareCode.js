@@ -26,7 +26,7 @@ class ReShareCode extends Component {
 }
 
 const mapStateToProps = state => {
-  return { qrCode: state.user.profile.qrCode }
+  return { qrCode: state.userState.profile.qrCode }
 }
 
 export default connect(mapStateToProps)(ReShareCode)

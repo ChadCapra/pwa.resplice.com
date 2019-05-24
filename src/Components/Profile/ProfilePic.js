@@ -1,53 +1,27 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React from 'react'
+import PropTypes from 'prop-types'
 import Identicon from 'react-identicons'
 
 import MdUpload from 'react-ionicons/lib/MdCloudUpload'
 
 import './profile.scss'
 
-class ProfilePic extends Component {
-  render() {
-    return (
-      <div className="profile-pic">
-        {this.props.avatar ? (
-          <div
-            className="pic"
-            style={{ backgroundImage: `url(${this.props.avatar})` }}
-          />
-        ) : (
-          <Identicon string={this.props.uuid} size={85} />
-        )}
-        <MdUpload
-          color="#1bbc9b"
-          fontSize="2.5em"
-          className="pic-upload-icon"
-        />
-      </div>
-    )
-  }
+const ProfilePic = ({ uuid, avatar }) => {
+  return (
+    <div className="profile-pic">
+      {avatar ? (
+        <div className="pic" style={{ backgroundImage: `url(${avatar})` }} />
+      ) : (
+        <Identicon string={uuid} size={85} />
+      )}
+      <MdUpload color="#1bbc9b" fontSize="2.5em" className="pic-upload-icon" />
+    </div>
+  )
 }
 
-// return (
-//   <div className="profile-pic">
-//     {this.props.avatar ? <div
-//       className="pic"
-//       style={{ backgroundImage: `url(${this.props.avatar})` }}
-//     > : <div className="profile-pic">
-//     <div className="pic" />
-//   </div>}
-
-//       <MdUpload
-//         color="#1bbc9b"
-//         fontSize="2.5em"
-//         className="pic-upload-icon"
-//       />
-//     </div>
-//   </div>
-// )
-
-const mapStateToProps = state => {
-  return { avatar: state.user.profile.avatar, uuid: state.user.profile.uuid }
+ProfilePic.propTypes = {
+  uuid: PropTypes.string.isRequired,
+  avatar: PropTypes.string
 }
 
-export default connect(mapStateToProps)(ProfilePic)
+export default ProfilePic

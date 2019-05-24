@@ -65,7 +65,7 @@ class ReShareDropdown extends Component {
 
 const mapStateToProps = state => {
   return {
-    contacts: state.contacts.list
+    contacts: state.contactState.list
   }
 }
 

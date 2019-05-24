@@ -22,6 +22,8 @@ class ReUserView extends Component {
   }
 
   render() {
+    if (this.props.loading) return ''
+
     return (
       <div className="user">
         <ReHeader menus={['Settings', 'Updates', 'Profile']} />
@@ -52,7 +54,13 @@ class ReUserView extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    loading: state.userState.loading
+  }
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   { swiped }
 )(ReUserView)

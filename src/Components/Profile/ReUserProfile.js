@@ -13,10 +13,16 @@ import './profile.scss'
 
 class ReUserProfile extends Component {
   render() {
-    const { name, unique_contacts, total_shares } = this.props.profile
+    const {
+      uuid,
+      name,
+      avatar,
+      unique_contacts,
+      total_shares
+    } = this.props.profile
     return (
       <div className="user-profile">
-        <ProfilePic />
+        <ProfilePic uuid={uuid} avatar={avatar} />
         <h1 className="user-profile-name">{name}</h1>
         <Level breakpoint="mobile" className="profile-stats">
           <Level.Item>
@@ -45,7 +51,7 @@ class ReUserProfile extends Component {
 
 const mapStateToProps = state => {
   return {
-    profile: state.user.profile
+    profile: state.userState.profile
   }
 }
 

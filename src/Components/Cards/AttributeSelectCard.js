@@ -22,22 +22,21 @@ class AttributeSelectCard extends Component {
     })
   }
 
-  checkAttributes = id => {
+  checkAttributes = uuid => {
     if (
-      this.props.attribute_shares.findIndex(as => as.attribute_id === id) >= 0
+      this.props.attribute_shares.findIndex(as => as.attribute_uuid === uuid) >=
+      0
     )
       return true
     else return false
   }
 
   renderAttributes = () => {
-    const { attrs } = this.props
+    const { attrs, types } = this.props
     return attrs.map(attr => {
-      const attrType = this.props.types.find(
-        el => el.id === attr.attribute_type_id
-      )
+      const attrType = types.find(el => el.id === attr.attribute_type_id)
       return (
-        <div key={attr.id}>
+        <div key={attr.uuid}>
           <Columns
             className="card-attribute"
             breakpoint="mobile"
@@ -52,12 +51,12 @@ class AttributeSelectCard extends Component {
             </Columns.Column>
             <Columns.Column className="card-attribute-text">
               <span className="card-attribute-text-name">{attr.name}</span>
-              <span>{this.combineAttrValues(attr.details)}</span>
+              <span>{this.combineAttrValues(attr.value)}</span>
             </Columns.Column>
             <Columns.Column size={2} className="card-attribute-icon">
               <ReCheckbox
                 onClick={() => this.handleAttributeSelect(attr)}
-                checked={this.checkAttributes(attr.id)}
+                checked={this.checkAttributes(attr.uuid)}
               />
             </Columns.Column>
           </Columns>
@@ -79,8 +78,8 @@ class AttributeSelectCard extends Component {
 
 const mapStateToProps = state => {
   return {
-    types: state.attributes.types,
-    attribute_shares: state.shares.attribute_shares
+    types: state.attributeState.types,
+    attribute_shares: state.shareState.attribute_shares
   }
 }
 
