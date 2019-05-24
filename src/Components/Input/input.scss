@@ -1,44 +1,75 @@
-.re-input {
-  outline: 0;
-  border: 0;
-  background: #e5e5e5;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  text-align: left;
-  height: 40px;
-  width: calc(100% - 15px);
-  max-width: 500px;
-  margin: 10px 0px;
-  font-size: 18px;
-  padding-left: 15px;
-
-  &::placeholder {
-    font-style: italic;
-    text-align: left;
-  }
-
-  &--error {
-    border: 1px solid #fc3769;
+@-webkit-keyframes autofill {
+  to {
+    color: #6c7dd5;
+    background: transparent;
   }
 }
+input:-webkit-autofill {
+  -webkit-animation-name: autofill;
+  -webkit-animation-fill-mode: both;
+}
+
+.re-input,
 .re-input-search {
-  outline: 0;
-  border: 0;
-  background: #e5e5e5;
-  border-radius: 10px;
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
   text-align: left;
-  height: 50px;
-  width: calc(100% - 15px);
-  max-width: 500px;
   margin: 10px 0px;
-  font-size: 18px;
-  padding-left: 10px;
+  height: 54px;
+  border: 1px solid #c8ccd4;
+  border-radius: 5px;
+  transition: 0.2s all ease;
 
-  &::placeholder {
-    font-style: italic;
-    text-align: center;
+  &:focus-within {
+    border: 1px solid #1bbc9b;
+    .re-input-label {
+      transform: translateY(-10px) scale(0.8);
+    }
+  }
+
+  &--filled {
+    .re-input-label {
+      transform: translateY(-10px) scale(0.8);
+    }
+  }
+  &--error {
+    border: 1px solid #ff3860;
+  }
+  &--warning {
+    border: 1px solid #f6cd2b;
   }
 }
+
+.re-field {
+  position: absolute;
+  height: 40px;
+  background: none;
+  width: calc(100% - 15px);
+  padding-top: 12px;
+  top: 0;
+  left: 15px;
+  outline: 0;
+  border: 0;
+  font-size: 16px;
+}
+
+.re-input-label {
+  position: absolute;
+  top: 16px;
+  left: 15px;
+  font-size: 16px;
+  color: #5a667f;
+  font-weight: 500;
+  transform-origin: 0 0;
+  transition: all 0.2s ease;
+
+  &--phone {
+    transform: translateY(-10px) scale(0.8);
+    left: 50px;
+  }
+}
+
 .re-input-card {
   margin-top: -15px;
   padding-left: 20px;
@@ -59,22 +90,10 @@
   }
 }
 
-.re-input-label {
-  font-size: 18px;
-}
-
 .re-input-icon {
   position: absolute;
   top: 10px;
   right: 10px;
-}
-
-.re-input-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  text-align: left;
-  margin: 10px 0px;
 }
 
 .re-input-container-search {
@@ -85,6 +104,8 @@
 }
 
 .input-error-text {
+  position: absolute;
+  top: 54px;
   color: #fc3769;
   font-size: 14px;
 }
@@ -97,16 +118,13 @@
 .react-tel-input input[type='tel'] {
   outline: 0 !important;
   border: 0 !important;
-  background: #e5e5e5 !important;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+  background: none !important;
   border-radius: 10px !important;
   text-align: left;
-  height: 40px !important;
+  height: 52px !important;
   width: 100% !important;
-  max-width: 500px;
-  margin: 10px 0px;
-  font-size: 24px !important;
-  padding-left: 15px;
+  padding-top: 12px;
+  font-size: 16px !important;
 
   &::placeholder {
     font-style: italic;
@@ -116,6 +134,10 @@
   &--error {
     border: 1px solid #fc3769;
   }
+}
+.flag-dropdown {
+  border: none !important;
+  background-color: #c8ccd4 !important;
 }
 
 .checkbox {
@@ -129,7 +151,33 @@
   background-color: #1bbc9b;
 }
 
-.code-verifying {
-  position: absolute;
-  right: 0;
+// Verification Code Inputs
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
+$fontSize: 60px;
+
+.re-code-input-container {
+  width: 100%;
+  margin: 25px 0;
+}
+
+.re-code-inputs {
+  font-family: 'Open Sans', sans-serif;
+  margin-top: 25px;
+  & input {
+    width: #{$fontSize/(3/2) + 10};
+    height: $fontSize;
+    line-height: 100%;
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+    color: #32393d;
+    font-size: $fontSize;
+    word-spacing: 0px;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  & input::placeholder {
+    color: #c4c4c4;
+  }
 }

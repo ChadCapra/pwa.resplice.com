@@ -3,15 +3,23 @@ import PhoneInput from 'react-phone-input-2'
 
 import './input.scss'
 
-const ReInputPhone = ({ input, label, meta: { touched, error, warning } }) => {
+const ReInputPhone = ({
+  input,
+  label,
+  meta: { pristine, touched, error, warning }
+}) => {
   return (
-    <div className="re-input-container">
-      <label className="re-input-label">{label}</label>
+    <div
+      className={`re-input${error && touched ? ' re-input--error' : ''}${
+        pristine ? '' : ' re-input--filled'
+      }`}
+    >
+      <label className="re-input-label re-input-label--phone">{label}</label>
       <PhoneInput
         {...input}
         id="phone-input"
         defaultCountry={'us'}
-        disableAreaCodes={true}
+        disableAreaCodes
       />
       {touched &&
         ((error && <span className="input-error-text">{error}</span>) ||
