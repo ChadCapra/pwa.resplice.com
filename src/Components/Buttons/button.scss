@@ -1,4 +1,9 @@
+$button-bg: #1bbc9b;
+
 .btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   outline: none;
   border: none;
   border-radius: 50px;
@@ -6,7 +11,7 @@
   font-size: 24px;
   text-align: center;
   height: 50px;
-  transition: 0.3s ease all;
+  transition: all 0.2s ease;
 
   &--primary {
     color: white;
@@ -40,9 +45,14 @@
     }
   }
 
-  &:hover {
-    background-color: #77d3c0;
-    box-shadow: 0 1px 5px #0000004f;
+  &:active {
+    transform: scale(0.9);
+    background-color: darken($button-bg, 5%);
+    box-shadow: 0 2px 25px rgba(255, 0, 130, 0.2);
+  }
+
+  .re-ring {
+    margin-left: 10px;
   }
 }
 
