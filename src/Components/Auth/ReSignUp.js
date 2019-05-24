@@ -13,10 +13,6 @@ import ReButton from '../Buttons/ReButton'
 import StatusBar from '../Util/StatusBar'
 import ReAlert from '../Modals/ReAlert'
 
-import './login.scss'
-import './form.scss'
-import './signup.scss'
-
 class ReSignUp extends Component {
   state = {
     passStrength: {
@@ -41,7 +37,7 @@ class ReSignUp extends Component {
     let percent = 0
     if (pass.length >= 12) {
       percent += 50
-    } else if (pass.legnth >= 8) {
+    } else if (pass.length >= 8) {
       percent += 35
     } else if (pass.length >= 6) {
       percent += 20
