@@ -13,11 +13,13 @@ import HelpCircle from 'react-ionicons/lib/MdHelpCircle'
 
 class ReLogin extends Component {
   onSubmit = ({ phone, email }) => {
-    const login = {
-      phone,
-      email
+    if (!this.props.loading) {
+      const login = {
+        phone,
+        email
+      }
+      this.props.login(login)
     }
-    this.props.login(login)
   }
 
   renderForm() {
@@ -55,7 +57,8 @@ class ReLogin extends Component {
   }
 
   render() {
-    if (this.props.loginObject) return <Redirect push to="/auth/verify" />
+    if (Object.entries(this.props.loginObject).length > 0)
+      return <Redirect push to="/auth/verify" />
 
     return (
       <div className="login">
@@ -89,7 +92,7 @@ const validate = formValues => {
 const mapStateToProps = state => {
   return {
     loading: state.authState.loading,
-    loginObject: state.authState.register,
+    loginObject: state.authState.login,
     errors: state.authState.error
   }
 }

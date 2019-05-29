@@ -1,16 +1,8 @@
 import api from '../api'
-import {
-  SWIPED,
-  AUTHORIZE,
-  LOAD,
-  LOAD_SUCCESS,
-  LOAD_FAILURE,
-  FETCH_SETTINGS,
-  FETCH_SETTINGS_SUCCESS,
-  FETCH_SETTINGS_FAILURE
-} from './types'
-import { fetchUserProfile, fetchUserAttributes } from './UserActions'
+import { SWIPED, LOAD, LOAD_SUCCESS, LOAD_FAILURE } from './types'
+import { fetchUserProfile } from './UserActions'
 import { fetchContactList } from './ContactActions'
+import { fetchAttributeTypes } from './AttributeActions'
 
 // Async Action Pattern
 // export const name = param => async dispatch => {
@@ -31,31 +23,18 @@ export const swiped = idx => {
   }
 }
 
-export const fetchSettings = () => async dispatch => {
-  dispatch({ type: FETCH_SETTINGS })
-
-  try {
-    const response = await api.get('/settings')
-    dispatch({ type: FETCH_SETTINGS_SUCCESS, payload: response.data })
-  } catch (err) {
-    dispatch({ type: FETCH_SETTINGS_FAILURE, payload: err })
-  }
-}
-
 export const loadApplication = () => async dispatch => {
   dispatch({ type: LOAD })
 
   try {
-    await dispatch(fetchSettings())
     let authToken = localStorage.getItem('access_key')
     let userUuid = localStorage.getItem('user_uuid')
     if (authToken && userUuid) {
       // Set auth header on axios instance
       api.defaults.headers.common['access_key'] = authToken
       api.defaults.headers.common['user_uuid'] = userUuid
-      dispatch({ type: AUTHORIZE })
+      await dispatch(fetchAttributeTypes())
       await dispatch(fetchUserProfile())
-      await dispatch(fetchUserAttributes())
       await dispatch(fetchContactList())
     }
 

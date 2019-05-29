@@ -6,14 +6,14 @@ import './button.scss'
  * Primary Button for Resplice. Used on forms, in modals, etc.
  */
 const ReButton = ({ type, text, loading, width = '300px', onClick }) => {
-  return (
-    <button
-      style={{ width }}
-      className={`btn btn--${type}${loading ? ' btn--loading' : ''}`}
-      onClick={onClick}
-    >
+  return loading ? (
+    <button style={{ width }} className={`btn btn--${type} btn--loading`}>
       {text}
-      {loading && <div className="re-ring re-spin" />}
+      <div className="re-ring re-spin" />
+    </button>
+  ) : (
+    <button style={{ width }} className={`btn btn--${type}`} onClick={onClick}>
+      {text}
     </button>
   )
 }

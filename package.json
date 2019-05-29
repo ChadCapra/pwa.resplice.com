@@ -10,6 +10,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.2",
     "react-bulma-components": "^3.0.1-2",
+    "react-country-region-selector": "^1.4.3",
     "react-dom": "^16.8.2",
     "react-identicons": "^1.1.7",
     "react-ionicons": "^3.0.1",

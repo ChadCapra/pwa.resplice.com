@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { verifyAttributes } from '../../actions'
+import { verifyAttributes, logout } from '../../actions'
 
 import ReAuthHeader from './ReAuthHeader'
 import ReInputCode from '../Input/ReInputCode'
@@ -9,64 +9,50 @@ import ReButton from '../Buttons/ReButton'
 
 class ReVerify extends Component {
   state = {
-    canceled: false,
-    verifying: false,
-    verified: false,
-    verifyFailed: false,
-    phone_verify_token: null,
-    email_verify_token: null
+    verify_token_1: null,
+    verify_token_2: null,
+    bothVerified: false
   }
 
-  onSubmit = () => {
-    this.setState({ canceled: true })
-  }
+  onPhoneComplete = code => {
+    this.setState({ verify_token_1: parseInt(code) })
 
-  onPhoneChange = (e, code) => {
-    if (code.length === 7) {
-      this.setState({ phone_verify_token: code }, () => {
-        if (
-          this.state.phone_verify_token &&
-          this.state.email_verify_token &&
-          this.props.register.data
-        ) {
-          this.verify()
-        }
-      })
+    if (Object.entries(this.props.login).length > 0) {
+      const verifyObject = {
+        uuid: this.props.login.data.uuid,
+        verify_token_1: parseInt(code),
+        verify_token_2: this.state.verify_token_2
+      }
+      this.props.verifyAttributes(verifyObject)
     }
   }
 
-  onEmailChange = (e, code) => {
-    if (code.length === 7) {
-      this.setState({ email_verify_token: code }, () => {
-        console.log(this.props.register.data)
-        if (
-          this.state.phone_verify_token &&
-          this.state.email_verify_token &&
-          this.props.register.data
-        ) {
-          this.verify()
-        }
-      })
-    }
-  }
+  onEmailComplete = code => {
+    this.setState({ verify_token_2: parseInt(code) })
 
-  verify = () => {
-    const verifyObject = {
-      uuid: this.props.register.data.uuid,
-      phone_verify_token: parseInt(
-        this.state.phone_verify_token.replace(/[^\d]/g, '')
-      ),
-      email_verify_token: parseInt(
-        this.state.email_verify_token.replace(/[^\d]/g, '')
-      )
+    if (Object.entries(this.props.login).length > 0) {
+      const verifyObject = {
+        uuid: this.props.login.data.uuid,
+        verify_token_1: this.state.verify_token_1,
+        verify_token_2: parseInt(code)
+      }
+      this.props.verifyAttributes(verifyObject)
     }
-    console.log('verify')
-    this.props.verifyAttributes(verifyObject)
   }
 
   render() {
-    if (this.state.canceled) return <Redirect to="/auth/login" />
-    if (this.props.verified) return <Redirect to="/" />
+    if (Object.entries(this.props.login).length <= 0)
+      return <Redirect to="/auth/login" />
+    if (this.props.authorized) return <Redirect to="/" />
+    if (this.props.verified) return <Redirect to="/auth/signup" />
+
+    let tokenOneVerified = false
+    let tokenTwoVerified = false
+
+    if (Object.entries(this.props.verify).length > 0) {
+      tokenOneVerified = this.props.verify.data.token_1_valid
+      tokenTwoVerified = this.props.verify.data.token_2_valid
+    }
 
     return (
       <div className="re-verify">
@@ -76,26 +62,34 @@ class ReVerify extends Component {
 
         <div className="form">
           <p>
-            You are almost signed up.
-            <br />
             We just need to verify some info!
+            <br />
+            Please verify your attributes
+            <br />
+            {this.props.login.values.phone} & {this.props.login.values.email}
           </p>
           <div className="inputs">
             <ReInputCode
               name="phone_verify_token"
               label="Verification Code #1"
+              onComplete={this.onPhoneComplete}
+              loading={this.props.verifying}
+              verified={tokenOneVerified}
               focus
             />
             <ReInputCode
               name="email_verify_token"
               label="Verification Code #2"
+              onComplete={this.onEmailComplete}
+              loading={this.props.verifying}
+              verified={tokenTwoVerified}
             />
           </div>
           <ReButton
             type="secondary"
             text="Cancel"
             width="200px"
-            onClick={() => this.setState({ canceled: true })}
+            onClick={this.props.logout}
           />
         </div>
       </div>
@@ -105,13 +99,15 @@ class ReVerify extends Component {
 
 const mapStateToProps = state => {
   return {
-    register: state.authState.register,
+    login: state.authState.login,
+    verify: state.authState.verify,
+    verified: state.authState.isVerified,
     verifying: state.authState.loading,
-    verified: state.authState.verify
+    authorized: state.authState.isAuthorized
   }
 }
 
 export default connect(
   mapStateToProps,
-  { verifyAttributes }
+  { verifyAttributes, logout }
 )(ReVerify)

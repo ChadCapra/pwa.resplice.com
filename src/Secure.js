@@ -15,12 +15,12 @@ import Offline from './components/Util/Offline'
 
 const PrivateRoute = ({ authorized, ...rest }) => {
   // Check if user is authorized and then render the App component
-  // Otherwise redirect to signin
+  // Otherwise redirect to login
   return (
     <Route
       {...rest}
       render={props =>
-        authorized ? <App {...props} /> : <Redirect to="/auth/signin" />
+        authorized ? <App {...props} /> : <Redirect to="/auth/login" />
       }
     />
   )

@@ -1,7 +1,7 @@
 import {
-  FETCH_SETTINGS,
-  FETCH_SETTINGS_SUCCESS,
-  FETCH_SETTINGS_FAILURE,
+  FETCH_ATTRIBUTE_TYPES,
+  FETCH_ATTRIBUTE_TYPES_SUCCESS,
+  FETCH_ATTRIBUTE_TYPES_FAILURE,
   ADD_ATTRIBUTE,
   ADD_ATTRIBUTE_SUCCESS,
   ADD_ATTRIBUTE_FAILURE,
@@ -21,16 +21,16 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case FETCH_SETTINGS:
+    case FETCH_ATTRIBUTE_TYPES:
       return { ...state, loading: true }
-    case FETCH_SETTINGS_SUCCESS:
+    case FETCH_ATTRIBUTE_TYPES_SUCCESS:
       return {
         ...state,
         loading: false,
         error: null,
-        types: action.payload.data.attribute_types
+        types: action.payload.data
       }
-    case FETCH_SETTINGS_FAILURE:
+    case FETCH_ATTRIBUTE_TYPES_FAILURE:
       return { ...state, loading: false, error: action.payload.status }
     case ADD_ATTRIBUTE:
       return { ...state, loading: true }

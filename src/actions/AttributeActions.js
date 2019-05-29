@@ -1,5 +1,8 @@
 import api from '../api'
 import {
+  FETCH_ATTRIBUTE_TYPES,
+  FETCH_ATTRIBUTE_TYPES_SUCCESS,
+  FETCH_ATTRIBUTE_TYPES_FAILURE,
   ADD_ATTRIBUTE,
   ADD_ATTRIBUTE_SUCCESS,
   ADD_ATTRIBUTE_FAILURE,
@@ -10,6 +13,17 @@ import {
   DELETE_ATTRIBUTE_SUCCESS,
   DELETE_ATTRIBUTE_FAILURE
 } from './types'
+
+export const fetchAttributeTypes = () => async dispatch => {
+  dispatch({ type: FETCH_ATTRIBUTE_TYPES })
+
+  try {
+    const response = await api.get('/attribute/types')
+    dispatch({ type: FETCH_ATTRIBUTE_TYPES_SUCCESS, payload: response.data })
+  } catch (err) {
+    dispatch({ type: FETCH_ATTRIBUTE_TYPES_FAILURE, payload: err })
+  }
+}
 
 export const addAttribute = attribute => async (dispatch, getState) => {
   dispatch({ type: ADD_ATTRIBUTE })

@@ -1,28 +1,23 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom'
-import { Field, reduxForm } from 'redux-form'
+// import { Redirect } from 'react-router-dom'
+import { Field, reduxForm, formValueSelector } from 'redux-form'
 import { connect } from 'react-redux'
 import { register } from '../../actions'
-import Icon from 'react-bulma-components/lib/components/icon'
-import HelpCircle from 'react-ionicons/lib/MdHelpCircle'
 
+import ReAuthHeader from './ReAuthHeader'
 import ReInput from '../Input/ReInput'
-import ReInputPassword from '../Input/ReInputPassword'
-import ReInputPhone from '../Input/ReInputPhone'
+import ReInputCountry from '../Input/ReInputCountry'
+import ReInputRegion from '../Input/ReInputRegion'
 import ReButton from '../Buttons/ReButton'
-import StatusBar from '../Util/StatusBar'
 import ReAlert from '../Modals/ReAlert'
+import ProfilePic from '../Profile/ProfilePic'
 
 class ReSignUp extends Component {
   state = {
-    passStrength: {
-      percent: 0,
-      color: '#e5bd37'
-    },
     showErrors: true
   }
 
-  onSubmit = async ({ email, phone, name, password }) => {
+  onSubmit = ({ email, phone, name, password }) => {
     const registration = {
       name,
       phone,
@@ -33,74 +28,76 @@ class ReSignUp extends Component {
     this.props.register(registration)
   }
 
-  determineStrength = (e, pass) => {
-    let percent = 0
-    if (pass.length >= 12) {
-      percent += 50
-    } else if (pass.length >= 8) {
-      percent += 35
-    } else if (pass.length >= 6) {
-      percent += 20
-    }
-
-    const letters = /[a-zA-Z]/.test(pass)
-    const numbers = /[0-9]/.test(pass)
-    const chars = /\W/.test(pass)
-
-    if (letters) percent += 15
-    if (numbers) percent += 15
-    if (chars) percent += 20
-
-    let color = ''
-    if (percent < 20) {
-      color = '#fc3769'
-    } else if (percent < 60) {
-      color = '#e5bd37'
-    } else {
-      color = '#1bbc9b'
-    }
-    this.setState({ passStrength: { percent, color } })
-  }
-
-  renderHeader() {
-    return (
-      <div className="login-header">
-        <h1>Welcome!</h1>
-      </div>
-    )
-  }
-
   renderForm() {
     return (
       <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="form">
-        <p>
+        {/* <p>
           Signing up is easy!
           <br />
           Just tell us a couple of things so we can get you all signed up.
-        </p>
+        </p> */}
+
+        <div style={{ margin: '25px 0' }}>
+          <ProfilePic uuid="" />
+        </div>
 
         <div className="inputs">
           <Field
             name="name"
-            placeholder="Enter Name"
-            label="Full Name"
             type="text"
+            label="Full Name"
             component={ReInput}
           />
-          <Field name="phone" label="Phone" component={ReInputPhone} />
-          <Field name="email" type="email" label="Email" component={ReInput} />
+
+          <div className="input-row">
+            <Field
+              name="date_of_birth"
+              type="date"
+              label="Date of Birth"
+              component={ReInput}
+            />
+            <Field
+              name="country"
+              type="text"
+              label="Select Country"
+              component={ReInputCountry}
+            />
+          </div>
+
           <Field
-            name="password"
-            type="password"
-            placeholder="Enter Password"
-            label="Password"
-            onChange={this.determineStrength}
-            component={ReInputPassword}
+            name="street_address_1"
+            type="text"
+            label="Street Address"
+            component={ReInput}
           />
-          <StatusBar
-            percent={this.state.passStrength.percent}
-            color={this.state.passStrength.color}
+          <Field
+            name="street_address_2"
+            type="text"
+            label="Street Address 2"
+            component={ReInput}
           />
+          <Field
+            name="locality"
+            type="text"
+            label="City (Locality)"
+            component={ReInput}
+          />
+
+          <div className="input-row">
+            <Field
+              name="region"
+              type="text"
+              label="State (Region)"
+              country={this.props.country}
+              component={ReInputRegion}
+            />
+            <Field
+              name="postal_code"
+              type="text"
+              label="Zip (Postal Code)"
+              component={ReInput}
+            />
+          </div>
         </div>
 
         <ReButton
@@ -114,10 +111,6 @@ class ReSignUp extends Component {
   }
 
   render() {
-    if (this.props.registerValues) {
-      return <Redirect to="/auth/verify" />
-    }
-
     return (
       <div className="sign-up">
         {this.props.authError && this.state.showErrors && (
@@ -126,12 +119,11 @@ class ReSignUp extends Component {
             close={() => this.setState({ showErrors: false })}
           >{`${this.props.authError} error`}</ReAlert>
         )}
-        {this.renderHeader()}
-        {this.renderForm()}
+        <ReAuthHeader>
+          <h1>Signup!</h1>
+        </ReAuthHeader>
 
-        <Icon size="large" className="help-icon">
-          <HelpCircle color="#1bbc9b" fontSize="2.5rem" />
-        </Icon>
+        {this.renderForm()}
       </div>
     )
   }
@@ -142,23 +134,26 @@ const validate = values => {
   if (!values.name) {
     errors.name = 'Your full name is required'
   }
-  if (!values.phone) {
-    errors.phone = 'You must enter a phone number'
+  if (!values.date_of_birth) {
+    errors.date_of_birth = 'Your date of birth is required'
   }
-  if (!values.email) {
-    errors.email = 'You must enter an email address'
+  if (!values.postal_code) {
+    errors.postal_code = 'You must enter a postal code'
   }
-  if (!values.password) {
-    errors.password = 'You must enter a password'
+  if (!values.country) {
+    errors.country = 'You must select a country'
   }
   return errors
 }
 
+const selector = formValueSelector('signUp')
 const mapStateToProps = state => {
+  const country = selector(state, 'country')
   return {
     loading: state.authState.loading,
-    registerValues: state.authState.register,
-    authError: state.authState.error
+    registerObject: state.authState.register,
+    authError: state.authState.error,
+    country
   }
 }
 

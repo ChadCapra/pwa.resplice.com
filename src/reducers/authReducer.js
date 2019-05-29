@@ -5,18 +5,9 @@ import {
   REGISTER,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
-  RESET_PASSWORD,
-  RESET_PASSWORD_SUCCESS,
-  RESET_PASSWORD_FAILURE,
-  FORGOT_PASSWORD,
-  FORGOT_PASSWORD_SUCCESS,
-  FORGOT_PASSWORD_FAILURE,
   VERIFY,
   VERIFY_SUCCESS,
   VERIFY_FAILURE,
-  VERIFY_PASSWORD_RESET,
-  VERIFY_PASSWORD_RESET_SUCCESS,
-  VERIFY_PASSWORD_RESET_FAILURE,
   AUTHORIZE,
   FETCH_PROFILE_FAILURE,
   FETCH_CONTACT_LIST_FAILURE,
@@ -29,9 +20,10 @@ const INITIAL_STATE = {
   loading: false,
   error: null,
   isAuthorized: false,
-  register: null,
-  resetPassword: null,
-  verify: null
+  isVerified: false,
+  login: {},
+  verify: {},
+  register: {}
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -42,30 +34,17 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: false,
-        register: action.payload,
-        isAuthorized: true
+        login: { ...action.payload.data, values: action.payload.formValues }
       }
     case LOGIN_FAILURE:
       return { ...state, loading: false, error: action.payload }
     case LOGOUT:
-      return { ...state, isAuthorized: false }
+      return INITIAL_STATE
     case REGISTER:
       return { ...state, loading: true }
     case REGISTER_SUCCESS:
       return { ...state, loading: false, register: action.payload }
     case REGISTER_FAILURE:
-      return { ...state, loading: false, error: action.payload }
-    case RESET_PASSWORD:
-      return { ...state, loading: true }
-    case RESET_PASSWORD_SUCCESS:
-      return { ...state, loading: false, resetPassword: action.payload }
-    case RESET_PASSWORD_FAILURE:
-      return { ...state, loading: false, error: action.payload }
-    case FORGOT_PASSWORD:
-      return { ...state, loading: true }
-    case FORGOT_PASSWORD_SUCCESS:
-      return { ...state, loading: false, resetPassword: action.payload }
-    case FORGOT_PASSWORD_FAILURE:
       return { ...state, loading: false, error: action.payload }
     case VERIFY:
       return { ...state, loading: true }
@@ -74,20 +53,9 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         verify: action.payload,
-        isAuthorized: true
+        isVerified: action.payload.data.access_key
       }
     case VERIFY_FAILURE:
-      return { ...state, loading: false, error: action.payload.status }
-    case VERIFY_PASSWORD_RESET:
-      return { ...state, loading: true }
-    case VERIFY_PASSWORD_RESET_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        verify: action.payload,
-        isAuthorized: true
-      }
-    case VERIFY_PASSWORD_RESET_FAILURE:
       return { ...state, loading: false, error: action.payload.status }
     case AUTHORIZE:
       return { ...state, isAuthorized: true }
