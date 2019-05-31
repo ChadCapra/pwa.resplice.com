@@ -3,8 +3,6 @@ import { connect } from 'react-redux'
 import Columns from 'react-bulma-components/lib/components/columns'
 
 import CardVerify from './CardVerify'
-import ReInputCard from '../Input/ReInputCard'
-import ReButton from '../Buttons/ReButton'
 import ReDropdown from '../Util/ReDropdown'
 import ActionIcon from '../Util/ActionIcon'
 import ReModal from '../Modals/ReModal'

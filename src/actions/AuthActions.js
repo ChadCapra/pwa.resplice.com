@@ -14,6 +14,7 @@ import {
 } from './types'
 
 export const login = formValues => async dispatch => {
+  dispatch(logout())
   dispatch({ type: LOGIN })
 
   try {

@@ -21,7 +21,8 @@ AttributeCardList.propTypes = {
   // Collection of attributes
   collections: PropTypes.object.isRequired,
   // Component to render
-  ListComponent: PropTypes.func.isRequired,
+  ListComponent: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
+    .isRequired,
   // Indicate whether the collections for the current user or a contact
   user: PropTypes.bool
 }

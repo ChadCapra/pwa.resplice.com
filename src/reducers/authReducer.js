@@ -11,7 +11,6 @@ import {
   AUTHORIZE,
   FETCH_PROFILE_FAILURE,
   FETCH_CONTACT_LIST_FAILURE,
-  FETCH_ATTRIBUTES_FAILURE,
   REMOVE_ERROR,
   LOGOUT
 } from '../actions/types'
@@ -53,15 +52,13 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         verify: action.payload,
-        isVerified: action.payload.data.access_key
+        isVerified: action.payload.data.access_key ? true : false
       }
     case VERIFY_FAILURE:
       return { ...state, loading: false, error: action.payload.status }
     case AUTHORIZE:
       return { ...state, isAuthorized: true }
-    case FETCH_PROFILE_FAILURE ||
-      FETCH_CONTACT_LIST_FAILURE ||
-      FETCH_ATTRIBUTES_FAILURE:
+    case FETCH_PROFILE_FAILURE || FETCH_CONTACT_LIST_FAILURE:
       if (action.payload.response.status === 401) {
         return { ...state, isAuthorized: false }
       } else {
