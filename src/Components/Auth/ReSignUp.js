@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-// import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { Field, reduxForm, formValueSelector } from 'redux-form'
 import { connect } from 'react-redux'
 import { register } from '../../actions'
@@ -17,16 +17,11 @@ class ReSignUp extends Component {
     showErrors: true
   }
 
-  onSubmit = ({ email, phone, name, password }) => {
-    const registration = {
-      name,
-      phone,
-      email,
-      password
-    }
-
-    this.props.register(registration)
+  onSubmit = formValues => {
+    this.props.register(formValues)
   }
+
+  showAvatarModal = () => {}
 
   renderForm() {
     return (
@@ -38,7 +33,7 @@ class ReSignUp extends Component {
         </p> */}
 
         <div style={{ margin: '25px 0' }}>
-          <ProfilePic uuid="" />
+          <ProfilePic uuid="" onClick={this.showAvatarModal} />
         </div>
 
         <div className="inputs">
@@ -94,6 +89,8 @@ class ReSignUp extends Component {
             <Field
               name="postal_code"
               type="text"
+              maxLength="8"
+              pattern="[a-zA-Z0-9-]+"
               label="Zip (Postal Code)"
               component={ReInput}
             />
@@ -111,6 +108,10 @@ class ReSignUp extends Component {
   }
 
   render() {
+    if (Object.entries(this.props.registerObject).length > 0)
+      return <Redirect to="/" />
+    if (this.props.userProfile.name || this.props.isVerified)
+      return <Redirect to="/" />
     return (
       <div className="sign-up">
         {this.props.authError && this.state.showErrors && (
@@ -153,6 +154,8 @@ const mapStateToProps = state => {
     loading: state.authState.loading,
     registerObject: state.authState.register,
     authError: state.authState.error,
+    userProfile: state.userState.profile,
+    isVerified: state.authState.isVerified,
     country
   }
 }
