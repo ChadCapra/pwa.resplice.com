@@ -7,7 +7,8 @@ const ReInput = ({
   input,
   type,
   label,
-  meta: { pristine, touched, error, warning }
+  meta: { pristine, touched, error, warning },
+  ...props
 }) => {
   return (
     <div
@@ -16,7 +17,7 @@ const ReInput = ({
       }`}
     >
       <label className="re-input-label">{label}</label>
-      <input {...input} className="re-field" type={type} />
+      <input {...input} {...props} className="re-field" type={type} />
       {touched &&
         ((error && <span className="input-error-text">{error}</span>) ||
           (warning && <span className="input-warning-text">{warning}</span>))}

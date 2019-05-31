@@ -4,7 +4,6 @@ import ReactSwipe from 'react-swipe'
 import { swiped } from '../actions'
 
 import ReUserProfile from './Profile/ReUserProfile'
-import ReUserUpdates from './Profile/ReUserUpdates'
 import ReUserSettings from './Profile/ReUserSettings'
 import RePlusFAB from './Buttons/RePlusFAB'
 import ReHeader from './Header/ReHeader'
@@ -18,7 +17,7 @@ class ReUserView extends Component {
   }
 
   componentWillMount() {
-    this.props.swiped(1)
+    this.props.swiped(0)
   }
 
   render() {
@@ -26,26 +25,23 @@ class ReUserView extends Component {
 
     return (
       <div className="user">
-        <ReHeader menus={['Settings', 'Updates', 'Profile']} />
+        <ReHeader menus={['Profile', 'Settings']} />
         <div className="user-body">
           <ReactSwipe
             className="swipe-nav"
             swipeOptions={{
-              startSlide: 1,
+              startSlide: 0,
               continuous: false,
               callback: idx => this.props.swiped(idx)
             }}
             ref={this.swipe}
           >
             <div className="swipe-nav-item-container">
-              <ReUserSettings />
-            </div>
-            <div className="swipe-nav-item-container">
-              <ReUserUpdates />
-            </div>
-            <div className="swipe-nav-item-container">
               <ReUserProfile />
               <RePlusFAB route="/profile/add-attribute" />
+            </div>
+            <div className="swipe-nav-item-container">
+              <ReUserSettings />
             </div>
           </ReactSwipe>
         </div>

@@ -123,3 +123,31 @@
 .edit-attribute-type {
   color: rgba(0, 0, 0, 0.5);
 }
+
+.avatar-upload-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.avatar-upload-header {
+  margin: 0;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.upload-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px 0;
+}
+.upload-option-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1bbc9b;
+  border-radius: 50%;
+  height: 75px;
+  width: 75px;
+}
