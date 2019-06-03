@@ -33,7 +33,7 @@ class ReSignUp extends Component {
         </p> */}
 
         <div style={{ margin: '25px 0' }}>
-          <ProfilePic uuid="" onClick={this.showAvatarModal} />
+          <ProfilePic uuid={this.props.uuid} onClick={this.showAvatarModal} />
         </div>
 
         <div className="inputs">
@@ -102,6 +102,7 @@ class ReSignUp extends Component {
           text="Sign Up"
           width="200px"
           loading={this.props.loading}
+          disabled={this.props.pristine}
         />
       </form>
     )
@@ -110,8 +111,9 @@ class ReSignUp extends Component {
   render() {
     if (Object.entries(this.props.registerObject).length > 0)
       return <Redirect to="/" />
-    if (this.props.userProfile.name || this.props.isVerified)
+    if (this.props.userProfile.name && this.props.isVerified)
       return <Redirect to="/" />
+
     return (
       <div className="sign-up">
         {this.props.authError && this.state.showErrors && (
@@ -153,6 +155,8 @@ const mapStateToProps = state => {
   return {
     loading: state.authState.loading,
     registerObject: state.authState.register,
+    uuid: '',
+    // uuid: state.authState.verify.data.user_uuid || state.userState.profile.uuid,
     authError: state.authState.error,
     userProfile: state.userState.profile,
     isVerified: state.authState.isVerified,

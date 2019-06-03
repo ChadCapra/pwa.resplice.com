@@ -10,8 +10,7 @@ import ReButton from '../Buttons/ReButton'
 class ReVerify extends Component {
   state = {
     verify_token_1: null,
-    verify_token_2: null,
-    bothVerified: false
+    verify_token_2: null
   }
 
   onPhoneComplete = code => {

@@ -31,9 +31,9 @@ export const login = formValues => async dispatch => {
 export const logout = () => {
   // TODO: cleanup service worker caches and other data
   // Remove auth header on axios instance and items in storage
-  api.defaults.headers.common['access_key'] = null
+  api.defaults.headers.common['access_token'] = null
   api.defaults.headers.common['user_uuid'] = null
-  localStorage.removeItem('access_key')
+  localStorage.removeItem('access_token')
   localStorage.removeItem('user_uuid')
   return {
     type: LOGOUT
@@ -59,12 +59,13 @@ export const verifyAttributes = verifyObject => async dispatch => {
 
     dispatch({ type: VERIFY_SUCCESS, payload: response.data })
 
-    if (response.data.data.access_key) {
+    if (response.data.data.access_token) {
       // Set auth header on axios instance
-      api.defaults.headers.common['access_key'] = response.data.data.access_key
+      api.defaults.headers.common['access_token'] =
+        response.data.data.access_token
       api.defaults.headers.common['user_uuid'] = response.data.data.user_uuid
       // Set auth token and uuid in browser storage
-      localStorage.setItem('access_key', response.data.data.access_key)
+      localStorage.setItem('access_token', response.data.data.access_token)
       localStorage.setItem('user_uuid', response.data.data.user_uuid)
     }
   } catch (err) {

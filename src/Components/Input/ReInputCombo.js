@@ -1,12 +1,23 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import './input.scss'
 
-const ReInputCombo = ({ input, label, name, listName, dataList }) => {
+const ReInputCombo = ({
+  input,
+  label,
+  listName,
+  dataList,
+  meta: { touched, error }
+}) => {
   return (
-    <div className="re-input-container">
+    <div
+      className={`re-input${error && touched ? ' re-input--error' : ''}${
+        input.value ? ' re-input--filled' : ''
+      }`}
+    >
       <label className="re-input-label">{label}</label>
-      <input className="re-input" list={listName} name={name} {...input} />
+      <input className="re-field" list={listName} {...input} />
       <datalist id={listName}>
         {dataList.map((option, idx) => {
           return <option value={option} key={idx} />
@@ -14,6 +25,14 @@ const ReInputCombo = ({ input, label, name, listName, dataList }) => {
       </datalist>
     </div>
   )
+}
+
+ReInputCombo.propTypes = {
+  input: PropTypes.object,
+  label: PropTypes.string.isRequired,
+  listName: PropTypes.string.isRequired,
+  dataList: PropTypes.array.isRequired,
+  meta: PropTypes.object.isRequired
 }
 
 export default ReInputCombo

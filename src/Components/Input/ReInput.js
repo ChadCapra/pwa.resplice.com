@@ -13,7 +13,7 @@ const ReInput = ({
   return (
     <div
       className={`re-input${error && touched ? ' re-input--error' : ''}${
-        pristine && type !== 'date' ? '' : ' re-input--filled'
+        input.value || type === 'date' ? ' re-input--filled' : ''
       }`}
     >
       <label className="re-input-label">{label}</label>

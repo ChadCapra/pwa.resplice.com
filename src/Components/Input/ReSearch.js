@@ -2,10 +2,10 @@ import React from 'react'
 
 const ReSearch = () => {
   return (
-    <div className="re-input-container-search">
+    <div className="re-input">
       <input
         name="search"
-        className="re-input-search"
+        className="re-field"
         type="text"
         placeholder="Resplice"
       />

@@ -10,13 +10,20 @@ import {
   EDIT_ATTRIBUTE_FAILURE,
   DELETE_ATTRIBUTE,
   DELETE_ATTRIBUTE_SUCCESS,
-  DELETE_ATTRIBUTE_FAILURE
+  DELETE_ATTRIBUTE_FAILURE,
+  VERIFY_ATTRIBUTE,
+  VERIFY_ATTRIBUTE_SUCCESS,
+  VERIFY_ATTRIBUTE_FAILURE,
+  RESEND_VERIFY_ATTRIBUTE,
+  RESEND_VERIFY_ATTRIBUTE_SUCCESS,
+  RESEND_VERIFY_ATTRIBUTE_FAILURE
 } from '../actions/types'
 
 const INITIAL_STATE = {
   loading: false,
   error: null,
-  types: []
+  types: [],
+  verify: {}
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -50,6 +57,18 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, loading: false }
     case DELETE_ATTRIBUTE_FAILURE:
       return { ...state, loading: false, error: action.payload.status }
+    case VERIFY_ATTRIBUTE:
+      return { ...state, loading: true }
+    case VERIFY_ATTRIBUTE_SUCCESS:
+      return { ...state, loading: false, verify: action.payload }
+    case VERIFY_ATTRIBUTE_FAILURE:
+      return { ...state, loading: false, error: action.payload }
+    case RESEND_VERIFY_ATTRIBUTE:
+      return { ...state, loading: true }
+    case RESEND_VERIFY_ATTRIBUTE_SUCCESS:
+      return { ...state, loading: false, verify: action.payload }
+    case RESEND_VERIFY_ATTRIBUTE_FAILURE:
+      return { ...state, loading: false, err: action.payload }
     default:
       return state
   }

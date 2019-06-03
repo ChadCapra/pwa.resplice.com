@@ -2,11 +2,20 @@ import React from 'react'
 
 import './input.scss'
 
-const ReInputDropdown = ({ input, label, name, options }) => {
+const ReInputDropdown = ({
+  input,
+  label,
+  options,
+  meta: { touched, error }
+}) => {
   return (
-    <div className="re-input-container">
+    <div
+      className={`re-input${error && touched ? ' re-input--error' : ''}${
+        input.value ? ' re-input--filled' : ''
+      }`}
+    >
       <label className="re-input-label">{label}</label>
-      <select className="re-input" name={name} {...input}>
+      <select className="re-field" {...input}>
         <option label=" " />
         {options.map(option => {
           return (

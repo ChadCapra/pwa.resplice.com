@@ -13,7 +13,7 @@ const ReInputCountry = ({
   return (
     <div
       className={`re-input${error && touched ? ' re-input--error' : ''}${
-        pristine ? '' : ' re-input--filled'
+        input.value ? ' re-input--filled' : ''
       }`}
     >
       <label className="re-input-label">{label}</label>

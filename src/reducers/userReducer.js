@@ -37,18 +37,30 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         last_requested: action.payload.request_at,
-        profile: profile,
-        attributes: attributes,
-        collections: buildCollections(attributes)
+        profile,
+        attributes,
+        collections: buildCollections(action.payload.data.attributes)
       }
     case FETCH_PROFILE_FAILURE:
       return { ...state, loading: false, error: action.payload.data }
     case ADD_ATTRIBUTE_SUCCESS:
-      return { ...state, collections: action.payload.data }
+      return {
+        ...state,
+        attributes: action.payload,
+        collections: buildCollections(action.payload)
+      }
     case EDIT_ATTRIBUTE_SUCCESS:
-      return { ...state, collections: action.payload.data }
+      return {
+        ...state,
+        attributes: action.payload,
+        collections: buildCollections(action.payload)
+      }
     case DELETE_ATTRIBUTE_SUCCESS:
-      return { ...state, collections: action.payload.data }
+      return {
+        ...state,
+        attributes: action.payload,
+        collections: buildCollections(action.payload)
+      }
     default:
       return state
   }

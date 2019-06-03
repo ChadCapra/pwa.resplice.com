@@ -52,7 +52,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         verify: action.payload,
-        isVerified: action.payload.data.access_key ? true : false
+        isVerified: action.payload.data.access_token ? true : false
       }
     case VERIFY_FAILURE:
       return { ...state, loading: false, error: action.payload.status }

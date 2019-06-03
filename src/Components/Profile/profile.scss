@@ -118,10 +118,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-bottom: 10px;
 }
 
 .edit-attribute-type {
   color: rgba(0, 0, 0, 0.5);
+  font-size: 24px;
 }
 
 .avatar-upload-container {
@@ -150,4 +152,13 @@
   border-radius: 50%;
   height: 75px;
   width: 75px;
+}
+
+.re-verify-attribute {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.re-verify-attribute-name {
+  font-size: 18px;
 }

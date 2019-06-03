@@ -4,15 +4,11 @@ import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/dist/style.css'
 import './input.scss'
 
-const ReInputPhone = ({
-  input,
-  label,
-  meta: { pristine, touched, error, warning }
-}) => {
+const ReInputPhone = ({ input, label, meta: { touched, error, warning } }) => {
   return (
     <div
       className={`re-input${error && touched ? ' re-input--error' : ''}${
-        pristine ? '' : ' re-input--filled'
+        input.value ? ' re-input--filled' : ''
       }`}
     >
       <label className="re-input-label re-input-label--phone">{label}</label>

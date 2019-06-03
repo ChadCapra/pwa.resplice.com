@@ -1,25 +1,27 @@
 import React, { Component } from 'react'
-import { Field, reduxForm } from 'redux-form'
+import PropTypes from 'prop-types'
+import { Field, reduxForm, formValueSelector } from 'redux-form'
 import { connect } from 'react-redux'
 import { editAttribute } from '../../actions'
 
 import ReInput from '../Input/ReInput'
+import ReInputPhone from '../Input/ReInputPhone'
 import ReInputCombo from '../Input/ReInputCombo'
+import ReInputCountry from '../Input/ReInputCountry'
+import ReInputRegion from '../Input/ReInputRegion'
 import ReButton from '../Buttons/ReButton'
 
 class ReEditAttribute extends Component {
   onSubmit = ({ name, collection, ...formValues }) => {
     let attributeEdit = {
-      id: this.props.attribute.id,
+      uuid: this.props.attribute.uuid,
       name,
       collection,
-      details: {
+      value: {
         ...formValues
       }
     }
-    this.props
-      .editAttribute(attributeEdit, this.props.attribute)
-      .then(() => this.props.onEdit())
+    this.props.editAttribute(attributeEdit).then(() => this.props.onEdit())
   }
 
   formatLabel(label) {
@@ -35,20 +37,75 @@ class ReEditAttribute extends Component {
     const { attribute, collectionList } = this.props
     return (
       <>
-        <Field name="name" label="Name" component={ReInput} />
-        {Object.keys(attribute.details).map((detail, idx) => {
-          return (
-            <Field
-              key={idx}
-              name={detail}
-              label={this.formatLabel(detail)}
-              component={ReInput}
-            />
-          )
+        <Field name="name" type="text" label="Name" component={ReInput} />
+        {Object.keys(attribute.value).map((value, idx) => {
+          switch (value) {
+            case 'phone':
+              return (
+                <Field
+                  key={idx}
+                  name={value}
+                  label={this.formatLabel(value)}
+                  component={ReInputPhone}
+                />
+              )
+            case 'date':
+              return (
+                <Field
+                  key={idx}
+                  name={value}
+                  type="date"
+                  label={this.formatLabel(value)}
+                  component={ReInput}
+                />
+              )
+            case 'country':
+              return (
+                <Field
+                  key={idx}
+                  name={value}
+                  label={this.formatLabel(value)}
+                  component={ReInputCountry}
+                />
+              )
+            case 'region':
+              return (
+                <Field
+                  key={idx}
+                  name={value}
+                  label={this.formatLabel(value)}
+                  country={this.props.country}
+                  component={ReInputRegion}
+                />
+              )
+            case 'postal_code':
+              return (
+                <Field
+                  key={idx}
+                  name={value}
+                  type="text"
+                  maxLength="8"
+                  pattern="[a-zA-Z0-9-]+"
+                  label={this.formatLabel(value)}
+                  component={ReInput}
+                />
+              )
+            default:
+              return (
+                <Field
+                  key={idx}
+                  name={value}
+                  type="text"
+                  label={this.formatLabel(value)}
+                  component={ReInput}
+                />
+              )
+          }
         })}
         <Field
           name="collection"
           label="Collection"
+          listName="collections"
           dataList={collectionList}
           component={ReInputCombo}
         />
@@ -59,7 +116,6 @@ class ReEditAttribute extends Component {
   render() {
     return (
       <div className="edit-attribute">
-        <h1>Edit Attribute</h1>
         <p className="edit-attribute-type">{this.props.attrType.name}</p>
         <form
           className="edit-attribute-form"
@@ -71,6 +127,7 @@ class ReEditAttribute extends Component {
             text="Save"
             width="250px"
             loading={this.props.loading}
+            disabled={this.props.pristine}
           />
         </form>
       </div>
@@ -78,20 +135,35 @@ class ReEditAttribute extends Component {
   }
 }
 
+const selector = formValueSelector('editAttribute')
 const mapStateToProps = (state, ownProps) => {
-  const attrType = state.attributes.types.find(
+  const attrType = state.attributeState.types.find(
     type => type.id === ownProps.attribute.attribute_type_id
   )
+  const country = selector(state, 'country')
+
   return {
-    loading: state.attributes.loading,
-    collectionList: Object.keys(state.user.collections),
+    loading: state.attributeState.loading,
+    collectionList: Object.keys(state.userState.collections),
     attrType,
     initialValues: {
       name: ownProps.attribute.name,
-      ...ownProps.attribute.details,
+      ...ownProps.attribute.value,
       collection: ownProps.attribute.collection
-    }
+    },
+    country
   }
+}
+
+ReEditAttribute.propTypes = {
+  attribute: PropTypes.object.isRequired,
+  collection: PropTypes.string.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+  collectionList: PropTypes.array.isRequired,
+  attrType: PropTypes.object.isRequired,
+  initialValues: PropTypes.object,
+  editAttribute: PropTypes.func.isRequired
 }
 
 const editAttributeForm = reduxForm({

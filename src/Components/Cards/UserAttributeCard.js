@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Columns from 'react-bulma-components/lib/components/columns'
 
-import CardVerify from './CardVerify'
+import ReVerifyAttribute from '../Profile/ReVerifyAttribute'
 import ReDropdown from '../Util/ReDropdown'
 import ActionIcon from '../Util/ActionIcon'
 import ReModal from '../Modals/ReModal'
@@ -15,11 +15,34 @@ class UserAttributeCard extends Component {
   state = {
     showDropDownIdx: -1,
     showEditModal: false,
+    showVerifyModal: false,
     currentAttr: null
   }
 
-  combineAttrValues = values => {
-    return Object.values(values).reduce((accum, value) => {
+  handleDropdownAction = (action, currentAttr) => {
+    switch (action) {
+      case 'copy':
+        this.copyToClipboard(currentAttr.value)
+        console.log(this.state.showDropDownIdx)
+        this.setState({ showDropDownIdx: -1 })
+        break
+      case 'edit':
+        this.setState({ currentAttr, showDropDownIdx: -1, showEditModal: true })
+        break
+      case 'verify':
+        this.setState({
+          currentAttr,
+          showDropDownIdx: -1,
+          showVerifyModal: true
+        })
+        break
+      default:
+    }
+  }
+
+  combineAttrValues = attr => {
+    return Object.values(attr).reduce((accum, value) => {
+      if (!value) return accum
       return accum.concat(' ', value)
     }, '')
   }
@@ -35,14 +58,6 @@ class UserAttributeCard extends Component {
     document.execCommand('copy')
     document.body.removeChild(el)
   }
-
-  handleVerifiedClick = () => {
-    console.log('Verified was clicked')
-  }
-  handleUnverifiedClick = () => {
-    console.log('Unverified was clicked')
-  }
-  handlePendingClick = () => {}
 
   renderAttributes = () => {
     const { attrs, types } = this.props
@@ -71,57 +86,53 @@ class UserAttributeCard extends Component {
               <span>{this.combineAttrValues(attr.value)}</span>
               {idx === this.state.showDropDownIdx && (
                 <ReDropdown
+                  isUserAttribute
                   items={[]}
-                  userAttribute
-                  copy={() => this.copyToClipboard(attr.value)}
-                  edit={() =>
-                    this.setState({ currentAttr: attr, showEditModal: true })
-                  }
+                  onClick={action => this.handleDropdownAction(action, attr)}
                   close={() => this.setState({ showDropDownIdx: -1 })}
                 />
               )}
             </Columns.Column>
-            <Columns.Column size={1} className="card-attribute-icon">
-              {attr.verified_at && (
-                <CardVerify
-                  type="verified"
-                  handleClick={this.handleVerifiedClick}
-                />
-              )}
-              {!attr.verified_at && (
-                <CardVerify
-                  type="unverified"
-                  handleClick={this.handleUnverifiedClick}
-                />
-              )}
-            </Columns.Column>
+            <Columns.Column size={1} className="card-attribute-icon" />
           </Columns>
         </div>
       )
     })
   }
 
-  renderEditModal = () => {
-    return (
-      <ReModal
-        close={() => this.setState({ showEditModal: false })}
-        show={this.state.showEditModal}
-        modal={{ closeOnBlur: true, showClose: true }}
-      >
-        <ReEditAttribute
-          attribute={this.state.currentAttr}
-          collection={this.state.currentAttr.collection}
-          onEdit={() => this.setState({ showEditModal: false })}
-        />
-      </ReModal>
-    )
-  }
+  renderEditModal = () => (
+    <ReModal
+      onClose={() => this.setState({ showEditModal: false })}
+      show={this.state.showEditModal}
+      headerText="Edit Attribute"
+    >
+      <ReEditAttribute
+        attribute={this.state.currentAttr}
+        collection={this.state.currentAttr.collection}
+        onEdit={() => this.setState({ showEditModal: false })}
+      />
+    </ReModal>
+  )
+
+  renderVerifyModal = () => (
+    <ReModal
+      onClose={() => this.setState({ showVerifyModal: false })}
+      show={this.state.showVerifyModal}
+      headerText="Verify Attribute"
+    >
+      <ReVerifyAttribute
+        attribute={this.state.currentAttr}
+        onVerify={() => this.setState({ showVerifyModal: false })}
+      />
+    </ReModal>
+  )
 
   render() {
     const { header } = this.props
     return (
       <div className="card">
         {this.state.showEditModal && this.renderEditModal()}
+        {this.state.showVerifyModal && this.renderVerifyModal()}
         <div className="card-header">{header}</div>
         {this.props.types.length > 0 && this.renderAttributes()}
       </div>

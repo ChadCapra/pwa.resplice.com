@@ -11,7 +11,13 @@ import {
   EDIT_ATTRIBUTE_FAILURE,
   DELETE_ATTRIBUTE,
   DELETE_ATTRIBUTE_SUCCESS,
-  DELETE_ATTRIBUTE_FAILURE
+  DELETE_ATTRIBUTE_FAILURE,
+  VERIFY_ATTRIBUTE,
+  VERIFY_ATTRIBUTE_SUCCESS,
+  VERIFY_ATTRIBUTE_FAILURE,
+  RESEND_VERIFY_ATTRIBUTE,
+  RESEND_VERIFY_ATTRIBUTE_SUCCESS,
+  RESEND_VERIFY_ATTRIBUTE_FAILURE
 } from './types'
 
 export const fetchAttributeTypes = () => async dispatch => {
@@ -29,51 +35,75 @@ export const addAttribute = attribute => async (dispatch, getState) => {
   dispatch({ type: ADD_ATTRIBUTE })
 
   try {
-    const response = await api.post('/user/add_attribute', attribute)
     const {
-      user: { collections }
+      userState: {
+        attributes: [...attributes]
+      }
     } = getState()
-    collections[response.data.collection].push(response.data)
-    dispatch({ type: ADD_ATTRIBUTE_SUCCESS, payload: collections })
+
+    const response = await api.post('/attribute/add', attribute)
+    const addedAttribute = response.data.data
+    attributes.push(addedAttribute)
+
+    dispatch({ type: ADD_ATTRIBUTE_SUCCESS, payload: attributes })
   } catch (err) {
-    dispatch({ type: ADD_ATTRIBUTE_FAILURE, payload: err.response })
+    dispatch({ type: ADD_ATTRIBUTE_FAILURE, payload: err })
   }
 }
 
-export const editAttribute = (attribute, prevAttribute) => async (
-  dispatch,
-  getState
-) => {
+export const editAttribute = attribute => async (dispatch, getState) => {
   dispatch({ type: EDIT_ATTRIBUTE })
 
-  // I eventually may want to keep an attribute array in state
-  // and rebuild collections on create or edit
-  // instead of editing the collections object
   try {
-    const response = await api.post('/user/edit_attribute', attribute)
     const {
-      user: { collections }
+      userState: {
+        attributes: [...attributes]
+      }
     } = getState()
-    const attrIdx = collections[prevAttribute.collection].findIndex(
-      attr => attr.id === prevAttribute.id
+
+    const response = await api.post('/attribute/edit', attribute)
+    const editedAttribute = response.data.data
+    const attrIdx = attributes.findIndex(
+      attr => attr.uuid === editedAttribute.uuid
     )
-    collections[prevAttribute.collection].splice(attrIdx, 1)
-    collections[response.data.collection]
-      ? collections[response.data.collection].push(response.data)
-      : (collections[response.data.collection] = [response.data])
-    dispatch({ type: EDIT_ATTRIBUTE_SUCCESS, payload: collections })
+    attributes[attrIdx] = editedAttribute
+
+    dispatch({ type: EDIT_ATTRIBUTE_SUCCESS, payload: attributes })
   } catch (err) {
-    dispatch({ type: EDIT_ATTRIBUTE_FAILURE, payload: err.response })
+    console.log(err)
+    dispatch({ type: EDIT_ATTRIBUTE_FAILURE, payload: err })
   }
 }
 
-export const deleteAttribute = ({ id }) => async dispatch => {
+export const deleteAttribute = ({ uuid }) => async dispatch => {
   dispatch({ type: DELETE_ATTRIBUTE })
 
   try {
-    await api.delete(`/user/attributes/${id}`)
+    await api.delete(`/user/attributes/${uuid}`)
     dispatch({ type: DELETE_ATTRIBUTE_SUCCESS })
   } catch (err) {
-    dispatch({ type: DELETE_ATTRIBUTE_FAILURE, payload: err.response })
+    dispatch({ type: DELETE_ATTRIBUTE_FAILURE, payload: err })
+  }
+}
+
+export const verifyAttribute = (uuid, verify_token) => async dispatch => {
+  dispatch({ type: VERIFY_ATTRIBUTE })
+
+  try {
+    const response = await api.post('/attribute/verify', { uuid, verify_token })
+    dispatch({ type: VERIFY_ATTRIBUTE_SUCCESS, payload: response.data })
+  } catch (err) {
+    dispatch({ type: VERIFY_ATTRIBUTE_FAILURE, payload: err })
+  }
+}
+
+export const resendAttributeVerification = uuid => async dispatch => {
+  dispatch({ type: RESEND_VERIFY_ATTRIBUTE })
+
+  try {
+    const response = await api.post('/attribute/resend', { uuid })
+    dispatch({ type: RESEND_VERIFY_ATTRIBUTE_SUCCESS, payload: response.data })
+  } catch (err) {
+    dispatch({ type: RESEND_VERIFY_ATTRIBUTE_FAILURE })
   }
 }

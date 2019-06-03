@@ -14,13 +14,14 @@
 .icon-left,
 .icon-right {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
 }
 
 .icon-right {
   & svg {
     cursor: pointer;
+    padding: 1px;
   }
 }
 

@@ -1,4 +1,6 @@
 $button-bg: #1bbc9b;
+$button-bg-secondary: #c6c8c8;
+$button-bg-light: #77d3c0;
 
 .btn {
   display: flex;
@@ -15,34 +17,38 @@ $button-bg: #1bbc9b;
 
   &--primary {
     color: white;
-    background-color: #1bbc9b;
+    background-color: $button-bg;
     max-width: 350px;
   }
 
   &--secondary {
     color: black;
-    background-color: #c6c8c8;
+    background-color: $button-bg-secondary;
     max-width: 350px;
   }
 
   &--small {
     color: white;
-    background-color: #1bbc9b;
+    background-color: $button-bg;
     height: 35px;
     font-size: 14px;
   }
 
   &--big {
     color: white;
-    background-color: #1bbc9b;
+    background-color: $button-bg;
     height: 70px;
   }
 
   &--loading {
-    background-color: #77d3c0;
+    background-color: $button-bg-light;
     & span {
       margin-right: 15px;
     }
+  }
+
+  &--disabled {
+    background-color: $button-bg-light;
   }
 
   &:active {

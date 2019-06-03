@@ -57,6 +57,9 @@
   position: absolute;
   top: 5px;
   right: 5px;
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: 50%;
+  z-index: 10;
 }
 
 @keyframes slideDown {

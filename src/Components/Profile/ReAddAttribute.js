@@ -6,10 +6,12 @@ import { addAttribute } from '../../actions'
 
 import ReInput from '../Input/ReInput'
 import ReInputDropdown from '../Input/ReInputDropdown'
+import ReInputPhone from '../Input/ReInputPhone'
 import ReInputCombo from '../Input/ReInputCombo'
+import ReInputCountry from '../Input/ReInputCountry'
+import ReInputRegion from '../Input/ReInputRegion'
 import ReButton from '../Buttons/ReButton'
 import ReHeader from '../Header/ReHeader'
-import ReInputPhone from '../Input/ReInputPhone'
 
 class ReCreateAttribute extends Component {
   state = {
@@ -19,12 +21,11 @@ class ReCreateAttribute extends Component {
   }
 
   onSubmit = ({ attribute_type, collection, name, ...formValues }) => {
-    console.log(formValues)
     let attributeAdd = {
       attribute_type_id: this.state.attrType.id,
       name,
       collection,
-      details: {
+      value: {
         ...formValues
       }
     }
@@ -43,48 +44,82 @@ class ReCreateAttribute extends Component {
   }
 
   renderFields() {
-    if (this.state.attrType.name === 'Phone') {
-      return (
-        <>
-          <Field name="name" label="Name" component={ReInput} />
-
-          <Field name="phone_number" label="Phone" component={ReInputPhone} />
-
-          <Field
-            name="collection"
-            label="Collection"
-            dataList={this.props.collectionList}
-            listName="collections"
-            component={ReInputCombo}
-          />
-        </>
-      )
-    } else {
-      return (
-        <>
-          <Field name="name" label="Name" component={ReInput} />
-          {Object.keys(this.state.attrType.default_details).map(
-            (detail, idx) => {
+    return (
+      <>
+        <Field name="name" type="text" label="Name" component={ReInput} />
+        {Object.keys(this.state.attrType.default_value).map((value, idx) => {
+          switch (value) {
+            case 'phone':
               return (
                 <Field
                   key={idx}
-                  name={detail}
-                  label={this.formatLabel(detail)}
+                  name={value}
+                  label={this.formatLabel(value)}
+                  component={ReInputPhone}
+                />
+              )
+            case 'date':
+              return (
+                <Field
+                  key={idx}
+                  name={value}
+                  type="date"
+                  label={this.formatLabel(value)}
                   component={ReInput}
                 />
               )
-            }
-          )}
-          <Field
-            name="collection"
-            label="Collection"
-            dataList={this.props.collectionList}
-            listName="collections"
-            component={ReInputCombo}
-          />
-        </>
-      )
-    }
+            case 'country':
+              return (
+                <Field
+                  key={idx}
+                  name={value}
+                  label={this.formatLabel(value)}
+                  component={ReInputCountry}
+                />
+              )
+            case 'region':
+              return (
+                <Field
+                  key={idx}
+                  name={value}
+                  label={this.formatLabel(value)}
+                  country={this.props.country}
+                  component={ReInputRegion}
+                />
+              )
+            case 'postal_code':
+              return (
+                <Field
+                  key={idx}
+                  name={value}
+                  type="text"
+                  maxLength="8"
+                  pattern="[a-zA-Z0-9-]+"
+                  label={this.formatLabel(value)}
+                  component={ReInput}
+                />
+              )
+            default:
+              return (
+                <Field
+                  key={idx}
+                  name={value}
+                  type="text"
+                  label={this.formatLabel(value)}
+                  component={ReInput}
+                />
+              )
+          }
+        })}
+        <Field
+          name="collection"
+          label="Collection"
+          dataList={this.props.collectionList}
+          listName="collections"
+          component={ReInputCombo}
+        />
+      </>
+    )
   }
 
   handleTypeChange = (e, value) => {
@@ -110,10 +145,11 @@ class ReCreateAttribute extends Component {
             onSubmit={this.props.handleSubmit(this.onSubmit)}
             className="create-attribute-form"
           >
+            <h3>What would you like to add?</h3>
             <div className="inputs">
               <Field
                 name="attribute_type"
-                label="What would you like to add?"
+                label="Attribute Type"
                 options={this.props.attrTypes}
                 component={ReInputDropdown}
                 onChange={this.handleTypeChange}
@@ -125,6 +161,7 @@ class ReCreateAttribute extends Component {
               text="Add"
               width="250px"
               loading={this.props.loading}
+              disabled={this.props.pristine}
             />
           </form>
         </div>
@@ -135,9 +172,9 @@ class ReCreateAttribute extends Component {
 
 const mapStateToProps = state => {
   return {
-    attrTypes: state.attributes.types,
-    collectionList: Object.keys(state.user.collections),
-    loading: state.attributes.loading
+    attrTypes: state.attributeState.types,
+    collectionList: Object.keys(state.userState.collections),
+    loading: state.attributeState.loading
   }
 }
 
