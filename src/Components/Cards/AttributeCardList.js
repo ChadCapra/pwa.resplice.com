@@ -1,30 +1,35 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-class AttributeCardList extends Component {
-  render() {
-    const { collections, ListComponent } = this.props
-    return Object.keys(collections).map((col, idx) => {
-      return <ListComponent key={idx} header={col} attrs={collections[col]} />
-    })
+const AttributeCardList = ({ list, ListComponent, onClick }) =>
+  list.map((item, idx) => (
+    <ListComponent key={idx} idx={idx} item={item} onClick={onClick} />
+  ))
+
+const mapStateToProps = (state, ownProps) => {
+  switch (ownProps.type) {
+    case 'user':
+      return { list: Object.entries(state.userState.collections) }
+    case 'contact':
+      return { list: Object.entries(state.contactState.collections) }
+    case 'types':
+      return { list: state.attributeState.types }
+    default:
+      return { list: [] }
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return ownProps.user
-    ? { collections: state.userState.collections }
-    : { collections: state.contactState.collections }
-}
-
 AttributeCardList.propTypes = {
-  // Collection of attributes
-  collections: PropTypes.object.isRequired,
+  // List to iterate
+  list: PropTypes.array.isRequired,
   // Component to render
   ListComponent: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
     .isRequired,
-  // Indicate whether the collections for the current user or a contact
-  user: PropTypes.bool
+  // Indicate the type of list to iterate over
+  type: PropTypes.oneOf(['user', 'contact', 'types']),
+  // onClick function to pass to component
+  onClick: PropTypes.func
 }
 
 export default connect(mapStateToProps)(AttributeCardList)

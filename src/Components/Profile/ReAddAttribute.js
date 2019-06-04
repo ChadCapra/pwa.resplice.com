@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm, getFormValues } from 'redux-form'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { addAttribute } from '../../actions'
 
+import AttributeCardList from '../Cards/AttributeCardList'
+import AttributeTypeCard from '../Cards/AttributeTypeCard'
 import ReInput from '../Input/ReInput'
-import ReInputDropdown from '../Input/ReInputDropdown'
 import ReInputPhone from '../Input/ReInputPhone'
 import ReInputCombo from '../Input/ReInputCombo'
 import ReInputCountry from '../Input/ReInputCountry'
@@ -13,9 +14,9 @@ import ReInputRegion from '../Input/ReInputRegion'
 import ReButton from '../Buttons/ReButton'
 import ReHeader from '../Header/ReHeader'
 
-class ReCreateAttribute extends Component {
+class ReAddAttribute extends Component {
   state = {
-    attrType: this.props.attrTypes[0],
+    attrType: {},
     typeSelected: false,
     attributeAdded: false
   }
@@ -43,9 +44,50 @@ class ReCreateAttribute extends Component {
     return newLabel.join(' ')
   }
 
+  handleTypeChange = (attrType, cardIdx) => {
+    const topPos = 120
+
+    if (Object.keys(this.state.attrType) <= 0) {
+      const cards = [...document.querySelectorAll('.card')]
+      cards.forEach((card, idx) => {
+        const posFromTop = topPos - card.getBoundingClientRect().y
+        card.style.setProperty('--pixels-from-top', `${posFromTop}px`)
+        card.classList.add('collapse-card')
+        if (idx === cardIdx) {
+          card.classList.add('top-card')
+        }
+      })
+      setTimeout(() => {
+        this.setState({
+          attrType,
+          typeSelected: true
+        })
+      }, 500)
+    } else {
+      this.setState({ typeSelected: false, attrType: {} }, () => {
+        const cards = [...document.querySelectorAll('.card')]
+        cards.forEach(card => {
+          const posFromTop = topPos - card.getBoundingClientRect().y
+          card.style.setProperty('--pixels-from-pos', `${posFromTop}px`)
+          card.classList.add('expand-card')
+          setTimeout(() => {
+            card.classList.remove('expand-card')
+          }, 500)
+        })
+      })
+    }
+  }
+
   renderFields() {
     return (
       <>
+        <Field
+          name="collection"
+          label="Collection"
+          dataList={this.props.collectionList}
+          listName="collections"
+          component={ReInputCombo}
+        />
         <Field name="name" type="text" label="Name" component={ReInput} />
         {Object.keys(this.state.attrType.default_value).map((value, idx) => {
           switch (value) {
@@ -111,59 +153,49 @@ class ReCreateAttribute extends Component {
               )
           }
         })}
-        <Field
-          name="collection"
-          label="Collection"
-          dataList={this.props.collectionList}
-          listName="collections"
-          component={ReInputCombo}
-        />
       </>
     )
-  }
-
-  handleTypeChange = (e, value) => {
-    if (value) {
-      this.setState({
-        attrType: this.props.attrTypes.find(type => type.name === value),
-        typeSelected: true
-      })
-    } else {
-      this.setState({ typeSelected: false })
-    }
   }
 
   render() {
     if (this.state.attributeAdded) {
       return <Redirect push to="/profile" />
     }
+
     return (
-      <div className="create-attribute">
-        <ReHeader menus={['Add Attribute']} />
-        <div className="create-attribute-body">
-          <form
-            onSubmit={this.props.handleSubmit(this.onSubmit)}
-            className="create-attribute-form"
-          >
-            <h3>What would you like to add?</h3>
-            <div className="inputs">
-              <Field
-                name="attribute_type"
-                label="Attribute Type"
-                options={this.props.attrTypes}
-                component={ReInputDropdown}
-                onChange={this.handleTypeChange}
-              />
-              {this.state.typeSelected && this.renderFields()}
-            </div>
-            <ReButton
-              type="primary"
-              text="Add"
-              width="250px"
-              loading={this.props.loading}
-              disabled={this.props.pristine}
+      <div className="add-attribute">
+        <ReHeader menus={['Add Attribute']} exitRoute="/profile" />
+        <div className="add-attribute-body">
+          {!this.state.typeSelected && (
+            <AttributeCardList
+              type="types"
+              ListComponent={AttributeTypeCard}
+              onClick={this.handleTypeChange}
+              animate={this.state.animateCards}
             />
-          </form>
+          )}
+          {this.state.typeSelected && (
+            <>
+              <AttributeTypeCard
+                item={this.state.attrType}
+                onClick={this.handleTypeChange}
+                previewValues={this.props.formValues}
+              />
+              <form
+                onSubmit={this.props.handleSubmit(this.onSubmit)}
+                className="add-attribute-form"
+              >
+                <div className="inputs">{this.renderFields()}</div>
+                <ReButton
+                  type="primary"
+                  text="Add"
+                  width="250px"
+                  loading={this.props.loading}
+                  disabled={this.props.pristine}
+                />
+              </form>
+            </>
+          )}
         </div>
       </div>
     )
@@ -174,15 +206,16 @@ const mapStateToProps = state => {
   return {
     attrTypes: state.attributeState.types,
     collectionList: Object.keys(state.userState.collections),
-    loading: state.attributeState.loading
+    loading: state.attributeState.loading,
+    formValues: getFormValues('addAttribute')(state)
   }
 }
 
-const createAttributeForm = reduxForm({
-  form: 'createAttribute'
-})(ReCreateAttribute)
+const AddAttributeForm = reduxForm({
+  form: 'addAttribute'
+})(ReAddAttribute)
 
 export default connect(
   mapStateToProps,
   { addAttribute }
-)(createAttributeForm)
+)(AddAttributeForm)

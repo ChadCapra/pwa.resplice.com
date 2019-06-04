@@ -25,7 +25,7 @@ class ReUserView extends Component {
 
     return (
       <div className="user">
-        <ReHeader menus={['Profile', 'Settings']} />
+        <ReHeader menus={['Profile', 'Settings']} exitRoute={'/'} />
         <div className="user-body">
           <ReactSwipe
             className="swipe-nav"

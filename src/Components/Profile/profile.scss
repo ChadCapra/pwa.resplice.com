@@ -23,15 +23,24 @@
 }
 
 .user,
-.create-attribute {
+.add-attribute {
   height: 100vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
-.user-body,
-.create-attribute-body {
+.add-attribute-body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  flex-grow: 1;
+  overflow-y: scroll;
+}
+
+.user-body {
   flex-grow: 1;
   overflow-y: scroll;
   height: 100%;
@@ -42,8 +51,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  margin-top: 20px;
+  padding-top: 20px;
 }
 
 .user-profile-name {
@@ -113,12 +121,14 @@
   text-align: center;
 }
 
-.edit-attribute-form {
+.edit-attribute-form,
+.add-attribute-form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding-bottom: 10px;
+  width: 100%;
 }
 
 .edit-attribute-type {

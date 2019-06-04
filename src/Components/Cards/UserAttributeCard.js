@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Columns from 'react-bulma-components/lib/components/columns'
 
@@ -19,17 +20,17 @@ class UserAttributeCard extends Component {
     currentAttr: null
   }
 
-  handleDropdownAction = (action, currentAttr) => {
+  handleAction = (action, currentAttr) => {
     switch (action) {
-      case 'copy':
+      case 'Copy to Clipboard':
         this.copyToClipboard(currentAttr.value)
-        console.log(this.state.showDropDownIdx)
         this.setState({ showDropDownIdx: -1 })
+        console.log(this.state.showDropDownIdx)
         break
-      case 'edit':
+      case 'Edit':
         this.setState({ currentAttr, showDropDownIdx: -1, showEditModal: true })
         break
-      case 'verify':
+      case 'Verify':
         this.setState({
           currentAttr,
           showDropDownIdx: -1,
@@ -60,17 +61,18 @@ class UserAttributeCard extends Component {
   }
 
   renderAttributes = () => {
-    const { attrs, types } = this.props
+    const { item, types } = this.props
+    const attrs = item[1]
     return attrs.map((attr, idx) => {
       const attrType = types.find(el => el.id === attr.attribute_type_id)
       return (
-        <div key={attr.uuid}>
+        <React.Fragment key={attr.uuid}>
           <Columns
             className="card-attribute"
             breakpoint="mobile"
             multiline={false}
           >
-            <Columns.Column className="card-icon" size={1}>
+            <Columns.Column size={1}>
               <ActionIcon
                 name={attrType.actions[0].icon}
                 fill="#C4C4C4"
@@ -87,15 +89,21 @@ class UserAttributeCard extends Component {
               {idx === this.state.showDropDownIdx && (
                 <ReDropdown
                   isUserAttribute
-                  items={[]}
-                  onClick={action => this.handleDropdownAction(action, attr)}
+                  items={attrType.actions}
+                  onClick={action => this.handleAction(action, attr)}
                   close={() => this.setState({ showDropDownIdx: -1 })}
                 />
               )}
             </Columns.Column>
-            <Columns.Column size={1} className="card-attribute-icon" />
+            <Columns.Column size={1}>
+              <ActionIcon
+                name={attrType.actions[1].icon}
+                fill="#C4C4C4"
+                width="2.5em"
+              />
+            </Columns.Column>
           </Columns>
-        </div>
+        </React.Fragment>
       )
     })
   }
@@ -128,12 +136,11 @@ class UserAttributeCard extends Component {
   )
 
   render() {
-    const { header } = this.props
     return (
       <div className="card">
         {this.state.showEditModal && this.renderEditModal()}
         {this.state.showVerifyModal && this.renderVerifyModal()}
-        <div className="card-header">{header}</div>
+        <div className="card-header">{this.props.item[0]}</div>
         {this.props.types.length > 0 && this.renderAttributes()}
       </div>
     )
@@ -142,6 +149,11 @@ class UserAttributeCard extends Component {
 
 const mapStateToProps = state => {
   return { types: state.attributeState.types }
+}
+
+UserAttributeCard.propTypes = {
+  item: PropTypes.array.isRequired,
+  types: PropTypes.array.isRequired
 }
 
 export default connect(mapStateToProps)(UserAttributeCard)

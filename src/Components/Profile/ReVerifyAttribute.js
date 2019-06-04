@@ -17,14 +17,7 @@ const ReVerifyAttribute = ({
     <div className="re-verify-attribute">
       <p className="re-verify-attribute-name">{attribute.name}</p>
 
-      <ReButton
-        type="primary"
-        text="Resend Token"
-        loading={verifying}
-        onClick={() => resendAttributeVerification(attribute.uuid)}
-      />
-
-      <div className="inputs">
+      <div className="inputs" style={{ marginBottom: '50px' }}>
         <ReInputCode
           name="verify_token"
           label="Verification Token"
@@ -34,6 +27,13 @@ const ReVerifyAttribute = ({
           focus
         />
       </div>
+
+      <ReButton
+        type="primary"
+        text="Resend Token"
+        loading={verifying}
+        onClick={() => resendAttributeVerification(attribute.uuid)}
+      />
     </div>
   )
 }

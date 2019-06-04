@@ -13,21 +13,13 @@
   background-color: #e6e6e699;
 }
 
-.modal-header {
-  font-size: 36px;
-  margin-top: 0;
-  text-align: center;
-  margin: 15px 30px 0 30px;
-  overflow: auto;
-}
-
 .modal-content {
   position: relative;
   height: 75%;
   background-color: white;
   border-top-left-radius: 25px;
   border-top-right-radius: 25px;
-  animation: slideUp 0.3s ease;
+  animation: modalSlideUp 0.3s ease;
 
   &--full {
     height: 100%;
@@ -36,6 +28,13 @@
     border-radius: 0;
   }
 }
+.modal-header {
+  font-size: 36px;
+  margin-top: 0;
+  text-align: center;
+  margin: 15px 30px 0 30px;
+  overflow: auto;
+}
 .modal-children {
   overflow: auto;
   height: 100%;
@@ -43,7 +42,7 @@
 }
 
 .modal-close {
-  animation: slideDown 0.3s ease;
+  animation: modalSlideDown 0.3s ease forwards;
 }
 
 .modal .alert-container {
@@ -62,22 +61,22 @@
   z-index: 10;
 }
 
-@keyframes slideDown {
+@keyframes modalSlideUp {
   from {
-    height: 75%;
+    transform: translateY(100%);
   }
 
   to {
-    height: 0px;
+    transform: translateY(0);
   }
 }
 
-@keyframes slideUp {
+@keyframes modalSlideDown {
   from {
-    height: 0px;
+    transform: translateY(0);
   }
 
   to {
-    height: 75%;
+    transform: translateY(100%);
   }
 }
