@@ -1,50 +1,46 @@
-import React, { Component } from 'react'
+import React, { useEffect, useRef } from 'react'
 import ReactDOM from 'react-dom'
 
 import ActionIcon from '../Util/ActionIcon'
 
-class ReDropdown extends Component {
-  componentWillMount() {
+const ReDropdown = ({ onClick, close, items: [, , ...actions] }) => {
+  useEffect(() => {
     // add event listener for clicks on the page
-    document.addEventListener('click', this.handleClick, false)
-  }
-  componentWillUnmount() {
-    // remove event listener for clicks on the page
-    document.removeEventListener('click', this.handleClick, false)
-  }
+    document.addEventListener('click', handleClick)
 
-  handleClick = e => {
-    if (!ReactDOM.findDOMNode(this).contains(e.target)) {
+    return () => {
+      // remove event listener for clicks on the page
+      document.removeEventListener('click', handleClick)
+    }
+  })
+
+  const dropdown = useRef(null)
+
+  const handleClick = e => {
+    if (!ReactDOM.findDOMNode(dropdown.current).contains(e.target)) {
       // the click was outside of the dropdown, so handle closing here
-      this.props.close()
+      close()
     }
   }
 
-  render() {
-    const { onClick, close } = this.props
-    const [, , ...actions] = this.props.items
-    return (
-      <div className="drop-down">
-        {actions.map(item => {
-          return (
-            <div
-              className="drop-down-item"
-              key={item.id}
-              onClick={() => {
-                onClick(item.name)
-                close()
-              }}
-            >
-              <div className="drop-down-icon">
-                <ActionIcon name={item.icon} fill="#1bbc9b" width="1.5em" />
-              </div>
-              <div className="drop-down-text">{item.name}</div>
+  return (
+    <div className="drop-down" ref={dropdown}>
+      {actions.map((item, idx) => {
+        return (
+          <div
+            className="drop-down-item"
+            key={idx}
+            onClick={() => onClick(item.name)}
+          >
+            <div className="drop-down-icon">
+              <ActionIcon name={item.icon} fill="#1bbc9b" width="1.5em" />
             </div>
-          )
-        })}
-      </div>
-    )
-  }
+            <div className="drop-down-text">{item.display_name}</div>
+          </div>
+        )
+      })}
+    </div>
+  )
 }
 
 export default ReDropdown

@@ -1,4 +1,5 @@
-.card {
+.card,
+.type-card {
   width: 90%;
   max-width: 575px;
   border-radius: 10px;
@@ -7,10 +8,18 @@
   margin-bottom: 25px;
 }
 
+.attribute-preview-card {
+  margin-top: 50px;
+  margin-bottom: 2px;
+}
+
 .card-header {
   color: #1bbc9b;
   font-size: 24px;
   border-bottom: 1px solid #e5e5e5;
+  // background-color: #efeeee;
+  // border-top-left-radius: 10px;
+  // border-top-right-radius: 10px;
   padding: 10px 20px;
   margin-bottom: 10px;
 }

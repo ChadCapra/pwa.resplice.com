@@ -1,54 +1,42 @@
-import React, { Component } from 'react'
-import { Field, reduxForm, getFormValues } from 'redux-form'
-import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
-import { addAttribute } from '../../actions'
+import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 
+import ReAddAttributeForm from './ReAddAttributeForm'
 import AttributeCardList from '../Cards/AttributeCardList'
 import AttributeTypeCard from '../Cards/AttributeTypeCard'
-import ReInput from '../Input/ReInput'
-import ReInputPhone from '../Input/ReInputPhone'
-import ReInputCombo from '../Input/ReInputCombo'
-import ReInputCountry from '../Input/ReInputCountry'
-import ReInputRegion from '../Input/ReInputRegion'
-import ReButton from '../Buttons/ReButton'
-import ReHeader from '../Header/ReHeader'
 
-class ReAddAttribute extends Component {
-  state = {
-    attrType: {},
-    typeSelected: false,
-    attributeAdded: false
-  }
+const ReAddAttribute = ({ onAttributeAdd }) => {
+  const [attrType, setAttrType] = useState({})
+  const [attrTouched, setAttrTouched] = useState(false)
 
-  onSubmit = ({ attribute_type, collection, name, ...formValues }) => {
-    let attributeAdd = {
-      attribute_type_id: this.state.attrType.id,
-      name,
-      collection,
-      value: {
-        ...formValues
-      }
+  useEffect(() => {
+    if (!Object.keys(attrType).length && attrTouched) {
+      const topPos = 50
+      const cards = [...document.querySelectorAll('.type-card')]
+      // If an attribute type is not selected,
+      // For each card calculate the position from default pos
+      // And add the expand animation
+      cards.forEach(card => {
+        const posFromTop = topPos - card.getBoundingClientRect().y
+        card.style.setProperty('--pixels-from-pos', `${posFromTop}px`)
+        card.classList.add('expand-card')
+
+        // Remove expand animation after animation has finished
+        setTimeout(() => {
+          card.classList.remove('expand-card')
+        }, 500)
+      })
     }
-    this.props
-      .addAttribute(attributeAdd)
-      .then(() => this.setState({ attributeAdded: true }))
-  }
+  }, [attrType, attrTouched])
 
-  formatLabel(label) {
-    let newLabel = label.split('_')
-    for (let i = 0; i < newLabel.length; i++) {
-      newLabel[i] =
-        newLabel[i].charAt(0).toUpperCase() + newLabel[i].substring(1)
-    }
-    return newLabel.join(' ')
-  }
+  const handleTypeChange = (newAttrType, cardIdx) => {
+    const topPos = 50
+    // Get array of card elements
+    const cards = [...document.querySelectorAll('.type-card')]
 
-  handleTypeChange = (attrType, cardIdx) => {
-    const topPos = 120
-
-    if (Object.keys(this.state.attrType) <= 0) {
-      const cards = [...document.querySelectorAll('.card')]
+    if (!Object.keys(attrType).length) {
+      // For each card calcuate the position from the top
+      // And add the collapse animation
       cards.forEach((card, idx) => {
         const posFromTop = topPos - card.getBoundingClientRect().y
         card.style.setProperty('--pixels-from-top', `${posFromTop}px`)
@@ -57,165 +45,40 @@ class ReAddAttribute extends Component {
           card.classList.add('top-card')
         }
       })
+      // Set the attribute after animation has finished
       setTimeout(() => {
-        this.setState({
-          attrType,
-          typeSelected: true
-        })
+        setAttrType(newAttrType)
+        setAttrTouched(true)
       }, 500)
     } else {
-      this.setState({ typeSelected: false, attrType: {} }, () => {
-        const cards = [...document.querySelectorAll('.card')]
-        cards.forEach(card => {
-          const posFromTop = topPos - card.getBoundingClientRect().y
-          card.style.setProperty('--pixels-from-pos', `${posFromTop}px`)
-          card.classList.add('expand-card')
-          setTimeout(() => {
-            card.classList.remove('expand-card')
-          }, 500)
-        })
-      })
+      // Reset the attribute type
+      setAttrType({})
     }
   }
 
-  renderFields() {
-    return (
-      <>
-        <Field
-          name="collection"
-          label="Collection"
-          dataList={this.props.collectionList}
-          listName="collections"
-          component={ReInputCombo}
+  return (
+    <div className="add-attribute">
+      {Object.keys(attrType).length ? (
+        <ReAddAttributeForm
+          onCardClick={handleTypeChange}
+          attrType={attrType}
+          onAttributeAdd={onAttributeAdd}
         />
-        <Field name="name" type="text" label="Name" component={ReInput} />
-        {Object.keys(this.state.attrType.default_value).map((value, idx) => {
-          switch (value) {
-            case 'phone':
-              return (
-                <Field
-                  key={idx}
-                  name={value}
-                  label={this.formatLabel(value)}
-                  component={ReInputPhone}
-                />
-              )
-            case 'date':
-              return (
-                <Field
-                  key={idx}
-                  name={value}
-                  type="date"
-                  label={this.formatLabel(value)}
-                  component={ReInput}
-                />
-              )
-            case 'country':
-              return (
-                <Field
-                  key={idx}
-                  name={value}
-                  label={this.formatLabel(value)}
-                  component={ReInputCountry}
-                />
-              )
-            case 'region':
-              return (
-                <Field
-                  key={idx}
-                  name={value}
-                  label={this.formatLabel(value)}
-                  country={this.props.country}
-                  component={ReInputRegion}
-                />
-              )
-            case 'postal_code':
-              return (
-                <Field
-                  key={idx}
-                  name={value}
-                  type="text"
-                  maxLength="8"
-                  pattern="[a-zA-Z0-9-]+"
-                  label={this.formatLabel(value)}
-                  component={ReInput}
-                />
-              )
-            default:
-              return (
-                <Field
-                  key={idx}
-                  name={value}
-                  type="text"
-                  label={this.formatLabel(value)}
-                  component={ReInput}
-                />
-              )
-          }
-        })}
-      </>
-    )
-  }
-
-  render() {
-    if (this.state.attributeAdded) {
-      return <Redirect push to="/profile" />
-    }
-
-    return (
-      <div className="add-attribute">
-        <ReHeader menus={['Add Attribute']} exitRoute="/profile" />
+      ) : (
         <div className="add-attribute-body">
-          {!this.state.typeSelected && (
-            <AttributeCardList
-              type="types"
-              ListComponent={AttributeTypeCard}
-              onClick={this.handleTypeChange}
-              animate={this.state.animateCards}
-            />
-          )}
-          {this.state.typeSelected && (
-            <>
-              <AttributeTypeCard
-                item={this.state.attrType}
-                onClick={this.handleTypeChange}
-                previewValues={this.props.formValues}
-              />
-              <form
-                onSubmit={this.props.handleSubmit(this.onSubmit)}
-                className="add-attribute-form"
-              >
-                <div className="inputs">{this.renderFields()}</div>
-                <ReButton
-                  type="primary"
-                  text="Add"
-                  width="250px"
-                  loading={this.props.loading}
-                  disabled={this.props.pristine}
-                />
-              </form>
-            </>
-          )}
+          <AttributeCardList
+            type="types"
+            ListComponent={AttributeTypeCard}
+            onClick={handleTypeChange}
+          />
         </div>
-      </div>
-    )
-  }
+      )}
+    </div>
+  )
 }
 
-const mapStateToProps = state => {
-  return {
-    attrTypes: state.attributeState.types,
-    collectionList: Object.keys(state.userState.collections),
-    loading: state.attributeState.loading,
-    formValues: getFormValues('addAttribute')(state)
-  }
+ReAddAttribute.propTypes = {
+  onAttributeAdd: PropTypes.func.isRequired
 }
 
-const AddAttributeForm = reduxForm({
-  form: 'addAttribute'
-})(ReAddAttribute)
-
-export default connect(
-  mapStateToProps,
-  { addAttribute }
-)(AddAttributeForm)
+export default ReAddAttribute

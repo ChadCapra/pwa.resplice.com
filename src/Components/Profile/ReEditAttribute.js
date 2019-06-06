@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Field, reduxForm, formValueSelector } from 'redux-form'
+import { Field, reduxForm, formValueSelector, getFormValues } from 'redux-form'
 import { connect } from 'react-redux'
 import { editAttribute } from '../../actions'
 
+import AttributeTypeCard from '../Cards/AttributeTypeCard'
 import ReInput from '../Input/ReInput'
 import ReInputPhone from '../Input/ReInputPhone'
 import ReInputCombo from '../Input/ReInputCombo'
@@ -116,20 +117,26 @@ class ReEditAttribute extends Component {
   render() {
     return (
       <div className="edit-attribute">
-        <p className="edit-attribute-type">{this.props.attrType.name}</p>
-        <form
-          className="edit-attribute-form"
-          onSubmit={this.props.handleSubmit(this.onSubmit)}
-        >
-          <div className="inputs">{this.renderFields()}</div>
-          <ReButton
-            type="primary"
-            text="Save"
-            width="250px"
-            loading={this.props.loading}
-            disabled={this.props.pristine}
-          />
-        </form>
+        <AttributeTypeCard
+          className="attribute-preview-card"
+          item={this.props.attrType}
+          previewValues={this.props.formValues}
+        />
+        <div className="edit-attribute-body">
+          <form
+            className="edit-attribute-form"
+            onSubmit={this.props.handleSubmit(this.onSubmit)}
+          >
+            <div className="inputs">{this.renderFields()}</div>
+            <ReButton
+              type="primary"
+              text="Save"
+              width="250px"
+              loading={this.props.loading}
+              disabled={this.props.pristine}
+            />
+          </form>
+        </div>
       </div>
     )
   }
@@ -140,7 +147,6 @@ const mapStateToProps = (state, ownProps) => {
   const attrType = state.attributeState.types.find(
     type => type.id === ownProps.attribute.attribute_type_id
   )
-  const country = selector(state, 'country')
 
   return {
     loading: state.attributeState.loading,
@@ -151,7 +157,8 @@ const mapStateToProps = (state, ownProps) => {
       ...ownProps.attribute.value,
       collection: ownProps.attribute.collection
     },
-    country
+    formValues: getFormValues('editAttribute')(state),
+    country: selector(state, 'country')
   }
 }
 
@@ -163,6 +170,8 @@ ReEditAttribute.propTypes = {
   collectionList: PropTypes.array.isRequired,
   attrType: PropTypes.object.isRequired,
   initialValues: PropTypes.object,
+  country: PropTypes.string,
+  formValues: PropTypes.object,
   editAttribute: PropTypes.func.isRequired
 }
 

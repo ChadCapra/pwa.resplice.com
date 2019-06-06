@@ -10,7 +10,7 @@ const ReModal = ({ show, onClose, full, headerText, children }) => {
   const contentNode = useRef()
 
   const handleOutsideClick = e => {
-    if (!contentNode.current.contains(e.target)) {
+    if (!contentNode.current.contains(e.target) && !full) {
       animateAndClose()
     }
   }
@@ -60,6 +60,7 @@ ReModal.propTypes = {
   show: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   full: PropTypes.bool,
+  headerText: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object,

@@ -23,14 +23,24 @@
 }
 
 .user,
-.add-attribute {
+.add-attribute,
+.edit-attribute,
+.verify-attribute {
   height: 100vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
-.add-attribute-body {
+.add-attribute,
+.edit-attribute,
+.verify-attribute {
+  align-items: center;
+}
+
+.add-attribute-body,
+.edit-attribute-body,
+.verify-attribute-body {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -38,6 +48,7 @@
   padding-top: 20px;
   flex-grow: 1;
   overflow-y: scroll;
+  width: 100%;
 }
 
 .user-body {
@@ -117,10 +128,6 @@
   padding: 20px 0 15px 0;
 }
 
-.edit-attribute {
-  text-align: center;
-}
-
 .edit-attribute-form,
 .add-attribute-form {
   display: flex;
@@ -129,6 +136,7 @@
   align-items: center;
   padding-bottom: 10px;
   width: 100%;
+  max-width: 575px;
 }
 
 .edit-attribute-type {
@@ -141,7 +149,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  margin-top: 25px;
 }
 .avatar-upload-header {
   margin: 0;
@@ -164,11 +172,85 @@
   width: 75px;
 }
 
-.re-verify-attribute {
+.re-user-ranks {
+  padding: 20px;
+}
+.rank-header {
+  font-size: 36px;
+  margin-top: 0;
+  text-align: center;
+  margin: 0 30px;
+  overflow: auto;
+}
+.total-share-text {
+  text-align: center;
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 18px;
+  margin: 10px 0;
+}
+.rank-status {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 25px 0;
+}
+.rank-info {
+  flex-grow: 2;
+  display: flex;
+  margin-left: 20px;
+  flex-direction: column;
+}
+.rank-info-text {
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.re-user-settings {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  padding: 25px;
 }
-.re-verify-attribute-name {
-  font-size: 18px;
+.settings-group {
+  margin: 10px 0;
+  width: 100%;
+  max-width: 575px;
+}
+.settings-header {
+  color: #1bbc9b;
+  font-size: 24px;
+}
+.setting {
+  display: flex;
+  justify-content: space-between;
+  border-radius: 10px;
+  box-shadow: 1px 1px 15px #0000001a;
+  padding: 15px 10px;
+  margin: 10px 0;
+
+  &.red {
+    background-color: hsl(348, 100%, 61%);
+    color: white;
+  }
+}
+.setting-switch {
+  width: 40px;
+  height: 20px;
+  background-color: #e5e5e5;
+  border-radius: 50px;
+
+  &--active {
+    background-color: rgba(27, 188, 156, 0.3);
+    & .setting-switch-inner {
+      background-color: #1bbc9b;
+    }
+  }
+}
+.setting-switch-inner {
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 20px;
+  height: 20px;
 }

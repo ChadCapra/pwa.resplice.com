@@ -22,15 +22,61 @@ class UserAttributeCard extends Component {
 
   handleAction = (action, currentAttr) => {
     switch (action) {
-      case 'Copy to Clipboard':
+      case 'call':
+        window.open(`tel:${currentAttr.value.phone}`)
+        break
+      case 'sms':
+        window.open(`sms:${currentAttr.value.phone}`)
+        break
+      case 'email':
+        window.open(`mailto:${currentAttr.value.email}`)
+        break
+      case 'map':
+        window.open(
+          `https://www.google.com/maps/search/?api=1&query=${this.combineAttrValues(
+            currentAttr.value,
+            '+'
+          )}`
+        )
+        break
+      case 'nav':
+        window.open(
+          `https://www.google.com/maps/dir/?api=1&destination=${this.combineAttrValues(
+            currentAttr.value,
+            '+'
+          )}&dir_action=navigate`
+        )
+        break
+      case 'navigate':
+        window.open(
+          `https://www.google.com/maps/dir/?api=1&destination=${this.combineAttrValues(
+            currentAttr.value,
+            ','
+          )}&dir_action=navigate`
+        )
+        break
+      case 'locate':
+        window.open(
+          `https://www.google.com/maps/search/?api=1&query=${this.combineAttrValues(
+            currentAttr.value,
+            ','
+          )}`
+        )
+        break
+      case 'link':
+        window.open(currentAttr.value.url)
+        break
+      case 'calendar':
+        this.copyToClipboard(currentAttr.value)
+        break
+      case 'copy':
         this.copyToClipboard(currentAttr.value)
         this.setState({ showDropDownIdx: -1 })
-        console.log(this.state.showDropDownIdx)
         break
-      case 'Edit':
+      case 'edit':
         this.setState({ currentAttr, showDropDownIdx: -1, showEditModal: true })
         break
-      case 'Verify':
+      case 'verify':
         this.setState({
           currentAttr,
           showDropDownIdx: -1,
@@ -41,15 +87,16 @@ class UserAttributeCard extends Component {
     }
   }
 
-  combineAttrValues = attr => {
-    return Object.values(attr).reduce((accum, value) => {
+  combineAttrValues = (attr, delim) => {
+    return Object.values(attr).reduce((accum, value, idx) => {
       if (!value) return accum
-      return accum.concat(' ', value)
+      if (idx < 1) return value
+      return accum.concat(delim, value)
     }, '')
   }
 
   copyToClipboard = value => {
-    const text = this.combineAttrValues(value)
+    const text = this.combineAttrValues(value, ' ')
     let el = document.createElement('textarea')
     el.value = text
     el.setAttribute('readonly', '')
@@ -65,6 +112,9 @@ class UserAttributeCard extends Component {
     const attrs = item[1]
     return attrs.map((attr, idx) => {
       const attrType = types.find(el => el.id === attr.attribute_type_id)
+      const actions = attrType.actions.filter(
+        action => !action.unverified_only || !attr.verified_at
+      )
       return (
         <React.Fragment key={attr.uuid}>
           <Columns
@@ -72,12 +122,11 @@ class UserAttributeCard extends Component {
             breakpoint="mobile"
             multiline={false}
           >
-            <Columns.Column size={1}>
-              <ActionIcon
-                name={attrType.actions[0].icon}
-                fill="#C4C4C4"
-                width="2.5em"
-              />
+            <Columns.Column
+              size={1}
+              onClick={() => this.handleAction(actions[0].name, attr)}
+            >
+              <ActionIcon name={actions[0].icon} fill="#C4C4C4" width="2.5em" />
             </Columns.Column>
             <Columns.Column
               className="card-attribute-text"
@@ -85,22 +134,21 @@ class UserAttributeCard extends Component {
               onClick={() => this.setState({ showDropDownIdx: idx })}
             >
               <span className="card-attribute-text-name">{attr.name}</span>
-              <span>{this.combineAttrValues(attr.value)}</span>
+              <span>{this.combineAttrValues(attr.value, ' ')}</span>
               {idx === this.state.showDropDownIdx && (
                 <ReDropdown
                   isUserAttribute
-                  items={attrType.actions}
+                  items={actions}
                   onClick={action => this.handleAction(action, attr)}
                   close={() => this.setState({ showDropDownIdx: -1 })}
                 />
               )}
             </Columns.Column>
-            <Columns.Column size={1}>
-              <ActionIcon
-                name={attrType.actions[1].icon}
-                fill="#C4C4C4"
-                width="2.5em"
-              />
+            <Columns.Column
+              size={1}
+              onClick={() => this.handleAction(actions[1].name, attr)}
+            >
+              <ActionIcon name={actions[1].icon} fill="#C4C4C4" width="2.5em" />
             </Columns.Column>
           </Columns>
         </React.Fragment>
@@ -112,7 +160,7 @@ class UserAttributeCard extends Component {
     <ReModal
       onClose={() => this.setState({ showEditModal: false })}
       show={this.state.showEditModal}
-      headerText="Edit Attribute"
+      full
     >
       <ReEditAttribute
         attribute={this.state.currentAttr}
@@ -126,7 +174,7 @@ class UserAttributeCard extends Component {
     <ReModal
       onClose={() => this.setState({ showVerifyModal: false })}
       show={this.state.showVerifyModal}
-      headerText="Verify Attribute"
+      full
     >
       <ReVerifyAttribute
         attribute={this.state.currentAttr}

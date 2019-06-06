@@ -7,6 +7,8 @@ import ReUserProfile from './Profile/ReUserProfile'
 import ReUserSettings from './Profile/ReUserSettings'
 import RePlusFAB from './Buttons/RePlusFAB'
 import ReHeader from './Header/ReHeader'
+import ReAddAttribute from './Profile/ReAddAttribute'
+import ReModal from './Modals/ReModal'
 
 import './Profile/profile.scss'
 
@@ -14,6 +16,9 @@ class ReUserView extends Component {
   constructor(props) {
     super(props)
     this.swipe = React.createRef()
+    this.state = {
+      showAddAttributeModal: false
+    }
   }
 
   componentWillMount() {
@@ -21,8 +26,6 @@ class ReUserView extends Component {
   }
 
   render() {
-    if (this.props.loading) return ''
-
     return (
       <div className="user">
         <ReHeader menus={['Profile', 'Settings']} exitRoute={'/'} />
@@ -38,25 +41,33 @@ class ReUserView extends Component {
           >
             <div className="swipe-nav-item-container">
               <ReUserProfile />
-              <RePlusFAB route="/profile/add-attribute" />
+              <RePlusFAB
+                onClick={() => this.setState({ showAddAttributeModal: true })}
+              />
             </div>
             <div className="swipe-nav-item-container">
               <ReUserSettings />
             </div>
           </ReactSwipe>
         </div>
+
+        <ReModal
+          show={this.state.showAddAttributeModal}
+          onClose={() => this.setState({ showAddAttributeModal: false })}
+          full
+        >
+          <ReAddAttribute
+            onAttributeAdd={() =>
+              this.setState({ showAddAttributeModal: false })
+            }
+          />
+        </ReModal>
       </div>
     )
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    loading: state.userState.loading
-  }
-}
-
 export default connect(
-  mapStateToProps,
+  null,
   { swiped }
 )(ReUserView)
