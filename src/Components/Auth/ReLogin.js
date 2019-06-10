@@ -37,6 +37,7 @@ class ReLogin extends Component {
             type="text"
             label="Mobile Phone"
             component={ReInputPhone}
+            defaultCountry="us"
           />
           <Field
             name="email"

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 
 import './input.scss'
@@ -10,6 +10,13 @@ const ReInput = ({
   meta: { pristine, touched, error, warning },
   ...props
 }) => {
+  const field = useRef(null)
+  useEffect(() => {
+    if (props.autoFocus) {
+      field.current.focus()
+    }
+  }, [props.autoFocus])
+
   return (
     <div
       className={`re-input${error && touched ? ' re-input--error' : ''}${
@@ -17,7 +24,13 @@ const ReInput = ({
       }`}
     >
       <label className="re-input-label">{label}</label>
-      <input {...input} {...props} className="re-field" type={type} />
+      <input
+        {...input}
+        {...props}
+        className="re-field"
+        type={type}
+        ref={field}
+      />
       {touched &&
         ((error && <span className="input-error-text">{error}</span>) ||
           (warning && <span className="input-warning-text">{warning}</span>))}
@@ -26,7 +39,7 @@ const ReInput = ({
 }
 
 ReInput.propTypes = {
-  input: PropTypes.object,
+  input: PropTypes.object.isRequired,
   type: PropTypes.oneOf(['text', 'email', 'date']).isRequired,
   label: PropTypes.string.isRequired,
   meta: PropTypes.object.isRequired
