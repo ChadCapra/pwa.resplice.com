@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import ReactSwipe from 'react-swipe'
 import { swiped } from '../actions'
@@ -12,59 +12,44 @@ import ReModal from './Modals/ReModal'
 
 import './Profile/profile.scss'
 
-class ReUserView extends Component {
-  constructor(props) {
-    super(props)
-    this.swipe = React.createRef()
-    this.state = {
-      showAddAttributeModal: false
-    }
-  }
+const ReUserView = ({ swiped }) => {
+  const [showAddAttributeModal, setAddAttributeModal] = useState(false)
 
-  componentWillMount() {
-    this.props.swiped(0)
-  }
+  useEffect(() => {
+    swiped(0)
+  }, [swiped])
 
-  render() {
-    return (
-      <div className="user">
-        <ReHeader menus={['Profile', 'Settings']} exitRoute={'/'} />
-        <div className="user-body">
-          <ReactSwipe
-            className="swipe-nav"
-            swipeOptions={{
-              startSlide: 0,
-              continuous: false,
-              callback: idx => this.props.swiped(idx)
-            }}
-            ref={this.swipe}
-          >
-            <div className="swipe-nav-item-container">
-              <ReUserProfile />
-              <RePlusFAB
-                onClick={() => this.setState({ showAddAttributeModal: true })}
-              />
-            </div>
-            <div className="swipe-nav-item-container">
-              <ReUserSettings />
-            </div>
-          </ReactSwipe>
-        </div>
-
-        <ReModal
-          show={this.state.showAddAttributeModal}
-          onClose={() => this.setState({ showAddAttributeModal: false })}
-          full
+  return (
+    <div className="user">
+      <ReHeader menus={['Profile', 'Settings']} exitRoute={'/'} />
+      <div className="user-body">
+        <ReactSwipe
+          className="swipe-nav"
+          swipeOptions={{
+            startSlide: 0,
+            continuous: false,
+            callback: idx => swiped(idx)
+          }}
         >
-          <ReAddAttribute
-            onAttributeAdd={() =>
-              this.setState({ showAddAttributeModal: false })
-            }
-          />
-        </ReModal>
+          <div className="swipe-nav-item-container">
+            <ReUserProfile />
+            <RePlusFAB onClick={() => setAddAttributeModal(true)} />
+          </div>
+          <div className="swipe-nav-item-container">
+            <ReUserSettings />
+          </div>
+        </ReactSwipe>
       </div>
-    )
-  }
+
+      <ReModal
+        show={showAddAttributeModal}
+        onClose={() => setAddAttributeModal(false)}
+        full
+      >
+        <ReAddAttribute onAttributeAdd={() => setAddAttributeModal(false)} />
+      </ReModal>
+    </div>
+  )
 }
 
 export default connect(
