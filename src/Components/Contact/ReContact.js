@@ -1,27 +1,29 @@
-import React from 'react'
-import { withRouter } from 'react-router-dom'
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import { Redirect } from 'react-router-dom'
 
 import ReAvatar from './ReAvatar'
+
 import './contact.scss'
 
-const goToContact = (id, history, dummy) => {
-  if (!dummy) {
-    history.push(`/contact/${id}`)
-  }
+const ReContact = ({ contact: { uuid, name, tags, avatar }, dummy }) => {
+  const [goContact, setContact] = useState(false)
+  if (goContact && !dummy) return <Redirect push to={`/contacts/${uuid}`} />
+
+  return (
+    <div className="contact" onClick={() => setContact(true)}>
+      <ReAvatar avatar={avatar} uuid={uuid} />
+      <div className="contact-name">
+        <span>{name}</span>
+        <span className="contact-group">{tags}</span>
+      </div>
+    </div>
+  )
 }
 
-const ReContact = withRouter(
-  ({ history, contact: { name, tags, avatar, id, uuid }, dummy }) => {
-    return (
-      <div className="contact" onClick={() => goToContact(id, history, dummy)}>
-        <ReAvatar avatar={avatar} uuid={uuid} />
-        <div className="contact-name">
-          <span>{name}</span>
-          <span className="contact-group">{tags}</span>
-        </div>
-      </div>
-    )
-  }
-)
+ReContact.propTypes = {
+  contact: PropTypes.object.isRequired,
+  dummy: PropTypes.bool
+}
 
 export default ReContact

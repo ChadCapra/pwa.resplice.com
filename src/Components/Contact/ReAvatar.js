@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Identicon from 'react-identicons'
 
 import './contact.scss'
@@ -15,6 +16,11 @@ const ReAvatar = ({ avatar, uuid }) => {
       </div>
     )
   }
+}
+
+ReAvatar.propTypes = {
+  avatar: PropTypes.string.isRequired,
+  uuid: PropTypes.string.isRequired
 }
 
 export default ReAvatar

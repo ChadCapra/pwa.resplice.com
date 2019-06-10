@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 import ReContact from './ReContact'
 import RePlusFAB from '../Buttons/RePlusFAB'
@@ -11,8 +12,10 @@ class ReContactList extends Component {
       tags: 'You have no contacts',
       avatar: '',
       uuid: '23490909e-234-gdfgdf-w4323'
-    }
+    },
+    toShare: false
   }
+
   renderContactList() {
     if (this.props.contacts.length > 0) {
       return this.props.contacts.map(contact => {
@@ -23,10 +26,11 @@ class ReContactList extends Component {
     }
   }
   render() {
+    if (this.state.toShare) return <Redirect push to="/share" />
     return (
       <div className="contact-list">
         {this.renderContactList()}
-        <RePlusFAB selected={false} route="/share" />
+        <RePlusFAB onClick={() => this.setState({ toShare: true })} />
       </div>
     )
   }
