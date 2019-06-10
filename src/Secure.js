@@ -12,6 +12,7 @@ import App from './App'
 import ReAuth from './components/Auth/ReAuth'
 import GlobalLoading from './components/Loading/GlobalLoading'
 import Offline from './components/Util/Offline'
+import Test from './components/Test'
 
 const PrivateRoute = ({ authorized, ...rest }) => {
   // Check if user is authorized and then render the App component
@@ -45,6 +46,7 @@ class Secure extends Component {
       <Router>
         <Switch>
           <Route path="/auth" component={ReAuth} />
+          <Route path="/test" component={Test} />
           <PrivateRoute path="/" authorized={this.props.isAuthorized} />
         </Switch>
       </Router>
