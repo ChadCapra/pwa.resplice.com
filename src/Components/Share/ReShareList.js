@@ -3,12 +3,14 @@ import { connect } from 'react-redux'
 import { buildShare } from '../../actions'
 import { Redirect } from 'react-router-dom'
 
-import ReInputCustom from '../Input/ReInputCustom'
+import ReInput from '../Input/ReInput'
+import ReInputPhone from '../Input/ReInputPhone'
 import ReButton from '../Buttons/ReButton'
 import ReShareDropdown from './ReShareDropdown'
 import MdClose from 'react-ionicons/lib/MdClose'
 import MdMail from 'react-ionicons/lib/MdMail'
 import MdCall from 'react-ionicons/lib/MdCall'
+import ReAvatar from '../Contact/ReAvatar'
 
 import './share.scss'
 
@@ -21,43 +23,25 @@ class ReShareList extends Component {
     query: '',
     queryType: '',
     shareList: [],
-    phone_details: [],
-    email_details: [],
-    contactList: [],
     continue: false
   }
 
   handleAttrClick = () => {
     if (this.state.queryType === 'email') {
       const shareList = [...this.state.shareList]
-      const email_details = [...this.state.email_details]
-      shareList.push({ value: this.state.query, email: this.state.query })
-      email_details.push({ email: this.state.query })
+      shareList.push({ type: 'Email', value: this.state.query })
       this.setState({
         showMenu: false,
         shareList,
-        email_details,
         query: '',
         queryType: ''
       })
     } else if (this.state.queryType === 'phone') {
       const shareList = [...this.state.shareList]
-      const phone_details = [...this.state.phone_details]
-      shareList.push({
-        value: this.state.query,
-        country_code: '',
-        phone_number: this.state.query,
-        extension: ''
-      })
-      phone_details.push({
-        country_code: '',
-        phone_number: this.state.query,
-        extension: ''
-      })
+      shareList.push({ type: 'Phone', value: this.state.query })
       this.setState({
         showMenu: false,
         shareList,
-        phone_details,
         query: '',
         queryType: ''
       })
@@ -65,15 +49,11 @@ class ReShareList extends Component {
   }
 
   clearLists = () => {
-    this.setState({ shareList: [], contactList: [] })
+    this.setState({ shareList: [] })
   }
 
   buildLists = () => {
-    this.props.buildShare(
-      this.state.contactList,
-      this.state.phone_details,
-      this.state.email_details
-    )
+    this.props.buildShare(this.state.shareList)
     this.setState({ continue: true })
   }
 
@@ -88,12 +68,15 @@ class ReShareList extends Component {
   }
 
   handleInputChange = value => {
-    let numsOnly = /^[0-9]+$/
+    let numsOnly = /^[+0-9()-\s]+$/
     // eslint-disable-next-line
     let email = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     if (email.test(value)) {
       this.setState({ queryType: 'email' })
-    } else if (numsOnly.test(value) && value.length > 6) {
+    } else if (numsOnly.test(value) && value.length > 2) {
+      if (this.state.queryType !== 'phone' && value[0] !== '+') {
+        value = '1' + value
+      }
       this.setState({ queryType: 'phone' })
     } else {
       this.setState({ queryType: '' })
@@ -103,35 +86,48 @@ class ReShareList extends Component {
   }
 
   renderIcon = item => {
-    if (item.email) {
+    if (item.type === 'Email') {
       return <MdMail fontSize="2em" color="white" />
-    } else if (item.phone_number) {
+    } else if (item.type === 'Phone') {
       return <MdCall fontSize="2em" color="white" />
     } else {
-      return <div>{item.profile_pic}</div>
+      return <ReAvatar avatar={item.avatar} uuid={item.value} />
     }
   }
 
   render() {
     if (this.state.continue) return <Redirect push to="/share/attributes" />
+
     return (
       <div className="share-list">
         <h1 className="share-list-header">Add by Phone, Email, or Contact</h1>
         <div className="share-list-input-container">
-          <ReInputCustom
-            onFocus={() => {
-              this.setState({ showMenu: true })
-            }}
-            onChange={e => this.handleInputChange(e.target.value)}
-            value={this.state.query}
-          />
-          {this.state.showMenu && (
+          {this.state.queryType === 'phone' ? (
+            <ReInputPhone
+              label="Share"
+              meta={{ pristine: true, touched: false, error: '', warning: '' }}
+              onChange={value => {
+                this.handleInputChange(value)
+              }}
+              input={{ value: this.state.query }}
+              inputExtraProps={{ autoFocus: true }}
+            />
+          ) : (
+            <ReInput
+              type="text"
+              label="Share"
+              meta={{ pristine: true, touched: false, error: '', warning: '' }}
+              onChange={e => this.handleInputChange(e.target.value)}
+              input={{ value: this.state.query }}
+              autoFocus
+            />
+          )}
+          {this.state.query.length > 0 && (
             <ReShareDropdown
               query={this.state.query}
               queryType={this.state.queryType}
               handleAttrClick={this.handleAttrClick}
               handleContactClick={this.handleContactClick}
-              close={() => this.setState({ showMenu: false })}
             />
           )}
         </div>
@@ -144,7 +140,6 @@ class ReShareList extends Component {
                   <div>{item.value}</div>
                 </div>
                 <MdClose
-                  className="share-list-close"
                   fontSize="2em"
                   color="#1BBC9B"
                   onClick={() => this.removeFromShareList(idx)}
@@ -163,9 +158,10 @@ class ReShareList extends Component {
           />
           <ReButton
             type="primary"
-            text="Share"
+            text="Continue"
             width="175px"
             onClick={this.buildLists}
+            disabled={!this.state.shareList.length}
           />
         </div>
       </div>

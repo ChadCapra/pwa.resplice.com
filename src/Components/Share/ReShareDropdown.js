@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import MdMail from 'react-ionicons/lib/MdMail'
 import MdCall from 'react-ionicons/lib/MdCall'
 import ReContact from '../Contact/ReContact'
-import MdClose from 'react-ionicons/lib/MdClose'
 
 import './share.scss'
 
@@ -41,16 +40,6 @@ class ReShareDropdown extends Component {
 
     return (
       <div className="share-dropdown">
-        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <MdClose
-            style={{ margin: '0 0 10px 0', cursor: 'pointer' }}
-            color="#1bbc9b"
-            fontSize="1.5em"
-            className="re-exit-icon"
-            onClick={this.props.close}
-          />
-        </div>
-
         <div className="dropdown-query">
           {this.renderType(queryType)}
           <div className="dropdown-query-text" onClick={handleAttrClick}>
@@ -65,7 +54,7 @@ class ReShareDropdown extends Component {
 
 const mapStateToProps = state => {
   return {
-    contacts: state.contactState.list
+    contacts: state.contactState.contacts
   }
 }
 

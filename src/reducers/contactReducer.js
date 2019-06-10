@@ -14,21 +14,25 @@ const INITIAL_STATE = {
   contacts: []
 }
 
+const buildCollections = attributes => {
+  const collections = {}
+  attributes.forEach(attr => {
+    collections[attr.collection]
+      ? collections[attr.collection].push(attr)
+      : (collections[attr.collection] = [attr])
+  })
+  return collections
+}
+
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case FETCH_CONTACT:
       return { ...state, loading: true }
     case FETCH_CONTACT_SUCCESS:
-      const collections = {}
-      action.payload.attributes.forEach(attr => {
-        collections[attr.collection]
-          ? collections[attr.collection].push(attr)
-          : (collections[attr.collection] = [attr])
-      })
       return {
         ...state,
         loading: false,
-        collections,
+        collections: buildCollections(action.payload.data.attributes),
         profile: action.payload.profile
       }
     case FETCH_CONTACT_FAILURE:
@@ -36,7 +40,8 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_CONTACT_LIST:
       return { ...state, loading: true }
     case FETCH_CONTACT_LIST_SUCCESS:
-      return { ...state, loading: false, contacts: action.payload }
+      const { data: contacts, ...payload } = action.payload
+      return { ...state, loading: false, contacts, ...payload }
     case FETCH_CONTACT_LIST_FAILURE:
       return { ...state, loading: false, error: action.payload }
     default:

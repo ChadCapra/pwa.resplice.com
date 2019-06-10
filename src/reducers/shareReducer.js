@@ -2,19 +2,35 @@ import {
   SHARE_ATTRIBUTES,
   SHARE_ATTRIBUTES_SUCCESS,
   SHARE_ATTRIBUTES_FAILURE,
-  ADD_CONTACTS_TO_SHARES,
-  ADD_PHONES_TO_SHARES,
-  ADD_EMAILS_TO_SHARES,
-  TOGGLE_ATTRIBUTE_SHARE_LIST
+  BUILD_SHARE_LIST
 } from '../actions/types'
 
 const INITIAL_STATE = {
   loading: false,
   error: null,
-  contact_ids: [],
-  group_ids: [],
-  phone_details: [],
-  email_details: [],
+  // shareList: [],
+  shareList: [
+    {
+      type: 'Email',
+      value: 'chad@capabit.com'
+    },
+    {
+      type: 'Phone',
+      value: '+1 (218) 591-0657'
+    },
+    {
+      type: 'User',
+      value: 'a43e9f5b-7035-4fc8-8f70-03404aaf5a93',
+      name: 'Cindy Wu',
+      avatar: 'https://i.pravatar.cc/300?img=40'
+    },
+    {
+      type: 'User',
+      value: 'a43e9f5b-7035-4fc8-8f70-03404aaf5a94',
+      name: 'Jennifer Johnson',
+      avatar: 'https://i.pravatar.cc/300?img=43'
+    }
+  ],
   attribute_shares: []
 }
 
@@ -26,23 +42,11 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, loading: false }
     case SHARE_ATTRIBUTES_FAILURE:
       return { ...state, loading: false, error: action.payload.status }
-    case ADD_CONTACTS_TO_SHARES:
-      return { ...state, contact_ids: action.payload }
-    case ADD_PHONES_TO_SHARES:
-      return { ...state, phone_details: action.payload }
-    case ADD_EMAILS_TO_SHARES:
-      return { ...state, email_details: action.payload }
-    case TOGGLE_ATTRIBUTE_SHARE_LIST:
-      const attribute_shares = [...state.attribute_shares]
-      const idx = attribute_shares.findIndex(
-        as => as.attribute_id === action.payload.attribute_id
-      )
-      if (idx >= 0) {
-        attribute_shares.splice(idx, 1)
-      } else {
-        attribute_shares.push(action.payload)
+    case BUILD_SHARE_LIST:
+      return {
+        ...state,
+        shareList: action.payload
       }
-      return { ...state, attribute_shares }
     default:
       return state
   }
