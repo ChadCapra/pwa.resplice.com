@@ -2,9 +2,15 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-const AttributeCardList = ({ list, ListComponent, onClick }) =>
+const AttributeCardList = ({ list, ListComponent, onClick, ...props }) =>
   list.map((item, idx) => (
-    <ListComponent key={idx} idx={idx} item={item} onClick={onClick} />
+    <ListComponent
+      key={idx}
+      idx={idx}
+      item={item}
+      onClick={onClick}
+      {...props}
+    />
   ))
 
 const mapStateToProps = (state, ownProps) => {

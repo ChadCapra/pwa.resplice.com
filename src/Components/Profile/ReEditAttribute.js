@@ -121,6 +121,7 @@ class ReEditAttribute extends Component {
           className="attribute-preview-card"
           item={this.props.attrType}
           previewValues={this.props.formValues}
+          onClick={() => {}}
         />
         <div className="edit-attribute-body">
           <form

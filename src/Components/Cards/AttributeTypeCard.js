@@ -56,7 +56,7 @@ AttributeTypeCard.propTypes = {
   idx: PropTypes.number,
   item: PropTypes.object.isRequired,
   previewValues: PropTypes.object,
-  onClick: PropTypes.func
+  onClick: PropTypes.func.isRequired
 }
 
 export default AttributeTypeCard

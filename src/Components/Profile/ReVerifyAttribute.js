@@ -22,6 +22,7 @@ const ReVerifyAttribute = ({
         className="attribute-preview-card"
         item={attrType}
         previewValues={{ collection, name, value: Object.values(value) }}
+        onClick={() => {}}
       />
       <div className="verify-attribute-body">
         <div className="inputs" style={{ marginBottom: '50px' }}>
