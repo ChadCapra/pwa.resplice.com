@@ -67,3 +67,45 @@
   align-items: center;
   justify-content: center;
 }
+
+.re-tags-container {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.re-pill,
+.create-tag-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 30px;
+  width: fit-content;
+  max-width: 100%;
+  padding: 5px 25px;
+  margin: 5px;
+  background-color: #e5e5e5;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 0.3s ease all;
+  font-size: 18px;
+
+  &--active {
+    color: white;
+    background-color: #1bbc9b;
+  }
+}
+
+.create-tag-input {
+  & input {
+    width: 0px;
+    min-width: 100px;
+    font-size: 18px;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+  }
+}

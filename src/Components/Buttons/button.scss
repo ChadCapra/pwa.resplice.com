@@ -14,6 +14,7 @@ $button-bg-light: #77d3c0;
   text-align: center;
   height: 50px;
   transition: all 0.2s ease;
+  width: 300px;
 
   &--primary {
     color: white;
@@ -22,22 +23,11 @@ $button-bg-light: #77d3c0;
   }
 
   &--secondary {
-    color: black;
-    background-color: $button-bg-secondary;
+    color: #1bbc9b;
+    background-color: white;
+    border: 1px solid #1bbc9b;
     max-width: 350px;
-  }
-
-  &--small {
-    color: white;
-    background-color: $button-bg;
-    height: 35px;
-    font-size: 14px;
-  }
-
-  &--big {
-    color: white;
-    background-color: $button-bg;
-    height: 70px;
+    margin: 10px 0;
   }
 
   &--loading {
@@ -52,6 +42,7 @@ $button-bg-light: #77d3c0;
   }
 
   &:active {
+    color: white;
     transform: scale(0.9);
     background-color: darken($button-bg, 5%);
     box-shadow: 0 2px 25px rgba(255, 0, 130, 0.2);

@@ -59,6 +59,23 @@ input:-webkit-autofill {
   font-size: 16px;
 }
 
+.re-text-area {
+  z-index: 5;
+  outline: 0;
+  border: 0;
+  width: calc(100% - 20px);
+  font-size: 16px;
+  background: transparent;
+  border: 1px solid #c8ccd4;
+  border-radius: 5px;
+  transition: 0.2s all ease;
+  padding: 10px 10px;
+
+  &:focus {
+    border: 1px solid #1bbc9b;
+  }
+}
+
 .re-input-label {
   position: absolute;
   top: 16px;

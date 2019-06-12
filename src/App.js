@@ -5,7 +5,6 @@ import ReHomeView from './components/ReHomeView'
 import ReContactView from './components/ReContactView'
 import ReUserView from './components/ReUserView'
 import ReShareView from './components/ReShareView'
-import ReShareAttributes from './components/Share/ReShareAttributes'
 import ReCreateGroup from './components/Group/ReCreateGroup'
 import ReGroupView from './components/ReGroupView'
 
@@ -19,7 +18,6 @@ const App = () => (
         <Route path="/contact/:id" component={ReContactView} />
         <Route path="/profile" exact component={ReUserView} />
         <Route path="/share" exact component={ReShareView} />
-        <Route path="/share/attributes" component={ReShareAttributes} />
         <Route path="/group/create" component={ReCreateGroup} />
         <Route path="/group/:id" component={ReGroupView} />
       </>

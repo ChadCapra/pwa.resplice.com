@@ -22,11 +22,11 @@
   padding: 0px 5px;
 }
 
-.share-list-header,
-.qr-code-header,
-.share-camera-header {
+.invite-header {
+  width: 90%;
+  max-width: 575px;
+  color: #1bbc9b;
   font-size: 18px;
-  text-align: center;
 }
 
 .share-list {
@@ -38,9 +38,10 @@
 .share-list-footer {
   position: fixed;
   bottom: 0;
-  padding: 15px 0;
+  padding: 0 0 15px 0;
   width: 95%;
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
   border-top: 1px solid rgba(0, 0, 0, 0.15);
@@ -52,9 +53,22 @@
   position: relative;
 }
 
-.share-list-container {
+.invite-attribute-container {
   width: 90%;
   max-width: 575px;
+}
+
+.invite-message-container {
+  position: relative;
+  width: 90%;
+  max-width: 575px;
+
+  & label {
+    position: absolute;
+    top: 55px;
+    left: 10px;
+    color: rgba(0, 0, 0, 0.5);
+  }
 }
 
 .share-list-item {
@@ -190,8 +204,38 @@
   height: 400px;
 }
 
+.qr-camera-btn {
+  display: flex;
+  align-items: center;
+  background-color: #1bbc9b;
+  color: white;
+  width: 90%;
+  max-width: 575px;
+  height: 55px;
+  padding: 5px 0;
+  border-radius: 15px;
+  margin-top: 25px;
+  transition: all 0.2s ease;
+
+  & svg {
+    margin: 0 10px;
+  }
+
+  & span {
+    margin-left: 25px;
+    font-size: 24px;
+  }
+
+  &:active {
+    color: white;
+    transform: scale(0.9);
+    background-color: darken(#1bbc9b, 5%);
+    box-shadow: 0 2px 25px rgba(255, 0, 130, 0.2);
+  }
+}
+
 .qr-code-pin {
-  margin-top: -35px;
+  margin-top: -10px;
   margin-bottom: 25px;
   font-size: 64px;
 }

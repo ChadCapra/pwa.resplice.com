@@ -14,16 +14,7 @@ const combineAttrValues = values => {
   }, '')
 }
 
-const AttributeSelectCard = ({
-  item,
-  types,
-  attributeList,
-  toggleAttribute
-}) => {
-  const checkAttributes = uuid => {
-    return attributeList.findIndex(attr => attr.uuid === uuid) >= 0
-  }
-
+const AttributeSelectCard = ({ item, types, toggleAttribute }) => {
   return (
     <div className="card">
       <div className="card-header">{item[0]}</div>
@@ -60,7 +51,7 @@ const AttributeSelectCard = ({
                 <div className="card-checkbox">
                   <ReCheckbox
                     onClick={() => toggleAttribute(attr)}
-                    checked={checkAttributes(attr.uuid)}
+                    checked={attr.qr_sharable}
                   />
                 </div>
               </Columns.Column>

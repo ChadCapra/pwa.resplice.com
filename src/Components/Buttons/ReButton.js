@@ -5,33 +5,18 @@ import './button.scss'
 /**
  * Primary Button for Resplice. Used on forms, in modals, etc.
  */
-const ReButton = ({
-  type,
-  text,
-  loading,
-  width = '300px',
-  disabled,
-  onClick
-}) => {
+const ReButton = ({ type, text, loading, disabled, onClick, ...props }) => {
   return loading ? (
-    <button
-      style={{ width }}
-      className={`btn btn--${type} btn--loading`}
-      disabled
-    >
+    <button className={`btn btn--${type} btn--loading`} disabled {...props}>
       {text}
       <div className="re-ring re-spin" />
     </button>
   ) : disabled ? (
-    <button
-      style={{ width }}
-      className={`btn btn--${type} btn--disabled`}
-      disabled
-    >
+    <button className={`btn btn--${type} btn--disabled`} disabled {...props}>
       {text}
     </button>
   ) : (
-    <button style={{ width }} className={`btn btn--${type}`} onClick={onClick}>
+    <button className={`btn btn--${type}`} onClick={onClick} {...props}>
       {text}
     </button>
   )
@@ -41,7 +26,7 @@ ReButton.propTypes = {
   /**
    * The type of button, can be primary or secondary.
    */
-  type: PropTypes.oneOf(['primary', 'secondary', 'small']).isRequired,
+  type: PropTypes.oneOf(['primary', 'secondary']).isRequired,
   text: PropTypes.string.isRequired,
   /**
    * Indicates loading state.
