@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Sanchez');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
 // Color Variables will change to get the values from context
 $re-green: #1bbc9b;
 $re-dark: #32393d;
@@ -11,10 +14,19 @@ select,
 textarea {
   margin: 0;
   padding: 0;
-  font-family: 'Sanchez', serif;
+  font-family: 'Open Sans', 'Droid Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Sanchez', serif;
 }
 
 code {
@@ -26,4 +38,17 @@ code {
   width: 100%;
   height: 100vh;
   color: $re-dark;
+}
+
+.flex--center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-col--center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
