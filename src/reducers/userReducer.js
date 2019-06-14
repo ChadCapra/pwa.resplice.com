@@ -2,29 +2,24 @@ import {
   FETCH_PROFILE,
   FETCH_PROFILE_SUCCESS,
   FETCH_PROFILE_FAILURE,
+  FETCH_ATTRIBUTE_TYPES_SUCCESS,
   ADD_ATTRIBUTE_SUCCESS,
   EDIT_ATTRIBUTE_SUCCESS,
-  DELETE_ATTRIBUTE_SUCCESS
+  DELETE_ATTRIBUTE_SUCCESS,
+  ENABLE_QR_SHARE,
+  DISABLE_QR_SHARE
 } from '../actions/types'
+
+import { processAttributes } from '../helpers'
 
 const INITIAL_STATE = {
   loading: false,
   error: null,
-  last_requested: null,
+  loaded_at: null,
   profile: {},
-  attributes: [],
+  attributes: {},
   collections: {},
-  updates: []
-}
-
-const buildCollections = attributes => {
-  const collections = {}
-  attributes.forEach(attr => {
-    collections[attr.collection]
-      ? collections[attr.collection].push(attr)
-      : (collections[attr.collection] = [attr])
-  })
-  return collections
+  types: {}
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -32,34 +27,57 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_PROFILE:
       return { ...state, loading: true }
     case FETCH_PROFILE_SUCCESS:
-      const { attributes, ...profile } = action.payload.data
+      const { attributes, request_at, ...profile } = action.payload.ok
       return {
         ...state,
         loading: false,
-        last_requested: action.payload.request_at,
+        loaded_at: request_at,
         profile,
-        attributes,
-        collections: buildCollections(action.payload.data.attributes)
+        ...processAttributes({ ...attributes }, state.types)
       }
     case FETCH_PROFILE_FAILURE:
-      return { ...state, loading: false, error: action.payload.data }
+      return { ...state, loading: false, error: action.payload }
+    case FETCH_ATTRIBUTE_TYPES_SUCCESS:
+      return { ...state, types: action.payload.ok }
     case ADD_ATTRIBUTE_SUCCESS:
       return {
         ...state,
-        attributes: action.payload,
-        collections: buildCollections(action.payload)
+        ...processAttributes({ ...state.attributes }, state.types, {
+          action: 'add',
+          data: action.payload.ok
+        })
       }
     case EDIT_ATTRIBUTE_SUCCESS:
       return {
         ...state,
-        attributes: action.payload,
-        collections: buildCollections(action.payload)
+        ...processAttributes({ ...state.attributes }, state.types, {
+          action: 'edit',
+          data: action.payload.ok
+        })
       }
     case DELETE_ATTRIBUTE_SUCCESS:
       return {
         ...state,
-        attributes: action.payload,
-        collections: buildCollections(action.payload)
+        ...processAttributes({ ...state.attributes }, state.types, {
+          action: 'delete',
+          data: action.payload.ok
+        })
+      }
+    case ENABLE_QR_SHARE:
+      return {
+        ...state,
+        ...processAttributes({ ...state.attributes }, state.types, {
+          action: 'toggleShareOn',
+          data: action.payload.ok
+        })
+      }
+    case DISABLE_QR_SHARE:
+      return {
+        ...state,
+        ...processAttributes({ ...state.attributes }, state.types, {
+          action: 'toggleShareOff',
+          data: action.payload.ok
+        })
       }
     default:
       return state

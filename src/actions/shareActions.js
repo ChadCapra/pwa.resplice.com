@@ -1,13 +1,18 @@
 import api from '../api'
 import {
-  SHARE_ATTRIBUTES,
-  SHARE_ATTRIBUTES_SUCCESS,
-  SHARE_ATTRIBUTES_FAILURE,
-  BUILD_SHARE_LIST
+  SET_SHARE_ATTRIBUTES,
+  SET_SHARE_ATTRIBUTES_SUCCESS,
+  SET_SHARE_ATTRIBUTES_FAILURE,
+  ENABLE_QR_SHARE,
+  DISABLE_QR_SHARE,
+  QR_SHARE_ERROR,
+  INVITE,
+  INVITE_SUCCESS,
+  INVITE_FAILURE
 } from './types'
 
 export const shareAttributes = (attributes, shareList) => async dispatch => {
-  dispatch({ type: SHARE_ATTRIBUTES })
+  dispatch({ type: SET_SHARE_ATTRIBUTES })
 
   const shareObject = {
     attribute_shares: attributes,
@@ -19,13 +24,41 @@ export const shareAttributes = (attributes, shareList) => async dispatch => {
 
   try {
     await api.post('/sharing/share_attributes', shareObject)
-    dispatch({ type: SHARE_ATTRIBUTES_SUCCESS })
+    dispatch({ type: SET_SHARE_ATTRIBUTES_SUCCESS })
   } catch (err) {
-    dispatch({ type: SHARE_ATTRIBUTES_FAILURE, payload: err.response })
+    dispatch({ type: SET_SHARE_ATTRIBUTES_FAILURE, payload: err })
   }
 }
 
-export const buildShare = shareObject => dispatch => {
-  console.log(shareObject)
-  dispatch({ type: BUILD_SHARE_LIST, payload: shareObject })
+export const enableQrShare = uuid => async dispatch => {
+  dispatch({ type: ENABLE_QR_SHARE, payload: uuid })
+
+  try {
+    await api.patch(`/attribute/${uuid}/enable_qr_share`)
+  } catch (err) {
+    dispatch({ type: QR_SHARE_ERROR, payload: err })
+    dispatch({ type: DISABLE_QR_SHARE, payload: uuid })
+  }
+}
+
+export const disableQrShare = uuid => async dispatch => {
+  dispatch({ type: DISABLE_QR_SHARE, payload: uuid })
+
+  try {
+    await api.patch(`/attribute/${uuid}/disable_qr_share`)
+  } catch (err) {
+    dispatch({ type: QR_SHARE_ERROR, payload: err })
+    dispatch({ type: ENABLE_QR_SHARE, payload: uuid })
+  }
+}
+
+export const invite = inviteObject => async dispatch => {
+  dispatch({ type: INVITE })
+
+  try {
+    await api.post('/contact/invite', inviteObject)
+    dispatch({ type: INVITE_SUCCESS })
+  } catch (err) {
+    dispatch({ type: INVITE_FAILURE, payload: err })
+  }
 }

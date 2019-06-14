@@ -1,26 +1,29 @@
 import React from 'react'
-// import { connect } from 'react-redux'
+import { connect } from 'react-redux'
+import { enableQrShare, disableQrShare } from '../../actions'
 
-import AttributeCardList from '../Cards/AttributeCardList'
-import AttributeSelectCard from '../Cards/AttributeSelectCard'
+import CardList from '../Cards/CardList'
+import ShareCard from '../Cards/ShareCard'
 
-const ReShareAttributes = () => {
+const ReShareAttributes = ({ enableQrShare, disableQrShare }) => {
   return (
     <div className="share-attributes">
       <div className="share-attributes-body">
-        <AttributeCardList
-          ListComponent={AttributeSelectCard}
+        <CardList
+          Card={ShareCard}
           type="user"
-          attributeList={[]}
-          toggleAttribute={() => {}}
+          toggleKey="qr_sharable"
+          toggleAttribute={(on, uuid) => {
+            if (on) enableQrShare(uuid)
+            else disableQrShare(uuid)
+          }}
         />
       </div>
     </div>
   )
 }
 
-export default ReShareAttributes
-// export default connect(
-//   null,
-//   { setShareAttributes }
-// )(ReShareAttributes)
+export default connect(
+  null,
+  { enableQrShare, disableQrShare }
+)(ReShareAttributes)

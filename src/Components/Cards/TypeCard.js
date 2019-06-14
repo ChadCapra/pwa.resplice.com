@@ -11,7 +11,7 @@ const formatValues = values => {
   }, '')
 }
 
-const AttributeTypeCard = ({
+const TypeCard = ({
   idx,
   item: attrType,
   previewValues,
@@ -52,11 +52,11 @@ const AttributeTypeCard = ({
   )
 }
 
-AttributeTypeCard.propTypes = {
+TypeCard.propTypes = {
   idx: PropTypes.number,
   item: PropTypes.object.isRequired,
   previewValues: PropTypes.object,
   onClick: PropTypes.func.isRequired
 }
 
-export default AttributeTypeCard
+export default TypeCard

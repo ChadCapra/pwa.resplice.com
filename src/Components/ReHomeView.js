@@ -30,10 +30,10 @@ const ReHomeView = ({ swiped }) => {
             className="swipe-nav-item-container"
             style={{ transform: 'none' }}
           >
-            <ReContactList />
+            <ReGroupList />
           </div>
           <div className="swipe-nav-item-container">
-            <ReGroupList />
+            <ReContactList />
           </div>
         </ReactSwipe>
       </div>

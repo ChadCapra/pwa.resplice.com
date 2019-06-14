@@ -2,9 +2,9 @@ import {
   LOGIN,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
-  REGISTER,
-  REGISTER_SUCCESS,
-  REGISTER_FAILURE,
+  CREATE_PROFILE,
+  CREATE_PROFILE_SUCCESS,
+  CREATE_PROFILE_FAILURE,
   VERIFY,
   VERIFY_SUCCESS,
   VERIFY_FAILURE,
@@ -22,7 +22,7 @@ const INITIAL_STATE = {
   isVerified: false,
   login: {},
   verify: {},
-  register: {}
+  profile: {}
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -39,11 +39,11 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, loading: false, error: action.payload }
     case LOGOUT:
       return INITIAL_STATE
-    case REGISTER:
+    case CREATE_PROFILE:
       return { ...state, loading: true }
-    case REGISTER_SUCCESS:
-      return { ...state, loading: false, register: action.payload }
-    case REGISTER_FAILURE:
+    case CREATE_PROFILE_SUCCESS:
+      return { ...state, loading: false, profile: action.payload }
+    case CREATE_PROFILE_FAILURE:
       return { ...state, loading: false, error: action.payload }
     case VERIFY:
       return { ...state, loading: true }
@@ -52,10 +52,10 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         verify: action.payload,
-        isVerified: action.payload.data.access_token ? true : false
+        isVerified: action.payload.ok.access_token ? true : false
       }
     case VERIFY_FAILURE:
-      return { ...state, loading: false, error: action.payload.status }
+      return { ...state, loading: false, error: action.payload }
     case AUTHORIZE:
       return { ...state, isAuthorized: true }
     case FETCH_PROFILE_FAILURE || FETCH_CONTACT_LIST_FAILURE:

@@ -3,7 +3,7 @@ import { Field, reduxForm, formValueSelector, getFormValues } from 'redux-form'
 import { connect } from 'react-redux'
 import { addAttribute } from '../../actions'
 
-import AttributeTypeCard from '../Cards/AttributeTypeCard'
+import TypeCard from '../Cards/TypeCard'
 import ReInput from '../Input/ReInput'
 import ReInputPhone from '../Input/ReInputPhone'
 import ReInputCombo from '../Input/ReInputCombo'
@@ -36,7 +36,7 @@ class ReAddAttributeForm extends Component {
   render() {
     return (
       <>
-        <AttributeTypeCard
+        <TypeCard
           className="attribute-preview-card"
           item={this.props.attrType}
           onClick={this.props.onCardClick}
@@ -142,6 +142,7 @@ class ReAddAttributeForm extends Component {
 const selector = formValueSelector('addAttribute')
 const mapStateToProps = (state, ownProps) => {
   return {
+    loading: state.attributeState.loading,
     formValues: getFormValues('addAttribute')(state),
     country: selector(state, 'country'),
     collectionList: Object.keys(state.userState.collections),

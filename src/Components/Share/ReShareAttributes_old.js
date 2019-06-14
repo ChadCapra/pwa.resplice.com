@@ -6,7 +6,7 @@ import MdArrowDropdown from 'react-ionicons/lib/MdArrowDropdown'
 import MdArrowDropup from 'react-ionicons/lib/MdArrowDropup'
 import MdMail from 'react-ionicons/lib/MdMail'
 import MdCall from 'react-ionicons/lib/MdCall'
-import AttributeCardList from '../Cards/AttributeCardList'
+import CardList from '../Cards/CardList'
 import AttributeSelectCard from '../Cards/AttributeSelectCard'
 import ReButton from '../Buttons/ReButton'
 import ReModal from '../Modals/ReModal'
@@ -124,8 +124,8 @@ class ReShareAttributes extends Component {
               </div>
             </div>
             <div className="share-attributes-body">
-              <AttributeCardList
-                ListComponent={AttributeSelectCard}
+              <CardList
+                Card={AttributeSelectCard}
                 type="user"
                 attributeList={this.state.attributeList}
                 toggleAttribute={this.toggleAttribute}

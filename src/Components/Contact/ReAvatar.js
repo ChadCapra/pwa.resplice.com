@@ -19,7 +19,7 @@ const ReAvatar = ({ avatar, uuid }) => {
 }
 
 ReAvatar.propTypes = {
-  avatar: PropTypes.string.isRequired,
+  avatar: PropTypes.string,
   uuid: PropTypes.string.isRequired
 }
 

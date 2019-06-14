@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { verifyAttribute, resendAttributeVerification } from '../../actions'
 
-import AttributeTypeCard from '../Cards/AttributeTypeCard'
+import TypeCard from '../Cards/TypeCard'
 import ReInputCode from '../Input/ReInputCode'
 import ReButton from '../Buttons/ReButton'
 
@@ -18,7 +18,7 @@ const ReVerifyAttribute = ({
   const { collection, name, value } = attribute
   return (
     <div className="verify-attribute">
-      <AttributeTypeCard
+      <TypeCard
         className="attribute-preview-card"
         item={attrType}
         previewValues={{ collection, name, value: Object.values(value) }}

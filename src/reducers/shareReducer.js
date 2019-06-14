@@ -1,14 +1,13 @@
 import {
-  SHARE_ATTRIBUTES,
-  SHARE_ATTRIBUTES_SUCCESS,
-  SHARE_ATTRIBUTES_FAILURE,
-  BUILD_SHARE_LIST
+  SET_SHARE_ATTRIBUTES,
+  SET_SHARE_ATTRIBUTES_SUCCESS,
+  SET_SHARE_ATTRIBUTES_FAILURE,
+  QR_SHARE_ERROR
 } from '../actions/types'
 
 const INITIAL_STATE = {
   loading: false,
   error: null,
-  // shareList: [],
   shareList: [
     {
       type: 'Email',
@@ -36,17 +35,8 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case SHARE_ATTRIBUTES:
-      return { ...state, loading: true }
-    case SHARE_ATTRIBUTES_SUCCESS:
-      return { ...state, loading: false }
-    case SHARE_ATTRIBUTES_FAILURE:
-      return { ...state, loading: false, error: action.payload.status }
-    case BUILD_SHARE_LIST:
-      return {
-        ...state,
-        shareList: action.payload
-      }
+    case QR_SHARE_ERROR:
+      return { ...state, error: action.payload }
     default:
       return state
   }

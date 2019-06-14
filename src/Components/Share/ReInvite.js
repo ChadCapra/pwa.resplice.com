@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { buildShare } from '../../actions'
+import { invite } from '../../actions'
 
 import ReInput from '../Input/ReInput'
 import ReInputPhone from '../Input/ReInputPhone'
@@ -19,7 +19,7 @@ import './share.scss'
 /**
  * Share list component to show current share list
  */
-class ReShareList extends Component {
+class ReInvite extends Component {
   state = {
     showMenu: false,
     showCustomMessage: false,
@@ -181,5 +181,5 @@ class ReShareList extends Component {
 
 export default connect(
   null,
-  { buildShare }
-)(ReShareList)
+  { invite }
+)(ReInvite)

@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import Columns from 'react-bulma-components/lib/components/columns'
 
 import ActionIcon from '../Util/ActionIcon'
@@ -14,17 +13,12 @@ const combineAttrValues = values => {
   }, '')
 }
 
-const AttributeSelectCard = ({ item, types, toggleAttribute }) => {
+const ShareCard = ({ item, toggleKey, toggleAttribute }) => {
   return (
     <div className="card">
-      <div className="card-header">{item[0]}</div>
+      <h1 className="card-header">{item[0]}</h1>
       {item[1].map(attr => {
-        const attrType = types.find(
-          attrType => attrType.id === attr.attribute_type_id
-        )
-        const actionIconName = attrType.actions.filter(
-          action => !action.unverified_only
-        )[0].icon
+        const actionIconName = attr.actions[0].icon
 
         return (
           <div key={attr.uuid}>
@@ -50,8 +44,8 @@ const AttributeSelectCard = ({ item, types, toggleAttribute }) => {
               >
                 <div className="card-checkbox">
                   <ReCheckbox
-                    onClick={() => toggleAttribute(attr)}
-                    checked={attr.qr_sharable}
+                    onClick={() => toggleAttribute(!attr[toggleKey], attr.uuid)}
+                    checked={attr[toggleKey]}
                   />
                 </div>
               </Columns.Column>
@@ -63,15 +57,9 @@ const AttributeSelectCard = ({ item, types, toggleAttribute }) => {
   )
 }
 
-const mapStateToProps = state => {
-  return { types: state.attributeState.types }
-}
-
-AttributeSelectCard.propTypes = {
+ShareCard.propTypes = {
   item: PropTypes.array.isRequired,
-  types: PropTypes.array.isRequired,
-  attributeList: PropTypes.array.isRequired,
   toggleAttribute: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps)(AttributeSelectCard)
+export default ShareCard

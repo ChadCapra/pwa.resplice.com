@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import ReAddAttributeForm from './ReAddAttributeForm'
-import AttributeCardList from '../Cards/AttributeCardList'
-import AttributeTypeCard from '../Cards/AttributeTypeCard'
+import CardList from '../Cards/CardList'
+import TypeCard from '../Cards/TypeCard'
 
 const ReAddAttribute = ({ onAttributeAdd }) => {
   const [attrType, setAttrType] = useState({})
@@ -66,11 +66,7 @@ const ReAddAttribute = ({ onAttributeAdd }) => {
         />
       ) : (
         <div className="add-attribute-body">
-          <AttributeCardList
-            type="types"
-            ListComponent={AttributeTypeCard}
-            onClick={handleTypeChange}
-          />
+          <CardList type="types" Card={TypeCard} onClick={handleTypeChange} />
         </div>
       )}
     </div>

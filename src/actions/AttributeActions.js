@@ -19,68 +19,53 @@ import {
   RESEND_VERIFY_ATTRIBUTE_SUCCESS,
   RESEND_VERIFY_ATTRIBUTE_FAILURE
 } from './types'
+import { objectArrToDict } from '../helpers'
 
 export const fetchAttributeTypes = () => async dispatch => {
   dispatch({ type: FETCH_ATTRIBUTE_TYPES })
 
   try {
-    const response = await api.get('/attribute/types')
+    const response = await api.get('/attribute/attribute_types')
+    response.data.ok = objectArrToDict(response.data.ok, 'id')
     dispatch({ type: FETCH_ATTRIBUTE_TYPES_SUCCESS, payload: response.data })
   } catch (err) {
     dispatch({ type: FETCH_ATTRIBUTE_TYPES_FAILURE, payload: err })
   }
 }
 
-export const addAttribute = attribute => async (dispatch, getState) => {
+export const addAttribute = attribute => async dispatch => {
   dispatch({ type: ADD_ATTRIBUTE })
 
   try {
-    const {
-      userState: {
-        attributes: [...attributes]
-      }
-    } = getState()
-
     const response = await api.post('/attribute/add', attribute)
-    const addedAttribute = response.data.data
-    attributes.push(addedAttribute)
-
-    dispatch({ type: ADD_ATTRIBUTE_SUCCESS, payload: attributes })
+    dispatch({ type: ADD_ATTRIBUTE_SUCCESS, payload: response.data })
   } catch (err) {
+    console.log(err)
     dispatch({ type: ADD_ATTRIBUTE_FAILURE, payload: err })
   }
 }
 
-export const editAttribute = attribute => async (dispatch, getState) => {
+export const editAttribute = attribute => async dispatch => {
   dispatch({ type: EDIT_ATTRIBUTE })
 
   try {
-    const {
-      userState: {
-        attributes: [...attributes]
-      }
-    } = getState()
-
-    const response = await api.post('/attribute/edit', attribute)
-    const editedAttribute = response.data.data
-    const attrIdx = attributes.findIndex(
-      attr => attr.uuid === editedAttribute.uuid
+    const response = await api.put(
+      `/attribute/${attribute.uuid}/edit`,
+      attribute
     )
-    attributes[attrIdx] = editedAttribute
-
-    dispatch({ type: EDIT_ATTRIBUTE_SUCCESS, payload: attributes })
+    dispatch({ type: EDIT_ATTRIBUTE_SUCCESS, payload: response.data })
   } catch (err) {
-    console.log(err)
     dispatch({ type: EDIT_ATTRIBUTE_FAILURE, payload: err })
   }
 }
 
-export const deleteAttribute = ({ uuid }) => async dispatch => {
+export const deleteAttribute = uuid => async dispatch => {
   dispatch({ type: DELETE_ATTRIBUTE })
 
   try {
     await api.delete(`/user/attributes/${uuid}`)
-    dispatch({ type: DELETE_ATTRIBUTE_SUCCESS })
+    const payload = { data: { uuid } }
+    dispatch({ type: DELETE_ATTRIBUTE_SUCCESS, payload })
   } catch (err) {
     dispatch({ type: DELETE_ATTRIBUTE_FAILURE, payload: err })
   }

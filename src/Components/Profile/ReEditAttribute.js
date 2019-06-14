@@ -4,7 +4,7 @@ import { Field, reduxForm, formValueSelector, getFormValues } from 'redux-form'
 import { connect } from 'react-redux'
 import { editAttribute } from '../../actions'
 
-import AttributeTypeCard from '../Cards/AttributeTypeCard'
+import TypeCard from '../Cards/TypeCard'
 import ReInput from '../Input/ReInput'
 import ReInputPhone from '../Input/ReInputPhone'
 import ReInputCombo from '../Input/ReInputCombo'
@@ -13,16 +13,17 @@ import ReInputRegion from '../Input/ReInputRegion'
 import ReButton from '../Buttons/ReButton'
 
 class ReEditAttribute extends Component {
-  onSubmit = ({ name, collection, ...formValues }) => {
+  onSubmit = async ({ name, collection, ...formValues }) => {
     let attributeEdit = {
-      uuid: this.props.attribute.uuid,
+      uuid: this.props.uuid,
       name,
       collection,
       value: {
         ...formValues
       }
     }
-    this.props.editAttribute(attributeEdit).then(() => this.props.onEdit())
+    await this.props.editAttribute(attributeEdit)
+    this.props.onEdit()
   }
 
   formatLabel(label) {
@@ -38,6 +39,13 @@ class ReEditAttribute extends Component {
     const { attribute, collectionList } = this.props
     return (
       <>
+        <Field
+          name="collection"
+          label="Collection"
+          listName="collections"
+          dataList={collectionList}
+          component={ReInputCombo}
+        />
         <Field name="name" type="text" label="Name" component={ReInput} />
         {Object.keys(attribute.value).map((value, idx) => {
           switch (value) {
@@ -103,13 +111,6 @@ class ReEditAttribute extends Component {
               )
           }
         })}
-        <Field
-          name="collection"
-          label="Collection"
-          listName="collections"
-          dataList={collectionList}
-          component={ReInputCombo}
-        />
       </>
     )
   }
@@ -117,7 +118,7 @@ class ReEditAttribute extends Component {
   render() {
     return (
       <div className="edit-attribute">
-        <AttributeTypeCard
+        <TypeCard
           className="attribute-preview-card"
           item={this.props.attrType}
           previewValues={this.props.formValues}
@@ -145,18 +146,18 @@ class ReEditAttribute extends Component {
 
 const selector = formValueSelector('editAttribute')
 const mapStateToProps = (state, ownProps) => {
-  const attrType = state.attributeState.types.find(
-    type => type.id === ownProps.attribute.attribute_type_id
-  )
+  const attribute = state.userState.attributes[ownProps.uuid]
+  const attrType = state.userState.types[attribute.attribute_type_id]
 
   return {
     loading: state.attributeState.loading,
     collectionList: Object.keys(state.userState.collections),
+    attribute,
     attrType,
     initialValues: {
-      name: ownProps.attribute.name,
-      ...ownProps.attribute.value,
-      collection: ownProps.attribute.collection
+      name: attribute.name,
+      collection: attribute.collection,
+      ...attribute.value
     },
     formValues: getFormValues('editAttribute')(state),
     country: selector(state, 'country')
@@ -164,10 +165,10 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 ReEditAttribute.propTypes = {
-  attribute: PropTypes.object.isRequired,
-  collection: PropTypes.string.isRequired,
+  uuid: PropTypes.string.isRequired,
   onEdit: PropTypes.func.isRequired,
   loading: PropTypes.bool,
+  attribute: PropTypes.object.isRequired,
   collectionList: PropTypes.array.isRequired,
   attrType: PropTypes.object.isRequired,
   initialValues: PropTypes.object,

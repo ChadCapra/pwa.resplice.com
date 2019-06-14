@@ -22,7 +22,6 @@ import {
 const INITIAL_STATE = {
   loading: false,
   error: null,
-  types: [],
   verify: {}
 }
 
@@ -31,12 +30,7 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_ATTRIBUTE_TYPES:
       return { ...state, loading: true }
     case FETCH_ATTRIBUTE_TYPES_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        error: null,
-        types: action.payload.data
-      }
+      return { ...state, loading: false }
     case FETCH_ATTRIBUTE_TYPES_FAILURE:
       return { ...state, loading: false, error: action.payload.status }
     case ADD_ATTRIBUTE:

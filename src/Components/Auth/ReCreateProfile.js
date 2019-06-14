@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { Field, reduxForm, formValueSelector } from 'redux-form'
 import { connect } from 'react-redux'
-import { register } from '../../actions'
+import { createProfile } from '../../actions'
 
 import ReAuthHeader from './ReAuthHeader'
 import ReInput from '../Input/ReInput'
@@ -18,7 +18,7 @@ class ReSignUp extends Component {
   }
 
   onSubmit = formValues => {
-    this.props.register(formValues)
+    this.props.createProfile(formValues)
   }
 
   showAvatarModal = () => {}
@@ -109,7 +109,7 @@ class ReSignUp extends Component {
   }
 
   render() {
-    if (Object.entries(this.props.registerObject).length > 0)
+    if (Object.entries(this.props.profile).length > 0)
       return <Redirect to="/" />
     if (this.props.userProfile.name && this.props.isVerified)
       return <Redirect to="/" />
@@ -154,7 +154,7 @@ const mapStateToProps = state => {
   const country = selector(state, 'country')
   return {
     loading: state.authState.loading,
-    registerObject: state.authState.register,
+    profile: state.authState.profile,
     uuid: '',
     // uuid: state.authState.verify.data.user_uuid || state.userState.profile.uuid,
     authError: state.authState.error,
@@ -171,5 +171,5 @@ const signUpForm = reduxForm({
 
 export default connect(
   mapStateToProps,
-  { register }
+  { createProfile }
 )(signUpForm)

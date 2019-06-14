@@ -41,6 +41,25 @@ input:-webkit-autofill {
   }
 }
 
+.re-input-search {
+  margin-left: 15px;
+  width: calc(100% - 15px);
+  & svg {
+    position: absolute;
+    left: 5px;
+    top: 7px;
+  }
+
+  & .re-input-label {
+    left: 50px;
+  }
+
+  & .re-field {
+    left: 50px;
+    width: calc(100% - 50px);
+  }
+}
+
 .re-input select {
   height: 52px;
   left: 10px;

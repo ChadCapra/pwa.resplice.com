@@ -18,7 +18,7 @@ class ReVerify extends Component {
 
     if (Object.entries(this.props.login).length > 0) {
       const verifyObject = {
-        uuid: this.props.login.data.uuid,
+        uuid: this.props.login.ok.uuid,
         verify_token_1: parseInt(code),
         verify_token_2: this.state.verify_token_2
       }
@@ -31,7 +31,7 @@ class ReVerify extends Component {
 
     if (Object.entries(this.props.login).length > 0) {
       const verifyObject = {
-        uuid: this.props.login.data.uuid,
+        uuid: this.props.login.ok.uuid,
         verify_token_1: this.state.verify_token_1,
         verify_token_2: parseInt(code)
       }
@@ -43,14 +43,14 @@ class ReVerify extends Component {
     if (Object.entries(this.props.login).length <= 0)
       return <Redirect to="/auth/login" />
     if (this.props.authorized) return <Redirect to="/" />
-    if (this.props.verified) return <Redirect to="/auth/signup" />
+    if (this.props.verified) return <Redirect to="/auth/create-profile" />
 
     let tokenOneVerified = false
     let tokenTwoVerified = false
 
     if (Object.entries(this.props.verify).length > 0) {
-      tokenOneVerified = this.props.verify.data.token_1_valid
-      tokenTwoVerified = this.props.verify.data.token_2_valid
+      tokenOneVerified = this.props.verify.ok.token_1_valid
+      tokenTwoVerified = this.props.verify.ok.token_2_valid
     }
 
     return (

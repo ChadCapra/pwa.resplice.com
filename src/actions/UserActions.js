@@ -9,16 +9,26 @@ import {
   UPLOAD_AVATAR_FAILURE
 } from './types'
 
-export const fetchUserProfile = () => async dispatch => {
+import { objectArrToDict } from '../helpers'
+
+export const fetchUserProfile = () => async (dispatch, getState) => {
   dispatch({ type: FETCH_PROFILE })
 
   try {
     const response = await api.get('/user/profile')
-    if (response.data.data.name) {
+    response.data.ok.attributes = objectArrToDict(
+      response.data.ok.attributes,
+      'uuid'
+    )
+    if (response.data.ok.name) {
       dispatch({ type: AUTHORIZE })
     }
-    dispatch({ type: FETCH_PROFILE_SUCCESS, payload: response.data })
+    dispatch({
+      type: FETCH_PROFILE_SUCCESS,
+      payload: response.data
+    })
   } catch (err) {
+    console.log(err)
     dispatch({ type: FETCH_PROFILE_FAILURE, payload: err })
   }
 }
