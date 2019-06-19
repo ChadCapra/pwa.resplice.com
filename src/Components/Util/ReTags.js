@@ -24,12 +24,10 @@ const ReTags = ({ tags, selectedTags, onTagChange }) => {
   const [showCreateInput, setCreateInput] = useState(false)
   const [tagValue, setTagValue] = useState('')
   const [tagList, setTagList] = useState(buildTags(tags, selectedTags))
-  const [allTags, setAllTags] = useState([...tags, ...selectedTags])
 
   useEffect(() => {
-    setAllTags([...allTags, ...selectedTags])
-    setTagList(buildTags(allTags, selectedTags))
-  }, [tags, selectedTags, allTags])
+    setTagList(buildTags(tags, selectedTags))
+  }, [tags, selectedTags])
 
   return (
     <div className="re-tags-container">

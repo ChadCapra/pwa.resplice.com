@@ -63,10 +63,6 @@ class ReInvite extends Component {
     })
   }
 
-  buildLists = () => {
-    // this.props.buildShare(this.state.shareList)
-  }
-
   handleContactClick = id => {
     console.log(id)
   }
@@ -97,7 +93,7 @@ class ReInvite extends Component {
     } else {
       tags.push(tag)
     }
-    this.setState({ selectedTags: tags })
+    this.setState({ tags: [...this.state.tags, ...tags], selectedTags: tags })
   }
 
   handleRequest = () => {
