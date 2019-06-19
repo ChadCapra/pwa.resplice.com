@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { invite } from '../../actions'
+import { requestRelationship } from '../../actions'
 
 import ReInput from '../Input/ReInput'
 import ReInputPhone from '../Input/ReInputPhone'
@@ -25,7 +25,18 @@ class ReInvite extends Component {
     showCustomMessage: false,
     query: '',
     queryType: '',
-    attribute: null
+    attribute: null,
+    tags: [
+      'Work',
+      'Friend',
+      'Family',
+      'Service',
+      'Neighbor',
+      'School',
+      'Happy'
+    ],
+    selectedTags: [],
+    message: ''
   }
 
   handleAttrClick = () => {
@@ -47,7 +58,9 @@ class ReInvite extends Component {
   }
 
   clearAttribute = () => {
-    this.setState({ attribute: null })
+    this.setState({
+      attribute: null
+    })
   }
 
   buildLists = () => {
@@ -74,6 +87,25 @@ class ReInvite extends Component {
     }
 
     this.setState({ query: value })
+  }
+
+  handleTagChange = tag => {
+    let tags = [...this.state.selectedTags]
+    const tagIdx = tags.findIndex(t => t === tag)
+    if (tagIdx >= 0) {
+      tags.splice(tagIdx, 1)
+    } else {
+      tags.push(tag)
+    }
+    this.setState({ selectedTags: tags })
+  }
+
+  handleRequest = () => {
+    this.props.requestRelationship({
+      phone_or_email: this.state.attribute.value,
+      message: this.state.message,
+      tags: this.state.selectedTags
+    })
   }
 
   renderIcon = item => {
@@ -153,16 +185,29 @@ class ReInvite extends Component {
         </div>
 
         <h1 className="invite-header">Choose Tags</h1>
-        <ReTags />
+        <ReTags
+          tags={this.state.tags}
+          selectedTags={this.state.selectedTags}
+          onTagChange={this.handleTagChange}
+        />
 
         <div className="share-list-footer">
           <ReButton
             type="secondary"
-            text="Add Custom Message"
+            text={
+              this.state.message ? 'Edit Custom Message' : 'Add Custom Message'
+            }
             width="300px"
             onClick={() => this.setState({ showCustomMessage: true })}
           />
-          <ReButton type="primary" text="Invite" width="175px" />
+          <ReButton
+            type="primary"
+            text="Invite"
+            width="175px"
+            disabled={!this.state.attribute}
+            loading={this.props.loading}
+            onClick={this.handleRequest}
+          />
         </div>
 
         <ReModal
@@ -171,7 +216,12 @@ class ReInvite extends Component {
           headerText="Custom Message"
         >
           <div className="flex--center" style={{ marginTop: '25px' }}>
-            <ReCustomMessage />
+            <ReCustomMessage
+              message={this.state.message}
+              saveMessage={message =>
+                this.setState({ message, showCustomMessage: false })
+              }
+            />
           </div>
         </ReModal>
       </div>
@@ -179,7 +229,13 @@ class ReInvite extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    loading: state.shareState.loading
+  }
+}
+
 export default connect(
-  null,
-  { invite }
+  mapStateToProps,
+  { requestRelationship }
 )(ReInvite)

@@ -5,8 +5,7 @@ import ReButton from '../Buttons/ReButton'
 
 export default class ReShareCamera extends Component {
   state = {
-    cameraSupported: false,
-    startScan: false
+    cameraSupported: false
   }
 
   componentDidMount() {
@@ -24,35 +23,33 @@ export default class ReShareCamera extends Component {
   }
 
   render() {
-    if (this.state.cameraSupported && this.state.startScan) {
+    if (this.state.cameraSupported) {
       return (
         <div className="share-camera">
           <QrReader
             delay={300}
             onError={this.handleError}
             onScan={this.handleScan}
-            style={{ width: '100vw' }}
+            style={{ width: '100%', maxWidth: '575px' }}
+          />
+          <ReButton
+            type="primary"
+            text="Show QR Code"
+            onClick={this.props.onClose}
+            style={{ marginTop: '25px' }}
           />
         </div>
       )
-    }
-
-    return (
-      <div className="share-camera">
-        {!this.state.cameraSupported && (
+    } else {
+      return (
+        <div className="share-camera">
           <h1 className="share-camera-header">
-            Your device does not have a camera, you can upload a qr code instead
+            QR Code scanning not supported, either your device doesn't have a
+            camera or you denied us access. You can still start a relationship
+            by inviting with a phone number or an email.
           </h1>
-        )}
-        {!this.state.startScan && (
-          <ReButton
-            type="primary"
-            text="Start Scan"
-            width="200px"
-            onClick={() => this.setState({ startScan: true })}
-          />
-        )}
-      </div>
-    )
+        </div>
+      )
+    }
   }
 }

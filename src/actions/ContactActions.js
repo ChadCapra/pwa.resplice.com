@@ -7,6 +7,7 @@ import {
   FETCH_CONTACT_SUCCESS,
   FETCH_CONTACT_FAILURE
 } from './types'
+import { contact } from './mockData'
 
 export const fetchContactList = () => async dispatch => {
   dispatch({ type: FETCH_CONTACT_LIST })
@@ -19,13 +20,13 @@ export const fetchContactList = () => async dispatch => {
   }
 }
 
-export const fetchContact = ({ uuid }) => async dispatch => {
+export const fetchContact = uuid => async dispatch => {
   dispatch({ type: FETCH_CONTACT })
-
-  try {
-    const response = await api.get(`/contact/${uuid}`)
-    dispatch({ type: FETCH_CONTACT_SUCCESS, payload: response.data })
-  } catch (err) {
-    dispatch({ type: FETCH_CONTACT_FAILURE, payload: err.response })
-  }
+  dispatch({ type: FETCH_CONTACT_SUCCESS, payload: contact })
+  // try {
+  //   const response = await api.get(`/contact/${uuid}`)
+  //   dispatch({ type: FETCH_CONTACT_SUCCESS, payload: response.data })
+  // } catch (err) {
+  //   dispatch({ type: FETCH_CONTACT_FAILURE, payload: err.response })
+  // }
 }

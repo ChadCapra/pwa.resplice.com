@@ -1,10 +1,16 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { logout } from '../../actions'
+// import { connect } from 'react-redux'
+// import { logout, fetchSessions } from '../../actions'
 
 import MdArrowDropright from 'react-ionicons/lib/MdArrowDropright'
+import ReModal from '../Modals/ReModal'
+import ReSessions from '../Settings/ReSessions'
 
 class ReUserSettings extends Component {
+  state = {
+    showSessions: false
+  }
+
   render() {
     return (
       <div className="re-user-settings">
@@ -48,9 +54,19 @@ class ReUserSettings extends Component {
             <span className="setting-text">Download Data</span>
             <MdArrowDropright />
           </div>
-          <div className="setting">
+          <div
+            className="setting"
+            onClick={() => this.setState({ showSessions: true })}
+          >
             <span className="setting-text">Logout</span>
             <MdArrowDropright />
+            <ReModal
+              show={this.state.showSessions}
+              headerText="Devices & Logout"
+              onClose={() => this.setState({ showSessions: false })}
+            >
+              <ReSessions />
+            </ReModal>
           </div>
           <div className="setting red">
             <span className="setting-text">Delete Account</span>
@@ -76,7 +92,8 @@ class ReUserSettings extends Component {
   }
 }
 
-export default connect(
-  null,
-  { logout }
-)(ReUserSettings)
+export default ReUserSettings
+// export default connect(
+//   null,
+//   { logout, fetchSessions }
+// )(ReUserSettings)

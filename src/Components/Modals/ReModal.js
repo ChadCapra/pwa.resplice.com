@@ -10,8 +10,10 @@ const ReModal = ({ show, onClose, full, headerText, children }) => {
   const contentNode = useRef()
 
   const handleOutsideClick = e => {
-    if (!contentNode.current.contains(e.target) && !full) {
-      animateAndClose()
+    if (contentNode.current) {
+      if (!contentNode.current.contains(e.target) && !full) {
+        animateAndClose()
+      }
     }
   }
 

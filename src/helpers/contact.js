@@ -1,6 +1,8 @@
 import { buildCollections } from './attribute'
+import { objectArrToDict } from './index'
 
 export const processSummaries = (contactList, newContactList) => {
+  newContactList = objectArrToDict(newContactList)
   Object.entries(newContactList).forEach(summary => {
     const uuid = summary[0]
     const contact = summary[1]
@@ -21,7 +23,7 @@ export const processContact = (
   types
 ) => {
   contact.requested_at = requested_at
-  contact.collections = buildCollections(contact.attributes, types)
+  contact.collections = buildCollections(contact.attributes, types, true)
   contactList[contact.uuid] = contact
   return contactList
 }

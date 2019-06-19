@@ -4,7 +4,8 @@ import {
   FETCH_CONTACT_LIST_FAILURE,
   FETCH_CONTACT,
   FETCH_CONTACT_SUCCESS,
-  FETCH_CONTACT_FAILURE
+  FETCH_CONTACT_FAILURE,
+  FETCH_ATTRIBUTE_TYPES_SUCCESS
 } from '../actions/types'
 
 import { processContact, processSummaries } from '../helpers'
@@ -19,6 +20,8 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case FETCH_ATTRIBUTE_TYPES_SUCCESS:
+      return { ...state, types: action.payload.ok }
     case FETCH_CONTACT_LIST:
       return { ...state, loading: true }
     case FETCH_CONTACT_LIST_SUCCESS:

@@ -18,10 +18,10 @@ export const processAttributes = (attributes, types, config) => {
         delete attributes[data.uuid]
         break
       case 'toggleShareOn':
-        attributes[data.uuid].qr_sharable = true
+        attributes[data].qr_sharable = true
         break
       case 'toggleShareOff':
-        attributes[data.uuid].qr_sharable = false
+        attributes[data].qr_sharable = false
         break
       default:
     }
@@ -33,14 +33,23 @@ export const processAttributes = (attributes, types, config) => {
  * Attaches actions to attributes and builds their collections
  * @param {Object} attributes - Attribute Dictionary
  * @param {Object} types - Attribute Types Dictionary
+ * @param {Boolean} [contact] - Indicates if the attributes are for a contact
  * @returns {Object} Returns built collections with actions
  */
-export const buildCollections = (attributes, types) => {
+export const buildCollections = (attributes, types, contact) => {
   const collections = {}
   Object.values(attributes).forEach(attr => {
-    const actions = types[attr.attribute_type_id].actions.filter(
-      action => !action.unverified_only || !attr.verified_recency
-    )
+    let actions = []
+    if (contact) {
+      actions = types[attr.attribute_type_id].actions.filter(
+        action => !action.user_only
+      )
+    } else {
+      actions = types[attr.attribute_type_id].actions.filter(
+        action => !action.unverified_only || !attr.verified_recency
+      )
+    }
+
     attr.actions = actions
     collections[attr.collection]
       ? collections[attr.collection].push(attr)

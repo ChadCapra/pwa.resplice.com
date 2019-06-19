@@ -19,7 +19,7 @@ const ReTextArea = ({
 
   return (
     <>
-      {pristine && <label>{label}</label>}
+      {label && <label>{label}</label>}
       <textarea
         {...input}
         {...props}
@@ -36,7 +36,7 @@ const ReTextArea = ({
 
 ReTextArea.propTypes = {
   input: PropTypes.object.isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   meta: PropTypes.object.isRequired
 }
 

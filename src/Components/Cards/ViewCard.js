@@ -15,7 +15,7 @@ const combineAttrValues = (attr, delim) => {
   }, '')
 }
 
-const ViewCard = ({ item, handleAction }) => {
+const ViewCard = ({ item, handleAction, ...props }) => {
   const [showDropdownIdx, setDropdownIdx] = useState(-1)
   const collection = item[0]
   const attributes = item[1]
@@ -41,7 +41,7 @@ const ViewCard = ({ item, handleAction }) => {
           >
             <ActionIcon
               name={attr.actions[0].icon}
-              fill="#C4C4C4"
+              fill={props.contactUuid ? '#1BBC9B' : '#C4C4C4'}
               width="2.5em"
             />
           </Columns.Column>
@@ -74,7 +74,7 @@ const ViewCard = ({ item, handleAction }) => {
           >
             <ActionIcon
               name={attr.actions[1].icon}
-              fill="#C4C4C4"
+              fill={props.contactUuid ? '#1BBC9B' : '#C4C4C4'}
               width="2.5em"
             />
           </Columns.Column>

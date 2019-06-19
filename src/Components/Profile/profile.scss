@@ -58,14 +58,15 @@
   width: 100%;
 }
 
-.user-profile {
+.profile {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 20px;
+  min-height: calc(100vh - 100px);
 }
 
-.user-profile-name {
+.profile-name {
   text-align: center;
 }
 

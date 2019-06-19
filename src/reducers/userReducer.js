@@ -7,7 +7,10 @@ import {
   EDIT_ATTRIBUTE_SUCCESS,
   DELETE_ATTRIBUTE_SUCCESS,
   ENABLE_QR_SHARE,
-  DISABLE_QR_SHARE
+  DISABLE_QR_SHARE,
+  FETCH_SESSIONS,
+  FETCH_SESSIONS_SUCCESS,
+  FETCH_SESSIONS_FAILURE
 } from '../actions/types'
 
 import { processAttributes } from '../helpers'
@@ -19,7 +22,8 @@ const INITIAL_STATE = {
   profile: {},
   attributes: {},
   collections: {},
-  types: {}
+  types: {},
+  settings: {}
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -68,7 +72,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         ...processAttributes({ ...state.attributes }, state.types, {
           action: 'toggleShareOn',
-          data: action.payload.ok
+          data: action.payload
         })
       }
     case DISABLE_QR_SHARE:
@@ -76,9 +80,19 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         ...processAttributes({ ...state.attributes }, state.types, {
           action: 'toggleShareOff',
-          data: action.payload.ok
+          data: action.payload
         })
       }
+    case FETCH_SESSIONS:
+      return { ...state, loading: true }
+    case FETCH_SESSIONS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        settings: { ...state.settings, sessions: action.payload }
+      }
+    case FETCH_SESSIONS_FAILURE:
+      return { ...state, loading: false, error: action.payload }
     default:
       return state
   }

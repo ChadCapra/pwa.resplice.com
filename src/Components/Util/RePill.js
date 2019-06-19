@@ -1,8 +1,8 @@
 import React from 'react'
 
-const RePill = ({ children, isActive, ...props }) => {
+const RePill = ({ children, selected, ...props }) => {
   return (
-    <div className={`re-pill${isActive ? ' re-pill--active' : ''}`} {...props}>
+    <div className={`re-pill${selected ? ' active' : ''}`} {...props}>
       {children}
     </div>
   )

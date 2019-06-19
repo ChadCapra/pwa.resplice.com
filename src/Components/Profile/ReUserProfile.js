@@ -34,9 +34,9 @@ const ReUserProfile = ({
   }
 
   return (
-    <div className="user-profile">
+    <div className="profile">
       <ProfilePic uuid={uuid} avatar={avatar} />
-      <h1 className="user-profile-name">{name}</h1>
+      <h1 className="profile-name">{name}</h1>
       <Level breakpoint="mobile" className="profile-stats">
         <Level.Item>
           <div className="profile-stat">

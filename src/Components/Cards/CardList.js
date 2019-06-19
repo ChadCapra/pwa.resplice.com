@@ -12,12 +12,15 @@ const mapStateToProps = (state, ownProps) => {
       list = Object.entries(state.userState.collections)
       break
     case 'contact':
-      list = Object.entries(state.contactState.collections)
+      list = Object.entries(
+        state.contactState.contacts[ownProps.contactUuid].collections
+      )
       break
     case 'types':
       list = Object.values(state.userState.types)
       break
     default:
+      list = ownProps.list
   }
 
   return {

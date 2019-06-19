@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { swiped } from '../actions'
 import ReactSwipe from 'react-swipe'
+
+import { swiped } from '../actions'
 
 import ReShareAttributes from './Share/ReShareAttributes'
 import ReInvite from './Share/ReInvite'

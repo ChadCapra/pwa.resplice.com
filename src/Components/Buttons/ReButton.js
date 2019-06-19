@@ -32,7 +32,6 @@ ReButton.propTypes = {
    * Indicates loading state.
    */
   loading: PropTypes.bool,
-  width: PropTypes.string,
   disabled: PropTypes.bool,
   onClick: PropTypes.func
 }

@@ -1,8 +1,8 @@
 import {
-  SET_SHARE_ATTRIBUTES,
-  SET_SHARE_ATTRIBUTES_SUCCESS,
-  SET_SHARE_ATTRIBUTES_FAILURE,
-  QR_SHARE_ERROR
+  QR_SHARE_ERROR,
+  INVITE,
+  INVITE_SUCCESS,
+  INVITE_FAILURE
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -37,6 +37,12 @@ export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case QR_SHARE_ERROR:
       return { ...state, error: action.payload }
+    case INVITE:
+      return { ...state, loading: true }
+    case INVITE_SUCCESS:
+      return { ...state, loading: false }
+    case INVITE_FAILURE:
+      return { ...state, loading: false, err: action.payload }
     default:
       return state
   }
