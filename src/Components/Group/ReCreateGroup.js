@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import { createGroup } from '../../actions'
@@ -21,10 +21,10 @@ const checkCollections = collections => {
 
 const ReCreateGroup = ({ collections, createGroup }) => {
   const [groupName, setGroupName] = useState('')
-  const [checkedCollections, setCheckedCollections] = useState(
-    checkCollections(collections)
-  )
+  const [checkedCollections, setCheckedCollections] = useState(collections)
   const [attribute_uuids, setAttributeUuids] = useState([])
+
+  useEffect(() => {})
 
   const toggleAttrbute = (val, uuid) => {
     let newUuids = [...attribute_uuids]
@@ -45,9 +45,7 @@ const ReCreateGroup = ({ collections, createGroup }) => {
         idx = attrIdx
       }
     }
-    console.log(colName, idx, newCollections[colName][idx])
     newCollections[colName][idx].checked = val
-    console.log(newCollections, newUuids)
 
     setCheckedCollections(newCollections)
     setAttributeUuids(newUuids)
@@ -86,7 +84,7 @@ const ReCreateGroup = ({ collections, createGroup }) => {
 
 const mapStateToProps = state => {
   return {
-    collections: state.userState.collections
+    collections: checkCollections(state.userState.collections)
   }
 }
 

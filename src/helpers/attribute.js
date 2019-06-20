@@ -10,7 +10,7 @@ export const processAttributes = (attributes, types, config) => {
   if (config) {
     const { action, data } = config
     switch (action) {
-      case 'add':
+      case 'add': // Add and edit do the same thing
       case 'edit':
         attributes[data.uuid] = data
         break
@@ -22,6 +22,10 @@ export const processAttributes = (attributes, types, config) => {
         break
       case 'toggleShareOff':
         attributes[data].qr_sharable = false
+        break
+      case 'toggleContactShareOn':
+        break
+      case 'toggleGroupShareOn':
         break
       default:
     }
