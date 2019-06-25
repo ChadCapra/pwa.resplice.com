@@ -21,8 +21,7 @@ const INITIAL_STATE = {
   isAuthorized: false,
   isVerified: false,
   login: {},
-  verify: {},
-  profile: {}
+  verify: {}
 }
 
 export default (state = INITIAL_STATE, action) => {

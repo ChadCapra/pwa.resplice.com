@@ -14,12 +14,12 @@ import GlobalLoading from './components/Loading/GlobalLoading'
 import Offline from './components/Util/Offline'
 import Test from './components/Test'
 
-const PrivateRoute = ({ authorized, ...rest }) => {
+const PrivateRoute = ({ authorized, ...props }) => {
   // Check if user is authorized and then render the App component
   // Otherwise redirect to login
   return (
     <Route
-      {...rest}
+      {...props}
       render={props =>
         authorized ? <App {...props} /> : <Redirect to="/auth/login" />
       }

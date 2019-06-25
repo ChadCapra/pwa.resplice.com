@@ -37,6 +37,7 @@ export const createGroup = group => async dispatch => {
   dispatch({ type: CREATE_GROUP })
 
   try {
+    console.log(group)
     const response = await api.get('/groups/create', group)
     dispatch({ type: CREATE_GROUP_SUCCESS, payload: response.data })
   } catch (err) {

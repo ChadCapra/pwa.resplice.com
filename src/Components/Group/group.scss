@@ -1,5 +1,8 @@
 .re-group-list {
-  height: 100%;
+  position: relative;
+  height: calc(100% - 10px);
+  overflow: auto;
+  padding-top: 10px;
 }
 
 .re-create-group {

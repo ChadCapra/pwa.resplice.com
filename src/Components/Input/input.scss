@@ -203,13 +203,18 @@ input:-webkit-autofill {
 }
 
 // Verification Code Inputs
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
 $fontSize: 60px;
 
 .re-code-input-container {
-  width: 100%;
   margin: 25px 0;
   position: relative;
+
+  & svg {
+    position: absolute;
+    top: 45%;
+    right: 41%;
+    font-size: $fontSize;
+  }
 }
 
 .re-code-inputs {
@@ -231,5 +236,34 @@ $fontSize: 60px;
 
   & input::placeholder {
     color: #c4c4c4;
+  }
+
+  & input:nth-child(3) {
+    margin-right: 25px;
+  }
+}
+
+.code-loading,
+.code-verified {
+  font-size: $fontSize;
+  color: rgba(0, 0, 0, 0.5);
+  background-color: #e5e5e5;
+
+  & div {
+    width: 50px;
+  }
+
+  & div:nth-child(3) {
+    margin-right: 25px;
+  }
+
+  & .lds-ripple {
+    position: absolute;
+    top: 40%;
+  }
+
+  & svg {
+    position: absolute;
+    top: 35%;
   }
 }

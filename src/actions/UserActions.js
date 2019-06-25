@@ -6,7 +6,10 @@ import {
   FETCH_PROFILE_FAILURE,
   UPLOAD_AVATAR,
   UPLOAD_AVATAR_SUCCESS,
-  UPLOAD_AVATAR_FAILURE
+  UPLOAD_AVATAR_FAILURE,
+  CREATE_PROFILE,
+  CREATE_PROFILE_SUCCESS,
+  CREATE_PROFILE_FAILURE
 } from './types'
 
 import { objectArrToDict } from '../helpers'
@@ -46,5 +49,16 @@ export const uploadAvatar = blob => async dispatch => {
     dispatch({ type: UPLOAD_AVATAR_SUCCESS, payload: 'implement' })
   } catch (err) {
     dispatch({ type: UPLOAD_AVATAR_FAILURE, payload: err })
+  }
+}
+
+export const createProfile = formValues => async dispatch => {
+  dispatch({ type: CREATE_PROFILE })
+
+  try {
+    const response = await api.post('/user/create_profile', formValues)
+    dispatch({ type: CREATE_PROFILE_SUCCESS, payload: response.data })
+  } catch (err) {
+    dispatch({ type: CREATE_PROFILE_FAILURE, payload: err.response })
   }
 }

@@ -6,12 +6,11 @@ import { swiped, fetchContact } from '../actions'
 
 import ReContactProfile from './Contact/ReContactProfile'
 import ReContactShares from './Contact/ReContactShares'
-import ReContactUpdates from './Contact/ReContactUpdates'
 import ReHeader from './Header/ReHeader'
 
 const ReContactView = ({ loading, profile, swiped, fetchContact, match }) => {
   useEffect(() => {
-    swiped(1)
+    swiped(0)
     fetchContact(match.params.uuid)
   }, [swiped, fetchContact, match])
 
@@ -19,24 +18,21 @@ const ReContactView = ({ loading, profile, swiped, fetchContact, match }) => {
 
   return (
     <div className="contact-container">
-      <ReHeader menus={['Share', 'Contact', 'Updates']} exitRoute={'/'} />
+      <ReHeader menus={['Contact', 'Shares']} exitRoute={'/'} />
       <div className="contact-body">
         <ReactSwipe
           className="swipe-nav"
           swipeOptions={{
-            startSlide: 1,
+            startSlide: 0,
             continuous: false,
             callback: idx => swiped(idx)
           }}
         >
           <div className="swipe-nav-item-container">
-            <ReContactShares />
-          </div>
-          <div className="swipe-nav-item-container">
             <ReContactProfile profile={profile} />
           </div>
           <div className="swipe-nav-item-container">
-            <ReContactUpdates />
+            <ReContactShares profile={profile} />
           </div>
         </ReactSwipe>
       </div>

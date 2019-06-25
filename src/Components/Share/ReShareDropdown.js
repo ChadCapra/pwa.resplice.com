@@ -22,12 +22,15 @@ class ReShareDropdown extends Component {
     if (this.props.contacts.length <= 0) {
       return <div style={{ textAlign: 'center' }}>No Contacts</div>
     }
-    this.props.contacts.map(contact => {
+    this.props.contacts.map(con => {
+      const uuid = con[0]
+      const contact = con[1]
+      //console.log(contact)
       return (
         <div
           className="dropdown-result"
-          key={contact.id}
-          onClick={() => this.props.handleContactClick(contact.id)}
+          key={uuid}
+          onClick={() => this.props.handleContactClick(uuid)}
         >
           <ReContact contact={contact} />
         </div>
@@ -54,7 +57,7 @@ class ReShareDropdown extends Component {
 
 const mapStateToProps = state => {
   return {
-    contacts: state.contactState.contacts
+    contacts: Object.entries(state.contactState.contacts)
   }
 }
 

@@ -27,11 +27,11 @@ export const loadApplication = () => async dispatch => {
   dispatch({ type: LOAD })
 
   try {
-    const authToken = localStorage.getItem('access_token')
+    const accessToken = localStorage.getItem('access_token')
     const userUuid = localStorage.getItem('user_uuid')
-    if (authToken && userUuid) {
+    if (accessToken && userUuid) {
       // Set auth header on axios instance
-      api.defaults.headers.common['access_token'] = authToken
+      api.defaults.headers.common['access_token'] = accessToken
       api.defaults.headers.common['user_uuid'] = userUuid
       await dispatch(fetchAttributeTypes())
       await dispatch(fetchUserProfile())

@@ -4,8 +4,8 @@ import { swiped } from '../actions'
 import ReactSwipe from 'react-swipe'
 
 import ReHomeHeader from './Header/ReHomeHeader'
-import ReContactList from './Contact/ReContactList'
 import ReGroupList from './Group/ReGroupList'
+import ReContactList from './Contact/ReContactList'
 
 import './views.scss'
 
@@ -26,10 +26,7 @@ const ReHomeView = ({ swiped }) => {
             callback: idx => swiped(idx)
           }}
         >
-          <div
-            className="swipe-nav-item-container"
-            style={{ transform: 'none' }}
-          >
+          <div className="swipe-nav-item-container">
             <ReGroupList />
           </div>
           <div className="swipe-nav-item-container">

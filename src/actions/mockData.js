@@ -18,10 +18,16 @@ export const contact = {
       }
     }
   },
+  common_groups: {
+    udfsdfs: {
+      name: 'Jedi',
+      avatar: null
+    }
+  },
   requested_at: 'timestamp'
 }
 
-// attributesold: [
+// attributes_old: [
 //   {
 //     id: 1,
 //     attributeTypeId: 1,

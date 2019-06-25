@@ -2,6 +2,9 @@ import {
   FETCH_PROFILE,
   FETCH_PROFILE_SUCCESS,
   FETCH_PROFILE_FAILURE,
+  CREATE_PROFILE,
+  CREATE_PROFILE_SUCCESS,
+  CREATE_PROFILE_FAILURE,
   FETCH_ATTRIBUTE_TYPES_SUCCESS,
   ADD_ATTRIBUTE_SUCCESS,
   EDIT_ATTRIBUTE_SUCCESS,
@@ -28,8 +31,10 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case CREATE_PROFILE:
     case FETCH_PROFILE:
       return { ...state, loading: true }
+    case CREATE_PROFILE_SUCCESS:
     case FETCH_PROFILE_SUCCESS:
       const { attributes, request_at, ...profile } = action.payload.ok
       return {
@@ -39,6 +44,7 @@ export default (state = INITIAL_STATE, action) => {
         profile,
         ...processAttributes({ ...attributes }, state.types)
       }
+    case CREATE_PROFILE_FAILURE:
     case FETCH_PROFILE_FAILURE:
       return { ...state, loading: false, error: action.payload }
     case FETCH_ATTRIBUTE_TYPES_SUCCESS:

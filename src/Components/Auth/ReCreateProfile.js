@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { Field, reduxForm, formValueSelector } from 'redux-form'
 import { connect } from 'react-redux'
-import { createProfile } from '../../actions'
+import { createProfile, fetchUserProfile } from '../../actions'
 
 import ReAuthHeader from './ReAuthHeader'
 import ReInput from '../Input/ReInput'
@@ -17,11 +17,13 @@ class ReSignUp extends Component {
     showErrors: true
   }
 
+  componentWillMount() {
+    if (this.props.isVerified) this.props.fetchUserProfile()
+  }
+
   onSubmit = formValues => {
     this.props.createProfile(formValues)
   }
-
-  showAvatarModal = () => {}
 
   renderForm() {
     return (
@@ -33,7 +35,7 @@ class ReSignUp extends Component {
         </p> */}
 
         <div style={{ margin: '25px 0' }}>
-          <ProfilePic uuid={this.props.uuid} onClick={this.showAvatarModal} />
+          <ProfilePic uuid={this.props.profile.uuid} />
         </div>
 
         <div className="inputs">
@@ -109,9 +111,9 @@ class ReSignUp extends Component {
   }
 
   render() {
-    if (Object.entries(this.props.profile).length > 0)
-      return <Redirect to="/" />
-    if (this.props.userProfile.name && this.props.isVerified)
+    if (this.props.profileLoading) return 'loading'
+    if (!this.props.isVerified) return <Redirect to="/auth/login" />
+    if (this.props.profile.name && this.props.isVerified)
       return <Redirect to="/" />
 
     return (
@@ -154,11 +156,9 @@ const mapStateToProps = state => {
   const country = selector(state, 'country')
   return {
     loading: state.authState.loading,
-    profile: state.authState.profile,
-    uuid: '',
-    // uuid: state.authState.verify.data.user_uuid || state.userState.profile.uuid,
+    profileLoading: state.userState.loading,
+    profile: state.userState.profile,
     authError: state.authState.error,
-    userProfile: state.userState.profile,
     isVerified: state.authState.isVerified,
     country
   }
@@ -171,5 +171,5 @@ const signUpForm = reduxForm({
 
 export default connect(
   mapStateToProps,
-  { createProfile }
+  { createProfile, fetchUserProfile }
 )(signUpForm)

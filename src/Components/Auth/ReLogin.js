@@ -79,7 +79,7 @@ class ReLogin extends Component {
 const validate = formValues => {
   const errors = {}
 
-  if (!formValues.phone) {
+  if (!formValues.phone || formValues.phone.length < 8) {
     errors.phone = 'You must enter a valid phone number'
   }
 

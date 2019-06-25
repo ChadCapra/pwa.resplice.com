@@ -6,19 +6,6 @@ import Ripple from '../Loading/Ripple'
 
 import './input.scss'
 
-const RenderIcon = ({ loading, verified, error }) => {
-  return (
-    (loading && <Ripple className="code-verifying" />) ||
-    (verified && (
-      <MdCheck className="re-input-icon" color="#1bbc9b" fontSize="2.5rem" />
-    )) ||
-    (error && (
-      <MdClose className="re-input-icon" color="#fc3769" fontSize="2.5rem" />
-    )) ||
-    ''
-  )
-}
-
 class ReInputCode extends Component {
   state = {
     code: ['', '', '', '', '', '']
@@ -50,6 +37,17 @@ class ReInputCode extends Component {
     this.checkIfComplete(code)
   }
 
+  checkKey = (e, idx) => {
+    const inputs = document.getElementById(this.props.name).children
+    if (e.keyCode === 8 && !inputs[idx].value) {
+      const code = [...this.state.code]
+      code[idx - 1] = ''
+      inputs[idx - 1].value = ''
+      inputs[idx - 1].focus()
+      this.setState({ code })
+    }
+  }
+
   checkIfComplete = codeArr => {
     const code = codeArr.join('')
     if (codeArr.every(val => val !== '')) {
@@ -63,66 +61,91 @@ class ReInputCode extends Component {
     return (
       <div className="re-code-input-container">
         <label className="re-code-input-label">{label}</label>
-        <div className="re-code-inputs" id={name}>
-          <input
-            type="text"
-            placeholder="_"
-            inputMode="numeric"
-            pattern="[0-9]"
-            maxLength="1"
-            value={this.state.code[0]}
-            autoFocus={focus}
-            onChange={e => this.processInput(e, 0)}
-          />
-          <input
-            type="text"
-            placeholder="_"
-            inputMode="numeric"
-            pattern="[0-9]"
-            maxLength="1"
-            value={this.state.code[1]}
-            onChange={e => this.processInput(e, 1)}
-          />
-          <input
-            type="text"
-            placeholder="_"
-            inputMode="numeric"
-            pattern="[0-9]"
-            maxLength="1"
-            value={this.state.code[2]}
-            onChange={e => this.processInput(e, 2)}
-          />
-          <span className="input-code-dash">-</span>
-          <input
-            type="text"
-            placeholder="_"
-            inputMode="numeric"
-            pattern="[0-9]"
-            maxLength="1"
-            value={this.state.code[3]}
-            onChange={e => this.processInput(e, 3)}
-          />
-          <input
-            type="text"
-            placeholder="_"
-            inputMode="numeric"
-            pattern="[0-9]"
-            maxLength="1"
-            value={this.state.code[4]}
-            onChange={e => this.processInput(e, 4)}
-          />
-          <input
-            type="text"
-            placeholder="_"
-            inputMode="numeric"
-            pattern="[0-9]"
-            maxLength="1"
-            value={this.state.code[5]}
-            onChange={e => this.processInput(e, 5)}
-          />
-        </div>
+        {loading ? (
+          <div className="code-loading flex--center">
+            {this.state.code.map((num, idx) => (
+              <div key={idx} className="flex--center">
+                {num}
+              </div>
+            ))}
+            <Ripple />
+          </div>
+        ) : verified ? (
+          <div className="code-verified flex--center">
+            {this.state.code.map((num, idx) => (
+              <div key={idx} className="flex--center">
+                {num}
+              </div>
+            ))}
+            <MdCheck color="#1BBC9B" fontSize="1em" />
+          </div>
+        ) : (
+          <div className="re-code-inputs" id={name}>
+            <input
+              type="text"
+              placeholder="_"
+              inputMode="numeric"
+              pattern="[0-9]"
+              maxLength="1"
+              value={this.state.code[0]}
+              autoFocus={focus}
+              onChange={e => this.processInput(e, 0)}
+              onKeyUp={e => this.checkKey(e, 0)}
+            />
+            <input
+              type="text"
+              placeholder="_"
+              inputMode="numeric"
+              pattern="[0-9]"
+              maxLength="1"
+              value={this.state.code[1]}
+              onChange={e => this.processInput(e, 1)}
+              onKeyUp={e => this.checkKey(e, 1)}
+            />
+            <input
+              type="text"
+              placeholder="_"
+              inputMode="numeric"
+              pattern="[0-9]"
+              maxLength="1"
+              value={this.state.code[2]}
+              onChange={e => this.processInput(e, 2)}
+              onKeyUp={e => this.checkKey(e, 2)}
+            />
+            <input
+              type="text"
+              placeholder="_"
+              inputMode="numeric"
+              pattern="[0-9]"
+              maxLength="1"
+              value={this.state.code[3]}
+              onChange={e => this.processInput(e, 3)}
+              onKeyUp={e => this.checkKey(e, 3)}
+            />
+            <input
+              type="text"
+              placeholder="_"
+              inputMode="numeric"
+              pattern="[0-9]"
+              maxLength="1"
+              value={this.state.code[4]}
+              onChange={e => this.processInput(e, 4)}
+              onKeyUp={e => this.checkKey(e, 4)}
+            />
+            <input
+              type="text"
+              placeholder="_"
+              inputMode="numeric"
+              pattern="[0-9]"
+              maxLength="1"
+              value={this.state.code[5]}
+              onChange={e => this.processInput(e, 5)}
+              onKeyUp={e => this.checkKey(e, 5)}
+            />
+          </div>
+        )}
 
-        <RenderIcon loading={loading} verified={verified} error={error} />
+        {error && <MdClose color="#FF3860" fontSize="1em" />}
       </div>
     )
   }
@@ -132,10 +155,10 @@ ReInputCode.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   onComplete: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
+  loading: PropTypes.bool,
   verified: PropTypes.bool,
   focus: PropTypes.bool,
-  error: PropTypes.object
+  error: PropTypes.bool
 }
 
 export default ReInputCode

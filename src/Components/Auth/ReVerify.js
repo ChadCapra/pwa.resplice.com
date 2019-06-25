@@ -45,12 +45,22 @@ class ReVerify extends Component {
     if (this.props.authorized) return <Redirect to="/" />
     if (this.props.verified) return <Redirect to="/auth/create-profile" />
 
-    let tokenOneVerified = false
-    let tokenTwoVerified = false
+    let tokenOneVerified = false,
+      tokenOneError = false
+    let tokenTwoVerified = false,
+      tokenTwoError = false
 
-    if (Object.entries(this.props.verify).length > 0) {
+    if (Object.entries(this.props.verify).length) {
       tokenOneVerified = this.props.verify.ok.token_1_valid
+      tokenOneError =
+        this.state.verify_token_1 &&
+        !this.props.verify.ok.token_1_valid &&
+        !this.props.verifying
       tokenTwoVerified = this.props.verify.ok.token_2_valid
+      tokenTwoError =
+        this.state.verify_token_2 &&
+        !this.props.verify.ok.token_2_valid &&
+        !this.props.verifying
     }
 
     return (
@@ -72,16 +82,18 @@ class ReVerify extends Component {
               name="phone_verify_token"
               label="Verification Code #1"
               onComplete={this.onPhoneComplete}
-              loading={this.props.verifying}
+              loading={this.state.verify_token_1 && this.props.verifying}
               verified={tokenOneVerified}
+              error={tokenOneError}
               focus
             />
             <ReInputCode
               name="email_verify_token"
               label="Verification Code #2"
               onComplete={this.onEmailComplete}
-              loading={this.props.verifying}
+              loading={this.state.verify_token_2 && this.props.verifying}
               verified={tokenTwoVerified}
+              error={tokenTwoError}
             />
           </div>
           <ReButton

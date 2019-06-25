@@ -4,9 +4,6 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT,
-  CREATE_PROFILE,
-  CREATE_PROFILE_SUCCESS,
-  CREATE_PROFILE_FAILURE,
   VERIFY,
   VERIFY_SUCCESS,
   VERIFY_FAILURE,
@@ -40,24 +37,11 @@ export const logout = () => {
   }
 }
 
-export const createProfile = formValues => async dispatch => {
-  dispatch({ type: CREATE_PROFILE })
-
-  try {
-    const response = await api.post('/user/create_profile', formValues)
-    dispatch({ type: CREATE_PROFILE_SUCCESS, payload: response.data })
-  } catch (err) {
-    dispatch({ type: CREATE_PROFILE_FAILURE, payload: err.response })
-  }
-}
-
 export const verifyAttributes = verifyObject => async dispatch => {
   dispatch({ type: VERIFY })
 
   try {
     const response = await api.patch('/verify_login', verifyObject)
-
-    dispatch({ type: VERIFY_SUCCESS, payload: response.data })
 
     if (response.data.ok.access_token) {
       // Set auth header on axios instance
@@ -68,6 +52,8 @@ export const verifyAttributes = verifyObject => async dispatch => {
       localStorage.setItem('access_token', response.data.ok.access_token)
       localStorage.setItem('user_uuid', response.data.ok.user_uuid)
     }
+
+    dispatch({ type: VERIFY_SUCCESS, payload: response.data })
   } catch (err) {
     JSON.stringify(err)
     console.log(err)
