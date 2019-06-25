@@ -79,7 +79,10 @@ const ReUserProfile = ({
         show={actionType === 'verify'}
         onClose={() => setActionType('')}
       >
-        <ReVerifyAttribute uuid={actionAttributeId} />
+        <ReVerifyAttribute
+          uuid={actionAttributeId}
+          onVerify={() => setActionType('')}
+        />
       </ReModal>
     </div>
   )

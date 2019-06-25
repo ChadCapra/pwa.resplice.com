@@ -40,7 +40,6 @@ export const addAttribute = attribute => async dispatch => {
     const response = await api.post('/attribute/add', attribute)
     dispatch({ type: ADD_ATTRIBUTE_SUCCESS, payload: response.data })
   } catch (err) {
-    console.log(err)
     dispatch({ type: ADD_ATTRIBUTE_FAILURE, payload: err })
   }
 }

@@ -9,7 +9,10 @@ import {
   UPLOAD_AVATAR_FAILURE,
   CREATE_PROFILE,
   CREATE_PROFILE_SUCCESS,
-  CREATE_PROFILE_FAILURE
+  CREATE_PROFILE_FAILURE,
+  UPDATE_NAME,
+  UPDATE_NAME_SUCCESS,
+  UPDATE_NAME_FAILURE
 } from './types'
 
 import { objectArrToDict } from '../helpers'
@@ -60,5 +63,16 @@ export const createProfile = formValues => async dispatch => {
     dispatch({ type: CREATE_PROFILE_SUCCESS, payload: response.data })
   } catch (err) {
     dispatch({ type: CREATE_PROFILE_FAILURE, payload: err.response })
+  }
+}
+
+export const updateName = (name, oldName) => async dispatch => {
+  dispatch({ type: UPDATE_NAME, payload: name })
+
+  try {
+    await api.patch('/user/name', name)
+    dispatch({ type: UPDATE_NAME_SUCCESS })
+  } catch (err) {
+    dispatch({ type: UPDATE_NAME_FAILURE, payload: { err, oldName } })
   }
 }

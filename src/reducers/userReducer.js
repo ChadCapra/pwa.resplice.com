@@ -13,7 +13,9 @@ import {
   DISABLE_QR_SHARE,
   FETCH_SESSIONS,
   FETCH_SESSIONS_SUCCESS,
-  FETCH_SESSIONS_FAILURE
+  FETCH_SESSIONS_FAILURE,
+  UPDATE_NAME,
+  UPDATE_NAME_FAILURE
 } from '../actions/types'
 
 import { processAttributes } from '../helpers'
@@ -99,6 +101,14 @@ export default (state = INITIAL_STATE, action) => {
       }
     case FETCH_SESSIONS_FAILURE:
       return { ...state, loading: false, error: action.payload }
+    case UPDATE_NAME:
+      return { ...state, profile: { ...state.profile, name: action.payload } }
+    case UPDATE_NAME_FAILURE:
+      return {
+        ...state,
+        profile: { ...state.profile, name: action.payload.oldName },
+        error: action.payload.err
+      }
     default:
       return state
   }

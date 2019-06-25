@@ -27,3 +27,12 @@ export const processContact = (
   contactList[contact.uuid] = contact
   return contactList
 }
+
+/**
+ * Converts a timestamp to a human readable time
+ * @param {String} timestamp - Timestamp to convert
+ * @returns {String}
+ */
+export const dateToReadable = timestamp => {
+  return '3 Hours'
+}

@@ -114,12 +114,12 @@
 .alphanum-list {
   position: fixed;
   right: 15px;
-  top: 25px;
+  top: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #e5e5e57e;
+  background-color: #ececec;
   border-radius: 10px;
   padding: 5px 2.5px;
 
@@ -127,7 +127,7 @@
     display: none;
   }
   & div {
-    font-size: 14px;
+    font-size: calc(20vh / 15);
     cursor: pointer;
     transition: 0.3s ease all;
     border-radius: 5px;

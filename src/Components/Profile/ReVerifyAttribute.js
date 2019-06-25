@@ -13,9 +13,13 @@ const ReVerifyAttribute = ({
   onVerify,
   verifyObject,
   verifying,
-  verifyAttribute
+  error,
+  verifyAttribute,
+  resendAttributeVerification
 }) => {
   const { collection, name, value } = attribute
+  if (Object.entries(verifyObject).length) onVerify()
+
   return (
     <div className="verify-attribute">
       <TypeCard
@@ -32,6 +36,7 @@ const ReVerifyAttribute = ({
             onComplete={code => verifyAttribute(attribute.uuid, code)}
             loading={verifying}
             verified={Object.entries(verifyObject).length > 0}
+            error={!!error}
             focus
           />
         </div>
@@ -53,19 +58,21 @@ ReVerifyAttribute.propTypes = {
   onVerify: PropTypes.func.isRequired,
   verifyObject: PropTypes.object,
   verifying: PropTypes.bool,
+  error: PropTypes.object,
   verifyAttribute: PropTypes.func.isRequired,
   resendAttributeVerification: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const attrType = state.attributeState.types.find(
-    type => type.id === ownProps.attribute.attribute_type_id
-  )
+  const attribute = state.userState.attributes[ownProps.uuid]
+  const attrType = state.userState.types[attribute.attribute_type_id]
 
   return {
     attrType,
+    attribute,
     verifyObject: state.attributeState.verify,
-    verifying: state.attributeState.loading
+    verifying: state.attributeState.loading,
+    error: state.attributeState.error
   }
 }
 
