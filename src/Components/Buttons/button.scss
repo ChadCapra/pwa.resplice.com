@@ -53,13 +53,14 @@ $button-bg-light: #77d3c0;
   }
 }
 
-// TODO: Get this to work without using sticky
 .fab {
   position: sticky;
-  bottom: 15px;
+  top: 100vh;
   left: 100vw;
-  margin-right: 15px;
-  //right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px;
   width: 65px;
   height: 65px;
   background-color: #1bbc9b;
@@ -90,10 +91,17 @@ $button-bg-light: #77d3c0;
   }
 }
 
-.fab {
+.fab-action-menu {
+  position: sticky;
+  top: 100vh;
+  left: 100vw;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+  margin: 15px;
+  height: 65px;
+  background-color: #1bbc9b;
+  border-radius: 10px;
 }
 
 .re-ring {

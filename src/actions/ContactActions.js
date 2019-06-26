@@ -22,11 +22,12 @@ export const fetchContactList = () => async dispatch => {
 
 export const fetchContact = uuid => async dispatch => {
   dispatch({ type: FETCH_CONTACT })
-  dispatch({ type: FETCH_CONTACT_SUCCESS, payload: contact })
-  // try {
-  //   const response = await api.get(`/contact/${uuid}`)
-  //   dispatch({ type: FETCH_CONTACT_SUCCESS, payload: response.data })
-  // } catch (err) {
-  //   dispatch({ type: FETCH_CONTACT_FAILURE, payload: err.response })
-  // }
+
+  try {
+    // const response = await api.get(`/contact/${uuid}`)
+    // dispatch({ type: FETCH_CONTACT_SUCCESS, payload: response.data })
+    dispatch({ type: FETCH_CONTACT_SUCCESS, payload: contact })
+  } catch (err) {
+    dispatch({ type: FETCH_CONTACT_FAILURE, payload: err.response })
+  }
 }

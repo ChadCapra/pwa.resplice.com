@@ -10,6 +10,7 @@ import {
   CREATE_GROUP_SUCCESS,
   CREATE_GROUP_FAILURE
 } from './types'
+import { contact } from './mockData'
 
 export const fetchGroupList = () => async dispatch => {
   dispatch({ type: FETCH_GROUP_LIST })
@@ -26,8 +27,9 @@ export const fetchGroup = ({ id }) => async dispatch => {
   dispatch({ type: FETCH_GROUP })
 
   try {
-    const response = await api.get(`/groups/${id}`)
-    dispatch({ type: FETCH_GROUP_SUCCESS, payload: response.data })
+    // const response = await api.get(`/groups/${id}`)
+    // dispatch({ type: FETCH_GROUP_SUCCESS, payload: response.data })
+    dispatch({ type: FETCH_GROUP_SUCCESS, payload: contact })
   } catch (err) {
     dispatch({ type: FETCH_GROUP_FAILURE, payload: err.response })
   }

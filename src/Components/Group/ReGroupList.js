@@ -1,4 +1,6 @@
 import React, { PureComponent } from 'react'
+import { FixedSizeList as List } from 'react-window'
+import AutoSizer from 'react-virtualized-auto-sizer'
 
 import ReContact from '../Contact/ReContact'
 import ReCreateGroup from './ReCreateGroup'
@@ -10,7 +12,7 @@ import './group.scss'
 
 const buildSortedList = () => {
   const contacts = {}
-  for (let i = 1; i <= 100; i++) {
+  for (let i = 1; i <= 1000; i++) {
     const uuid = Math.random()
       .toString(36)
       .substring(2, 15)
@@ -34,64 +36,72 @@ const buildSortedList = () => {
   })
 }
 
-const buildLetterMap = contacts => {
-  return contacts.reduce((map, contact) => {
-    const letter = contact.name[0].toUpperCase()
-    if (/[0-9]/.test(letter)) map['#'] = []
-    else map[letter] = []
-    return map
-  }, {})
-}
-
-let letterRefMap = {}
 class ReGroupList extends PureComponent {
-  state = {
-    showCreateModal: false,
-    contactsSelectable: false,
-    contacts: buildSortedList(),
-    contactsSelected: []
+  constructor(props) {
+    super(props)
+    this.state = {
+      showCreateModal: false,
+      contactsSelectable: false,
+      contacts: buildSortedList(),
+      contactsSelected: []
+    }
+    this.listRef = React.createRef()
   }
 
-  componentWillMount() {
-    letterRefMap = buildLetterMap(this.state.contacts)
+  handleLetterClick = index => {
+    this.listRef.current.scrollToItem(index, 'start')
   }
 
-  addToRefMap = instance => {
-    if (!instance) return
-    const name = instance.children[1].children[0].textContent
-    const letter = /[0-9]/.test(name[0]) ? '#' : name[0].toUpperCase()
-    letterRefMap[letter]
-      ? letterRefMap[letter].push(instance)
-      : (letterRefMap[letter] = [instance])
+  handleSelect = uuid => {
+    const newUuids = [...this.state.contactsSelected]
+    newUuids.push(uuid)
+    this.setState({ contactsSelected: newUuids, contactsSelectable: true })
   }
 
-  handleLetterClick = letter => {
-    letterRefMap[letter][0].scrollIntoView({
-      alignToTop: true,
-      behavior: 'smooth'
-    })
+  renderGroupItem = ({ index, style }) => {
+    const contact = this.state.contacts[index]
+    const selected = this.state.contactsSelected.includes(contact.uuid)
+
+    return (
+      <ReContact
+        contact={contact}
+        selected={selected}
+        selectable={this.state.contactsSelectable}
+        style={style}
+        onSelect={this.handleSelect}
+      />
+    )
   }
 
   render() {
     return (
       <div className="re-group-list">
-        {this.state.contacts.map(item => {
-          return (
-            <ReContact
-              key={item.uuid}
-              contact={item}
-              addToRefMap={this.addToRefMap}
-              onLongPress={() => console.log('Long press')}
-            />
-          )
-        })}
+        <AutoSizer>
+          {({ height, width }) => (
+            <List
+              ref={this.listRef}
+              className="List"
+              height={height}
+              itemCount={this.state.contacts.length}
+              itemSize={60}
+              width={width}
+              itemData={this.state.contacts}
+              overscanCount={10}
+            >
+              {this.renderGroupItem}
+            </List>
+          )}
+        </AutoSizer>
 
         <AlphaNumericSlider
-          list={Object.keys(letterRefMap)}
+          list={this.state.contacts}
           onClick={this.handleLetterClick}
         />
 
-        <RePlusFAB onClick={() => this.setState({ showCreateModal: true })} />
+        <RePlusFAB
+          onClick={() => this.setState({ showCreateModal: true })}
+          selecting={this.state.contactsSelectable}
+        />
 
         <ReModal
           full
