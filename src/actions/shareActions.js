@@ -52,12 +52,12 @@ export const disableQrShare = uuid => async dispatch => {
   }
 }
 
-export const requestRelationship = request => async dispatch => {
+export const inviteContact = request => async dispatch => {
   dispatch({ type: INVITE })
 
   try {
     console.log(request)
-    // await api.post('/contact/request_relationship', request)
+    await api.post('/contact/request_relationship', request)
     dispatch({ type: INVITE_SUCCESS })
   } catch (err) {
     dispatch({ type: INVITE_FAILURE, payload: err })

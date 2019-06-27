@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Identicon from 'react-identicons'
+import { ReactComponent as Shield } from '../../assets/Copper_3.svg'
 
 const ContactProfilePic = ({ uuid, avatar }) => {
   return (
@@ -12,7 +13,7 @@ const ContactProfilePic = ({ uuid, avatar }) => {
         <Identicon string={uuid} size={85} />
       )}
       {/* Change to rank icons */}
-      {/* <MdUpload color="#1bbc9b" fontSize="2.5em" className="pic-upload-icon" /> */}
+      <Shield className="pic-upload-icon" />
     </div>
   )
 }

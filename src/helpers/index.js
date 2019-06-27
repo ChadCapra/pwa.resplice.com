@@ -12,5 +12,14 @@ export const objectArrToDict = (arr, key) => {
   return dict
 }
 
+/**
+ * Takes in a string and capitalizes it
+ * @param {String} str - String to capitalize
+ * @returns {String}
+ */
+export const capitalizeString = str => {
+  return str[0].toUpperCase() + str.slice(1)
+}
+
 export * from './attribute'
 export * from './contact'

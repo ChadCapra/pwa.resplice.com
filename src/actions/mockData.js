@@ -5,7 +5,7 @@ export const contact = {
     shares: 50,
     avatar:
       'https://res.cloudinary.com/capabit-solutions/image/upload/v1529421479/Resplice/ncf3iws37vcg6tdofrgh.png',
-    tags: ['Father'],
+    tags: ['Father', 'Dark Side'],
     attributes: {
       '1': {
         uuid: '1',
@@ -14,6 +14,24 @@ export const contact = {
         name: 'Primary Phone',
         value: {
           phone: '16123428709'
+        }
+      },
+      '2': {
+        uuid: '2',
+        attribute_type_id: 2,
+        collection: 'Emails',
+        name: 'Primary Email',
+        value: {
+          email: 'vader@deathstar.com'
+        }
+      },
+      '3': {
+        uuid: '2',
+        attribute_type_id: 6,
+        collection: 'Websites',
+        name: 'Personal Website',
+        value: {
+          url: 'https://www.vader.com'
         }
       }
     }

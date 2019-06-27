@@ -29,13 +29,6 @@
   height: 100%;
 }
 
-.invite-header {
-  width: 90%;
-  max-width: 575px;
-  color: #1bbc9b;
-  font-size: 18px;
-}
-
 .share-list {
   height: 100%;
   overflow: auto;
@@ -58,6 +51,15 @@
   width: 90%;
   max-width: 575px;
   position: relative;
+  margin-bottom: 25px;
+}
+
+.re-invite {
+  position: relative;
+  height: 100%;
+}
+.re-invite-modal {
+  margin-top: 25px;
 }
 
 .invite-attribute-container {
@@ -82,6 +84,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
   margin: 15px 0;
 }
 
@@ -211,27 +214,20 @@
   height: 400px;
 }
 
-.qr-camera-btn {
+.camera-fab {
+  position: sticky;
+  bottom: 15px;
+  left: 100vw;
   display: flex;
+  justify-content: center;
   align-items: center;
   background-color: #1bbc9b;
   color: white;
-  width: 90%;
-  max-width: 575px;
-  height: 55px;
-  padding: 5px 0;
-  border-radius: 15px;
-  margin-top: 25px;
+  height: 75px;
+  width: 75px;
+  margin-right: 15px;
+  border-radius: 50%;
   transition: all 0.2s ease;
-
-  & svg {
-    margin: 0 10px;
-  }
-
-  & span {
-    margin-left: 25px;
-    font-size: 24px;
-  }
 
   &:active {
     color: white;
@@ -239,6 +235,18 @@
     background-color: darken(#1bbc9b, 5%);
     box-shadow: 0 2px 25px rgba(255, 0, 130, 0.2);
   }
+}
+
+.qr-outer-loading {
+  width: 100%;
+  height: 7px;
+  background-color: #e5e5e5;
+  border-radius: 25px;
+}
+.qr-inner-loading {
+  height: 7px;
+  background-color: #1bbc9b;
+  border-radius: 25px;
 }
 
 .qr-code-pin {
@@ -260,6 +268,23 @@
   & svg {
     margin: 0 10px 0 2.5px;
   }
+}
+
+.invite-attr-link {
+  text-align: center;
+  margin: 25px 0;
+  color: #1bbc9b;
+  font-size: 24px;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.invite-label {
+  color: #1bbc9b;
+  width: 90%;
 }
 
 .dropdown-query {

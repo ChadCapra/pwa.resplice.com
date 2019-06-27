@@ -6,24 +6,23 @@ import { swiped } from '../actions'
 
 import ReShareAttributes from './Share/ReShareAttributes'
 import ReInvite from './Share/ReInvite'
-import ReShareCode from './Share/ReShareCode'
 import ReHeader from './Header/ReHeader'
 
 import './Share/share.scss'
 
 const ReShareView = ({ swiped }) => {
   useEffect(() => {
-    swiped(1)
+    swiped(0)
   }, [swiped])
 
   return (
     <div className="share">
-      <ReHeader menus={['Invite', 'Shares', 'QR Code']} exitRoute={'/'} />
+      <ReHeader menus={['Invite', 'Shares']} exitRoute={'/'} />
       <div className="share-body">
         <ReactSwipe
           className="swipe-nav"
           swipeOptions={{
-            startSlide: 1,
+            startSlide: 0,
             continuous: false,
             callback: idx => swiped(idx)
           }}
@@ -33,9 +32,6 @@ const ReShareView = ({ swiped }) => {
           </div>
           <div className="swipe-nav-item-container">
             <ReShareAttributes />
-          </div>
-          <div className="swipe-nav-item-container">
-            <ReShareCode />
           </div>
         </ReactSwipe>
       </div>
