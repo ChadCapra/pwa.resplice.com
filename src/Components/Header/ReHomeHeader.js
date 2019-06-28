@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
 import Columns from 'react-bulma-components/lib/components/columns'
-import ReSearch from '../Input/ReSearch'
+import ReSearch from '../Form/ReSearch'
 import SwipeNav from './SwipeNav'
 import ReAvatar from '../Contact/ReAvatar'
 import './header.scss'

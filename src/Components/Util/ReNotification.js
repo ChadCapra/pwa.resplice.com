@@ -1,18 +1,30 @@
-import React from 'react'
-import Notification from 'react-bulma-components/lib/components/notification'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import ReButton from '../Buttons/ReButton'
+const Header = () => {}
+const Body = () => {}
 
-const ReNotification = ({ title, children, btnText, type }) => {
-  return (
-    <Notification color={type} className="notif">
-      <div>
-        <span className="notif-text">{title}</span>
-        <span className="notif-text-2">{children}</span>
+class ReNotification extends Component {
+  static Header = Header
+  static Body = Body
+
+  render() {
+    const { type, style, children } = this.props
+    const header = children.find(child => child.type === Header)
+    const body = children.find(child => child.type === Body)
+
+    return (
+      <div className={`re-notification ${type}`} style={style}>
+        <div className="header">{header ? header.props.children : null}</div>
+        <div className="body">{body ? body.props.children : null}</div>
       </div>
-      <ReButton type="small" width="75px" text={btnText} />
-    </Notification>
-  )
+    )
+  }
+}
+
+ReNotification.propTypes = {
+  type: PropTypes.oneOf(['info', 'danger', 'success']).isRequired,
+  style: PropTypes.object
 }
 
 export default ReNotification

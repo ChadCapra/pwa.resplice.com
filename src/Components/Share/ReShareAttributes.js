@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { enableQrShare, disableQrShare } from '../../actions'
+import { enableQrShare, disableQrShare } from '../../state/actions'
 
-import CardList from '../Cards/CardList'
-import ShareCard from '../Cards/ShareCard'
+import CardList from '../Card/CardList'
+import ShareCard from '../Card/ShareCard'
 
 const ReShareAttributes = ({ enableQrShare, disableQrShare }) => {
   return (

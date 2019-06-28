@@ -1,39 +1,39 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import './button.scss'
+
+export interface ReButtonProps {
+  type: 'primary' | 'secondary'
+  loading: boolean | undefined
+  disabled: boolean | undefined
+  onClick(e: object): void
+  children: any
+}
 
 /**
  * Primary Button for Resplice. Used on forms, in modals, etc.
  */
-const ReButton = ({ type, text, loading, disabled, onClick, ...props }) => {
+const ReButton = ({
+  type,
+  loading,
+  disabled,
+  onClick,
+  children,
+  ...props
+}: ReButtonProps) => {
   return loading ? (
     <button className={`btn btn--${type} btn--loading`} disabled {...props}>
-      {text}
+      {children}
       <div className="re-ring re-spin" />
     </button>
   ) : disabled ? (
     <button className={`btn btn--${type} btn--disabled`} disabled {...props}>
-      {text}
+      {children}
     </button>
   ) : (
     <button className={`btn btn--${type}`} onClick={onClick} {...props}>
-      {text}
+      {children}
     </button>
   )
-}
-
-ReButton.propTypes = {
-  /**
-   * The type of button, can be primary or secondary.
-   */
-  type: PropTypes.oneOf(['primary', 'secondary']).isRequired,
-  text: PropTypes.string.isRequired,
-  /**
-   * Indicates loading state.
-   */
-  loading: PropTypes.bool,
-  disabled: PropTypes.bool,
-  onClick: PropTypes.func
 }
 
 export default ReButton

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { uploadAvatar } from '../../actions'
+import { uploadAvatar } from '../../state/actions'
 import Identicon from 'react-identicons'
 import MdCamera from 'react-ionicons/lib/MdCamera'
 import MdUpload from 'react-ionicons/lib/MdCloudUpload'

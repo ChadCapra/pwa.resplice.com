@@ -2,10 +2,10 @@ import React, { PureComponent } from 'react'
 import { FixedSizeList as List } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
 
-import ReContact from '../Contact/ReContact'
+import ReContact from '../Profile/ReProfileItem'
 import ReCreateGroup from './ReCreateGroup'
-import RePlusFAB from '../Buttons/RePlusFAB'
-import ReModal from '../Modals/ReModal'
+import RePlusFAB from '../Button/RePlusFAB'
+import ReModal from '../Modal/ReModal'
 import AlphaNumericSlider from '../Util/AlphaNumericSlider'
 
 import './group.scss'

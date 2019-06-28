@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { inviteContact } from '../../actions'
+import { inviteContact } from '../../state/actions'
 
 import MdMail from 'react-ionicons/lib/MdMail'
 import MdCall from 'react-ionicons/lib/MdCall'
-import ReInput from '../Input/ReInput'
-import ReInputPhone from '../Input/ReInputPhone'
+import ReInput from '../Form/ReInput'
+import ReInputPhone from '../Form/ReInputPhone'
 import ReShareDropdown from './ReShareDropdown'
 import MdClose from 'react-ionicons/lib/MdClose'
-import ReButton from '../Buttons/ReButton'
+import ReButton from '../Button/ReButton'
 
 const QUERY_TYPES = {
   EMAIL: 'Email',

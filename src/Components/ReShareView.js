@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import ReactSwipe from 'react-swipe'
 
-import { swiped } from '../actions'
+import { swiped } from '../state/actions'
 
 import ReShareAttributes from './Share/ReShareAttributes'
 import ReInvite from './Share/ReInvite'

@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { verifyAttributes, logout } from '../../actions'
+import { verifyAttributes, logout } from '../../state/actions'
 
 import ReAuthHeader from './ReAuthHeader'
-import ReInputCode from '../Input/ReInputCode'
-import ReButton from '../Buttons/ReButton'
+import ReInputCode from '../Form/ReInputCode'
+import ReButton from '../Button/ReButton'
 
 class ReVerify extends Component {
   state = {

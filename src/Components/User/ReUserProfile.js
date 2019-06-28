@@ -4,18 +4,16 @@ import { connect } from 'react-redux'
 import Level from 'react-bulma-components/lib/components/level'
 import Icon from 'react-bulma-components/lib/components/icon'
 
-import ProfilePic from './ProfilePic'
-import ViewCard from '../Cards/ViewCard'
-import CardList from '../Cards/CardList'
+import ProfilePic from '../Profile/ProfilePic'
+import ViewCard from '../Card/ViewCard'
+import CardList from '../Card/CardList'
 import ReUserRanks from './ReUserRanks'
-import ReModal from '../Modals/ReModal'
-import ReEditAttribute from './ReEditAttribute'
-import ReVerifyAttribute from './ReVerifyAttribute'
+import ReModal from '../Modal/ReModal'
+import ReEditAttribute from '../Profile/ReEditAttribute'
+import ReVerifyAttribute from '../Profile/ReVerifyAttribute'
 import { ReactComponent as Shield } from '../../assets/Copper_3.svg'
 
 import { handleAttributeAction } from '../../helpers'
-
-import './profile.scss'
 
 const ReUserProfile = ({
   profile: { uuid, name, avatar, unique_contacts, total_shares }

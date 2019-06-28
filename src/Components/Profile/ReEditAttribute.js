@@ -2,15 +2,15 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm, formValueSelector, getFormValues } from 'redux-form'
 import { connect } from 'react-redux'
-import { editAttribute } from '../../actions'
+import { editAttribute } from '../../state/actions'
 
-import TypeCard from '../Cards/TypeCard'
-import ReInput from '../Input/ReInput'
-import ReInputPhone from '../Input/ReInputPhone'
-import ReInputCombo from '../Input/ReInputCombo'
-import ReInputCountry from '../Input/ReInputCountry'
-import ReInputRegion from '../Input/ReInputRegion'
-import ReButton from '../Buttons/ReButton'
+import TypeCard from '../Card/TypeCard'
+import ReInput from '../Form/ReInput'
+import ReInputPhone from '../Form/ReInputPhone'
+import ReInputCombo from '../Form/ReInputCombo'
+import ReInputCountry from '../Form/ReInputCountry'
+import ReInputRegion from '../Form/ReInputRegion'
+import ReButton from '../Button/ReButton'
 
 class ReEditAttribute extends Component {
   onSubmit = async ({ name, collection, ...formValues }) => {

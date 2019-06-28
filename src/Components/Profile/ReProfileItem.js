@@ -3,11 +3,12 @@ import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
 
 import MdCheckmark from 'react-ionicons/lib/MdCheckmark'
-import ReAvatar from './ReAvatar'
+import ReAvatar from '../Contact/ReAvatar'
 
-import { dateToReadable } from '../../helpers'
+import { getTimeRemaining } from '../../helpers'
 
-import './contact.scss'
+import './profile.scss'
+import '../Contact/contact.scss'
 
 const ReContact = ({
   contact: { uuid, name, tags, avatar, pending },
@@ -58,7 +59,9 @@ const ReContact = ({
       <div className="contact-name">
         <span>{name}</span>
         <span className="contact-group">
-          {pending ? `Expires in ${dateToReadable()}` : tags}
+          {pending
+            ? `Expires in ${getTimeRemaining('2019-06-30T21:09:10')}`
+            : tags}
         </span>
       </div>
     </div>

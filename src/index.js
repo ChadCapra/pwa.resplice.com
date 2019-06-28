@@ -8,7 +8,7 @@ import reduxThunk from 'redux-thunk'
 
 import './index.css'
 import Secure from './Secure'
-import reducers from './reducers'
+import reducers from './state/reducers'
 import * as serviceWorker from './serviceWorker'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

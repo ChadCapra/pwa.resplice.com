@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
-import ReTextArea from '../Input/ReTextArea'
-import ReButton from '../Buttons/ReButton'
+import ReTextArea from '../Form/ReTextArea'
+import ReButton from '../Button/ReButton'
 
 const ReCustomMessage = ({ message, saveMessage }) => {
   const [inviteMessage, setInviteMessage] = useState(message)

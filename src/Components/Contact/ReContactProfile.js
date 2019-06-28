@@ -2,14 +2,17 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 import ContactProfilePic from './ContactProfilePic'
-import CardList from '../Cards/CardList'
-import ViewCard from '../Cards/ViewCard'
-import ReModal from '../Modals/ReModal'
+import CardList from '../Card/CardList'
+import ViewCard from '../Card/ViewCard'
+import ReModal from '../Modal/ReModal'
 import ReTags from '../Util/ReTags'
+import ReNotification from '../Util/ReNotification'
 
-import { handleAttributeAction } from '../../helpers'
+import { handleAttributeAction, getTimeRemaining } from '../../helpers'
 
-const ReContactProfile = ({ profile: { uuid, name, tags } }) => {
+const ReContactProfile = ({
+  profile: { uuid, name, tags, pending_expiration, pending_attribute_value }
+}) => {
   const [showTagModal, setShowTagModal] = useState(false)
 
   const handleAction = (actionType, { value }) => {
@@ -22,13 +25,24 @@ const ReContactProfile = ({ profile: { uuid, name, tags } }) => {
 
   return (
     <div className="profile">
+      {pending_expiration && (
+        <ReNotification type="info" style={{ marginBottom: '25px' }}>
+          <ReNotification.Header>Pending Contact</ReNotification.Header>
+          <ReNotification.Body>
+            Share {pending_attribute_value} to unlock <br />
+            Expires in{' '}
+            {getTimeRemaining(new Date(pending_expiration), new Date())}
+          </ReNotification.Body>
+        </ReNotification>
+      )}
+
       <ContactProfilePic uuid={uuid} />
       <div onClick={() => setShowTagModal(true)}>
         <h1 className="profile-name">{name}</h1>
         <div className="profile-tags">
           {tags.map((tag, idx) => (
             <span key={tag}>
-              {tag} {idx !== tags.length - 1 ? '|' : ''}{' '}
+              {tag} {idx !== tags.length - 1 ? '|' : null}{' '}
             </span>
           ))}
         </div>
@@ -42,7 +56,6 @@ const ReContactProfile = ({ profile: { uuid, name, tags } }) => {
       />
 
       <ReModal
-        full
         show={showTagModal}
         onClose={() => setShowTagModal(false)}
         headerText="Tags"

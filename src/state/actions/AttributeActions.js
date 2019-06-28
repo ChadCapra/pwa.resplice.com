@@ -1,4 +1,4 @@
-import api from '../api'
+import api from '../../api'
 import {
   FETCH_ATTRIBUTE_TYPES,
   FETCH_ATTRIBUTE_TYPES_SUCCESS,
@@ -19,7 +19,7 @@ import {
   RESEND_VERIFY_ATTRIBUTE_SUCCESS,
   RESEND_VERIFY_ATTRIBUTE_FAILURE
 } from './types'
-import { objectArrToDict } from '../helpers'
+import { objectArrToDict } from '../../helpers'
 
 export const fetchAttributeTypes = () => async dispatch => {
   dispatch({ type: FETCH_ATTRIBUTE_TYPES })

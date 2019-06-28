@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import ReAddAttributeForm from './ReAddAttributeForm'
-import CardList from '../Cards/CardList'
-import TypeCard from '../Cards/TypeCard'
+import CardList from '../Card/CardList'
+import TypeCard from '../Card/TypeCard'
 
 const ReAddAttribute = ({ onAttributeAdd }) => {
   const [attrType, setAttrType] = useState({})

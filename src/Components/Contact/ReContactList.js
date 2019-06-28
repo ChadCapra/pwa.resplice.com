@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
-import ReContact from './ReContact'
-import RePlusFAB from '../Buttons/RePlusFAB'
+import ReContact from '../Profile/ReProfileItem'
+import RePlusFAB from '../Button/RePlusFAB'
 
 class ReContactList extends Component {
   state = {

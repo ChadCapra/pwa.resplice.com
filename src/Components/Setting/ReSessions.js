@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { fetchSessions, logout } from '../../actions'
+import { fetchSessions, logout } from '../../state/actions'
 
 import './settings.scss'
 

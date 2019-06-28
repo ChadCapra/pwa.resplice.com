@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Identicon from 'react-identicons'
 import MdUpload from 'react-ionicons/lib/MdCloudUpload'
 
-import ReModal from '../Modals/ReModal'
+import ReModal from '../Modal/ReModal'
 import AvatarUpload from './ReAvatarUpload'
 
 import './profile.scss'

@@ -1,4 +1,4 @@
-import api from '../api'
+import api from '../../api'
 import {
   FETCH_GROUP_LIST,
   FETCH_GROUP_LIST_SUCCESS,

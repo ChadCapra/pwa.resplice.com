@@ -6,12 +6,19 @@ import MdClose from 'react-ionicons/lib/MdClose'
 
 import './modal.scss'
 
-const ReModal = ({ show, onClose, full, headerText, children }) => {
+const ReModal = ({
+  show,
+  onClose,
+  full,
+  closeOnOutside,
+  headerText,
+  children
+}) => {
   const contentNode = useRef()
 
   const handleOutsideClick = e => {
     if (contentNode.current) {
-      if (!contentNode.current.contains(e.target) && !full) {
+      if (closeOnOutside && !contentNode.current.contains(e.target) && !full) {
         animateAndClose()
       }
     }
@@ -62,6 +69,7 @@ ReModal.propTypes = {
   show: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   full: PropTypes.bool,
+  closeOnOutside: PropTypes.bool,
   headerText: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.string,

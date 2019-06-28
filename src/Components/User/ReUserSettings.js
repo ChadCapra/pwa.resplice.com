@@ -3,8 +3,8 @@ import React, { Component } from 'react'
 // import { logout, fetchSessions } from '../../actions'
 
 import MdArrowDropright from 'react-ionicons/lib/MdArrowDropright'
-import ReModal from '../Modals/ReModal'
-import ReSessions from '../Settings/ReSessions'
+import ReModal from '../Modal/ReModal'
+import ReSessions from '../Setting/ReSessions'
 
 class ReUserSettings extends Component {
   state = {

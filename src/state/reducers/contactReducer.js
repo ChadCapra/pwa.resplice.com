@@ -8,7 +8,7 @@ import {
   FETCH_ATTRIBUTE_TYPES_SUCCESS
 } from '../actions/types'
 
-import { processContact, processSummaries } from '../helpers'
+import { processContact, processSummaries } from '../../helpers'
 
 const INITIAL_STATE = {
   loading: false,

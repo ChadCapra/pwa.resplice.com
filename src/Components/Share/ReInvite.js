@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import MdCamera from 'react-ionicons/lib/MdCamera'
 import fakeQR from '../../assets/fakeQR.png'
 import ReShareCamera from './ReShareCamera'
-import ReModal from '../Modals/ReModal'
+import ReModal from '../Modal/ReModal'
 import ReInviteModal from './ReInviteModal'
 
 const CameraFab = ({ onClick }) => {

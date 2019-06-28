@@ -6,17 +6,20 @@ export const contact = {
     avatar:
       'https://res.cloudinary.com/capabit-solutions/image/upload/v1529421479/Resplice/ncf3iws37vcg6tdofrgh.png',
     tags: ['Father', 'Dark Side'],
-    attributes: {
-      '1': {
+    pending_shares_expiry: '2019-06-30T21:09:10',
+    pending_shares_count: 2,
+    attributes: [
+      {
         uuid: '1',
         attribute_type_id: 1,
         collection: 'Phones',
         name: 'Primary Phone',
         value: {
           phone: '16123428709'
-        }
+        },
+        pending_attribute_value: '2185910657'
       },
-      '2': {
+      {
         uuid: '2',
         attribute_type_id: 2,
         collection: 'Emails',
@@ -25,7 +28,7 @@ export const contact = {
           email: 'vader@deathstar.com'
         }
       },
-      '3': {
+      {
         uuid: '2',
         attribute_type_id: 6,
         collection: 'Websites',
@@ -34,7 +37,7 @@ export const contact = {
           url: 'https://www.vader.com'
         }
       }
-    }
+    ]
   },
   common_groups: {
     udfsdfs: {

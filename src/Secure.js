@@ -6,7 +6,7 @@ import {
   Switch
 } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { loadApplication } from './actions'
+import { loadApplication } from './state/actions'
 
 import App from './App'
 import ReAuth from './components/Auth/ReAuth'

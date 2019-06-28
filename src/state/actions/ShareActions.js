@@ -1,4 +1,4 @@
-import api from '../api'
+import api from '../../api'
 import {
   SET_SHARE_ATTRIBUTES,
   SET_SHARE_ATTRIBUTES_SUCCESS,

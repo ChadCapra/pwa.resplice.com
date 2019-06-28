@@ -1,4 +1,4 @@
-import api from '../api'
+import api from '../../api'
 import {
   FETCH_CONTACT_LIST,
   FETCH_CONTACT_LIST_SUCCESS,

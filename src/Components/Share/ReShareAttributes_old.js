@@ -6,13 +6,13 @@ import MdArrowDropdown from 'react-ionicons/lib/MdArrowDropdown'
 import MdArrowDropup from 'react-ionicons/lib/MdArrowDropup'
 import MdMail from 'react-ionicons/lib/MdMail'
 import MdCall from 'react-ionicons/lib/MdCall'
-import CardList from '../Cards/CardList'
+import CardList from '../Card/CardList'
 import AttributeSelectCard from '../Cards/AttributeSelectCard'
-import ReButton from '../Buttons/ReButton'
-import ReModal from '../Modals/ReModal'
+import ReButton from '../Button/ReButton'
+import ReModal from '../Modal/ReModal'
 import ReAvatar from '../Contact/ReAvatar'
-import ReContact from '../Contact/ReContact'
-import ReInput from '../Input/ReInput'
+import ReContact from '../Profile/ReProfileItem'
+import ReInput from '../Form/ReInput'
 
 const ShareConfirmModal = () => {
   return (

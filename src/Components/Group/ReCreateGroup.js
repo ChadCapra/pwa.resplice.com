@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 
-import { createGroup } from '../../actions'
+import { createGroup } from '../../state/actions'
 
-import ReInput from '../Input/ReInput'
-import CardList from '../Cards/CardList'
-import ShareCard from '../Cards/ShareCard'
-import ReButton from '../Buttons/ReButton'
+import ReInput from '../Form/ReInput'
+import CardList from '../Card/CardList'
+import ShareCard from '../Card/ShareCard'
+import ReButton from '../Button/ReButton'
 
 const checkCollections = collections => {
   const newCollections = { ...collections }

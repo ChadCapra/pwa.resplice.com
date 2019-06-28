@@ -18,7 +18,7 @@ import {
   UPDATE_NAME_FAILURE
 } from '../actions/types'
 
-import { processAttributes } from '../helpers'
+import { processAttributes } from '../../helpers'
 
 const INITIAL_STATE = {
   loading: false,

@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
-import { login, removeError } from '../../actions'
+import { login, removeError } from '../../state/actions'
 import { Redirect } from 'react-router-dom'
 
 import ReAuthHeader from './ReAuthHeader'
-import ReInput from '../Input/ReInput'
-import ReButton from '../Buttons/ReButton'
-import ReInputPhone from '../Input/ReInputPhone'
+import ReInput from '../Form/ReInput'
+import ReButton from '../Button/ReButton'
+import ReInputPhone from '../Form/ReInputPhone'
 import Icon from 'react-bulma-components/lib/components/icon'
 import HelpCircle from 'react-ionicons/lib/MdHelpCircle'
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Columns from 'react-bulma-components/lib/components/columns'
 
 import ActionIcon from '../Util/ActionIcon'
-import ReCheckbox from '../Input/ReCheckbox'
+import ReCheckbox from '../Form/ReCheckbox'
 
 import './card.scss'
 

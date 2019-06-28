@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import MdMail from 'react-ionicons/lib/MdMail'
 import MdCall from 'react-ionicons/lib/MdCall'
-import ReContact from '../Contact/ReContact'
+import ReContact from '../Profile/ReProfileItem'
 
 const QUERY_TYPES = {
   EMAIL: 'Email',

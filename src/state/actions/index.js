@@ -1,4 +1,4 @@
-import api from '../api'
+import api from '../../api'
 import { SWIPED, LOAD, LOAD_SUCCESS, LOAD_FAILURE } from './types'
 import { fetchUserProfile } from './UserActions'
 import { fetchContactList } from './ContactActions'

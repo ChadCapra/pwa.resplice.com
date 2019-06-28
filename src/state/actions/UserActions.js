@@ -1,4 +1,4 @@
-import api from '../api'
+import api from '../../api'
 import {
   AUTHORIZE,
   FETCH_PROFILE,
@@ -15,7 +15,7 @@ import {
   UPDATE_NAME_FAILURE
 } from './types'
 
-import { objectArrToDict } from '../helpers'
+import { objectArrToDict } from '../../helpers'
 
 export const fetchUserProfile = () => async (dispatch, getState) => {
   dispatch({ type: FETCH_PROFILE })

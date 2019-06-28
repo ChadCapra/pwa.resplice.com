@@ -1,11 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { verifyAttribute, resendAttributeVerification } from '../../actions'
+import {
+  verifyAttribute,
+  resendAttributeVerification
+} from '../../state/actions'
 
-import TypeCard from '../Cards/TypeCard'
-import ReInputCode from '../Input/ReInputCode'
-import ReButton from '../Buttons/ReButton'
+import TypeCard from '../Card/TypeCard'
+import ReInputCode from '../Form/ReInputCode'
+import ReButton from '../Button/ReButton'
 
 const ReVerifyAttribute = ({
   attribute,

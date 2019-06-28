@@ -1,4 +1,4 @@
-import api from '../api'
+import api from '../../api'
 import {
   FETCH_SESSIONS,
   FETCH_SESSIONS_SUCCESS,

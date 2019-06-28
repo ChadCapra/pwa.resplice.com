@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import QrReader from 'react-qr-reader'
-import ReButton from '../Buttons/ReButton'
+import ReButton from '../Button/ReButton'
 
 export default class ReShareCamera extends Component {
   state = {

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { swiped } from '../actions'
+import { swiped } from '../state/actions'
 import ReactSwipe from 'react-swipe'
 
 import ReHomeHeader from './Header/ReHomeHeader'

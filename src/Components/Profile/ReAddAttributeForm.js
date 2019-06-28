@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import { Field, reduxForm, formValueSelector, getFormValues } from 'redux-form'
 import { connect } from 'react-redux'
-import { addAttribute } from '../../actions'
+import { addAttribute } from '../../state/actions'
 
-import TypeCard from '../Cards/TypeCard'
-import ReInput from '../Input/ReInput'
-import ReInputPhone from '../Input/ReInputPhone'
-import ReInputCombo from '../Input/ReInputCombo'
-import ReInputCountry from '../Input/ReInputCountry'
-import ReInputRegion from '../Input/ReInputRegion'
-import ReButton from '../Buttons/ReButton'
+import TypeCard from '../Card/TypeCard'
+import ReInput from '../Form/ReInput'
+import ReInputPhone from '../Form/ReInputPhone'
+import ReInputCombo from '../Form/ReInputCombo'
+import ReInputCountry from '../Form/ReInputCountry'
+import ReInputRegion from '../Form/ReInputRegion'
+import ReButton from '../Button/ReButton'
 
 class ReAddAttributeForm extends Component {
   onSubmit = ({ attribute_type, collection, name, ...formValues }) => {
