@@ -56,7 +56,7 @@ const ReCreateGroup = ({ collections, createGroup }) => {
   }
 
   return (
-    <div className="re-create-group">
+    <div className="re-create-group flex-col--center ">
       <div className="inputs">
         <ReInput
           type="text"

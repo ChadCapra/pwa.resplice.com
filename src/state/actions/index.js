@@ -1,8 +1,9 @@
 import api from '../../api'
 import { SWIPED, LOAD, LOAD_SUCCESS, LOAD_FAILURE } from './types'
-import { fetchUserProfile } from './UserActions'
-import { fetchContactList } from './ContactActions'
 import { fetchAttributeTypes } from './AttributeActions'
+import { fetchUserProfile } from './UserActions'
+import { fetchGroupList } from './GroupActions'
+import { fetchContactList } from './ContactActions'
 
 // Async Action Pattern
 // export const name = param => async dispatch => {
@@ -35,6 +36,7 @@ export const loadApplication = () => async dispatch => {
       api.defaults.headers.common['user_uuid'] = userUuid
       await dispatch(fetchAttributeTypes())
       await dispatch(fetchUserProfile())
+      await dispatch(fetchGroupList())
       await dispatch(fetchContactList())
     }
 

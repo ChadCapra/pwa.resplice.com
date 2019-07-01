@@ -4,7 +4,7 @@ import MdClose from 'react-ionicons/lib/MdClose'
 import MdCheck from 'react-ionicons/lib/MdCheckmark'
 import Ripple from '../Loading/Ripple'
 
-import './input.scss'
+import './form.scss'
 
 class ReInputCode extends Component {
   state = {

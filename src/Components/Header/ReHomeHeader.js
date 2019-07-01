@@ -8,7 +8,7 @@ import SwipeNav from './SwipeNav'
 import ReAvatar from '../Contact/ReAvatar'
 import './header.scss'
 
-const ReHeader = ({ user }) => {
+const ReHeader = ({ user, handleNavClick }) => {
   const [navigateToUser, setNavigateToUser] = useState(false)
 
   if (navigateToUser) return <Redirect push to="/profile" />
@@ -24,7 +24,10 @@ const ReHeader = ({ user }) => {
           </div>
         </Columns.Column>
       </Columns>
-      <SwipeNav menus={['Groups', 'Individuals']} active={0} />
+      <SwipeNav
+        menus={['Groups', 'Individuals']}
+        handleNavClick={handleNavClick}
+      />
     </div>
   )
 }

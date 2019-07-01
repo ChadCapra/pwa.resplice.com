@@ -16,9 +16,9 @@ const ReShareView = ({ swiped }) => {
   }, [swiped])
 
   return (
-    <div className="share">
+    <div className="view">
       <ReHeader menus={['Invite', 'Shares']} exitRoute={'/'} />
-      <div className="share-body">
+      <div className="view-body">
         <ReactSwipe
           className="swipe-nav"
           swipeOptions={{

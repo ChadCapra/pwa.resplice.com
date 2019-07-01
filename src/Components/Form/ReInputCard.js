@@ -1,6 +1,6 @@
 import React from 'react'
 
-import './input.scss'
+import './form.scss'
 
 const ReInputCard = ({ input, placeholder, type }) => {
   return (

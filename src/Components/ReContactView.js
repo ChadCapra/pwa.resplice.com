@@ -19,9 +19,9 @@ const ReContactView = ({ loading, profile, swiped, fetchContact, match }) => {
   if (loading || !profile) return 'loading'
 
   return (
-    <div className="contact-container">
+    <div className="view">
       <ReHeader menus={['Contact', 'Shares']} exitRoute={'/'} />
-      <div className="contact-body">
+      <div className="view-body">
         <ReactSwipe
           className="swipe-nav"
           swipeOptions={{

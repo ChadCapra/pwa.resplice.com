@@ -6,7 +6,7 @@ import SwipeNav from './SwipeNav'
 
 import './header.scss'
 
-const ReHeader = ({ children, menus, active, exitRoute }) => {
+const ReHeader = ({ children, menus, exitRoute, handleNavClick }) => {
   return (
     <div className="re-header">
       <Columns breakpoint="mobile" gapless style={{ marginBottom: '9px' }}>
@@ -15,7 +15,7 @@ const ReHeader = ({ children, menus, active, exitRoute }) => {
           <ReExit exitRoute={exitRoute} />
         </Columns.Column>
       </Columns>
-      <SwipeNav menus={menus} active={active} />
+      <SwipeNav menus={menus} handleNavClick={handleNavClick} />
     </div>
   )
 }

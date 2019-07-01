@@ -2,7 +2,7 @@ import React from 'react'
 
 import Eye from 'react-ionicons/lib/MdEye'
 
-import './input.scss'
+import './form.scss'
 
 const ReInputPassword = ({
   input,

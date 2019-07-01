@@ -5,12 +5,12 @@
  * @returns Converted array as a dictionary
  */
 export const objectArrToDict = (
-  arr: Array<ObjectDictionary>,
+  arr: Array<Dictionary>,
   key: string
 ): ObjectDictionary => {
   const dict: ObjectDictionary = {}
   arr.forEach(item => {
-    const keyValue: any = item[key]
+    const keyValue = item[key]
     dict[keyValue] = item
   })
   return dict
@@ -52,5 +52,17 @@ export const getTimeRemaining = (
   }
 }
 
-export * from './attribute'
-export * from './contact'
+/**
+ * Sorts strings alphabetically when used in combination with Array.sort()
+ * @param {String} strA
+ * @param {String} strB
+ * @returns {Number} -1 => less than, 1 => greater than, 0 => equal
+ */
+export const alphabetSort = (strA: string, strB: string): number => {
+  if (strA < strB) return -1
+  if (strA > strB) return 1
+  return 0
+}
+
+export * from './attributeHelper'
+export * from './profileHelper'

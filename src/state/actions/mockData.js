@@ -1,3 +1,28 @@
+export const generatedProfileList = () => {
+  const contacts = []
+  for (let i = 1; i <= 500; i++) {
+    const uuid =
+      Math.random()
+        .toString(36)
+        .substring(2, 15) +
+      Math.random()
+        .toString(36)
+        .substring(2, 15)
+    const name = Math.random()
+      .toString(36)
+      .substring(2, 15)
+
+    contacts.push({
+      uuid,
+      name,
+      tags: i,
+      pending: i % 4 === 0
+    })
+  }
+
+  return contacts
+}
+
 export const contact = {
   contact: {
     uuid: '1',

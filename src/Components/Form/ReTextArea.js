@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 
-import './input.scss'
+import './form.scss'
 
 const ReTextArea = ({
   input,

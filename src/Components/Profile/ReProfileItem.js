@@ -60,7 +60,10 @@ const ReContact = ({
         <span>{name}</span>
         <span className="contact-group">
           {pending
-            ? `Expires in ${getTimeRemaining('2019-06-30T21:09:10')}`
+            ? `Expires in ${getTimeRemaining(
+                new Date('2019-06-30T21:09:10'),
+                new Date()
+              )}`
             : tags}
         </span>
       </div>

@@ -1,0 +1,41 @@
+.settings-group {
+  margin: 10px 0;
+  width: 100%;
+  max-width: 575px;
+}
+.settings-header {
+  color: #1bbc9b;
+  font-size: 24px;
+}
+.setting {
+  display: flex;
+  justify-content: space-between;
+  border-radius: 10px;
+  box-shadow: 1px 1px 15px #0000001a;
+  padding: 15px 10px;
+  margin: 10px 0;
+
+  &.red {
+    background-color: hsl(348, 100%, 61%);
+    color: white;
+  }
+}
+.setting-switch {
+  width: 40px;
+  height: 20px;
+  background-color: #e5e5e5;
+  border-radius: 50px;
+
+  &--active {
+    background-color: rgba(27, 188, 156, 0.3);
+    & .setting-switch-inner {
+      background-color: #1bbc9b;
+    }
+  }
+}
+.setting-switch-inner {
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 20px;
+  height: 20px;
+}

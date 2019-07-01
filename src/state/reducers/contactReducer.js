@@ -8,7 +8,7 @@ import {
   FETCH_ATTRIBUTE_TYPES_SUCCESS
 } from '../actions/types'
 
-import { processContact, processSummaries } from '../../helpers'
+import { processProfile, processSummaries } from '../../helpers'
 
 const INITIAL_STATE = {
   loading: false,
@@ -39,7 +39,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: false,
-        contacts: processContact(
+        contacts: processProfile(
           { ...state.contacts },
           action.payload,
           state.types

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { RegionDropdown } from 'react-country-region-selector'
 
-import './input.scss'
+import './form.scss'
 
 const ReInputRegion = ({
   input,

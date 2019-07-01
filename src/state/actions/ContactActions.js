@@ -7,15 +7,20 @@ import {
   FETCH_CONTACT_SUCCESS,
   FETCH_CONTACT_FAILURE
 } from './types'
-import { contact } from './mockData'
+import { contact, generatedProfileList } from './mockData'
 
 export const fetchContactList = () => async dispatch => {
   dispatch({ type: FETCH_CONTACT_LIST })
 
   try {
-    const response = await api.get('/contacts')
-    dispatch({ type: FETCH_CONTACT_LIST_SUCCESS, payload: response.data })
+    // const response = await api.get('/contacts')
+    // dispatch({ type: FETCH_CONTACT_LIST_SUCCESS, payload: response.data })
+    dispatch({
+      type: FETCH_CONTACT_LIST_SUCCESS,
+      payload: { ok: generatedProfileList() }
+    })
   } catch (err) {
+    console.log(err)
     dispatch({ type: FETCH_CONTACT_LIST_FAILURE, payload: err.response })
   }
 }

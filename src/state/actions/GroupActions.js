@@ -10,14 +10,18 @@ import {
   CREATE_GROUP_SUCCESS,
   CREATE_GROUP_FAILURE
 } from './types'
-import { contact } from './mockData'
+import { contact, generatedProfileList } from './mockData'
 
 export const fetchGroupList = () => async dispatch => {
   dispatch({ type: FETCH_GROUP_LIST })
 
   try {
-    const response = await api.get('/groups')
-    dispatch({ type: FETCH_GROUP_LIST_SUCCESS, payload: response.data })
+    // const response = await api.get('/groups')
+    // dispatch({ type: FETCH_GROUP_LIST_SUCCESS, payload: response.data })
+    dispatch({
+      type: FETCH_GROUP_LIST_SUCCESS,
+      payload: { ok: generatedProfileList() }
+    })
   } catch (err) {
     dispatch({ type: FETCH_GROUP_LIST_FAILURE, payload: err.response })
   }

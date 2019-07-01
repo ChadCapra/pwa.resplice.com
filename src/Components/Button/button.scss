@@ -2,6 +2,9 @@ $button-bg: #1bbc9b;
 $button-bg-secondary: #c6c8c8;
 $button-bg-light: #77d3c0;
 
+/*************************
+* Button Styles 
+*************************/
 .btn {
   display: flex;
   justify-content: center;
@@ -53,9 +56,12 @@ $button-bg-light: #77d3c0;
   }
 }
 
+/*************************
+* FAB Styles 
+*************************/
 .fab {
   position: sticky;
-  top: 100vh;
+  bottom: 15px;
   left: 100vw;
   display: flex;
   justify-content: center;
@@ -90,7 +96,6 @@ $button-bg-light: #77d3c0;
     }
   }
 }
-
 .fab-action-menu {
   position: sticky;
   top: 100vh;
@@ -104,6 +109,9 @@ $button-bg-light: #77d3c0;
   border-radius: 10px;
 }
 
+/*************************
+* Button Loading Styles 
+*************************/
 .re-ring {
   width: 1em;
   height: 1em;
@@ -126,6 +134,7 @@ $button-bg-light: #77d3c0;
     border-radius: 50%;
     border-style: solid;
     border-width: 0.15em;
+    background-clip: padding-box;
     -webkit-background-clip: padding-box;
     border-color: currentColor currentColor currentColor transparent;
     box-sizing: border-box;
@@ -164,7 +173,6 @@ $button-bg-light: #77d3c0;
     transform: rotate(360deg);
   }
 }
-
 .re-spin {
   -webkit-animation: re-spin 1s infinite;
   animation: re-spin 1s infinite;
