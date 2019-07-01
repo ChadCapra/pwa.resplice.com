@@ -41,7 +41,10 @@ export default (state = INITIAL_STATE, action) => {
         loading: false,
         contacts: processProfile(
           { ...state.contacts },
-          action.payload,
+          {
+            profile: action.payload.ok.contact,
+            requested_at: action.payload.requested_at
+          },
           state.types
         )
       }

@@ -27,10 +27,10 @@ const ReShareView = ({ swiped }) => {
             callback: idx => swiped(idx)
           }}
         >
-          <div className="swipe-nav-item-container">
+          <div className="swipe-item-container">
             <ReInvite />
           </div>
-          <div className="swipe-nav-item-container">
+          <div className="swipe-item-container">
             <ReShareAttributes />
           </div>
         </ReactSwipe>

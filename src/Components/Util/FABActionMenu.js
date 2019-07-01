@@ -7,22 +7,29 @@ import MdMail from 'react-ionicons/lib/MdMail'
 import MdAddCircle from 'react-ionicons/lib/MdAddCircle'
 import MdCloseCircle from 'react-ionicons/lib/MdCloseCircle'
 
-import './button.scss'
+import './utils.scss'
 
-const RePlusFAB = ({ onClick }) => {
+const FABActionMenu = ({ onClick }) => {
   return (
     <div className="fab-action-menu">
-      <MdCloseCircle color="#E5E5E5" fontSize="3em" />
-      <MdText color="white" fontSize="3em" />
-      <MdMail color="white" fontSize="3em" />
-      <MdAddCircle color="white" fontSize="3em" />
+      <MdCloseCircle
+        color="#E5E5E5"
+        fontSize="3em"
+        onClick={() => onClick('clear')}
+      />
+      <MdText color="white" fontSize="3em" onClick={() => onClick('text')} />
+      <MdMail color="white" fontSize="3em" onClick={() => onClick('email')} />
+      <MdAddCircle
+        color="white"
+        fontSize="3em"
+        onClick={() => onClick('share')}
+      />
     </div>
   )
 }
 
-RePlusFAB.propTypes = {
-  selecting: PropTypes.bool,
+FABActionMenu.propTypes = {
   onClick: PropTypes.func
 }
 
-export default RePlusFAB
+export default FABActionMenu

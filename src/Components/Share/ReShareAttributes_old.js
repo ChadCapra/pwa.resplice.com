@@ -10,7 +10,7 @@ import CardList from '../Card/CardList'
 import AttributeSelectCard from '../Cards/AttributeSelectCard'
 import ReButton from '../Button/ReButton'
 import ReModal from '../Modal/ReModal'
-import ReAvatar from '../Contact/ReAvatar'
+import ReAvatar from '../Profile/ReAvatar'
 import ReContact from '../Profile/ReProfileItem'
 import ReInput from '../Form/ReInput'
 

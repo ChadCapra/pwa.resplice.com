@@ -77,7 +77,9 @@ const ReCreateGroup = ({ collections, createGroup }) => {
         toggleAttribute={toggleAttrbute}
       />
 
-      <ReButton type="primary" text="Create Group" onClick={submitGroup} />
+      <ReButton type="primary" onClick={submitGroup}>
+        Create Group
+      </ReButton>
     </div>
   )
 }

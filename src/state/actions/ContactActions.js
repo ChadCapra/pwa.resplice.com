@@ -31,8 +31,12 @@ export const fetchContact = uuid => async dispatch => {
   try {
     // const response = await api.get(`/contact/${uuid}`)
     // dispatch({ type: FETCH_CONTACT_SUCCESS, payload: response.data })
-    dispatch({ type: FETCH_CONTACT_SUCCESS, payload: contact })
+    dispatch({
+      type: FETCH_CONTACT_SUCCESS,
+      payload: { ok: contact, requested_at: contact.requested_at }
+    })
   } catch (err) {
+    console.log(err)
     dispatch({ type: FETCH_CONTACT_FAILURE, payload: err.response })
   }
 }

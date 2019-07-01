@@ -13,7 +13,7 @@ import ReModal from './Modal/ReModal'
 
 import './views.scss'
 
-const ReHomeView = ({ groups, contacts, swiped }) => {
+const ReHomeView = ({ swiped }) => {
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [toShare, setToShare] = useState(false)
   const [groupSelecting, setGroupSelecting] = useState(false)
@@ -31,13 +31,13 @@ const ReHomeView = ({ groups, contacts, swiped }) => {
 
   if (toShare) return <Redirect push to="/share" />
 
+  console.log('render home view')
   return (
     <div className="view">
       <ReHomeHeader handleNavClick={handleNavClick} />
       <div className="view-body">
         <ReactSwipe
           swipeOptions={{
-            startSlide: 0,
             continuous: false,
             callback: idx => swiped(idx)
           }}
@@ -46,7 +46,7 @@ const ReHomeView = ({ groups, contacts, swiped }) => {
           <div className="swipe-item-container" style={{ overflow: 'hidden' }}>
             <ReProfileList
               listType="groups"
-              onSelecting={() => setGroupSelecting(true)}
+              isSelecting={selecting => setGroupSelecting(selecting)}
             />
             {!groupSelecting && (
               <RePlusFAB onClick={() => setShowCreateModal(true)} />
@@ -55,7 +55,7 @@ const ReHomeView = ({ groups, contacts, swiped }) => {
           <div className="swipe-item-container" style={{ overflow: 'hidden' }}>
             <ReProfileList
               listType="contacts"
-              onSelecting={() => setContactSelecting(true)}
+              isSelecting={selecting => setContactSelecting(selecting)}
             />
             {!contactSelecting && (
               <RePlusFAB onClick={() => setToShare(true)} />

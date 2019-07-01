@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { FixedSizeList as VList } from 'react-window'
@@ -6,16 +6,16 @@ import AutoSizer from 'react-virtualized-auto-sizer'
 
 import ReProfileItem from './ReProfileItem'
 import AlphaNumericSlider from '../Util/AlphaNumericSlider'
+import FABActionMenu from '../Util/FABActionMenu'
 
 import { alphabetSort } from '../../helpers'
 
-class ReProfileList extends PureComponent {
+class ReProfileList extends Component {
   constructor(props) {
     super(props)
     this.state = {
       showCreateModal: false,
-      contactsSelectable: false,
-      contactsSelected: []
+      selectedUuids: []
     }
     this.listRef = React.createRef()
   }
@@ -25,27 +25,39 @@ class ReProfileList extends PureComponent {
   }
 
   handleSelect = uuid => {
-    const newUuids = [...this.state.contactsSelected]
-    newUuids.push(uuid)
-    this.setState({ contactsSelected: newUuids, contactsSelectable: true })
+    const selectedUuids = [...this.state.selectedUuids]
+    selectedUuids.push(uuid)
+    this.setState({ selectedUuids })
   }
+
+  handleDeselect = uuid => {
+    const selectedUuids = [...this.state.selectedUuids]
+    const idx = this.state.selectedUuids.findIndex(u => u === uuid)
+    selectedUuids.splice(idx, 1)
+    this.setState({ selectedUuids })
+  }
+
+  handleAction = action => {}
 
   renderProfileItem = ({ index, style }) => {
     const contact = this.props.list[index]
-    const selected = this.state.contactsSelected.includes(contact.uuid)
+    const selected = this.state.selectedUuids.includes(contact.uuid)
 
     return (
       <ReProfileItem
         contact={contact}
         selected={selected}
-        selectable={this.state.contactsSelectable}
         style={style}
         onSelect={this.handleSelect}
+        onDeselect={this.handleDeselect}
       />
     )
   }
 
   render() {
+    const isSelecting = this.state.selectedUuids.length > 0
+    this.props.isSelecting(isSelecting)
+
     return (
       <div className="re-profile-list">
         <AutoSizer>
@@ -68,6 +80,8 @@ class ReProfileList extends PureComponent {
           list={this.props.list}
           onClick={this.handleLetterClick}
         />
+
+        {isSelecting && <FABActionMenu onClick={this.handleAction} />}
       </div>
     )
   }
@@ -89,7 +103,7 @@ const mapStateToProps = (state, ownProps) => {
 ReProfileList.propTypes = {
   listType: PropTypes.string.isRequired,
   list: PropTypes.array.isRequired,
-  onSelecting: PropTypes.func.isRequired
+  isSelecting: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps)(ReProfileList)

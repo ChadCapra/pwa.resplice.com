@@ -2,16 +2,20 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Identicon from 'react-identicons'
 
-import './contact.scss'
+import './profile.scss'
 
-const ReAvatar = ({ avatar, uuid }) => {
+const ReAvatar = ({ avatar, uuid, ...props }) => {
   if (avatar) {
     return (
-      <div className="avatar" style={{ backgroundImage: `url(${avatar})` }} />
+      <div
+        className="avatar"
+        style={{ backgroundImage: `url(${avatar})` }}
+        {...props}
+      />
     )
   } else {
     return (
-      <div className="avatar">
+      <div className="avatar" {...props}>
         <Identicon string={uuid} size={30} />
       </div>
     )

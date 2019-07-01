@@ -62,12 +62,12 @@ export const contact = {
           url: 'https://www.vader.com'
         }
       }
-    ]
-  },
-  common_groups: {
-    udfsdfs: {
-      name: 'Jedi',
-      avatar: null
+    ],
+    common_groups: {
+      udfsdfs: {
+        name: 'Jedi',
+        avatar: null
+      }
     }
   },
   requested_at: 'timestamp'

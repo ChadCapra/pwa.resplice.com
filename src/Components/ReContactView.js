@@ -30,10 +30,10 @@ const ReContactView = ({ loading, profile, swiped, fetchContact, match }) => {
             callback: idx => swiped(idx)
           }}
         >
-          <div className="swipe-nav-item-container">
+          <div className="swipe-item-container">
             <ReContactProfile profile={profile} />
           </div>
-          <div className="swipe-nav-item-container">
+          <div className="swipe-item-container">
             <ReContactShares profile={profile} />
           </div>
         </ReactSwipe>
