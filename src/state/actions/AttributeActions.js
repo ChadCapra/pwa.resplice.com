@@ -74,7 +74,9 @@ export const verifyAttribute = (uuid, verify_token) => async dispatch => {
   dispatch({ type: VERIFY_ATTRIBUTE })
 
   try {
-    const response = await api.post('/attribute/verify', { uuid, verify_token })
+    const response = await api.patch(`/attribute/${uuid}/verify`, {
+      verify_token
+    })
     dispatch({ type: VERIFY_ATTRIBUTE_SUCCESS, payload: response.data })
   } catch (err) {
     dispatch({ type: VERIFY_ATTRIBUTE_FAILURE, payload: err })
@@ -85,7 +87,7 @@ export const resendAttributeVerification = uuid => async dispatch => {
   dispatch({ type: RESEND_VERIFY_ATTRIBUTE })
 
   try {
-    const response = await api.post('/attribute/resend', { uuid })
+    const response = await api.patch(`/attribute/${uuid}/resend_verification`)
     dispatch({ type: RESEND_VERIFY_ATTRIBUTE_SUCCESS, payload: response.data })
   } catch (err) {
     dispatch({ type: RESEND_VERIFY_ATTRIBUTE_FAILURE })

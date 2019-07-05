@@ -1,4 +1,4 @@
-export const generatedProfileList = () => {
+export const generateProfileList = () => {
   const contacts = []
   for (let i = 1; i <= 500; i++) {
     const uuid =

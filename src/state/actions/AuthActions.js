@@ -25,16 +25,15 @@ export const login = formValues => async dispatch => {
   }
 }
 
-export const logout = () => {
+export const logout = tokens => async dispatch => {
+  await api.delete('/logout', tokens)
   // TODO: cleanup service worker caches and other data
   // Remove auth header on axios instance and items in storage
   api.defaults.headers.common['access_token'] = null
   api.defaults.headers.common['user_uuid'] = null
   localStorage.removeItem('access_token')
   localStorage.removeItem('user_uuid')
-  return {
-    type: LOGOUT
-  }
+  dispatch({ type: LOGOUT })
 }
 
 export const verifyAttributes = verifyObject => async dispatch => {
@@ -55,8 +54,7 @@ export const verifyAttributes = verifyObject => async dispatch => {
 
     dispatch({ type: VERIFY_SUCCESS, payload: response.data })
   } catch (err) {
-    JSON.stringify(err)
-    console.log(err)
+    console.log(JSON.stringify(err))
     dispatch({ type: VERIFY_FAILURE, payload: err })
   }
 }

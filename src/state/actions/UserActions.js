@@ -4,20 +4,20 @@ import {
   FETCH_PROFILE,
   FETCH_PROFILE_SUCCESS,
   FETCH_PROFILE_FAILURE,
-  UPLOAD_AVATAR,
-  UPLOAD_AVATAR_SUCCESS,
-  UPLOAD_AVATAR_FAILURE,
+  EDIT_AVATAR,
+  EDIT_AVATAR_SUCCESS,
+  EDIT_AVATAR_FAILURE,
   CREATE_PROFILE,
   CREATE_PROFILE_SUCCESS,
   CREATE_PROFILE_FAILURE,
-  UPDATE_NAME,
-  UPDATE_NAME_SUCCESS,
-  UPDATE_NAME_FAILURE
+  EDIT_NAME,
+  EDIT_NAME_SUCCESS,
+  EDIT_NAME_FAILURE
 } from './types'
 
 import { objectArrToDict } from '../../helpers'
 
-export const fetchUserProfile = () => async (dispatch, getState) => {
+export const fetchUserProfile = () => async dispatch => {
   dispatch({ type: FETCH_PROFILE })
 
   try {
@@ -39,22 +39,6 @@ export const fetchUserProfile = () => async (dispatch, getState) => {
   }
 }
 
-export const uploadAvatar = blob => async dispatch => {
-  dispatch({ type: UPLOAD_AVATAR })
-
-  try {
-    let formData = new FormData()
-    formData.append('avatar', blob)
-    console.log(blob, formData)
-    // const response = await api.post('/user/upload-avatar', {
-    //   avatar: formData
-    // })
-    dispatch({ type: UPLOAD_AVATAR_SUCCESS, payload: 'implement' })
-  } catch (err) {
-    dispatch({ type: UPLOAD_AVATAR_FAILURE, payload: err })
-  }
-}
-
 export const createProfile = formValues => async dispatch => {
   dispatch({ type: CREATE_PROFILE })
 
@@ -66,13 +50,29 @@ export const createProfile = formValues => async dispatch => {
   }
 }
 
-export const updateName = (name, oldName) => async dispatch => {
-  dispatch({ type: UPDATE_NAME, payload: name })
+export const editName = name => async dispatch => {
+  dispatch({ type: EDIT_NAME, payload: name })
 
   try {
     await api.patch('/user/name', name)
-    dispatch({ type: UPDATE_NAME_SUCCESS })
+    dispatch({ type: EDIT_NAME_SUCCESS })
   } catch (err) {
-    dispatch({ type: UPDATE_NAME_FAILURE, payload: { err, oldName } })
+    dispatch({ type: EDIT_NAME_FAILURE, payload: err })
+  }
+}
+
+export const editAvatar = blob => async dispatch => {
+  dispatch({ type: EDIT_AVATAR })
+
+  try {
+    let formData = new FormData()
+    formData.append('avatar', blob)
+    console.log(blob, formData)
+    const response = await api.patch('/user/upload-avatar', {
+      avatar: formData
+    })
+    dispatch({ type: EDIT_AVATAR_SUCCESS, payload: response.data })
+  } catch (err) {
+    dispatch({ type: EDIT_AVATAR_FAILURE, payload: err })
   }
 }

@@ -99,24 +99,41 @@
   margin-right: 15px;
 }
 
+/*************************
+* Bulk Share Styles
+*************************/
+.re-bulk-share,
 .share-attributes {
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
 }
-.share-attributes-header,
-.share-attributes-expand-header {
+.bulk-share-header {
   flex: 0 0 65px;
   display: flex;
   max-width: 800px;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
+
+  & > span {
+    font-family: 'Sanchez', serif;
+  }
 }
-.share-attributes-expand-header {
+.bulk-share-dropdown-header {
+  flex: 0 0 65px;
+  display: flex;
   justify-content: center;
-  & span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 800px;
+  padding: 0 20px;
+  cursor: pointer;
+
+  & > p > span {
+    font-family: 'Sanchez', serif;
     color: #1bbc9b;
     font-size: 36px;
   }
@@ -126,36 +143,60 @@
     margin: 0;
     color: rgba(0, 0, 0, 0.5);
   }
-
-  & svg {
-    position: fixed;
-    top: 25px;
-    right: 25px;
-  }
 }
-.share-attributes-body {
+.bulk-share-dropdown-container {
+  position: absolute;
+  top: 65px;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 65px);
+  background-color: #e6e6e699;
+  z-index: 10;
+}
+.bulk-share-dropdown {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
+  background-color: white;
+  padding-bottom: 15px;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+
+.bulk-share-body,
+.share-attributes-body {
   overflow: auto;
   flex: 1 1;
   padding: 2em 0;
 }
-.share-attributes-dropdown {
+.bulk-share-card-container {
   display: flex;
   flex-direction: column;
-  flex: 1 1;
+  justify-content: flex-start;
+  align-items: center;
+  padding-bottom: 65px;
 }
-.share-attributes-footer {
-  flex: 0 0 70px;
+.bulk-share-footer {
+  position: absolute;
+  bottom: 0;
+  height: 70px;
+  width: 100%;
   display: flex;
   justify-content: space-around;
-  align-items: center;
-  border-top: 1px solid rgba(0, 0, 0, 0.15);
+  align-items: flex-start;
+  background-color: transparent;
+
+  & .btn {
+    box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+      0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+  }
+
+  & .btn--disabled {
+    box-shadow: none;
+  }
 }
 
-.share-attributes-icons {
+.bulk-share-icons {
   display: flex;
   align-items: center;
   & > div {
@@ -173,14 +214,7 @@
     margin: 0;
   }
 }
-
-.share-dropdown-value,
 .dropdown-icon {
-  display: flex;
-  align-items: center;
-}
-.dropdown-icon {
-  justify-content: center;
   width: 50px;
   height: 50px;
   background-color: #1bbc9b;
@@ -188,7 +222,7 @@
   margin: 5px 15px;
 }
 
-.share-attributes-stat {
+.bulk-share-stat {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -205,6 +239,9 @@
   }
 }
 
+/*************************
+* QR Code Styles
+*************************/
 .qr-code-container {
   background-position: center;
   background-size: contain;

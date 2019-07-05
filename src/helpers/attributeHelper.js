@@ -62,6 +62,16 @@ export const buildCollections = (attributes, types, contact) => {
   return collections
 }
 
+const updateAttrUuids = (uuidList, uuid) => {
+  const idx = uuidList.findIndex(u => u === uuid)
+  if (idx < 0) {
+    uuidList.push(uuid)
+  } else {
+    uuidList.splice(idx, 1)
+  }
+  return uuidList
+}
+
 /**
  * Formats an attribute value based on it's rules
  * @param {String[]} values - Values to combine and format
@@ -92,7 +102,7 @@ export const copyToClipboard = value => {
 }
 
 /**
- * Runs an action
+ * Runs an attribute action
  * @param {String} action
  * @param {Object} attr
  */
@@ -147,6 +157,31 @@ export const handleAttributeAction = (action, value) => {
       break
     case 'copy':
       copyToClipboard(value)
+      break
+    default:
+  }
+}
+
+/**
+ * Runs a bulk action
+ * @param {String} action - Type of action to be done
+ * @param {Object[]} attributeValues - Array of values to perform an action on
+ */
+export const handleBulkAction = (action, attributeValues) => {
+  switch (action) {
+    case 'email':
+      window.open(`mailto:${attributeValues.split(',')}`)
+      break
+    case 'sms':
+      window.open(`sms:${attributeValues.split(',')}`)
+      break
+    case 'map':
+      // window.open(
+      //   `https://www.google.com/maps/search/?api=1&query=${formatAttrValues(
+      //     value,
+      //     '+'
+      //   )}`
+      // )
       break
     default:
   }

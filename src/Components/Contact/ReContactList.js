@@ -1,45 +1,20 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
 
-import ReContact from '../Profile/ReProfileItem'
 import RePlusFAB from '../Button/RePlusFAB'
+import ReProfileList from '../Profile/ReProfileList'
 
-class ReContactList extends Component {
-  state = {
-    dummyContact: {
-      name: 'Tap the Plus to start sharing!',
-      tags: 'You have no contacts',
-      avatar: '',
-      uuid: '23490909e-234-gdfgdf-w4323'
-    },
-    toShare: false
-  }
+const ReContactList = () => {
+  const [toShare, setToShare] = useState(false)
+  const [selecting, setSelecting] = useState(false)
 
-  renderContactList() {
-    if (this.props.contacts.length > 0) {
-      return this.props.contacts.map(contact => {
-        return <ReContact key={contact.id} contact={contact} />
-      })
-    } else {
-      return <ReContact key={1} contact={this.state.dummyContact} dummy />
-    }
-  }
-  render() {
-    if (this.state.toShare) return <Redirect push to="/share" />
-    return (
-      <div className="contact-list">
-        {this.renderContactList()}
-        <RePlusFAB onClick={() => this.setState({ toShare: true })} />
-      </div>
-    )
-  }
+  if (toShare) return <Redirect push to="/share" />
+  return (
+    <>
+      <ReProfileList listType="contacts" onSelecting={setSelecting} />
+      {!selecting && <RePlusFAB onClick={() => setToShare(true)} />}
+    </>
+  )
 }
 
-const mapStateToProps = state => {
-  return {
-    contacts: state.contactState.contacts
-  }
-}
-
-export default connect(mapStateToProps)(ReContactList)
+export default ReContactList

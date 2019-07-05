@@ -11,47 +11,32 @@ import './profile.scss'
 import '../Contact/contact.scss'
 
 const ReContact = ({
-  contact: { uuid, name, tags, avatar, pending },
-  dummy,
-  selected,
-  selectable,
+  contact: { uuid, name, tags, avatar, pending, selected },
   onSelect,
   onDeselect,
   style
 }) => {
   const [toContact, setToContact] = useState(false)
-  const [localSelected, setLocalSelected] = useState(selected)
 
-  if (toContact && !dummy && !selectable)
-    return <Redirect push to={'/contact/1'} />
+  if (toContact) return <Redirect push to={'/contact/1'} />
   // return <Redirect push to={`/contact/${uuid}`} />
 
   return (
     <div
       className={`profile-list-item${pending ? ' pending' : ''}${
-        localSelected ? ' selected' : ''
+        selected ? ' selected' : ''
       }`}
       style={style}
     >
-      {localSelected ? (
+      {selected ? (
         <div
           className="profile-checked flex--center"
-          onClick={() => {
-            setLocalSelected(false)
-            onDeselect(uuid)
-          }}
+          onClick={() => onDeselect(uuid)}
         >
           <MdCheckmark color="white" fontSize="3.5em" />
         </div>
       ) : (
-        <ReAvatar
-          avatar={avatar}
-          uuid={uuid}
-          onClick={() => {
-            setLocalSelected(true)
-            onSelect(uuid)
-          }}
-        />
+        <ReAvatar avatar={avatar} uuid={uuid} onClick={() => onSelect(uuid)} />
       )}
 
       <div
@@ -74,9 +59,6 @@ const ReContact = ({
 
 ReContact.propTypes = {
   contact: PropTypes.object.isRequired,
-  dummy: PropTypes.bool,
-  selected: PropTypes.bool,
-  selectable: PropTypes.bool,
   style: PropTypes.object,
   onSelect: PropTypes.func,
   onDeselect: PropTypes.func

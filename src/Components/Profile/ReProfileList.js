@@ -1,20 +1,25 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import { FixedSizeList as VList } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
+
+import { setBulkShares } from '../../state/actions'
 
 import ReProfileItem from './ReProfileItem'
 import AlphaNumericSlider from '../Util/AlphaNumericSlider'
 import FABActionMenu from '../Util/FABActionMenu'
 
-import { alphabetSort } from '../../helpers'
+import { alphabetSort, handleBulkAction } from '../../helpers'
 
 class ReProfileList extends Component {
   constructor(props) {
     super(props)
     this.state = {
       showCreateModal: false,
+      toBulkShare: false,
+      list: this.props.list.map(item => ({ ...item })),
       selectedUuids: []
     }
     this.listRef = React.createRef()
@@ -26,21 +31,51 @@ class ReProfileList extends Component {
 
   handleSelect = uuid => {
     const selectedUuids = [...this.state.selectedUuids]
+    const list = [...this.state.list]
+    const itemIdx = list.findIndex(item => item.uuid === uuid)
+    list[itemIdx].selected = true
     selectedUuids.push(uuid)
-    this.setState({ selectedUuids })
+    this.setState({ selectedUuids, list })
   }
 
   handleDeselect = uuid => {
     const selectedUuids = [...this.state.selectedUuids]
+    const list = [...this.state.list]
+    const itemIdx = list.findIndex(item => item.uuid === uuid)
+    list[itemIdx].selected = false
     const idx = this.state.selectedUuids.findIndex(u => u === uuid)
     selectedUuids.splice(idx, 1)
-    this.setState({ selectedUuids })
+    this.setState({ selectedUuids, list })
   }
 
-  handleAction = action => {}
+  handleAction = action => {
+    switch (action) {
+      case 'share':
+        this.props.setBulkShares(
+          this.props.list.filter(profile =>
+            this.state.selectedUuids.includes(profile.uuid)
+          )
+        )
+        this.setState({ toBulkShare: true })
+        break
+      case 'email':
+        handleBulkAction(action, [])
+        break
+      case 'sms':
+        handleBulkAction(action, [])
+        break
+      case 'clear':
+        this.setState({
+          selectedUuids: [],
+          list: this.props.list.map(item => ({ ...item }))
+        })
+        break
+      default:
+    }
+  }
 
   renderProfileItem = ({ index, style }) => {
-    const contact = this.props.list[index]
+    const contact = this.state.list[index]
     const selected = this.state.selectedUuids.includes(contact.uuid)
 
     return (
@@ -55,8 +90,9 @@ class ReProfileList extends Component {
   }
 
   render() {
+    if (this.state.toBulkShare) return <Redirect push to="/share/bulk" />
     const isSelecting = this.state.selectedUuids.length > 0
-    this.props.isSelecting(isSelecting)
+    this.props.onSelecting(isSelecting)
 
     return (
       <div className="re-profile-list">
@@ -65,10 +101,10 @@ class ReProfileList extends Component {
             <VList
               ref={this.listRef}
               height={height}
-              itemCount={this.props.list.length}
+              itemCount={this.state.list.length}
               itemSize={60}
               width={width}
-              itemData={this.props.list}
+              itemData={this.state.list}
               overscanCount={10}
             >
               {this.renderProfileItem}
@@ -77,7 +113,7 @@ class ReProfileList extends Component {
         </AutoSizer>
 
         <AlphaNumericSlider
-          list={this.props.list}
+          list={this.state.list}
           onClick={this.handleLetterClick}
         />
 
@@ -103,7 +139,10 @@ const mapStateToProps = (state, ownProps) => {
 ReProfileList.propTypes = {
   listType: PropTypes.string.isRequired,
   list: PropTypes.array.isRequired,
-  isSelecting: PropTypes.func.isRequired
+  onSelecting: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps)(ReProfileList)
+export default connect(
+  mapStateToProps,
+  { setBulkShares }
+)(ReProfileList)

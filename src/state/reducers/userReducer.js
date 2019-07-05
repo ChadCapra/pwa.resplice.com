@@ -11,11 +11,16 @@ import {
   DELETE_ATTRIBUTE_SUCCESS,
   ENABLE_QR_SHARE,
   DISABLE_QR_SHARE,
+  GENERATE_QR_PIN_SUCCESS,
   FETCH_SESSIONS,
   FETCH_SESSIONS_SUCCESS,
   FETCH_SESSIONS_FAILURE,
-  UPDATE_NAME,
-  UPDATE_NAME_FAILURE
+  EDIT_NAME,
+  EDIT_NAME_SUCCESS,
+  EDIT_NAME_FAILURE,
+  EDIT_AVATAR,
+  EDIT_AVATAR_SUCCESS,
+  EDIT_AVATAR_FAILURE
 } from '../actions/types'
 
 import { processAttributes } from '../../helpers'
@@ -35,6 +40,9 @@ export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CREATE_PROFILE:
     case FETCH_PROFILE:
+    case FETCH_SESSIONS:
+    case EDIT_NAME:
+    case EDIT_AVATAR:
       return { ...state, loading: true }
     case CREATE_PROFILE_SUCCESS:
     case FETCH_PROFILE_SUCCESS:
@@ -46,9 +54,6 @@ export default (state = INITIAL_STATE, action) => {
         profile,
         ...processAttributes({ ...attributes }, state.types)
       }
-    case CREATE_PROFILE_FAILURE:
-    case FETCH_PROFILE_FAILURE:
-      return { ...state, loading: false, error: action.payload }
     case FETCH_ATTRIBUTE_TYPES_SUCCESS:
       return { ...state, types: action.payload.ok }
     case ADD_ATTRIBUTE_SUCCESS:
@@ -91,24 +96,36 @@ export default (state = INITIAL_STATE, action) => {
           data: action.payload
         })
       }
-    case FETCH_SESSIONS:
-      return { ...state, loading: true }
+    case GENERATE_QR_PIN_SUCCESS:
+      return {
+        ...state,
+        profile: { ...state.profile, qr_pin: action.payload.ok }
+      }
     case FETCH_SESSIONS_SUCCESS:
       return {
         ...state,
         loading: false,
         settings: { ...state.settings, sessions: action.payload }
       }
-    case FETCH_SESSIONS_FAILURE:
-      return { ...state, loading: false, error: action.payload }
-    case UPDATE_NAME:
-      return { ...state, profile: { ...state.profile, name: action.payload } }
-    case UPDATE_NAME_FAILURE:
+    case EDIT_NAME_SUCCESS:
       return {
         ...state,
-        profile: { ...state.profile, name: action.payload.oldName },
-        error: action.payload.err
+        loading: false,
+        profile: { ...state.profile, name: action.payload.name }
       }
+    case EDIT_AVATAR_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        profile: { ...profile, avatar: action.payload.avatar }
+      }
+
+    case CREATE_PROFILE_FAILURE:
+    case FETCH_PROFILE_FAILURE:
+    case FETCH_SESSIONS_FAILURE:
+    case EDIT_NAME_FAILURE:
+    case EDIT_AVATAR_FAILURE:
+      return { ...state, error: action.payload }
     default:
       return state
   }

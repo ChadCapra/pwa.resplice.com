@@ -6,7 +6,7 @@ import MdClose from 'react-ionicons/lib/MdClose'
 
 import './utils.scss'
 
-const ReExit = ({ exitRoute }) => {
+const ReExit = ({ exitRoute, ...props }) => {
   const [exit, setExit] = useState(false)
 
   if (exit) return <Redirect push to={exitRoute} />
@@ -17,6 +17,7 @@ const ReExit = ({ exitRoute }) => {
       fontSize="2.5em"
       className="re-exit-icon"
       onClick={() => setExit(true)}
+      {...props}
     />
   )
 }

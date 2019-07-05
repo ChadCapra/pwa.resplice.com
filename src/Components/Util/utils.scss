@@ -178,8 +178,7 @@
 
 .fab-action-menu {
   position: sticky;
-  top: 100vh;
-  left: 100vw;
+  top: calc(100vh - 215px);
   display: flex;
   justify-content: space-around;
   align-items: center;
