@@ -35,6 +35,7 @@ $button-bg-light: #77d3c0;
 
   &--loading {
     background-color: $button-bg-light;
+    cursor: wait;
     & span {
       margin-right: 15px;
     }
@@ -42,6 +43,7 @@ $button-bg-light: #77d3c0;
 
   &--disabled {
     background-color: $button-bg-light;
+    cursor: not-allowed;
   }
 
   &:active {
@@ -62,7 +64,7 @@ $button-bg-light: #77d3c0;
 .fab {
   position: sticky;
   bottom: 15px;
-  left: 100vw;
+  left: calc(100vw - 75px);
   display: flex;
   justify-content: center;
   align-items: center;

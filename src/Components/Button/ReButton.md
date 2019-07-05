@@ -2,30 +2,28 @@ Primary Button
 
 ```js
 <ReButton
-  text="Click Me"
   type="primary"
   onClick={() => console.log('Clicked')}
-/>
+>Click Me</ReButton>
 ```
 
 Secondary Button
 
 ```js
 <ReButton
-  text="Click Me"
   type="secondary"
   onClick={() => console.log('Clicked')}
-/>
+>Click Me</ReButton>
 ```
 
 Add the loading modifier
 
 ```js
-<ReButton text="Loading" type="primary" loading />
+<ReButton type="primary" loading>Loading</ReButton>
 ```
 
 Add the disabled modifier
 
 ```js
-<ReButton text="Disabled" type="primary" disabled />
+<ReButton type="primary" disabled>Disabled</ReButton>
 ```

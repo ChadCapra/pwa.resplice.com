@@ -47,12 +47,9 @@ class ReLogin extends Component {
           />
         </div>
 
-        <ReButton
-          type="primary"
-          text="Start"
-          width="200px"
-          loading={this.props.loading}
-        />
+        <ReButton type="primary" width="200px" loading={this.props.loading}>
+          Start
+        </ReButton>
       </form>
     )
   }
