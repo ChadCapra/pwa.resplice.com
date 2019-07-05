@@ -1,23 +1,16 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { swiped } from '../state/actions'
-import { Redirect } from 'react-router-dom'
 import ReactSwipe from 'react-swipe'
 
 import ReHomeHeader from './Header/ReHomeHeader'
-import ReProfileList from './Profile/ReProfileList'
-import ReCreateGroup from './Group/ReCreateGroup'
-import RePlusFAB from './Button/RePlusFAB'
-import ReModal from './Modal/ReModal'
+import ReGroupList from './Group/ReGroupList'
+import ReContactList from './Contact/ReContactList'
 
 import './views.scss'
 
 const ReHomeView = ({ swiped }) => {
-  const [showCreateModal, setShowCreateModal] = useState(false)
-  const [toShare, setToShare] = useState(false)
-  const [groupSelecting, setGroupSelecting] = useState(false)
-  const [contactSelecting, setContactSelecting] = useState(false)
   const reactSwipeEl = useRef(null)
 
   useEffect(() => {
@@ -29,9 +22,6 @@ const ReHomeView = ({ swiped }) => {
     else reactSwipeEl.current.swipe.prev()
   }
 
-  if (toShare) return <Redirect push to="/share" />
-
-  console.log('render home view')
   return (
     <div className="view">
       <ReHomeHeader handleNavClick={handleNavClick} />
@@ -44,34 +34,13 @@ const ReHomeView = ({ swiped }) => {
           ref={reactSwipeEl}
         >
           <div className="swipe-item-container" style={{ overflow: 'hidden' }}>
-            <ReProfileList
-              listType="groups"
-              isSelecting={selecting => setGroupSelecting(selecting)}
-            />
-            {!groupSelecting && (
-              <RePlusFAB onClick={() => setShowCreateModal(true)} />
-            )}
+            <ReGroupList />
           </div>
           <div className="swipe-item-container" style={{ overflow: 'hidden' }}>
-            <ReProfileList
-              listType="contacts"
-              isSelecting={selecting => setContactSelecting(selecting)}
-            />
-            {!contactSelecting && (
-              <RePlusFAB onClick={() => setToShare(true)} />
-            )}
+            <ReContactList />
           </div>
         </ReactSwipe>
       </div>
-
-      <ReModal
-        full
-        show={showCreateModal}
-        onClose={() => setShowCreateModal(false)}
-        headerText="Create Group"
-      >
-        <ReCreateGroup />
-      </ReModal>
     </div>
   )
 }
