@@ -115,14 +115,7 @@ export default (state = INITIAL_STATE, action) => {
     case REMOVE_MODERATORS_SUCCESS:
       return {
         ...state,
-        loading: false,
-        groups: {
-          ...state.groups,
-          [action.payload.uuid]: {
-            ...state.groups[action.payload.uuid],
-            members: action.payload.members
-          }
-        }
+        loading: false
       }
     case ADD_GROUP_SHARE:
     case REMOVE_GROUP_SHARE:

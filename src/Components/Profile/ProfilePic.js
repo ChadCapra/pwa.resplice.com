@@ -9,17 +9,26 @@ import AvatarUpload from './ReAvatarUpload'
 
 import './profile.scss'
 
-const ProfilePic = ({ uuid, avatar }) => {
+const ProfilePic = ({ uuid, avatar, editable }) => {
   const [showAvatarModal, setShowModal] = useState(false)
 
   return (
-    <div className="profile-pic" onClick={() => setShowModal(true)}>
+    <div
+      className="profile-pic"
+      onClick={() => (editable ? setShowModal(true) : null)}
+    >
       {avatar ? (
         <div className="pic" style={{ backgroundImage: `url(${avatar})` }} />
       ) : (
         <Identicon string={uuid} size={85} />
       )}
-      <MdUpload color="#1bbc9b" fontSize="2.5em" className="pic-upload-icon" />
+      {editable && (
+        <MdUpload
+          color="#1bbc9b"
+          fontSize="2.5em"
+          className="pic-upload-icon"
+        />
+      )}
 
       <ReModal
         show={showAvatarModal}

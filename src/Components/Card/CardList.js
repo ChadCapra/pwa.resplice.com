@@ -16,6 +16,11 @@ const mapStateToProps = (state, ownProps) => {
         state.contactState.contacts[ownProps.contactUuid].collections
       )
       break
+    case 'group':
+      list = Object.entries(
+        state.groupState.groups[ownProps.groupUuid].collections
+      )
+      break
     case 'types':
       list = Object.values(state.userState.types)
       break

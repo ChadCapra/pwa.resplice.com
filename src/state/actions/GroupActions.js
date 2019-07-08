@@ -30,18 +30,13 @@ import {
   LEAVE_GROUP_SUCCESS,
   LEAVE_GROUP_FAILURE
 } from './types'
-import { contact, generatedProfileList } from './mockData'
 
 export const fetchGroupList = () => async dispatch => {
   dispatch({ type: FETCH_GROUP_LIST })
 
   try {
-    // const response = await api.get('/groups')
-    // dispatch({ type: FETCH_GROUP_LIST_SUCCESS, payload: response.data })
-    dispatch({
-      type: FETCH_GROUP_LIST_SUCCESS,
-      payload: { ok: generatedProfileList() }
-    })
+    const response = await api.get('/groups')
+    dispatch({ type: FETCH_GROUP_LIST_SUCCESS, payload: response.data })
   } catch (err) {
     dispatch({ type: FETCH_GROUP_LIST_FAILURE, payload: err.response })
   }
@@ -51,9 +46,8 @@ export const fetchGroup = uuid => async dispatch => {
   dispatch({ type: FETCH_GROUP })
 
   try {
-    // const response = await api.get(`/group/${uuid}`)
-    // dispatch({ type: FETCH_GROUP_SUCCESS, payload: response.data })
-    dispatch({ type: FETCH_GROUP_SUCCESS, payload: contact })
+    const response = await api.get(`/group/${uuid}`)
+    dispatch({ type: FETCH_GROUP_SUCCESS, payload: response.data })
   } catch (err) {
     dispatch({ type: FETCH_GROUP_FAILURE, payload: err.response })
   }
@@ -103,13 +97,11 @@ export const inviteMembers = (uuid, members) => async dispatch => {
   dispatch({ type: INVITE_MEMBERS })
 
   try {
-    const response = await api.post(`group/${uuid}/invite_members`, {
+    await api.post(`group/${uuid}/invite_members`, {
       invitees: members
     })
-    dispatch({
-      type: INVITE_MEMBERS_SUCCESS,
-      payload: { uuid, members: response.data.ok }
-    })
+    dispatch({ type: INVITE_MEMBERS_SUCCESS })
+    dispatch(fetchGroup(uuid))
   } catch (err) {
     dispatch({ type: INVITE_MEMBERS_FAILURE, payload: err })
   }
@@ -119,13 +111,11 @@ export const removeMembers = (uuid, member_uuids) => async dispatch => {
   dispatch({ type: REMOVE_MEMBERS })
 
   try {
-    const response = await api.delete(`group/${uuid}/remove_members`, {
+    await api.delete(`group/${uuid}/remove_members`, {
       contact_uuids: member_uuids
     })
-    dispatch({
-      type: REMOVE_MEMBERS_SUCCESS,
-      payload: { uuid, members: response.data.ok }
-    })
+    dispatch({ type: REMOVE_MEMBERS_SUCCESS })
+    dispatch(fetchGroup(uuid))
   } catch (err) {
     dispatch({ type: REMOVE_MEMBERS_SUCCESS, payload: err })
   }
@@ -135,13 +125,11 @@ export const addModerators = (uuid, member_uuids) => async dispatch => {
   dispatch({ type: ADD_MODERATORS })
 
   try {
-    const response = await api.post(`/group/${uuid}/add_moderators`, {
+    await api.post(`/group/${uuid}/add_moderators`, {
       contact_uuids: member_uuids
     })
-    dispatch({
-      type: ADD_MODERATORS_SUCCESS,
-      payload: { uuid, members: response.data.ok }
-    })
+    dispatch({ type: ADD_MODERATORS_SUCCESS })
+    dispatch(fetchGroup(uuid))
   } catch (err) {
     dispatch({ type: ADD_MODERATORS_FAILURE, payload: err })
   }
@@ -151,13 +139,11 @@ export const removeModerators = (uuid, member_uuids) => async dispatch => {
   dispatch({ type: REMOVE_MODERATORS })
 
   try {
-    const response = await api.delete(`/group/${uuid}/remove_moderators`, {
+    await api.delete(`/group/${uuid}/remove_moderators`, {
       contact_uuids: member_uuids
     })
-    dispatch({
-      type: REMOVE_MODERATORS_SUCCESS,
-      payload: { uuid, members: response.data.ok }
-    })
+    dispatch({ type: REMOVE_MODERATORS_SUCCESS })
+    dispatch(fetchGroup(uuid))
   } catch (err) {
     dispatch({ type: REMOVE_MODERATORS_FAILURE, payload: err })
   }

@@ -62,7 +62,7 @@ export const buildCollections = (attributes, types, contact) => {
   return collections
 }
 
-const updateAttrUuids = (uuidList, uuid) => {
+export const updateAttrUuids = (uuidList, uuid) => {
   const idx = uuidList.findIndex(u => u === uuid)
   if (idx < 0) {
     uuidList.push(uuid)

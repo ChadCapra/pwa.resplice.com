@@ -129,10 +129,13 @@ const mapStateToProps = (state, ownProps) => {
     list = Object.values(state.groupState.groups).sort((a, b) =>
       alphabetSort(a.name, b.name)
     )
-  } else if (ownProps.listType === 'contacts')
+  } else if (ownProps.listType === 'contacts') {
     list = Object.values(state.contactState.contacts).sort((a, b) =>
       alphabetSort(a.name, b.name)
     )
+  } else if (ownProps.listType === 'custom') {
+    list = ownProps.list
+  }
   return { list }
 }
 

@@ -5,7 +5,6 @@ import {
   REMOVE_SHARE_BULK,
   SET_BULK_SHARES,
   INVITE_SUCCESS,
-  SET_SHARE_ATTRIBUTES_FAILURE,
   QR_SHARE_ERROR,
   GENERATE_QR_PIN_FAILURE,
   INVITE_FAILURE
@@ -51,7 +50,6 @@ export default (state = INITIAL_STATE, action) => {
     case INVITE_SUCCESS:
       return { ...state, loading: false }
 
-    case SET_SHARE_ATTRIBUTES_FAILURE:
     case QR_SHARE_ERROR:
     case GENERATE_QR_PIN_FAILURE:
     case INVITE_FAILURE:
