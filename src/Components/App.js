@@ -1,12 +1,12 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
 
-import ReHomeView from './components/ReHomeView'
-import ReContactView from './components/ReContactView'
-import ReUserView from './components/ReUserView'
-import ReShareView from './components/ReShareView'
-import ReGroupView from './components/ReGroupView'
-import ReBulkShare from './components/Share/ReBulkShare'
+import ReHomeView from './Views/ReHomeView'
+import ReContactView from './Views/ReContactView'
+import ReUserView from './Views/ReUserView'
+import ReShareView from './Views/ReShareView'
+import ReGroupView from './Views/ReGroupView'
+import ReBulkShare from './Share/ReBulkShare'
 
 import './App.scss'
 

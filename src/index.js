@@ -6,7 +6,6 @@ import { createStore, applyMiddleware, compose } from 'redux'
 // import offlineConfig from '@redux-offline/redux-offline/lib/defaults'
 import reduxThunk from 'redux-thunk'
 
-import './index.css'
 import Secure from './Secure'
 import reducers from './state/reducers'
 import * as serviceWorker from './serviceWorker'

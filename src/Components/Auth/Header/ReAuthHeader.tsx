@@ -1,7 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-const ReAuthHeader = ({ logo, children }) => {
+interface Props {
+  logo: boolean | undefined
+  children: any
+}
+
+const ReAuthHeader = ({ logo, children }: Props) => {
   return (
     <div className="auth-header">
       {logo && (
@@ -14,11 +18,6 @@ const ReAuthHeader = ({ logo, children }) => {
       {children}
     </div>
   )
-}
-
-ReAuthHeader.propTypes = {
-  logo: PropTypes.bool,
-  children: PropTypes.node.isRequired
 }
 
 export default ReAuthHeader

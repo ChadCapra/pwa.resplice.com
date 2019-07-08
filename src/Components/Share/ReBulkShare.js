@@ -6,7 +6,7 @@ import MdArrowDropdown from 'react-ionicons/lib/MdArrowDropdown'
 import CardList from '../Card/CardList'
 import ShareCard from '../Card/ShareCard'
 import ReButton from '../Button/ReButton'
-import ReAvatar from '../Profile/ReAvatar'
+import ReAvatar from '../Profile/Avatar/ReAvatarThumbnail'
 import BulkShareDropdown from './BulkShareDropdown'
 import ReExit from '../Util/ReExit'
 

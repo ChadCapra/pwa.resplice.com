@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Level from 'react-bulma-components/lib/components/level'
 import Icon from 'react-bulma-components/lib/components/icon'
 
-import ProfilePic from '../Profile/ProfilePic'
+import ProfilePic from '../Profile/Avatar/ReAvatar'
 import ViewCard from '../Card/ViewCard'
 import CardList from '../Card/CardList'
 import ReUserRanks from './ReUserRanks'

@@ -4,15 +4,15 @@ import { Field, reduxForm, formValueSelector } from 'redux-form'
 import { connect } from 'react-redux'
 import { createProfile, fetchUserProfile } from '../../state/actions'
 
-import ReAuthHeader from './ReAuthHeader'
+import ReAuthHeader from './Header/ReAuthHeader'
 import ReInput from '../Form/ReInput'
 import ReInputCountry from '../Form/ReInputCountry'
 import ReInputRegion from '../Form/ReInputRegion'
 import ReButton from '../Button/ReButton'
 import ReAlert from '../Modal/ReAlert'
-import ProfilePic from '../Profile/ProfilePic'
+import ProfilePic from '../Profile/Avatar/ReAvatar'
 
-class ReSignUp extends Component {
+class ReBuildProfile extends Component {
   state = {
     showErrors: true
   }
@@ -164,12 +164,12 @@ const mapStateToProps = state => {
   }
 }
 
-const signUpForm = reduxForm({
+const buildProfileForm = reduxForm({
   form: 'signUp',
   validate
-})(ReSignUp)
+})(ReBuildProfile)
 
 export default connect(
   mapStateToProps,
   { createProfile, fetchUserProfile }
-)(signUpForm)
+)(buildProfileForm)

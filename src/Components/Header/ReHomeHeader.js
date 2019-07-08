@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom'
 import Columns from 'react-bulma-components/lib/components/columns'
 import ReSearch from '../Form/ReSearch'
 import SwipeNav from './SwipeNav'
-import ReAvatar from '../Profile/ReAvatar'
+import ReAvatar from '../Profile/Avatar/ReAvatarThumbnail'
 import './header.scss'
 
 const ReHeader = ({ user, handleNavClick }) => {

@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { swiped } from '../state/actions'
+import { swiped } from '../../state/actions'
 import ReactSwipe from 'react-swipe'
 
-import ReHomeHeader from './Header/ReHomeHeader'
-import ReGroupList from './Group/ReGroupList'
-import ReContactList from './Contact/ReContactList'
+import ReHomeHeader from '../Header/ReHomeHeader'
+import ReGroupList from '../Group/ReGroupList'
+import ReContactList from '../Contact/ReContactList'
 
 import './views.scss'
 

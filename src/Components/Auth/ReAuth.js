@@ -2,7 +2,7 @@ import React from 'react'
 import { Route } from 'react-router-dom'
 
 import ReLogin from './ReLogin'
-import ReCreateProfile from './ReCreateProfile'
+import ReCreateProfile from './ReBuildProfile'
 import ReVerify from './ReVerify'
 
 import './auth.scss'

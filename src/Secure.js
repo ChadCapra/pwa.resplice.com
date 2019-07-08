@@ -8,7 +8,7 @@ import {
 import { connect } from 'react-redux'
 import { loadApplication } from './state/actions'
 
-import App from './App'
+import App from './components/App'
 import ReAuth from './components/Auth/ReAuth'
 import GlobalLoading from './components/Loading/GlobalLoading'
 import Offline from './components/Util/Offline'
