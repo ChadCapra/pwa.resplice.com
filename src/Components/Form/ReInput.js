@@ -8,14 +8,15 @@ const ReInput = ({
   type,
   label,
   meta: { pristine, touched, error, warning },
+  autoFocus,
   ...props
 }) => {
   const field = useRef(null)
   useEffect(() => {
-    if (props.autoFocus) {
+    if (autoFocus) {
       field.current.focus()
     }
-  }, [props.autoFocus])
+  }, [autoFocus])
 
   return (
     <div

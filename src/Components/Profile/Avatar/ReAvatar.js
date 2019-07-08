@@ -4,12 +4,12 @@ import PropTypes from 'prop-types'
 import Identicon from 'react-identicons'
 import MdUpload from 'react-ionicons/lib/MdCloudUpload'
 
-import ReModal from '../Modal/ReModal'
-import AvatarUpload from './ReAvatarUpload'
+import ReModal from '../../Modal/ReModal'
+import AvatarUpload from '../ReAvatarUpload'
 
 import './profile.scss'
 
-const ProfilePic = ({ uuid, avatar, editable }) => {
+const ReAvatar = ({ uuid, avatar, editable }) => {
   const [showAvatarModal, setShowModal] = useState(false)
 
   return (
@@ -41,9 +41,9 @@ const ProfilePic = ({ uuid, avatar, editable }) => {
   )
 }
 
-ProfilePic.propTypes = {
+ReAvatar.propTypes = {
   uuid: PropTypes.string.isRequired,
   avatar: PropTypes.string
 }
 
-export default ProfilePic
+export default ReAvatar

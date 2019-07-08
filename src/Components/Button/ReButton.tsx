@@ -1,7 +1,7 @@
 import React from 'react'
 import './button.scss'
 
-export interface ReButtonProps {
+interface Props {
   type: 'primary' | 'secondary'
   loading: boolean | undefined
   disabled: boolean | undefined
@@ -19,7 +19,7 @@ const ReButton = ({
   onClick,
   children,
   ...props
-}: ReButtonProps) => {
+}: Props) => {
   return loading ? (
     <button className={`btn btn--${type} btn--loading`} disabled {...props}>
       {children}

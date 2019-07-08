@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
 
 import MdCheckmark from 'react-ionicons/lib/MdCheckmark'
-import ReAvatar from './ReAvatar'
+import ReAvatar from './Avatar/ReAvatarThumbnail'
 
 import { getTimeRemaining } from '../../helpers'
 

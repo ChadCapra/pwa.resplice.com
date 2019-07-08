@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { verifyAttributes, logout } from '../../state/actions'
 
-import ReAuthHeader from './ReAuthHeader'
+import ReAuthHeader from './Header/ReAuthHeader'
 import ReInputCode from '../Form/ReInputCode'
 import ReButton from '../Button/ReButton'
 

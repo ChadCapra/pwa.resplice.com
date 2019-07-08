@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { login, removeError } from '../../state/actions'
 import { Redirect } from 'react-router-dom'
 
-import ReAuthHeader from './ReAuthHeader'
+import ReAuthHeader from './Header/ReAuthHeader'
 import ReInput from '../Form/ReInput'
 import ReButton from '../Button/ReButton'
 import ReInputPhone from '../Form/ReInputPhone'
@@ -13,13 +13,11 @@ import HelpCircle from 'react-ionicons/lib/MdHelpCircle'
 
 class ReLogin extends Component {
   onSubmit = ({ phone, email }) => {
-    if (!this.props.loading) {
-      const login = {
-        phone,
-        email
-      }
-      this.props.login(login)
+    const login = {
+      phone,
+      email
     }
+    this.props.login(login)
   }
 
   renderForm() {

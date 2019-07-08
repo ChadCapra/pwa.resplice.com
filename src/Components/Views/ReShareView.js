@@ -2,11 +2,11 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import ReactSwipe from 'react-swipe'
 
-import { swiped } from '../state/actions'
+import { swiped } from '../../state/actions'
 
-import ReShareAttributes from './Share/ReShareAttributes'
-import ReInvite from './Share/ReInvite'
-import ReHeader from './Header/ReHeader'
+import ReShareAttributes from '../Share/ReShareAttributes'
+import ReInvite from '../Share/ReInvite'
+import ReHeader from '../Header/ReHeader'
 
 import './Share/share.scss'
 

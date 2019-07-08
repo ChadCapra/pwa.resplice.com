@@ -2,11 +2,11 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import ReactSwipe from 'react-swipe'
 
-import { swiped, fetchContact } from '../state/actions'
+import { swiped, fetchContact } from '../../state/actions'
 
-import ReContactProfile from './Contact/ReContactProfile'
-import ReContactShares from './Contact/ReContactShares'
-import ReHeader from './Header/ReHeader'
+import ReContactProfile from '../Contact/ReContactProfile'
+import ReContactShares from '../Contact/ReContactShares'
+import ReHeader from '../Header/ReHeader'
 
 import './Contact/contact.scss'
 
