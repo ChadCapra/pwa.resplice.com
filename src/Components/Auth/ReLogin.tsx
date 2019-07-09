@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Field, reduxForm } from 'redux-form'
+import { Field, InjectedFormProps, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 import { login, removeError } from '../../state/actions'
 import { Redirect } from 'react-router-dom'
@@ -14,11 +14,11 @@ interface Props {
   loading: boolean
   loginObject: Login | null
   isAuthorized: boolean
-  login: Action
-  handleSubmit(fn: Action): () => {}
+  login: AsyncAction
+  handleSubmit(fn: AsyncAction): () => {}
 }
 
-const ReLogin: FC<Props> = ({
+const ReLogin: FC<Props & InjectedFormProps<{}, Props>> = ({
   loading,
   loginObject,
   isAuthorized,

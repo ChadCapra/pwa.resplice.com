@@ -7,8 +7,12 @@ import {
   VERIFY,
   VERIFY_SUCCESS,
   VERIFY_FAILURE,
-  REMOVE_ERROR
+  REMOVE_ERROR,
+  CLEAR_LOGIN
 } from './types'
+import { fetchAttributeTypes } from './AttributeActions'
+import { fetchUserProfile } from './UserActions'
+import { fetchContactList } from './ContactActions'
 
 export const login = formValues => async dispatch => {
   dispatch({ type: LOGIN })
@@ -56,6 +60,10 @@ export const verifyAttributes = verifyObject => async dispatch => {
       // Set auth token and uuid in browser storage
       localStorage.setItem('access_token', data.access_token)
       localStorage.setItem('user_uuid', data.user_uuid)
+      await dispatch(fetchAttributeTypes())
+      await dispatch(fetchUserProfile())
+      // await dispatch(fetchGroupList())
+      await dispatch(fetchContactList())
     }
 
     dispatch({ type: VERIFY_SUCCESS, payload: { requested_at, ...data } })
@@ -66,8 +74,10 @@ export const verifyAttributes = verifyObject => async dispatch => {
   }
 }
 
+export const clearLogin = () => {
+  return { type: CLEAR_LOGIN }
+}
+
 export const removeError = () => {
-  return {
-    type: REMOVE_ERROR
-  }
+  return { type: REMOVE_ERROR }
 }

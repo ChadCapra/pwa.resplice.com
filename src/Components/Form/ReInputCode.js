@@ -38,6 +38,7 @@ class ReInputCode extends Component {
   }
 
   checkKey = (e, idx) => {
+    if (idx <= 0) return
     const inputs = document.getElementById(this.props.name).children
     if (e.keyCode === 8 && !inputs[idx].value) {
       const code = [...this.state.code]

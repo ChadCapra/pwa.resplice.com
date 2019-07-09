@@ -15,7 +15,8 @@ interface Match {
 // End Utility Types
 
 // Redux State Types
-type Action = (...args: any[]) => Promise<void>
+type AsyncAction = (...args: any[]) => Promise<void>
+type Action = (...args: any[]) => { type: string; payload?: any }
 interface StateSlice {
   loading: boolean
   error: Error | null
@@ -59,6 +60,10 @@ interface Verification {
   token_1_valid: boolean
   token_2_valid: boolean
 }
+interface VerifiedVerification {
+  user_uuid: string
+  access_token: string
+}
 interface CreateProfileValues {
   name: string
   date_of_birth: string
@@ -73,10 +78,29 @@ interface CreateProfileValues {
 
 // UserState
 interface UserState extends StateSlice {
-  profile: UserrProfile | null
+  profile: UserProfile | null
+  attributes: UserAttributes | null
+  collections: UserCollections | null
+  types: AttributeTypes | null
+  settings: Settings | null
 }
-interface UserProfile {}
+interface UserProfile {
+  uuid: string
+  name: string
+  avatar: string
+  profile_complete: boolean
+  registered_at: string
+  unique_contacts: number
+  total_shares: number
+}
+interface UserAttributes {}
+interface UserCollections {}
+interface Settings {}
 // End UserState
+
+// AttributeState
+interface AttributeTypes {}
+// End AttributeState
 
 // UtilState
 interface UtilState extends StateSlice {

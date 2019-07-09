@@ -17,7 +17,7 @@ interface Props {
   isAuthorized: boolean
   loading?: boolean
   offline: boolean
-  loadApplication: Action
+  loadApplication: AsyncAction
 }
 
 const Secure = ({ isAuthorized, loading, offline, loadApplication }: Props) => {

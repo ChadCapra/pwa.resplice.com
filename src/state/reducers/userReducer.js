@@ -29,11 +29,11 @@ const INITIAL_STATE = {
   loading: false,
   error: null,
   loaded_at: null,
-  profile: {},
-  attributes: {},
-  collections: {},
-  types: {},
-  settings: {}
+  profile: null,
+  attributes: null,
+  collections: null,
+  types: null,
+  settings: null
 }
 
 export default (state = INITIAL_STATE, action) => {

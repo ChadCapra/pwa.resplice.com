@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { verifyAttributes } from '../../state/actions'
+import { verifyAttributes, clearLogin } from '../../state/actions'
 
 import ReAuthHeader from './Header/ReAuthHeader'
 import ReInputCode from '../Form/ReInputCode'
@@ -9,7 +9,8 @@ import ReButton from '../Button/ReButton'
 
 interface Props {
   login: Login | null
-  verifyAttributes: Action
+  verifyAttributes: AsyncAction
+  clearLogin: Action
   verified: boolean
   loading: boolean
   verification: Verification | null
@@ -18,6 +19,7 @@ interface Props {
 const ReVerify: FC<Props> = ({
   login,
   verifyAttributes,
+  clearLogin,
   verification,
   verified,
   loading
@@ -93,7 +95,7 @@ const ReVerify: FC<Props> = ({
             error={tokenTwoError}
           />
         </div>
-        <ReButton type="secondary" onClick={() => console.log('hello')}>
+        <ReButton type="secondary" onClick={clearLogin}>
           Cancel
         </ReButton>
       </div>
@@ -113,5 +115,5 @@ const mapStateToProps = (state: RespliceState) => {
 
 export default connect(
   mapStateToProps,
-  { verifyAttributes }
+  { verifyAttributes, clearLogin }
 )(ReVerify)

@@ -2,8 +2,10 @@
 export const LOGIN = 'LOGIN'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
+
 export const LOGOUT = 'LOGOUT'
 export const AUTHORIZE = 'AUTHORIZE'
+export const CLEAR_LOGIN = 'CLEAR_LOGIN'
 
 export const CREATE_PROFILE = 'CREATE_PROFILE'
 export const CREATE_PROFILE_SUCCESS = 'CREATE_PROFILE_SUCCESS'

@@ -29,6 +29,7 @@ export const fetchAttributeTypes = () => async dispatch => {
     response.data.ok = objectArrToDict(response.data.ok, 'id')
     dispatch({ type: FETCH_ATTRIBUTE_TYPES_SUCCESS, payload: response.data })
   } catch (err) {
+    console.log(err)
     dispatch({ type: FETCH_ATTRIBUTE_TYPES_FAILURE, payload: err })
   }
 }

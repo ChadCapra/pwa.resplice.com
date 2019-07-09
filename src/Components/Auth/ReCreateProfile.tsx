@@ -1,6 +1,11 @@
 import React, { FC } from 'react'
 import { Redirect } from 'react-router-dom'
-import { Field, reduxForm, formValueSelector } from 'redux-form'
+import {
+  Field,
+  InjectedFormProps,
+  reduxForm,
+  formValueSelector
+} from 'redux-form'
 import { connect } from 'react-redux'
 import { loadApplication, createProfile } from '../../state/actions'
 
@@ -9,28 +14,39 @@ import ReInput from '../Form/ReInput'
 import ReInputCountry from '../Form/ReInputCountry'
 import ReInputRegion from '../Form/ReInputRegion'
 import ReButton from '../Button/ReButton'
-import ReAlert from '../Modal/ReAlert'
 import ReAvatar from '../Profile/Avatar/ReAvatar'
 
 interface Props {
   profile: UserProfile | null
-  handleSubmit(fn: Action): () => {}
+  loading: boolean
+  pristine: boolean
+  isVerified: boolean
+  isAuthorized: boolean
+  country: string
+  createProfile: AsyncAction
+  handleSubmit(fn: AsyncAction): () => {}
 }
 
-const ReCreateProfile: FC<Props> = ({ profile, handleSubmit }) => {}
+const ReCreateProfile: FC<Props & InjectedFormProps<{}, Props>> = ({
+  profile,
+  loading,
+  pristine,
+  isVerified,
+  isAuthorized,
+  country,
+  createProfile,
+  handleSubmit
+}) => {
+  if (!isVerified) return <Redirect to="/auth/login" />
+  if (isAuthorized) return <Redirect to="/" />
 
-class ReCreateProfile extends Component {
-  state = {
-    showErrors: true
-  }
+  return (
+    <div className="create-profile">
+      <ReAuthHeader>
+        <h1>Signup!</h1>
+      </ReAuthHeader>
 
-  onSubmit = (formValues: CreateProfileValues) => {
-    this.props.createProfile(formValues)
-  }
-
-  renderForm() {
-    return (
-      <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="form">
+      <form onSubmit={handleSubmit(createProfile)} className="form">
         {/* <p>
           Signing up is easy!
           <br />
@@ -38,7 +54,7 @@ class ReCreateProfile extends Component {
         </p> */}
 
         <div style={{ margin: '25px 0' }}>
-          <ReAvatar uuid={this.props.profile.uuid} />
+          <ReAvatar uuid={profile!.uuid} avatar={profile!.avatar} />
         </div>
 
         <div className="inputs">
@@ -88,7 +104,7 @@ class ReCreateProfile extends Component {
               name="region"
               type="text"
               label="State (Region)"
-              country={this.props.country}
+              country={country}
               component={ReInputRegion}
             />
             <Field
@@ -102,41 +118,16 @@ class ReCreateProfile extends Component {
           </div>
         </div>
 
-        <ReButton
-          type="primary"
-          loading={this.props.loading}
-          disabled={this.props.pristine}
-        >
+        <ReButton type="primary" loading={loading} disabled={pristine}>
           Create Profile
         </ReButton>
       </form>
-    )
-  }
-
-  render() {
-    if (this.props.profileLoading) return 'loading'
-    if (!this.props.isVerified) return <Redirect to="/auth/login" />
-
-    return (
-      <div className="sign-up">
-        {this.props.authError && this.state.showErrors && (
-          <ReAlert
-            type="danger"
-            close={() => this.setState({ showErrors: false })}
-          >{`${this.props.authError} error`}</ReAlert>
-        )}
-        <ReAuthHeader>
-          <h1>Signup!</h1>
-        </ReAuthHeader>
-
-        {this.renderForm()}
-      </div>
-    )
-  }
+    </div>
+  )
 }
 
 const validate = (formValues: CreateProfileValues) => {
-  const errors = {}
+  const errors: any = {}
   if (!formValues.name) {
     errors.name = 'Your full name is required'
   }
@@ -157,15 +148,14 @@ const mapStateToProps = (state: RespliceState) => {
   const country = selector(state, 'country')
   return {
     loading: state.authState.loading,
-    profileLoading: state.userState.loading,
     profile: state.userState.profile,
-    authError: state.authState.error,
     isVerified: state.authState.isVerified,
+    isAuthorized: state.authState.isAuthorized,
     country
   }
 }
 
-const createProfileForm = reduxForm({
+const createProfileForm = reduxForm<{}, Props>({
   form: 'createProfile',
   validate
 })(ReCreateProfile)

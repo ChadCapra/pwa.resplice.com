@@ -43,8 +43,9 @@ export const createProfile = formValues => async dispatch => {
   dispatch({ type: CREATE_PROFILE })
 
   try {
-    const response = await api.post('/user/create_profile', formValues)
+    const response = await api.post('/user/complete_profile', formValues)
     dispatch({ type: CREATE_PROFILE_SUCCESS, payload: response.data })
+    dispatch({ type: AUTHORIZE })
   } catch (err) {
     dispatch({ type: CREATE_PROFILE_FAILURE, payload: err.response })
   }
