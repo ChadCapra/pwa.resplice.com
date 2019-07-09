@@ -27,7 +27,7 @@ const INITIAL_STATE = {
       avatar: 'https://i.pravatar.cc/300?img=43'
     }
   ],
-  attribute_uuids: []
+  attribute_uuids: null
 }
 
 export default (state = INITIAL_STATE, action) => {

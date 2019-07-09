@@ -22,16 +22,17 @@ export const fetchUserProfile = () => async dispatch => {
 
   try {
     const response = await api.get('/user/profile')
-    response.data.ok.attributes = objectArrToDict(
-      response.data.ok.attributes,
-      'uuid'
-    )
-    if (response.data.ok.name) {
+    const {
+      ok: { attributes, ...profile },
+      requested_at
+    } = response.data
+    const attributesDict = objectArrToDict(attributes, 'uuid')
+    if (profile.name) {
       dispatch({ type: AUTHORIZE })
     }
     dispatch({
       type: FETCH_PROFILE_SUCCESS,
-      payload: response.data
+      payload: { attributes: attributesDict, profile, requested_at }
     })
   } catch (err) {
     console.log(err)

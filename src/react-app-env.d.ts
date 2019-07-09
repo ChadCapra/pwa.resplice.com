@@ -30,10 +30,10 @@ interface Error {
 interface RespliceState {
   authState: AuthState
   userState: UserState
-  contactState: object
-  groupState: object
-  attributeState: object
-  shareState: object
+  contactState: ContactState
+  groupState: GroupState
+  attributeState: AttributeState
+  shareState: ShareState
   utilState: UtilState
 }
 
@@ -83,6 +83,7 @@ interface UserState extends StateSlice {
   collections: UserCollections | null
   types: AttributeTypes | null
   settings: Settings | null
+  requested_at: string | null
 }
 interface UserProfile {
   uuid: string
@@ -93,14 +94,79 @@ interface UserProfile {
   unique_contacts: number
   total_shares: number
 }
-interface UserAttributes {}
-interface UserCollections {}
+interface UserAttributes {
+  [index: string]: UserAttribute
+}
+interface UserCollections {
+  [index: string]: UserAttribute[]
+}
 interface Settings {}
+interface UserAttribute {
+  uuid: string
+  attribute_type_id: number
+  collection: string
+  name: string
+  value: { [index: string]: string }
+  verified_recency: number
+  qr_shareable: boolean
+  expiry: string | null
+  created_at: string
+  updated_at: string
+  verify_token: number | null
+  actions: AttributeAction[]
+}
 // End UserState
 
+// ContactState
+interface ContactState {}
+// End ContactState
+
+// GroupState
+interface GroupState {}
+// End GroupState
+
 // AttributeState
-interface AttributeTypes {}
+interface AttributeState extends StateSlice {
+  verify: null
+}
+interface AttributeTypes {
+  [index: number]: AttributeType
+}
+interface AttributeType {
+  id: number
+  name: string
+  default_collection: string
+  verify_seconds: string
+  preview_name: string
+  preview_value: { [index: string]: string }
+  value_rules: null
+  actions: AttributeAction[]
+}
+interface AttributeAction {
+  name: string
+  display_name: string
+  icon: string
+  user_only: boolean
+  unverified_only: boolean
+  action_value: string
+}
 // End AttributeState
+
+// ShareState
+interface ShareState extends StateSlice {
+  shareList: ShareItem[] | null
+  shareAttributes: ShareAttribute[] | null
+}
+interface ShareItem {
+  uuid: string
+  name: string
+  avatar: string
+}
+interface ShareAttribute {
+  uuid: string
+  share_expiry: string | null
+}
+// End ShareState
 
 // UtilState
 interface UtilState extends StateSlice {

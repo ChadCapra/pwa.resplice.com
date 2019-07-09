@@ -22,7 +22,7 @@ import {
 const INITIAL_STATE = {
   loading: false,
   error: null,
-  verify: {}
+  verify: null
 }
 
 export default (state = INITIAL_STATE, action) => {

@@ -28,7 +28,7 @@ import { processAttributes } from '../../helpers'
 const INITIAL_STATE = {
   loading: false,
   error: null,
-  loaded_at: null,
+  requested_at: null,
   profile: null,
   attributes: null,
   collections: null,
@@ -47,13 +47,12 @@ export default (state = INITIAL_STATE, action) => {
 
     case CREATE_PROFILE_SUCCESS:
     case FETCH_PROFILE_SUCCESS:
-      const { attributes, request_at, ...profile } = action.payload.ok
       return {
         ...state,
         loading: false,
-        loaded_at: request_at,
-        profile,
-        ...processAttributes({ ...attributes }, state.types)
+        requested_at: action.payload.requested_at,
+        profile: action.payload.profile,
+        ...processAttributes(action.payload.attributes, state.types)
       }
     case FETCH_ATTRIBUTE_TYPES_SUCCESS:
       return { ...state, types: action.payload.ok }
@@ -118,7 +117,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: false,
-        profile: { ...profile, avatar: action.payload.avatar }
+        profile: { ...action.payload.profile, avatar: action.payload.avatar }
       }
 
     case CREATE_PROFILE_FAILURE:
