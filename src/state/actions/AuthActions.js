@@ -11,14 +11,17 @@ import {
 } from './types'
 
 export const login = formValues => async dispatch => {
-  dispatch(logout())
   dispatch({ type: LOGIN })
 
   try {
     const response = await api.post('/login', formValues)
+    const {
+      requested_at,
+      ok: { ...data }
+    } = response.data
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: { formValues, data: response.data }
+      payload: { values: formValues, requested_at, ...data }
     })
   } catch (err) {
     dispatch({ type: LOGIN_FAILURE, payload: err.response })
@@ -41,19 +44,23 @@ export const verifyAttributes = verifyObject => async dispatch => {
 
   try {
     const response = await api.patch('/verify_login', verifyObject)
+    const {
+      requested_at,
+      ok: { ...data }
+    } = response.data
 
-    if (response.data.ok.access_token) {
+    if (data.access_token) {
       // Set auth header on axios instance
-      api.defaults.headers.common['access_token'] =
-        response.data.ok.access_token
-      api.defaults.headers.common['user_uuid'] = response.data.ok.user_uuid
+      api.defaults.headers.common['access_token'] = data.access_token
+      api.defaults.headers.common['user_uuid'] = data.user_uuid
       // Set auth token and uuid in browser storage
-      localStorage.setItem('access_token', response.data.ok.access_token)
-      localStorage.setItem('user_uuid', response.data.ok.user_uuid)
+      localStorage.setItem('access_token', data.access_token)
+      localStorage.setItem('user_uuid', data.user_uuid)
     }
 
-    dispatch({ type: VERIFY_SUCCESS, payload: response.data })
+    dispatch({ type: VERIFY_SUCCESS, payload: { requested_at, ...data } })
   } catch (err) {
+    console.log(err)
     console.log(JSON.stringify(err))
     dispatch({ type: VERIFY_FAILURE, payload: err })
   }

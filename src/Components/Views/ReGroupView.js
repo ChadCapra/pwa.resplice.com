@@ -2,14 +2,14 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import ReactSwipe from 'react-swipe'
 
-import { swiped, fetchGroup } from '../state/actions'
+import { swiped, fetchGroup } from '../../state/actions'
 
-import ReProfileList from './Profile/ReProfileList'
-import ReGroupProfile from './Group/ReGroupProfile'
-import ReGroupShares from './Group/ReGroupShares'
-import ReHeader from './Header/ReHeader'
+import ReProfileList from '../Profile/ReProfileList'
+import ReGroupProfile from '../Group/ReGroupProfile'
+import ReGroupShares from '../Group/ReGroupShares'
+import ReHeader from '../Header/ReHeader'
 
-import './Group/group.scss'
+import '../Group/group.scss'
 
 const ReGroupView = ({ loading, group, swiped, fetchGroup, match }) => {
   useEffect(() => {

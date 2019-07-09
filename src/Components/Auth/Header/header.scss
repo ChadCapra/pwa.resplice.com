@@ -1,0 +1,21 @@
+.auth-header {
+  flex: 0 0 150px;
+  background-color: #1bbc9b;
+  height: 150px;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  width: 100vw;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  h1 {
+    font-size: 52px;
+    font-weight: normal;
+  }
+  h2 {
+    font-weight: normal;
+  }
+}

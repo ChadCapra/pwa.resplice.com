@@ -1,25 +1,25 @@
-import React from 'react'
+import React, { FC } from 'react'
 import './button.scss'
 
 interface Props {
   type: 'primary' | 'secondary'
-  loading: boolean | undefined
-  disabled: boolean | undefined
-  onClick(e: object): void
+  loading?: boolean
+  disabled?: boolean
+  onClick?(e: object): void
   children: any
 }
 
 /**
  * Primary Button for Resplice. Used on forms, in modals, etc.
  */
-const ReButton = ({
+const ReButton: FC<Props> = ({
   type,
   loading,
   disabled,
   onClick,
   children,
   ...props
-}: Props) => {
+}) => {
   return loading ? (
     <button className={`btn btn--${type} btn--loading`} disabled {...props}>
       {children}

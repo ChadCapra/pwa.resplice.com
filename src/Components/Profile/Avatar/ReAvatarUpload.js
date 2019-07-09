@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { editAvatar } from '../../state/actions'
+import { editAvatar } from '../../../state/actions'
 import Identicon from 'react-identicons'
 import MdCamera from 'react-ionicons/lib/MdCamera'
 import MdUpload from 'react-ionicons/lib/MdCloudUpload'
@@ -78,7 +78,6 @@ const AvatarUploadModal = ({ uuid, onComplete, editAvatar, uploaded }) => {
 AvatarUploadModal.propTypes = {
   uuid: PropTypes.string.isRequired,
   onComplete: PropTypes.func.isRequired,
-  editAvatar: PropTypes.func.isRequired,
   uploaded: PropTypes.oneOfType([PropTypes.bool, PropTypes.symbol])
 }
 

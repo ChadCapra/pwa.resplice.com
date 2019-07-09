@@ -1,13 +1,17 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { Route } from 'react-router-dom'
 
 import ReLogin from './ReLogin'
-import ReCreateProfile from './ReBuildProfile'
+import ReCreateProfile from './ReCreateProfile'
 import ReVerify from './ReVerify'
 
 import './auth.scss'
 
-const ReAuth = ({ match }) => {
+interface Props {
+  match: Match
+}
+
+const ReAuth: FC<Props> = ({ match }) => {
   return (
     <>
       <Route path={`${match.path}/login`} component={ReLogin} />

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
-import ContactProfilePic from './ContactProfilePic'
+import ReAvatarContact from '../Profile/Avatar/ReAvatarContact'
 import CardList from '../Card/CardList'
 import ViewCard from '../Card/ViewCard'
 import ReModal from '../Modal/ReModal'
@@ -11,7 +11,14 @@ import ReNotification from '../Util/ReNotification'
 import { handleAttributeAction, getTimeRemaining } from '../../helpers'
 
 const ReContactProfile = ({
-  profile: { uuid, name, tags, pending_expiration, pending_attribute_value }
+  profile: {
+    uuid,
+    name,
+    avatar,
+    tags,
+    pending_expiration,
+    pending_attribute_value
+  }
 }) => {
   const [showTagModal, setShowTagModal] = useState(false)
 
@@ -36,7 +43,7 @@ const ReContactProfile = ({
         </ReNotification>
       )}
 
-      <ContactProfilePic uuid={uuid} />
+      <ReAvatarContact uuid={uuid} avatar={avatar} />
       <div onClick={() => setShowTagModal(true)}>
         <h1 className="profile-name">{name}</h1>
         <div className="profile-tags">

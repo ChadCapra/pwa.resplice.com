@@ -44,6 +44,7 @@ export default (state = INITIAL_STATE, action) => {
     case EDIT_NAME:
     case EDIT_AVATAR:
       return { ...state, loading: true }
+
     case CREATE_PROFILE_SUCCESS:
     case FETCH_PROFILE_SUCCESS:
       const { attributes, request_at, ...profile } = action.payload.ok

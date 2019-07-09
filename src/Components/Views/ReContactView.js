@@ -8,7 +8,7 @@ import ReContactProfile from '../Contact/ReContactProfile'
 import ReContactShares from '../Contact/ReContactShares'
 import ReHeader from '../Header/ReHeader'
 
-import './Contact/contact.scss'
+import '../Contact/contact.scss'
 
 const ReContactView = ({ loading, profile, swiped, fetchContact, match }) => {
   useEffect(() => {

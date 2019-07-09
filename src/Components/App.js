@@ -10,7 +10,7 @@ import ReBulkShare from './Share/ReBulkShare'
 
 import './App.scss'
 
-const App = () => (
+const App = props => (
   <div className="App">
     <>
       <Route path="/" exact component={ReHomeView} />

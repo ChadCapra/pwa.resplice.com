@@ -8,7 +8,7 @@ import ReShareAttributes from '../Share/ReShareAttributes'
 import ReInvite from '../Share/ReInvite'
 import ReHeader from '../Header/ReHeader'
 
-import './Share/share.scss'
+import '../Share/share.scss'
 
 const ReShareView = ({ swiped }) => {
   useEffect(() => {

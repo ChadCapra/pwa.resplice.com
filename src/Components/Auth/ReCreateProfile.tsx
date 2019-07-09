@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React, { FC } from 'react'
 import { Redirect } from 'react-router-dom'
 import { Field, reduxForm, formValueSelector } from 'redux-form'
 import { connect } from 'react-redux'
-import { createProfile, fetchUserProfile } from '../../state/actions'
+import { loadApplication, createProfile } from '../../state/actions'
 
 import ReAuthHeader from './Header/ReAuthHeader'
 import ReInput from '../Form/ReInput'
@@ -10,18 +10,21 @@ import ReInputCountry from '../Form/ReInputCountry'
 import ReInputRegion from '../Form/ReInputRegion'
 import ReButton from '../Button/ReButton'
 import ReAlert from '../Modal/ReAlert'
-import ProfilePic from '../Profile/Avatar/ReAvatar'
+import ReAvatar from '../Profile/Avatar/ReAvatar'
 
-class ReBuildProfile extends Component {
+interface Props {
+  profile: UserProfile | null
+  handleSubmit(fn: Action): () => {}
+}
+
+const ReCreateProfile: FC<Props> = ({ profile, handleSubmit }) => {}
+
+class ReCreateProfile extends Component {
   state = {
     showErrors: true
   }
 
-  componentWillMount() {
-    if (this.props.isVerified) this.props.fetchUserProfile()
-  }
-
-  onSubmit = formValues => {
+  onSubmit = (formValues: CreateProfileValues) => {
     this.props.createProfile(formValues)
   }
 
@@ -35,7 +38,7 @@ class ReBuildProfile extends Component {
         </p> */}
 
         <div style={{ margin: '25px 0' }}>
-          <ProfilePic uuid={this.props.profile.uuid} />
+          <ReAvatar uuid={this.props.profile.uuid} />
         </div>
 
         <div className="inputs">
@@ -101,11 +104,11 @@ class ReBuildProfile extends Component {
 
         <ReButton
           type="primary"
-          text="Sign Up"
-          width="200px"
           loading={this.props.loading}
           disabled={this.props.pristine}
-        />
+        >
+          Create Profile
+        </ReButton>
       </form>
     )
   }
@@ -113,8 +116,6 @@ class ReBuildProfile extends Component {
   render() {
     if (this.props.profileLoading) return 'loading'
     if (!this.props.isVerified) return <Redirect to="/auth/login" />
-    if (this.props.profile.name && this.props.isVerified)
-      return <Redirect to="/" />
 
     return (
       <div className="sign-up">
@@ -134,25 +135,25 @@ class ReBuildProfile extends Component {
   }
 }
 
-const validate = values => {
+const validate = (formValues: CreateProfileValues) => {
   const errors = {}
-  if (!values.name) {
+  if (!formValues.name) {
     errors.name = 'Your full name is required'
   }
-  if (!values.date_of_birth) {
+  if (!formValues.date_of_birth) {
     errors.date_of_birth = 'Your date of birth is required'
   }
-  if (!values.postal_code) {
+  if (!formValues.postal_code) {
     errors.postal_code = 'You must enter a postal code'
   }
-  if (!values.country) {
+  if (!formValues.country) {
     errors.country = 'You must select a country'
   }
   return errors
 }
 
-const selector = formValueSelector('signUp')
-const mapStateToProps = state => {
+const selector = formValueSelector('createProfile')
+const mapStateToProps = (state: RespliceState) => {
   const country = selector(state, 'country')
   return {
     loading: state.authState.loading,
@@ -164,12 +165,12 @@ const mapStateToProps = state => {
   }
 }
 
-const buildProfileForm = reduxForm({
-  form: 'signUp',
+const createProfileForm = reduxForm({
+  form: 'createProfile',
   validate
-})(ReBuildProfile)
+})(ReCreateProfile)
 
 export default connect(
   mapStateToProps,
-  { createProfile, fetchUserProfile }
-)(buildProfileForm)
+  { createProfile, loadApplication }
+)(createProfileForm)

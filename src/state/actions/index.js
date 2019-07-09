@@ -36,7 +36,7 @@ export const loadApplication = () => async dispatch => {
       api.defaults.headers.common['user_uuid'] = userUuid
       await dispatch(fetchAttributeTypes())
       await dispatch(fetchUserProfile())
-      await dispatch(fetchGroupList())
+      // await dispatch(fetchGroupList())
       await dispatch(fetchContactList())
     }
 

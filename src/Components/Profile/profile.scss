@@ -29,55 +29,6 @@
   font-size: 24px;
   color: rgba(0, 0, 0, 0.5);
 }
-.profile-pic {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 150px;
-  width: 150px;
-  border-radius: 50%;
-  position: relative;
-  background-color: #e5e5e5;
-}
-.pic {
-  width: 100%;
-  height: 100%;
-  background-position: center;
-  background-size: cover;
-}
-.pic-upload-icon {
-  position: absolute;
-  top: -5px;
-  right: 10px;
-}
-.avatar-upload-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 25px;
-}
-.avatar-upload-header {
-  margin: 0;
-  margin-bottom: 10px;
-  text-align: center;
-}
-.upload-option {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 10px 0;
-}
-.upload-option-icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #1bbc9b;
-  border-radius: 50%;
-  height: 75px;
-  width: 75px;
-}
-
 /*************************
 * Profile List Styles 
 *************************/
@@ -113,18 +64,6 @@
   margin: 5px 15px;
   border-radius: 50%;
   background-color: #1bbc9b;
-}
-.avatar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-position: center;
-  background-size: cover;
-  background-color: #e5e5e5;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin: 5px 15px;
 }
 
 /*************************

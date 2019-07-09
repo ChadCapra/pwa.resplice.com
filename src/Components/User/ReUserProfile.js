@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Level from 'react-bulma-components/lib/components/level'
 import Icon from 'react-bulma-components/lib/components/icon'
 
-import ProfilePic from '../Profile/Avatar/ReAvatar'
+import ReAvatar from '../Profile/Avatar/ReAvatar'
 import ViewCard from '../Card/ViewCard'
 import CardList from '../Card/CardList'
 import ReUserRanks from './ReUserRanks'
@@ -33,7 +33,7 @@ const ReUserProfile = ({
 
   return (
     <div className="profile">
-      <ProfilePic uuid={uuid} avatar={avatar} />
+      <ReAvatar uuid={uuid} avatar={avatar} />
       <h1 className="profile-name">{name}</h1>
       <Level breakpoint="mobile" className="profile-stats">
         <Level.Item>

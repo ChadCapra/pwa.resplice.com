@@ -10,8 +10,8 @@ import ReHeader from '../Header/ReHeader'
 import ReAddAttribute from '../Profile/ReAddAttribute'
 import ReModal from '../Modal/ReModal'
 
-import './Profile/profile.scss'
-import './User/user.scss'
+import '../Profile/profile.scss'
+import '../User/user.scss'
 
 const ReUserView = ({ swiped }) => {
   const [showAddAttributeModal, setAddAttributeModal] = useState(false)

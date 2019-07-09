@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { FC } from 'react'
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 import { login, removeError } from '../../state/actions'
@@ -8,23 +8,35 @@ import ReAuthHeader from './Header/ReAuthHeader'
 import ReInput from '../Form/ReInput'
 import ReButton from '../Button/ReButton'
 import ReInputPhone from '../Form/ReInputPhone'
-import Icon from 'react-bulma-components/lib/components/icon'
 import HelpCircle from 'react-ionicons/lib/MdHelpCircle'
 
-class ReLogin extends Component {
-  onSubmit = ({ phone, email }) => {
-    const login = {
-      phone,
-      email
-    }
-    this.props.login(login)
-  }
+interface Props {
+  loading: boolean
+  loginObject: Login | null
+  isAuthorized: boolean
+  login: Action
+  handleSubmit(fn: Action): () => {}
+}
 
-  renderForm() {
-    return (
-      <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="form">
+const ReLogin: FC<Props> = ({
+  loading,
+  loginObject,
+  isAuthorized,
+  handleSubmit,
+  login
+}) => {
+  if (loginObject) return <Redirect to="/auth/verify" />
+  if (isAuthorized) return <Redirect to="/" />
+
+  return (
+    <div className="login">
+      <ReAuthHeader>
+        <h2>Resplice</h2>
+      </ReAuthHeader>
+
+      <form onSubmit={handleSubmit(login)} className="form">
         <p>
-          Welcome to Resplice, the world's most accurate contact directory!{' '}
+          Welcome to Resplice, the world's most accurate contact directory!
           <br />
           Start by entering your phone and email
         </p>
@@ -32,10 +44,9 @@ class ReLogin extends Component {
         <div className="inputs">
           <Field
             name="phone"
-            type="text"
             label="Mobile Phone"
-            component={ReInputPhone}
             defaultCountry="us"
+            component={ReInputPhone}
           />
           <Field
             name="email"
@@ -45,34 +56,18 @@ class ReLogin extends Component {
           />
         </div>
 
-        <ReButton type="primary" width="200px" loading={this.props.loading}>
+        <ReButton type="primary" loading={loading}>
           Start
         </ReButton>
       </form>
-    )
-  }
 
-  render() {
-    if (Object.entries(this.props.loginObject).length > 0)
-      return <Redirect push to="/auth/verify" />
-
-    return (
-      <div className="login">
-        <ReAuthHeader logo>
-          <h2>Resplice</h2>
-        </ReAuthHeader>
-        {this.renderForm()}
-
-        <Icon size="large" className="help-icon">
-          <HelpCircle color="#1bbc9b" fontSize="2.5rem" />
-        </Icon>
-      </div>
-    )
-  }
+      <HelpCircle className="help-icon" color="#1bbc9b" fontSize="2.5rem" />
+    </div>
+  )
 }
 
-const validate = formValues => {
-  const errors = {}
+const validate = (formValues: LoginValues) => {
+  const errors: any = {}
 
   if (!formValues.phone || formValues.phone.length < 8) {
     errors.phone = 'You must enter a valid phone number'
@@ -85,15 +80,16 @@ const validate = formValues => {
   return errors
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: RespliceState) => {
   return {
     loading: state.authState.loading,
     loginObject: state.authState.login,
+    isAuthorized: state.authState.isAuthorized,
     errors: state.authState.error
   }
 }
 
-const loginForm = reduxForm({
+const loginForm = reduxForm<{}, Props>({
   form: 'login',
   validate
 })(ReLogin)
