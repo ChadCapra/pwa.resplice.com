@@ -11,15 +11,16 @@ import './profile.scss'
 import '../Contact/contact.scss'
 
 const ReContact = ({
-  contact: { uuid, name, tags, avatar, pending, selected },
+  profile: { uuid, name, avatar, tags, member_count, pending, selected },
   onSelect,
   onDeselect,
   style
 }) => {
-  const [toContact, setToContact] = useState(false)
+  const [toProfile, setToProfile] = useState(false)
 
-  if (toContact) return <Redirect push to={'/contact/1'} />
-  // return <Redirect push to={`/contact/${uuid}`} />
+  if (toProfile && member_count >= 0)
+    return <Redirect push to={`group/${uuid}`} />
+  if (toProfile) return <Redirect push to={`/contact/${uuid}`} />
 
   return (
     <div
@@ -41,7 +42,7 @@ const ReContact = ({
 
       <div
         className="profile-list-item-name"
-        onClick={() => setToContact(true)}
+        onClick={() => setToProfile(true)}
       >
         <span>{name}</span>
         <span className="profile-list-item-group">
@@ -58,7 +59,7 @@ const ReContact = ({
 }
 
 ReContact.propTypes = {
-  contact: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
   style: PropTypes.object,
   onSelect: PropTypes.func,
   onDeselect: PropTypes.func

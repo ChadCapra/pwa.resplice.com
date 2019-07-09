@@ -42,7 +42,7 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case FETCH_ATTRIBUTE_TYPES_SUCCESS:
-      return { ...state, types: action.payload.ok }
+      return { ...state, types: action.payload }
     case FETCH_CONTACT_LIST:
       return { ...state, loading: true }
     case FETCH_CONTACT_LIST_SUCCESS:

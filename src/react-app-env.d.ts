@@ -79,9 +79,9 @@ interface CreateProfileValues {
 // UserState
 interface UserState extends StateSlice {
   profile: UserProfile | null
-  attributes: UserAttributes | null
-  collections: UserCollections | null
-  types: AttributeTypes | null
+  attributes: { [index: string]: UserAttribute } | null
+  collections: { [index: string]: UserAttribute[] } | null
+  types: { [index: number]: AttributeType } | null
   settings: Settings | null
   requested_at: string | null
 }
@@ -93,12 +93,6 @@ interface UserProfile {
   registered_at: string
   unique_contacts: number
   total_shares: number
-}
-interface UserAttributes {
-  [index: string]: UserAttribute
-}
-interface UserCollections {
-  [index: string]: UserAttribute[]
 }
 interface Settings {}
 interface UserAttribute {
@@ -118,19 +112,43 @@ interface UserAttribute {
 // End UserState
 
 // ContactState
-interface ContactState {}
+interface ContactState extends StateSlice {
+  contacts: Contacts | null
+  types: { [index: number]: AttributeType } | null
+  requested_at: string | null
+}
+interface Contacts {
+  [index: string]: ContactSummary | ContactDetails
+}
+interface ContactSummary {}
+interface ContactDetails extends ContactSummary {}
+interface ContactAttribute {}
 // End ContactState
 
 // GroupState
-interface GroupState {}
+interface GroupState extends StateSlice {
+  groups: Groups | null
+  types: { [index: number]: AttributeType } | null
+}
+interface Groups {
+  [index: string]: GroupSummary | GroupDetails
+}
+interface GroupSummary {
+  uuid: string
+  name: string
+  avatar: string | null
+  joined_at: string
+  member_count: number
+  member_uuids: string[]
+  requested_at: string
+}
+interface GroupDetails extends GroupSummary {}
+interface GroupAttribute {}
 // End GroupState
 
 // AttributeState
 interface AttributeState extends StateSlice {
   verify: null
-}
-interface AttributeTypes {
-  [index: number]: AttributeType
 }
 interface AttributeType {
   id: number

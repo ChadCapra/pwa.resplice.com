@@ -36,7 +36,11 @@ export const fetchGroupList = () => async dispatch => {
 
   try {
     const response = await api.get('/groups')
-    dispatch({ type: FETCH_GROUP_LIST_SUCCESS, payload: response.data })
+    const { requested_at, ok: groups } = response.data
+    dispatch({
+      type: FETCH_GROUP_LIST_SUCCESS,
+      payload: { requested_at, groups }
+    })
   } catch (err) {
     dispatch({ type: FETCH_GROUP_LIST_FAILURE, payload: err.response })
   }
@@ -47,7 +51,11 @@ export const fetchGroup = uuid => async dispatch => {
 
   try {
     const response = await api.get(`/group/${uuid}`)
-    dispatch({ type: FETCH_GROUP_SUCCESS, payload: response.data })
+    const { ok: details, requested_at } = response.data
+    dispatch({
+      type: FETCH_GROUP_SUCCESS,
+      payload: { ...details, requested_at }
+    })
   } catch (err) {
     dispatch({ type: FETCH_GROUP_FAILURE, payload: err.response })
   }
@@ -57,10 +65,14 @@ export const createGroup = group => async dispatch => {
   dispatch({ type: CREATE_GROUP })
 
   try {
-    console.log(group)
     const response = await api.post('/group/create', group)
-    dispatch({ type: CREATE_GROUP_SUCCESS, payload: response.data })
+    const { ok: summary, requested_at } = response.data
+    dispatch({
+      type: CREATE_GROUP_SUCCESS,
+      payload: { ...summary, requested_at }
+    })
   } catch (err) {
+    console.log(err)
     dispatch({ type: CREATE_GROUP_FAILURE, payload: err })
   }
 }

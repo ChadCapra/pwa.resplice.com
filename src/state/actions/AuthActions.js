@@ -13,6 +13,7 @@ import {
 import { fetchAttributeTypes } from './AttributeActions'
 import { fetchUserProfile } from './UserActions'
 import { fetchContactList } from './ContactActions'
+import { fetchGroupList } from './GroupActions'
 
 export const login = formValues => async dispatch => {
   dispatch({ type: LOGIN })
@@ -62,7 +63,7 @@ export const verifyAttributes = verifyObject => async dispatch => {
       localStorage.setItem('user_uuid', data.user_uuid)
       await dispatch(fetchAttributeTypes())
       await dispatch(fetchUserProfile())
-      // await dispatch(fetchGroupList())
+      await dispatch(fetchGroupList())
       await dispatch(fetchContactList())
     }
 

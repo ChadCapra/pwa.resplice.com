@@ -29,14 +29,13 @@ const ReGroupProfile = ({
           </ReNotification.Body>
         </ReNotification>
       )}
-
-      <CardList
-        type="contact"
+      {/* <CardList
+        type="group"
         Card={ViewCard}
-        contactUuid={uuid}
+        groupUuid={uuid}
         handleAction={handleAction}
-      />
-
+      /> */}
+      Card List
       <ReModal
         show={showAddAttribute}
         onClose={() => setShowAddAttribute(false)}

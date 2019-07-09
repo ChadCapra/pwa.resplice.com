@@ -55,7 +55,7 @@ export default (state = INITIAL_STATE, action) => {
         ...processAttributes(action.payload.attributes, state.types)
       }
     case FETCH_ATTRIBUTE_TYPES_SUCCESS:
-      return { ...state, types: action.payload.ok }
+      return { ...state, types: action.payload }
     case ADD_ATTRIBUTE_SUCCESS:
       return {
         ...state,

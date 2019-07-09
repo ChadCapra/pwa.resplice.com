@@ -32,7 +32,7 @@ const ReGroupView = ({ loading, group, swiped, fetchGroup, match }) => {
           }}
         >
           <div className="swipe-item-container">
-            <ReProfileList listType="custom" list={group.members} />
+            {/* <ReProfileList listType="custom" list={group.members} /> */}
           </div>
           <div className="swipe-item-container">
             <ReGroupProfile profile={group} />

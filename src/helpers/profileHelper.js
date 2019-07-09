@@ -19,7 +19,7 @@ export const processSummaries = (profileList, newProfileList) => {
 
 export const processProfile = (
   profileList,
-  { profile, requested_at },
+  { requested_at, ...profile },
   types
 ) => {
   profile.requested_at = requested_at

@@ -1,16 +1,22 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 import { createGroup } from '../../state/actions'
 
 import ReInput from '../Form/ReInput'
 import ReButton from '../Button/ReButton'
 
-const ReCreateGroup = ({ createGroup }) => {
+const ReCreateGroup = ({ createGroup, createdGroupUuid }) => {
+  const [toGroup, setToGroup] = useState(false)
   const [groupName, setGroupName] = useState('')
 
-  const submitGroup = () => {
-    createGroup({ name: groupName })
+  if (toGroup && createdGroupUuid)
+    return <Redirect push to={`/group/${createdGroupUuid}`} />
+
+  const submitGroup = async () => {
+    await createGroup({ name: groupName })
+    setToGroup(true)
   }
 
   const pristine = groupName === ''
@@ -35,7 +41,13 @@ const ReCreateGroup = ({ createGroup }) => {
   )
 }
 
+const mapStateToProps = state => {
+  return {
+    createdGroupUuid: state.groupState.createdGroupUuid
+  }
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   { createGroup }
 )(ReCreateGroup)

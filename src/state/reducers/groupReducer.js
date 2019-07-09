@@ -46,8 +46,9 @@ const INITIAL_STATE = {
   loading: false,
   error: null,
   requested_at: null,
-  groups: {},
-  types: {}
+  groups: null,
+  types: null,
+  createdGroupUuid: null
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -65,12 +66,13 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, loading: true }
 
     case FETCH_ATTRIBUTE_TYPES_SUCCESS:
-      return { ...state, types: action.payload.ok }
+      return { ...state, types: action.payload }
     case FETCH_GROUP_LIST_SUCCESS:
+      console.log(action.payload)
       return {
         ...state,
         loading: false,
-        groups: processSummaries({ ...state.groups }, action.payload.ok),
+        groups: processSummaries({ ...state.groups }, action.payload.groups),
         requested_at: action.payload.requested_at
       }
     case FETCH_GROUP_SUCCESS:
@@ -83,7 +85,8 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: false,
-        groups: processProfile({ ...state.groups }, action.payload, state.types)
+        groups: processSummaries({ ...state.groups }, [action.payload]),
+        createdGroupUuid: action.payload.uuid
       }
     case EDIT_GROUP_NAME_SUCCESS:
       return {

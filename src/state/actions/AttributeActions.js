@@ -26,8 +26,8 @@ export const fetchAttributeTypes = () => async dispatch => {
 
   try {
     const response = await api.get('/attribute/attribute_types')
-    response.data.ok = objectArrToDict(response.data.ok, 'id')
-    dispatch({ type: FETCH_ATTRIBUTE_TYPES_SUCCESS, payload: response.data })
+    const types = objectArrToDict(response.data.ok, 'id')
+    dispatch({ type: FETCH_ATTRIBUTE_TYPES_SUCCESS, payload: types })
   } catch (err) {
     console.log(err)
     dispatch({ type: FETCH_ATTRIBUTE_TYPES_FAILURE, payload: err })
