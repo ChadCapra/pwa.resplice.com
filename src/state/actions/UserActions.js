@@ -35,7 +35,6 @@ export const fetchUserProfile = () => async dispatch => {
       payload: { attributes: attributesDict, profile, requested_at }
     })
   } catch (err) {
-    console.log(err)
     dispatch({ type: FETCH_PROFILE_FAILURE, payload: err })
   }
 }
@@ -45,9 +44,17 @@ export const createProfile = formValues => async dispatch => {
 
   try {
     const response = await api.post('/user/complete_profile', formValues)
-    dispatch({ type: CREATE_PROFILE_SUCCESS, payload: response.data })
+    const {
+      ok: { attributes, ...profile },
+      requested_at
+    } = response.data
+    dispatch({
+      type: CREATE_PROFILE_SUCCESS,
+      payload: { attributes, profile, requested_at }
+    })
     dispatch({ type: AUTHORIZE })
   } catch (err) {
+    console.log(err)
     dispatch({ type: CREATE_PROFILE_FAILURE, payload: err.response })
   }
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
-import ReAvatarContact from '../Profile/Avatar/ReAvatarContact'
+import ReAvatar from '../Profile/Avatar/ReAvatar'
 import CardList from '../Card/CardList'
 import ViewCard from '../Card/ViewCard'
 import ReModal from '../Modal/ReModal'
@@ -43,7 +43,8 @@ const ReContactProfile = ({
         </ReNotification>
       )}
 
-      <ReAvatarContact uuid={uuid} avatar={avatar} />
+      <ReAvatar uuid={uuid} avatar={avatar} viewOnly />
+
       <div onClick={() => setShowTagModal(true)}>
         <h1 className="profile-name">{name}</h1>
         <div className="profile-tags">

@@ -3,15 +3,23 @@ import PropTypes from 'prop-types'
 
 import CardList from '../Card/CardList'
 import ViewCard from '../Card/ViewCard'
+import ReAvatar from '../Profile/Avatar/ReAvatarContact'
 import ReModal from '../Modal/ReModal'
 import ReNotification from '../Util/ReNotification'
 
 import { handleAttributeAction, getTimeRemaining } from '../../helpers'
 
 const ReGroupProfile = ({
-  profile: { uuid, name, members, pending_expiration, pending_attribute_value }
+  profile: {
+    uuid,
+    name,
+    avatar,
+    member_count,
+    pending_expiration,
+    pending_attribute_value
+  }
 }) => {
-  const [showAddAttribute, setShowAddAttribute] = useState(0)
+  const [showAddAttribute, setShowAddAttribute] = useState(false)
 
   const handleAction = (actionType, { value }) => {
     handleAttributeAction(actionType, value)
@@ -29,6 +37,11 @@ const ReGroupProfile = ({
           </ReNotification.Body>
         </ReNotification>
       )}
+      <ReAvatar uuid={uuid} avatar={avatar} viewOnly />
+      <div>
+        <h1 className="profile-name">{name}</h1>
+        <div className="profile-tags">{member_count}</div>
+      </div>
       {/* <CardList
         type="group"
         Card={ViewCard}

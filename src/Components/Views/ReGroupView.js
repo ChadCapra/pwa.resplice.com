@@ -8,16 +8,19 @@ import ReProfileList from '../Profile/ReProfileList'
 import ReGroupProfile from '../Group/ReGroupProfile'
 import ReGroupShares from '../Group/ReGroupShares'
 import ReHeader from '../Header/ReHeader'
+import ReProfileError from '../Profile/ReProfileError'
+import ReProfileLoading from '../Loading/ReProfileLoading'
 
 import '../Group/group.scss'
 
-const ReGroupView = ({ loading, group, swiped, fetchGroup, match }) => {
+const ReGroupView = ({ group, swiped, fetchGroup, match, loading, error }) => {
   useEffect(() => {
     swiped(1)
     fetchGroup(match.params.uuid)
   }, [swiped, fetchGroup, match])
 
-  if (loading || !group) return 'loading'
+  if (loading || !group) return <ReProfileLoading />
+  if (error) return <ReProfileError />
 
   return (
     <div className="view">
@@ -49,7 +52,8 @@ const ReGroupView = ({ loading, group, swiped, fetchGroup, match }) => {
 const mapStateToProps = (state, ownProps) => {
   return {
     group: state.groupState.groups[ownProps.match.params.uuid],
-    loading: state.groupState.loading
+    loading: state.groupState.loading,
+    error: state.groupState.error
   }
 }
 

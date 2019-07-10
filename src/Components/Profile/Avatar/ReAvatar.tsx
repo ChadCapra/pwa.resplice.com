@@ -11,16 +11,16 @@ import './avatar.scss'
 interface Props {
   uuid: string
   avatar: string
-  editable?: boolean
+  viewOnly?: boolean
 }
 
-const ReAvatar = ({ uuid, avatar, editable }: Props) => {
+const ReAvatar = ({ uuid, avatar, viewOnly }: Props) => {
   const [showAvatarModal, setShowModal] = useState(false)
 
   return (
     <div
-      className="profile-pic"
-      onClick={() => (editable ? setShowModal(true) : null)}
+      className="avatar"
+      onClick={() => (!viewOnly ? setShowModal(true) : null)}
     >
       {avatar ? (
         <div className="pic" style={{ backgroundImage: `url(${avatar})` }} />
@@ -28,12 +28,12 @@ const ReAvatar = ({ uuid, avatar, editable }: Props) => {
         <Identicon string={uuid} size={85} />
       )}
 
-      {editable && (
+      {!viewOnly && (
         <>
           <MdUpload
             color="#1bbc9b"
             fontSize="2.5em"
-            className="pic-upload-icon"
+            className="avatar-upload-icon"
           />
 
           <ReModal

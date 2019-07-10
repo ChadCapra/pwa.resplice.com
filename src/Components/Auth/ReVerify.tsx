@@ -81,7 +81,7 @@ const ReVerify: FC<Props> = ({
             name="phone_verify_token"
             label="Verification Code #1"
             onComplete={onTokenOneComplete}
-            loading={tokenOne && loading}
+            loading={tokenOne && loading && !tokenOneVerified}
             verified={tokenOneVerified}
             error={tokenOneError}
             focus
@@ -90,7 +90,7 @@ const ReVerify: FC<Props> = ({
             name="email_verify_token"
             label="Verification Code #2"
             onComplete={onTokenTwoComplete}
-            loading={tokenTwo && loading}
+            loading={tokenTwo && loading && !tokenTwoVerified}
             verified={tokenTwoVerified}
             error={tokenTwoError}
           />

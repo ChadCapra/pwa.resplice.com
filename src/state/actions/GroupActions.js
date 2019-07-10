@@ -42,7 +42,7 @@ export const fetchGroupList = () => async dispatch => {
       payload: { requested_at, groups }
     })
   } catch (err) {
-    dispatch({ type: FETCH_GROUP_LIST_FAILURE, payload: err.response })
+    dispatch({ type: FETCH_GROUP_LIST_FAILURE, payload: err })
   }
 }
 
@@ -57,7 +57,7 @@ export const fetchGroup = uuid => async dispatch => {
       payload: { ...details, requested_at }
     })
   } catch (err) {
-    dispatch({ type: FETCH_GROUP_FAILURE, payload: err.response })
+    dispatch({ type: FETCH_GROUP_FAILURE, payload: err })
   }
 }
 
@@ -72,7 +72,6 @@ export const createGroup = group => async dispatch => {
       payload: { ...summary, requested_at }
     })
   } catch (err) {
-    console.log(err)
     dispatch({ type: CREATE_GROUP_FAILURE, payload: err })
   }
 }

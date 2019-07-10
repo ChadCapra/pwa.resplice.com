@@ -12,6 +12,8 @@ interface ObjectDictionary {
 interface Match {
   path: string
 }
+
+type Callback = (...args: any[]) => void
 // End Utility Types
 
 // Redux State Types

@@ -68,7 +68,6 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_ATTRIBUTE_TYPES_SUCCESS:
       return { ...state, types: action.payload }
     case FETCH_GROUP_LIST_SUCCESS:
-      console.log(action.payload)
       return {
         ...state,
         loading: false,
@@ -151,7 +150,7 @@ export default (state = INITIAL_STATE, action) => {
     case REMOVE_MODERATORS_FAILURE:
     case GROUP_SHARE_ERROR:
     case LEAVE_GROUP_FAILURE:
-      return { ...state, loading: false, error: action.payload }
+      return { ...state, loading: false, error: action.payload.message }
     default:
       return state
   }
