@@ -54,7 +54,6 @@ const ReInvite = ({ qrCode }) => {
       <CameraFab onClick={() => setShowCamera(true)} />
 
       <ReModal
-        full
         show={showInvite}
         onClose={() => setShowInvite(false)}
         headerText="Invite"

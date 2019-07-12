@@ -1,4 +1,4 @@
-import api from '../../api'
+import api, { mockApi } from '../../api'
 import {
   FETCH_CONTACT_LIST,
   FETCH_CONTACT_LIST_SUCCESS,
@@ -22,18 +22,14 @@ import {
   DELETE_CONTACT_SUCCESS,
   DELETE_CONTACT_FAILURE
 } from './types'
-import { contact, generateProfileList } from './mockData'
+import { objectArrToDict } from '../../helpers'
 
 export const fetchContactList = () => async dispatch => {
   dispatch({ type: FETCH_CONTACT_LIST })
 
   try {
-    // const response = await api.get('/contacts')
-    // dispatch({ type: FETCH_CONTACT_LIST_SUCCESS, payload: response.data })
-    dispatch({
-      type: FETCH_CONTACT_LIST_SUCCESS,
-      payload: { ok: generateProfileList() }
-    })
+    const response = await mockApi.get('/contacts')
+    dispatch({ type: FETCH_CONTACT_LIST_SUCCESS, payload: response.data })
   } catch (err) {
     console.log(err)
     dispatch({ type: FETCH_CONTACT_LIST_FAILURE, payload: err.response })
@@ -44,11 +40,16 @@ export const fetchContact = uuid => async dispatch => {
   dispatch({ type: FETCH_CONTACT })
 
   try {
-    // const response = await api.get(`/contact/${uuid}`)
-    // dispatch({ type: FETCH_CONTACT_SUCCESS, payload: response.data })
+    const response = await mockApi.get(`/contact/${uuid}`)
+    const {
+      ok: { attributes, shares, ...profile },
+      requested_at
+    } = response.data
+    profile.attributes = objectArrToDict(attributes, 'uuid')
+    profile.shares = objectArrToDict(shares, 'attribute_uuid')
     dispatch({
       type: FETCH_CONTACT_SUCCESS,
-      payload: { ok: contact, requested_at: contact.requested_at }
+      payload: { profile, requested_at }
     })
   } catch (err) {
     console.log(err)
@@ -90,32 +91,27 @@ export const removeTag = (uuid, tag) => async dispatch => {
   }
 }
 
-export const addShare = (
-  uuid,
-  attribute_uuid,
-  share_expiry
-) => async dispatch => {
-  dispatch({ type: ADD_SHARE, payload: { uuid, attribute_uuid, share_expiry } })
+export const addShare = (uuid, share) => async dispatch => {
+  dispatch({ type: ADD_SHARE, payload: { uuid, share } })
 
   try {
-    await api.patch(`/contact/${uuid}/add_share`, {
-      attribute_uuid,
-      share_expiry
-    })
+    await api.patch(`/contact/${uuid}/add_share`, share)
   } catch (err) {
     dispatch({ type: SHARE_ERROR, payload: err })
-    dispatch({ type: REMOVE_SHARE, payload: attribute_uuid })
+    dispatch({ type: REMOVE_SHARE, payload: { uuid, share } })
   }
 }
 
-export const removeShare = (uuid, attribute_uuid) => async dispatch => {
-  dispatch({ type: REMOVE_SHARE, payload: attribute_uuid })
+export const removeShare = (uuid, share) => async dispatch => {
+  dispatch({ type: REMOVE_SHARE, payload: { uuid, share } })
 
   try {
-    await api.patch(`/contact/${uuid}/remove_share`, { attribute_uuid })
+    await api.patch(`/contact/${uuid}/remove_share`, {
+      attribute_uuid: share.attribute_uuid
+    })
   } catch (err) {
     dispatch({ type: SHARE_ERROR, payload: err })
-    dispatch({ type: ADD_SHARE, payload: attribute_uuid })
+    dispatch({ type: ADD_SHARE, payload: { uuid, share } })
   }
 }
 
@@ -123,7 +119,7 @@ export const declinePending = uuid => async dispatch => {
   dispatch({ type: DECLINE_PENDING })
 
   try {
-    const response = await api.delete(`/contact/${uuid}/decline_pending`)
+    const response = await api.delete(`/contact/${uuid}/decline_pending_shares`)
     dispatch({
       type: DECLINE_PENDING_SUCCESS,
       payload: {

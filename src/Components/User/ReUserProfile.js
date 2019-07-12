@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { connect } from 'react-redux'
 
 import Level from 'react-bulma-components/lib/components/level'
 import Icon from 'react-bulma-components/lib/components/icon'
@@ -16,7 +15,8 @@ import { ReactComponent as Shield } from '../../assets/Copper_3.svg'
 import { handleAttributeAction } from '../../helpers'
 
 const ReUserProfile = ({
-  profile: { uuid, name, avatar, unique_contacts, total_shares }
+  profile: { uuid, name, avatar, unique_contacts, total_shares },
+  collections
 }) => {
   const [showBadgeModal, setBadgeModal] = useState(false)
   const [actionAttributeId, setActionAttributeId] = useState(null)
@@ -55,7 +55,11 @@ const ReUserProfile = ({
         </Level.Item>
       </Level>
 
-      <CardList type="user" Card={ViewCard} handleAction={handleAction} />
+      <CardList
+        list={Object.entries(collections)}
+        Card={ViewCard}
+        handleAction={handleAction}
+      />
 
       <ReModal show={showBadgeModal} onClose={() => setBadgeModal(false)}>
         <ReUserRanks totalShares={total_shares} />
@@ -86,10 +90,4 @@ const ReUserProfile = ({
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    profile: state.userState.profile
-  }
-}
-
-export default connect(mapStateToProps)(ReUserProfile)
+export default ReUserProfile

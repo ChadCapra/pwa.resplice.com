@@ -1,18 +1,26 @@
-import React from 'react'
+import React, { FC } from 'react'
 import ReHeader from '../Header/ReHeader'
 import ReAvatarLoading from './ReAvatarLoading'
 import ReCardListLoading from './ReCardListLoading'
 
-const ReProfileLoading = () => {
+interface Props {
+  group: boolean
+}
+
+const ReProfileLoading: FC<Props> = ({ group }) => {
   return (
     <div className="view">
-      <ReHeader menus={['Members', 'Group', 'Shares']} exitRoute={'/'} />
+      {group ? (
+        <ReHeader menus={['Members', 'Group', 'Shares']} exitRoute={'/'} />
+      ) : (
+        <ReHeader menus={['Contact', 'Shares']} exitRoute={'/'} />
+      )}
 
       <div className="view-body">
         <div className="profile">
           <ReAvatarLoading />
           <div className="flex-col--center">
-            <h1
+            <div
               className="profile-name loading"
               style={{ height: '25px', width: '200px', borderRadius: '10px' }}
             />

@@ -12,8 +12,15 @@ import ReInputRegion from '../Form/ReInputRegion'
 import ReButton from '../Button/ReButton'
 
 class ReAddAttributeForm extends Component {
-  onSubmit = ({ attribute_type, collection, name, ...formValues }) => {
+  onSubmit = async ({
+    groupUuid,
+    attribute_type,
+    collection,
+    name,
+    ...formValues
+  }) => {
     let attributeAdd = {
+      group_uuid: groupUuid,
       attribute_type_id: this.props.attrType.id,
       name,
       collection,
@@ -21,7 +28,8 @@ class ReAddAttributeForm extends Component {
         ...formValues
       }
     }
-    this.props.addAttribute(attributeAdd).then(this.props.onAttributeAdd)
+    await this.props.addAttribute(attributeAdd)
+    this.props.onAttributeAdd()
   }
 
   formatLabel = label => {
@@ -127,11 +135,9 @@ class ReAddAttributeForm extends Component {
 
             <ReButton
               type="primary"
-              text={`Add ${this.props.attrType.name}`}
-              width="250px"
               loading={this.props.loading}
               disabled={this.props.pristine}
-            />
+            >{`Add ${this.props.attrType.name}`}</ReButton>
           </form>
         </div>
       </>

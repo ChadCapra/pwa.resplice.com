@@ -5,7 +5,7 @@ import ReAddAttributeForm from './ReAddAttributeForm'
 import CardList from '../Card/CardList'
 import TypeCard from '../Card/TypeCard'
 
-const ReAddAttribute = ({ onAttributeAdd }) => {
+const ReAddAttribute = ({ groupUuid, onAttributeAdd, types }) => {
   const [attrType, setAttrType] = useState({})
   const [attrTouched, setAttrTouched] = useState(false)
 
@@ -60,13 +60,18 @@ const ReAddAttribute = ({ onAttributeAdd }) => {
     <div className="add-attribute">
       {Object.keys(attrType).length ? (
         <ReAddAttributeForm
+          groupUuid={groupUuid}
           onCardClick={handleTypeChange}
           attrType={attrType}
           onAttributeAdd={onAttributeAdd}
         />
       ) : (
         <div className="add-attribute-body">
-          <CardList type="types" Card={TypeCard} onClick={handleTypeChange} />
+          <CardList
+            list={Object.values(types)}
+            Card={TypeCard}
+            onClick={handleTypeChange}
+          />
         </div>
       )}
     </div>
@@ -74,7 +79,9 @@ const ReAddAttribute = ({ onAttributeAdd }) => {
 }
 
 ReAddAttribute.propTypes = {
-  onAttributeAdd: PropTypes.func.isRequired
+  groupUuid: PropTypes.string,
+  onAttributeAdd: PropTypes.func.isRequired,
+  types: PropTypes.object.isRequired
 }
 
 export default ReAddAttribute

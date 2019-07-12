@@ -18,7 +18,6 @@ const ReContactList = ({ contacts, setBulkShares }) => {
   const [showBulkActionModal, setShowBulkActionModal] = useState(false)
 
   const selecting = selectedUuids.length > 0
-  console.log(selecting)
 
   if (toShare) return <Redirect push to="/share" />
 

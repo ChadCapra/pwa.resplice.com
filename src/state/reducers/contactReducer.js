@@ -35,8 +35,8 @@ const INITIAL_STATE = {
   loading: false,
   error: null,
   requested_at: null,
-  contacts: {},
-  types: {}
+  contacts: null,
+  types: null
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -55,17 +55,14 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_CONTACT_LIST_FAILURE:
       return { ...state, loading: false, error: action.payload }
     case FETCH_CONTACT:
-      return { ...state, loading: true }
+      return { ...state, loading: true, error: null }
     case FETCH_CONTACT_SUCCESS:
       return {
         ...state,
         loading: false,
         contacts: processProfile(
           { ...state.contacts },
-          {
-            profile: action.payload.ok.contact,
-            requested_at: action.payload.requested_at
-          },
+          action.payload,
           state.types
         )
       }
@@ -104,9 +101,9 @@ export default (state = INITIAL_STATE, action) => {
         contacts: {
           ...state.contacts,
           [action.payload.uuid]: updateShares(
-            ...state.contacts[action.payload.uuid],
-            action.payload.attribute_uuid,
-            action.payload.share_expiry
+            { ...state.contacts[action.payload.uuid] },
+            action.payload.share.attribute_uuid,
+            action.payload.share.share_expiry
           )
         }
       }

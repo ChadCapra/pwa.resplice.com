@@ -132,11 +132,11 @@ class ReEditAttribute extends Component {
             <div className="inputs">{this.renderFields()}</div>
             <ReButton
               type="primary"
-              text="Save"
-              width="250px"
               loading={this.props.loading}
               disabled={this.props.pristine}
-            />
+            >
+              Save
+            </ReButton>
           </form>
         </div>
       </div>

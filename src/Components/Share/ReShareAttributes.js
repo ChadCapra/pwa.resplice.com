@@ -5,25 +5,33 @@ import { enableQrShare, disableQrShare } from '../../state/actions'
 import CardList from '../Card/CardList'
 import ShareCard from '../Card/ShareCard'
 
-const ReShareAttributes = ({ enableQrShare, disableQrShare }) => {
+const ReShareAttributes = ({ collections, enableQrShare, disableQrShare }) => {
+  const toggleShare = (on, uuid) => {
+    if (on) enableQrShare(uuid)
+    else disableQrShare(uuid)
+  }
+
   return (
     <div className="share-attributes">
       <div className="share-attributes-body">
         <CardList
+          list={Object.entries(collections)}
           Card={ShareCard}
-          type="user"
           toggleKey="qr_sharable"
-          toggleAttribute={(on, uuid) => {
-            if (on) enableQrShare(uuid)
-            else disableQrShare(uuid)
-          }}
+          toggleAttribute={toggleShare}
         />
       </div>
     </div>
   )
 }
 
+const mapStateToProps = state => {
+  return {
+    collections: state.userState.collections
+  }
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   { enableQrShare, disableQrShare }
 )(ReShareAttributes)

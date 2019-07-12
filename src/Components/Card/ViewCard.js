@@ -20,13 +20,17 @@ const ViewCard = ({ item, handleAction, ...props }) => {
   const collection = item[0]
   const attributes = item[1]
 
+  const allPending = attributes.every(attr => !!attr.pending_attribute_value)
+
   return (
-    <div className="card">
+    <div className={`card${allPending ? ' pending' : ''}`}>
       <h1 className="card-header">{collection}</h1>
       {attributes.map((attr, idx) => (
         <Columns
           key={attr.uuid}
-          className="card-attribute"
+          className={`card-attribute${
+            !allPending && attr.pending_attribute_value ? ' pending' : ''
+          }`}
           breakpoint="mobile"
           multiline={false}
         >

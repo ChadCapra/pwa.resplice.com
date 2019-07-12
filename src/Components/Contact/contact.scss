@@ -13,3 +13,18 @@
 .profile-tag-modal {
   margin-top: 25px;
 }
+
+.re-contact-shares {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  & h3 {
+    text-align: center;
+    font-size: 24px;
+
+    & > span {
+      color: #1bbc9b;
+      font-size: 28px;
+    }
+  }
+}

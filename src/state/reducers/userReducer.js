@@ -85,7 +85,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         ...processAttributes({ ...state.attributes }, state.types, {
           action: 'toggleShareOn',
-          data: action.payload
+          data: action.payload.uuid
         })
       }
     case DISABLE_QR_SHARE:
@@ -93,7 +93,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         ...processAttributes({ ...state.attributes }, state.types, {
           action: 'toggleShareOff',
-          data: action.payload
+          data: action.payload.uuid
         })
       }
     case GENERATE_QR_PIN_SUCCESS:

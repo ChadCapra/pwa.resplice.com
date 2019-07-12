@@ -19,7 +19,7 @@ const ReGroupView = ({ group, swiped, fetchGroup, match, loading, error }) => {
     fetchGroup(match.params.uuid)
   }, [swiped, fetchGroup, match])
 
-  if (loading || !group) return <ReProfileLoading />
+  if (loading || !group) return <ReProfileLoading group />
   if (error) return <ReProfileError />
 
   return (

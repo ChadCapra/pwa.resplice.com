@@ -23,7 +23,6 @@
 }
 
 .share-camera {
-  background-color: #32393d;
   width: 100%;
   padding: 0;
   height: 100%;
@@ -165,6 +164,9 @@
 
 .bulk-share-body,
 .share-attributes-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   overflow: auto;
   flex: 1 1;
   padding: 2em 0;

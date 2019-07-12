@@ -11,7 +11,15 @@ import './profile.scss'
 import '../Contact/contact.scss'
 
 const ReContact = ({
-  profile: { uuid, name, avatar, tags, member_count, pending, selected },
+  profile: {
+    uuid,
+    name,
+    avatar,
+    tags,
+    member_count,
+    pending_expiration,
+    selected
+  },
   onSelect,
   onDeselect,
   style
@@ -24,7 +32,7 @@ const ReContact = ({
 
   return (
     <div
-      className={`profile-list-item${pending ? ' pending' : ''}${
+      className={`profile-list-item${pending_expiration ? ' pending' : ''}${
         selected ? ' selected' : ''
       }`}
       style={style}
@@ -46,12 +54,17 @@ const ReContact = ({
       >
         <span>{name}</span>
         <span className="profile-list-item-group">
-          {pending
+          {pending_expiration
             ? `Expires in ${getTimeRemaining(
-                new Date('2019-06-30T21:09:10'),
+                new Date(pending_expiration),
                 new Date()
               )}`
-            : tags}
+            : tags &&
+              tags.map((tag, idx) => (
+                <span key={tag}>
+                  {tag} {idx !== tags.length - 1 ? '|' : null}{' '}
+                </span>
+              ))}
         </span>
       </div>
     </div>

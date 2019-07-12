@@ -39,7 +39,7 @@ const ReInviteModal = ({ loading, inviteContact }) => {
     if (email.test(value)) {
       setQueryType(QUERY_TYPES.EMAIL)
     } else if (numsOnly.test(value) && value.length > 2) {
-      if (queryType !== 'phone' && value[0] !== '+') {
+      if (queryType !== QUERY_TYPES.PHONE && value[0] !== '+') {
         value = '1' + value
       }
       setQueryType(QUERY_TYPES.PHONE)
@@ -119,11 +119,12 @@ const ReInviteModal = ({ loading, inviteContact }) => {
         )}
         <ReButton
           type="primary"
-          text="Invite"
           disabled={!attribute}
           loading={loading}
           onClick={() => inviteContact({ phone_or_email: attribute.value })}
-        />
+        >
+          Invite
+        </ReButton>
       </div>
     </div>
   )

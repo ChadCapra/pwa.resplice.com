@@ -122,9 +122,31 @@ interface ContactState extends StateSlice {
 interface Contacts {
   [index: string]: ContactSummary | ContactDetails
 }
-interface ContactSummary {}
-interface ContactDetails extends ContactSummary {}
-interface ContactAttribute {}
+interface ContactSummary {
+  uuid: string
+  name: string
+  avatar: string | null
+  tags: string[]
+  pending_expiration: string | null
+}
+interface ContactDetails extends ContactSummary {
+  attributes: ContactAttribute[]
+  shares: ContactShare[]
+}
+interface ContactAttribute {
+  uuid: string
+  attribute_type_id: number
+  collection: string
+  name: string
+  value: { [index: string]: string }
+  pending_attribute_value: { [index: string]: string }
+  is_verified: boolean
+  shared_at: string
+}
+interface ContactShare {
+  attribute_uuid: string
+  expiry: string
+}
 // End ContactState
 
 // GroupState

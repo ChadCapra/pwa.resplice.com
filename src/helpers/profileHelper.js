@@ -19,12 +19,12 @@ export const processSummaries = (profileList, newProfileList) => {
 
 export const processProfile = (
   profileList,
-  { requested_at, ...profile },
+  { requested_at, profile },
   types
 ) => {
   profile.requested_at = requested_at
   profile.collections = buildCollections(profile.attributes, types, true)
-  profile.shares = objectArrToDict(profile.shares, 'uuid')
+  // profile.shares = objectArrToDict(profile.shares, 'uuid')
   profileList[profile.uuid] = profile
   return profileList
 }
@@ -39,7 +39,7 @@ export const updateShares = (profile, attribute_uuid, share_expiry) => {
     delete profile.shares[attribute_uuid]
   } else {
     profile.shares[attribute_uuid] = {
-      uuid: attribute_uuid,
+      attribute_uuid,
       share_expiry
     }
   }

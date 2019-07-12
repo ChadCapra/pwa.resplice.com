@@ -7,6 +7,7 @@ import ViewCard from '../Card/ViewCard'
 import ReModal from '../Modal/ReModal'
 import ReTags from '../Util/ReTags'
 import ReNotification from '../Util/ReNotification'
+import ReButton from '../Button/ReButton'
 
 import { handleAttributeAction, getTimeRemaining } from '../../helpers'
 
@@ -17,10 +18,15 @@ const ReContactProfile = ({
     avatar,
     tags,
     pending_expiration,
-    pending_attribute_value
-  }
+    attributes,
+    collections
+  },
+  pendingValues,
+  declinePending
 }) => {
   const [showTagModal, setShowTagModal] = useState(false)
+
+  const collectionsArray = Object.entries(collections)
 
   const handleAction = (actionType, { value }) => {
     handleAttributeAction(actionType, value)
@@ -34,9 +40,9 @@ const ReContactProfile = ({
     <div className="profile">
       {pending_expiration && (
         <ReNotification type="info" style={{ marginBottom: '25px' }}>
-          <ReNotification.Header>Pending Contact</ReNotification.Header>
+          <ReNotification.Header>Pending Shares</ReNotification.Header>
           <ReNotification.Body>
-            Share {pending_attribute_value} to unlock <br />
+            Share {pendingValues.join(' or ')} to unlock <br />
             Expires in{' '}
             {getTimeRemaining(new Date(pending_expiration), new Date())}
           </ReNotification.Body>
@@ -56,12 +62,28 @@ const ReContactProfile = ({
         </div>
       </div>
 
-      <CardList
-        type="contact"
-        Card={ViewCard}
-        contactUuid={uuid}
-        handleAction={handleAction}
-      />
+      <>
+        {collectionsArray.length ? (
+          <CardList
+            list={collectionsArray}
+            Card={ViewCard}
+            handleAction={handleAction}
+          />
+        ) : (
+          'No Attributes Shared'
+        )}
+      </>
+      <>
+        {pending_expiration && (
+          <ReButton
+            type="secondary"
+            style={{ border: '1px solid #6C7DD5', color: '#6C7DD5' }}
+            onClick={() => declinePending(uuid)}
+          >
+            Decline Share
+          </ReButton>
+        )}
+      </>
 
       <ReModal
         show={showTagModal}

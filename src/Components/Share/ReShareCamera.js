@@ -34,10 +34,11 @@ export default class ReShareCamera extends Component {
           />
           <ReButton
             type="primary"
-            text="Show QR Code"
             onClick={this.props.onClose}
             style={{ marginTop: '25px' }}
-          />
+          >
+            Show QR Code
+          </ReButton>
         </div>
       )
     } else {

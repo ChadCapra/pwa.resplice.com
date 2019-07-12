@@ -21,7 +21,7 @@ const ReVerifyAttribute = ({
   resendAttributeVerification
 }) => {
   const { collection, name, value } = attribute
-  if (Object.entries(verifyObject).length) onVerify()
+  if (verifyObject) onVerify()
 
   return (
     <div className="verify-attribute">
@@ -38,7 +38,7 @@ const ReVerifyAttribute = ({
             label="Verification Token"
             onComplete={code => verifyAttribute(attribute.uuid, code)}
             loading={verifying}
-            verified={Object.entries(verifyObject).length > 0}
+            verified={verifyObject}
             error={!!error}
             focus
           />
@@ -46,10 +46,11 @@ const ReVerifyAttribute = ({
 
         <ReButton
           type="primary"
-          text="Resend Token"
           loading={verifying}
           onClick={() => resendAttributeVerification(attribute.uuid)}
-        />
+        >
+          Resend Token
+        </ReButton>
       </div>
     </div>
   )

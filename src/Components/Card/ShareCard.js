@@ -14,10 +14,12 @@ const combineAttrValues = values => {
 }
 
 const ShareCard = ({ item, toggleKey, toggleAttribute }) => {
+  const collection = item[0]
+  const attributes = item[1]
   return (
     <div className="card">
-      <h1 className="card-header">{item[0]}</h1>
-      {item[1].map(attr => {
+      <h1 className="card-header">{collection}</h1>
+      {attributes.map(attr => {
         const actionIconName = attr.actions[0].icon
 
         return (
@@ -42,12 +44,16 @@ const ShareCard = ({ item, toggleKey, toggleAttribute }) => {
                 size={1}
                 style={{ display: 'flex', justifyContent: 'center' }}
               >
-                <div className="card-checkbox">
-                  <ReCheckbox
-                    onClick={() => toggleAttribute(!attr[toggleKey], attr.uuid)}
-                    checked={attr[toggleKey]}
-                  />
-                </div>
+                {!attr.share_disabled && (
+                  <div className="card-checkbox">
+                    <ReCheckbox
+                      onClick={() =>
+                        toggleAttribute(!attr[toggleKey], attr.uuid)
+                      }
+                      checked={attr[toggleKey]}
+                    />
+                  </div>
+                )}
               </Columns.Column>
             </Columns>
           </div>
@@ -59,6 +65,7 @@ const ShareCard = ({ item, toggleKey, toggleAttribute }) => {
 
 ShareCard.propTypes = {
   item: PropTypes.array.isRequired,
+  toggleKey: PropTypes.string.isRequired,
   toggleAttribute: PropTypes.func.isRequired
 }
 

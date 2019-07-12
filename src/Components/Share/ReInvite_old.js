@@ -9,7 +9,7 @@ import ReShareDropdown from './ReShareDropdown'
 import MdClose from 'react-ionicons/lib/MdClose'
 import MdMail from 'react-ionicons/lib/MdMail'
 import MdCall from 'react-ionicons/lib/MdCall'
-import ReAvatar from '../Profile/Avatar/ReAvatarThumbnail'
+import ReAvatarThumbnail from '../Profile/Avatar/ReAvatarThumbnail'
 import ReTags from '../Util/ReTags'
 import ReModal from '../Modal/ReModal'
 import ReCustomMessage from './ReCustomMessage'
@@ -110,7 +110,7 @@ class ReInvite extends Component {
     } else if (item.type === 'Phone') {
       return <MdCall fontSize="2em" color="white" />
     } else {
-      return <ReAvatar avatar={item.avatar} uuid={item.value} />
+      return <ReAvatarThumbnail avatar={item.avatar} uuid={item.value} />
     }
   }
 
@@ -180,13 +180,6 @@ class ReInvite extends Component {
           )}
         </div>
 
-        <h1 className="invite-header">Choose Tags</h1>
-        <ReTags
-          tags={this.state.tags}
-          selectedTags={this.state.selectedTags}
-          onTagChange={this.handleTagChange}
-        />
-
         <div className="share-list-footer">
           <ReButton
             type="secondary"
@@ -205,21 +198,6 @@ class ReInvite extends Component {
             onClick={this.handleRequest}
           />
         </div>
-
-        <ReModal
-          show={this.state.showCustomMessage}
-          onClose={() => this.setState({ showCustomMessage: false })}
-          headerText="Custom Message"
-        >
-          <div className="flex--center" style={{ marginTop: '25px' }}>
-            <ReCustomMessage
-              message={this.state.message}
-              saveMessage={message =>
-                this.setState({ message, showCustomMessage: false })
-              }
-            />
-          </div>
-        </ReModal>
       </div>
     )
   }

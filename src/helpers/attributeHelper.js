@@ -75,9 +75,10 @@ export const updateAttrUuids = (uuidList, uuid) => {
 /**
  * Formats an attribute value based on it's rules
  * @param {String[]} values - Values to combine and format
+ * @param {Object} ruleMap - Rules to format value
  * @returns {String} Formatted value
  */
-export const formatAttrValues = values => {
+export const formatAttrValues = (values, ruleMap) => {
   return Object.values(values).reduce((accum, value, idx) => {
     if (!value) return accum
     if (idx < 1) return value
