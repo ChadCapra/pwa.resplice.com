@@ -34,7 +34,8 @@ export const login = formValues => async dispatch => {
 }
 
 export const logout = tokens => async dispatch => {
-  await api.delete('/logout', tokens)
+  console.log(tokens)
+  await api.delete('/logout', { params: { access_tokens: tokens } })
   // TODO: cleanup service worker caches and other data
   // Remove auth header on axios instance and items in storage
   api.defaults.headers.common['access_token'] = null

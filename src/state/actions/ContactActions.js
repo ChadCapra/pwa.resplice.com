@@ -1,4 +1,4 @@
-import api, { mockApi } from '../../api'
+import api from '../../api'
 import {
   FETCH_CONTACT_LIST,
   FETCH_CONTACT_LIST_SUCCESS,
@@ -28,7 +28,7 @@ export const fetchContactList = () => async dispatch => {
   dispatch({ type: FETCH_CONTACT_LIST })
 
   try {
-    const response = await mockApi.get('/contacts')
+    const response = await api.get('/contacts')
     dispatch({ type: FETCH_CONTACT_LIST_SUCCESS, payload: response.data })
   } catch (err) {
     console.log(err)
@@ -40,7 +40,7 @@ export const fetchContact = uuid => async dispatch => {
   dispatch({ type: FETCH_CONTACT })
 
   try {
-    const response = await mockApi.get(`/contact/${uuid}`)
+    const response = await api.get(`/contact/${uuid}`)
     const {
       ok: { attributes, shares, ...profile },
       requested_at

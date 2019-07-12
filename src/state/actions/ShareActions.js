@@ -50,7 +50,6 @@ export const inviteContact = request => async dispatch => {
   dispatch({ type: INVITE })
 
   try {
-    console.log(request)
     await api.post('/contact/invite', request)
     dispatch({ type: INVITE_SUCCESS })
   } catch (err) {

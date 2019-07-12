@@ -17,7 +17,7 @@ const QUERY_TYPES = {
   NONE: ''
 }
 
-const ReInviteModal = ({ loading, inviteContact }) => {
+const ReInviteModal = ({ loading, inviteContact, onInvite }) => {
   const [queryType, setQueryType] = useState(QUERY_TYPES.NONE)
   const [query, setQuery] = useState('')
   const [attribute, setAttribute] = useState(null)
@@ -56,6 +56,11 @@ const ReInviteModal = ({ loading, inviteContact }) => {
     } else if (item.type === QUERY_TYPES.PHONE) {
       return <MdCall fontSize="2em" color="white" />
     }
+  }
+
+  const invite = async () => {
+    await inviteContact({ phone_or_email: attribute.value })
+    onInvite()
   }
 
   return (
@@ -121,7 +126,7 @@ const ReInviteModal = ({ loading, inviteContact }) => {
           type="primary"
           disabled={!attribute}
           loading={loading}
-          onClick={() => inviteContact({ phone_or_email: attribute.value })}
+          onClick={invite}
         >
           Invite
         </ReButton>

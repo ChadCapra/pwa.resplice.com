@@ -58,7 +58,7 @@ const ReInvite = ({ qrCode }) => {
         onClose={() => setShowInvite(false)}
         headerText="Invite"
       >
-        <ReInviteModal />
+        <ReInviteModal onInvite={() => setShowInvite(false)} />
       </ReModal>
     </div>
   )
