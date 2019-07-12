@@ -267,3 +267,28 @@ $fontSize: 60px;
     top: 35%;
   }
 }
+
+.re-switch {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 40px;
+  height: 20px;
+  background-color: #e5e5e5;
+  border-radius: 50px;
+
+  &--active {
+    justify-content: flex-end;
+    background-color: rgba(27, 188, 156, 0.3);
+    & .re-switch-inner {
+      background-color: #1bbc9b;
+    }
+  }
+  transition: 0.3s ease all;
+}
+.re-switch-inner {
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 20px;
+  height: 20px;
+}

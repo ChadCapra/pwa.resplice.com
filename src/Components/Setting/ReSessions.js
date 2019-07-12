@@ -1,33 +1,41 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { fetchSessions, logout } from '../../state/actions'
+
+import ReButton from '../Button/ReButton'
 
 import './settings.scss'
 
-const ReSessions = ({ loading, sessions, error, fetchSessions, logout }) => {
+const ReSessions = ({
+  userLoading,
+  authLoading,
+  sessions,
+  fetchSessions,
+  logout
+}) => {
   useEffect(() => {
     fetchSessions()
   }, [fetchSessions])
 
-  if (loading || !sessions) return 'loading'
+  if (userLoading || !sessions) return 'loading'
+
+  const tokens = sessions.list.map(session => session.access_token)
   return (
-    <div className="re-sessions">
+    <div className="flex-col--center re-sessions">
       {sessions.list.map(session => (
         <div key={session.access_token} className="session">
           {session.access_token}
         </div>
       ))}
+
+      <ReButton
+        type="primary"
+        loading={authLoading}
+        onClick={() => logout(tokens)}
+      >
+        Logout
+      </ReButton>
     </div>
   )
-}
-
-const mapStateToProps = state => {
-  return {
-    loading: state.userState.loading,
-    sessions: state.userState.settings.sessions,
-    error: state.userState.error
-  }
 }
 
 ReSessions.propTypes = {
@@ -38,7 +46,4 @@ ReSessions.propTypes = {
   logout: PropTypes.func.isRequired
 }
 
-export default connect(
-  mapStateToProps,
-  { fetchSessions, logout }
-)(ReSessions)
+export default ReSessions

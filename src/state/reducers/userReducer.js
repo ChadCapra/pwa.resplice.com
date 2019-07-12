@@ -20,7 +20,9 @@ import {
   EDIT_NAME_FAILURE,
   EDIT_AVATAR,
   EDIT_AVATAR_SUCCESS,
-  EDIT_AVATAR_FAILURE
+  EDIT_AVATAR_FAILURE,
+  ENABLE_NOTIFICATIONS,
+  DISABLE_NOTIFICAITONS
 } from '../actions/types'
 
 import { processAttributes } from '../../helpers'
@@ -33,7 +35,10 @@ const INITIAL_STATE = {
   attributes: null,
   collections: null,
   types: null,
-  settings: null
+  settings: {
+    sessions: null,
+    notifications: true
+  }
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -119,6 +124,10 @@ export default (state = INITIAL_STATE, action) => {
         loading: false,
         profile: { ...action.payload.profile, avatar: action.payload.avatar }
       }
+    case ENABLE_NOTIFICATIONS:
+      return { ...state, settings: { ...state.settings, notifications: true } }
+    case DISABLE_NOTIFICAITONS:
+      return { ...state, settings: { ...state.settings, notifications: false } }
 
     case CREATE_PROFILE_FAILURE:
     case FETCH_PROFILE_FAILURE:
