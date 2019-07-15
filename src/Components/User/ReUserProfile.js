@@ -39,7 +39,9 @@ const ReUserProfile = ({
         <Level.Item>
           <div className="profile-stat">
             <span className="stat">{unique_contacts}</span>
-            <span className="stat-text">Contacts</span>
+            <span className="stat-text">{`Contact${
+              unique_contacts === 1 ? '' : 's'
+            }`}</span>
           </div>
         </Level.Item>
         <Level.Item onClick={() => setBadgeModal(true)}>
@@ -50,7 +52,9 @@ const ReUserProfile = ({
         <Level.Item>
           <div className="profile-stat">
             <span className="stat">{total_shares}</span>
-            <span className="stat-text">Shares</span>
+            <span className="stat-text">{`Share${
+              total_shares === 1 ? '' : 's'
+            }`}</span>
           </div>
         </Level.Item>
       </Level>
