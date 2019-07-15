@@ -10,6 +10,7 @@ import {
 } from '../../state/actions'
 
 import MdArrowDropright from 'react-ionicons/lib/MdArrowDropright'
+import MdArrowDropdown from 'react-ionicons/lib/MdArrowDropdown'
 import ReModal from '../Modal/ReModal'
 import ReSessions from '../Setting/ReSessions'
 import DeleteAccount from '../Setting/DeleteAccount'
@@ -44,6 +45,10 @@ const ReUserSettings = ({
             disable={disableNotifications}
             enable={enableNotifications}
           />
+        </div>
+        <div className="setting">
+          <span className="setting-text">Notification Value</span>
+          <MdArrowDropdown />
         </div>
         {/* <div className="setting">
             <span className="setting-text">Language</span>
