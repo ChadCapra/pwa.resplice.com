@@ -1,4 +1,4 @@
-import api from '../../api'
+import api, { mockApi } from '../../api'
 import {
   FETCH_GROUP_LIST,
   FETCH_GROUP_LIST_SUCCESS,
@@ -30,6 +30,7 @@ import {
   LEAVE_GROUP_SUCCESS,
   LEAVE_GROUP_FAILURE
 } from './types'
+import { objectArrToDict } from '../../helpers'
 
 export const fetchGroupList = () => async dispatch => {
   dispatch({ type: FETCH_GROUP_LIST })
@@ -50,13 +51,19 @@ export const fetchGroup = uuid => async dispatch => {
   dispatch({ type: FETCH_GROUP })
 
   try {
-    const response = await api.get(`/group/${uuid}`)
-    const { ok: details, requested_at } = response.data
+    const response = await mockApi.get(`/group/${uuid}`)
+    const {
+      ok: { attributes, shares, ...profile },
+      requested_at
+    } = response.data
+    profile.attributes = objectArrToDict(attributes, 'uuid')
+    profile.shares = objectArrToDict(shares, 'attribute_uuid')
     dispatch({
       type: FETCH_GROUP_SUCCESS,
-      payload: { ...details, requested_at }
+      payload: { profile, requested_at }
     })
   } catch (err) {
+    console.log(err)
     dispatch({ type: FETCH_GROUP_FAILURE, payload: err })
   }
 }

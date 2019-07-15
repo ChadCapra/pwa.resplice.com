@@ -11,6 +11,8 @@ import {
   declinePending
 } from '../../state/actions'
 
+import { buildPendingAttributeValues } from '../../helpers'
+
 import ReContactProfile from '../Contact/ReContactProfile'
 import ReContactShares from '../Contact/ReContactShares'
 import ReHeader from '../Header/ReHeader'
@@ -40,18 +42,7 @@ const ReContactView = ({
   if (loading || !profile.attributes) return <ReProfileLoading />
   if (error) return <ReProfileError />
 
-  const buildPendingAttributeValues = () => {
-    const values = Object.values(profile.attributes).reduce((arr, attr) => {
-      if (attr.pending_attribute_value) {
-        const values = Object.values(attr.pending_attribute_value)
-        arr.push(values.map(value => value))
-      }
-      return arr
-    }, [])
-    // Flatten, array, create a set to remove duplicates and return an array
-    return [...new Set(values.flat())]
-  }
-  const pendingValues = buildPendingAttributeValues()
+  const pendingValues = buildPendingAttributeValues(profile.attributes)
 
   return (
     <div className="view">
@@ -76,10 +67,10 @@ const ReContactView = ({
             <ReContactShares
               profile={profile}
               collections={userCollections}
+              pendingValues={pendingValues}
               addShare={addShare}
               removeShare={removeShare}
               deleteContact={deleteContact}
-              pendingValues={pendingValues}
             />
           </div>
         </ReactSwipe>

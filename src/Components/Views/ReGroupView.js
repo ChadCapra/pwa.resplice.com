@@ -4,14 +4,15 @@ import ReactSwipe from 'react-swipe'
 
 import { swiped, fetchGroup } from '../../state/actions'
 
-import ReProfileList from '../Profile/ReProfileList'
 import ReGroupProfile from '../Group/ReGroupProfile'
 import ReGroupShares from '../Group/ReGroupShares'
 import ReHeader from '../Header/ReHeader'
 import ReProfileError from '../Profile/ReProfileError'
 import ReProfileLoading from '../Loading/ReProfileLoading'
+import ReMemberList from '../Group/ReMemberList'
 
 import '../Group/group.scss'
+import { buildPendingAttributeValues } from '../../helpers'
 
 const ReGroupView = ({ group, swiped, fetchGroup, match, loading, error }) => {
   useEffect(() => {
@@ -21,6 +22,8 @@ const ReGroupView = ({ group, swiped, fetchGroup, match, loading, error }) => {
 
   if (loading || !group.attributes) return <ReProfileLoading group />
   if (error) return <ReProfileError />
+
+  const pendingValues = buildPendingAttributeValues(group.attributes)
 
   return (
     <div className="view">
@@ -35,13 +38,13 @@ const ReGroupView = ({ group, swiped, fetchGroup, match, loading, error }) => {
           }}
         >
           <div className="swipe-item-container">
-            {/* <ReProfileList listType="custom" list={group.members} /> */}
+            <ReMemberList uuid={group.uuid} memberUuids={group.member_uuids} />
           </div>
           <div className="swipe-item-container">
-            <ReGroupProfile profile={group} />
+            <ReGroupProfile profile={group} pendingValues={pendingValues} />
           </div>
           <div className="swipe-item-container">
-            <ReGroupShares profile={group} />
+            <ReGroupShares profile={group} pendingValues={pendingValues} />
           </div>
         </ReactSwipe>
       </div>

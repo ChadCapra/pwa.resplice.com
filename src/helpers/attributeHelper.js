@@ -62,6 +62,18 @@ export const buildCollections = (attributes, types, contact) => {
   return collections
 }
 
+export const buildPendingAttributeValues = attributes => {
+  const values = Object.values(attributes).reduce((arr, attr) => {
+    if (attr.pending_attribute_value) {
+      const values = Object.values(attr.pending_attribute_value)
+      arr.push(values.map(value => value))
+    }
+    return arr
+  }, [])
+  // Flatten, array, create a set to remove duplicates and return an array
+  return [...new Set(values.flat())]
+}
+
 export const updateAttrUuids = (uuidList, uuid) => {
   const idx = uuidList.findIndex(u => u === uuid)
   if (idx < 0) {

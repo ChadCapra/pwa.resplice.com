@@ -70,7 +70,7 @@ const ReGroupProfile = ({
           handleAction={handleAction}
         />
       ) : (
-        'No Attributes Shared'
+        'No Group Attributes'
       )}
 
       <ReModal

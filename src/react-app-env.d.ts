@@ -164,10 +164,24 @@ interface GroupSummary {
   joined_at: string
   member_count: number
   member_uuids: string[]
+  pending_attribute_value: { [index: string]: string }
   requested_at: string
 }
-interface GroupDetails extends GroupSummary {}
-interface GroupAttribute {}
+interface GroupDetails extends GroupSummary {
+  attributes: GroupAttribute[]
+  shares: GroupShare[]
+}
+interface GroupAttribute {
+  uuid: string
+  attribute_type_id: number
+  collection: string
+  name: string
+  value: { [index: string]: string }
+}
+interface GroupShare {
+  attribute_uuid: string
+  expiry: string
+}
 // End GroupState
 
 // AttributeState

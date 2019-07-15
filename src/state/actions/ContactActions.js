@@ -29,7 +29,11 @@ export const fetchContactList = () => async dispatch => {
 
   try {
     const response = await api.get('/contacts')
-    dispatch({ type: FETCH_CONTACT_LIST_SUCCESS, payload: response.data })
+    const { ok: contacts, requested_at } = response.data
+    dispatch({
+      type: FETCH_CONTACT_LIST_SUCCESS,
+      payload: { contacts, requested_at }
+    })
   } catch (err) {
     console.log(err)
     dispatch({ type: FETCH_CONTACT_LIST_FAILURE, payload: err.response })

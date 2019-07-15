@@ -49,7 +49,10 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: false,
-        contacts: processSummaries({ ...state.contacts }, action.payload.ok),
+        contacts: processSummaries(
+          { ...state.contacts },
+          action.payload.contacts
+        ),
         requested_at: action.payload.requested_at
       }
     case FETCH_CONTACT_LIST_FAILURE:
