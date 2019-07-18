@@ -1,5 +1,7 @@
 # Resplice
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/cef2d9ea-ff7d-48c1-89fa-8d9eee3b3561/deploy-status)](https://app.netlify.com/sites/resplice-app/deploys)
+
 Front-end codebase for Resplice
 
 ## Pull Requests
