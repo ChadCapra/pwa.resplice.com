@@ -43,6 +43,7 @@ export const updateShares = (profile, attribute_uuid, share_expiry) => {
       share_expiry
     }
   }
+  return profile
 }
 
 export const updateTags = (contact, tag) => {

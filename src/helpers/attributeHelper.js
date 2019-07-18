@@ -63,6 +63,7 @@ export const buildCollections = (attributes, types, contact) => {
 }
 
 export const buildPendingAttributeValues = attributes => {
+  if (!attributes) return []
   const values = Object.values(attributes).reduce((arr, attr) => {
     if (attr.pending_attribute_value) {
       const values = Object.values(attr.pending_attribute_value)

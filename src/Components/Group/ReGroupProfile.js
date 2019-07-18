@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import CardList from '../Card/CardList'
@@ -6,8 +7,14 @@ import ViewCard from '../Card/ViewCard'
 import ReAvatar from '../Profile/Avatar/ReAvatarContact'
 import ReModal from '../Modal/ReModal'
 import ReNotification from '../Util/ReNotification'
+import RePlusFAB from '../Button/RePlusFAB'
+import ReAddAttribute from '../Profile/ReAddAttribute'
 
-import { handleAttributeAction, getTimeRemaining } from '../../helpers'
+import {
+  handleAttributeAction,
+  getTimeRemaining,
+  buildPendingAttributeValues
+} from '../../helpers'
 
 const ReGroupProfile = ({
   profile: {
@@ -17,31 +24,17 @@ const ReGroupProfile = ({
     member_count,
     pending_expiration,
     attributes,
-    collections
-  }
+    collections = {}
+  },
+  attributeTypes
 }) => {
   const [showAddAttribute, setShowAddAttribute] = useState(false)
 
   const collectionsArray = Object.entries(collections)
+  const pendingValues = buildPendingAttributeValues(attributes)
 
   const handleAction = (actionType, { value }) => {
     handleAttributeAction(actionType, value)
-  }
-
-  const renderPendingAttributeValues = () => {
-    const values = Object.values(attributes).map(attr => {
-      if (attr.pending_attribute_value) {
-        return Object.values(attr.pending_attribute_value).map((value, idx) => {
-          if (idx === Object.values(attr.pending_attribute_value).length - 1)
-            return value
-          else return `${value}, `
-        })
-      } else {
-        return ''
-      }
-    })
-    // Flatten, array, create a set to remove duplicates and return an array
-    return [...new Set(values.flat())]
   }
 
   return (
@@ -50,7 +43,7 @@ const ReGroupProfile = ({
         <ReNotification type="info" style={{ marginBottom: '25px' }}>
           <ReNotification.Header>Pending Shares</ReNotification.Header>
           <ReNotification.Body>
-            Share {renderPendingAttributeValues()} to unlock <br />
+            Share {pendingValues.join(' or ')} to unlock <br />
             Expires in{' '}
             {getTimeRemaining(new Date(pending_expiration), new Date())}
           </ReNotification.Body>
@@ -73,12 +66,18 @@ const ReGroupProfile = ({
         'No Group Attributes'
       )}
 
+      <RePlusFAB onClick={() => setShowAddAttribute(true)} />
+
       <ReModal
+        full
         show={showAddAttribute}
         onClose={() => setShowAddAttribute(false)}
-        headerText="Add Attribute"
       >
-        Add Attribute
+        <ReAddAttribute
+          groupUuid={uuid}
+          onAttributeAdd={() => setShowAddAttribute(false)}
+          types={attributeTypes}
+        />
       </ReModal>
     </div>
   )
@@ -88,4 +87,11 @@ ReGroupProfile.propTypes = {
   profile: PropTypes.object.isRequired
 }
 
-export default ReGroupProfile
+const mapStateToProps = (state, ownProps) => {
+  return {
+    profile: state.groupState.groups[ownProps.ruuid],
+    attributeTypes: state.groupState.types
+  }
+}
+
+export default connect(mapStateToProps)(ReGroupProfile)

@@ -7,8 +7,9 @@ import MdCall from 'react-ionicons/lib/MdCall'
 import ReContact from '../Profile/ReProfileItem'
 
 const QUERY_TYPES = {
-  EMAIL: 'Email',
-  PHONE: 'Phone',
+  PHONE: 'PHONE',
+  EMAIL: 'EMAIL',
+  CONTACT: 'CONTACT',
   NONE: ''
 }
 
@@ -42,7 +43,7 @@ const ReShareDropdown = ({ query, queryType, handleAttrClick, contacts }) => {
           key={uuid}
           onClick={() => handleContactClick(uuid)}
         >
-          <ReContact contact={contact} />
+          <ReContact profile={contact} />
         </div>
       )
     })

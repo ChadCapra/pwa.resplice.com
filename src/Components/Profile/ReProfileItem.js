@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
 
 import MdCheckmark from 'react-ionicons/lib/MdCheckmark'
-import ReAvatar from './Avatar/ReAvatarThumbnail'
+import ReAvatarThumbnail from './Avatar/ReAvatarThumbnail'
 
 import { getTimeRemaining } from '../../helpers'
 
@@ -45,15 +45,19 @@ const ReContact = ({
           <MdCheckmark color="white" fontSize="3.5em" />
         </div>
       ) : (
-        <ReAvatar avatar={avatar} uuid={uuid} onClick={() => onSelect(uuid)} />
+        <ReAvatarThumbnail
+          avatar={avatar}
+          uuid={uuid}
+          onClick={() => onSelect(uuid)}
+        />
       )}
 
       <div
-        className="profile-list-item-name"
+        className="profile-list-item-text"
         onClick={() => setToProfile(true)}
       >
         <span>{name}</span>
-        <span className="profile-list-item-group">
+        <span className="profile-list-item-subtext">
           {pending_expiration
             ? `Expires in ${getTimeRemaining(
                 new Date(pending_expiration),

@@ -1,4 +1,4 @@
-import api, { mockApi } from '../../api'
+import api from '../../api'
 import {
   FETCH_GROUP_LIST,
   FETCH_GROUP_LIST_SUCCESS,
@@ -51,7 +51,7 @@ export const fetchGroup = uuid => async dispatch => {
   dispatch({ type: FETCH_GROUP })
 
   try {
-    const response = await mockApi.get(`/group/${uuid}`)
+    const response = await api.get(`/group/${uuid}`)
     const {
       ok: { attributes, shares, ...profile },
       requested_at
@@ -167,32 +167,27 @@ export const removeModerators = (uuid, member_uuids) => async dispatch => {
   }
 }
 
-export const addShare = (
-  uuid,
-  attribute_uuid,
-  share_expiry
-) => async dispatch => {
-  dispatch({ type: ADD_GROUP_SHARE, payload: attribute_uuid })
+export const addGroupShare = (uuid, share) => async dispatch => {
+  dispatch({ type: ADD_GROUP_SHARE, payload: { uuid, ...share } })
 
   try {
-    await api.patch(`/group/${uuid}/add_share`, {
-      attribute_uuid,
-      share_expiry
-    })
+    await api.post(`/group/${uuid}/add_share`, share)
   } catch (err) {
     dispatch({ type: GROUP_SHARE_ERROR, payload: err })
-    dispatch({ type: REMOVE_GROUP_SHARE, payload: attribute_uuid })
+    dispatch({ type: REMOVE_GROUP_SHARE, payload: { uuid, ...share } })
   }
 }
 
-export const removeShare = (uuid, attribute_uuid) => async dispatch => {
-  dispatch({ type: REMOVE_GROUP_SHARE, payload: attribute_uuid })
+export const removeGroupShare = (uuid, share) => async dispatch => {
+  dispatch({ type: REMOVE_GROUP_SHARE, payload: { uuid, ...share } })
 
   try {
-    await api.patch(`/group/${uuid}/remove_share`, { attribute_uuid })
+    await api.delete(`/group/${uuid}/remove_share`, {
+      params: { attribute_uuid: share.attribute_uuid }
+    })
   } catch (err) {
     dispatch({ type: GROUP_SHARE_ERROR, payload: err })
-    dispatch({ type: ADD_GROUP_SHARE, payload: attribute_uuid })
+    dispatch({ type: ADD_GROUP_SHARE, payload: { uuid, ...share } })
   }
 }
 

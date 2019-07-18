@@ -6,13 +6,15 @@ const ReInputDropdown = ({
   input,
   label,
   options,
-  meta: { touched, error }
+  meta: { touched, error },
+  ...props
 }) => {
   return (
     <div
       className={`re-input${error && touched ? ' re-input--error' : ''}${
         input.value ? ' re-input--filled' : ''
       }`}
+      {...props}
     >
       <label className="re-input-label">{label}</label>
       <select className="re-field" {...input}>

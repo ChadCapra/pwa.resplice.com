@@ -58,7 +58,7 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, loading: false, error: action.payload }
     case FETCH_PROFILE_FAILURE:
     case FETCH_CONTACT_LIST_FAILURE:
-      if (action.payload.response.status === 401) {
+      if (action.payload.status === 401) {
         return { ...state, isAuthorized: false }
       } else {
         return state

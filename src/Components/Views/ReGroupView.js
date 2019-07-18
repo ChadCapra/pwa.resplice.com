@@ -12,18 +12,15 @@ import ReProfileLoading from '../Loading/ReProfileLoading'
 import ReMemberList from '../Group/ReMemberList'
 
 import '../Group/group.scss'
-import { buildPendingAttributeValues } from '../../helpers'
 
-const ReGroupView = ({ group, swiped, fetchGroup, match, loading, error }) => {
+const ReGroupView = ({ loading, error, swiped, fetchGroup, match }) => {
   useEffect(() => {
     swiped(1)
     fetchGroup(match.params.uuid)
   }, [swiped, fetchGroup, match])
 
-  if (loading || !group.attributes) return <ReProfileLoading group />
+  if (loading) return <ReProfileLoading group />
   if (error) return <ReProfileError />
-
-  const pendingValues = buildPendingAttributeValues(group.attributes)
 
   return (
     <div className="view">
@@ -38,13 +35,13 @@ const ReGroupView = ({ group, swiped, fetchGroup, match, loading, error }) => {
           }}
         >
           <div className="swipe-item-container">
-            <ReMemberList uuid={group.uuid} memberUuids={group.member_uuids} />
+            <ReMemberList ruuid={match.params.uuid} />
           </div>
           <div className="swipe-item-container">
-            <ReGroupProfile profile={group} pendingValues={pendingValues} />
+            <ReGroupProfile ruuid={match.params.uuid} />
           </div>
           <div className="swipe-item-container">
-            <ReGroupShares profile={group} pendingValues={pendingValues} />
+            <ReGroupShares ruuid={match.params.uuid} />
           </div>
         </ReactSwipe>
       </div>
@@ -52,9 +49,8 @@ const ReGroupView = ({ group, swiped, fetchGroup, match, loading, error }) => {
   )
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
-    group: state.groupState.groups[ownProps.match.params.uuid],
     loading: state.groupState.loading,
     error: state.groupState.error
   }

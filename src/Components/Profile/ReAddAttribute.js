@@ -6,11 +6,11 @@ import CardList from '../Card/CardList'
 import TypeCard from '../Card/TypeCard'
 
 const ReAddAttribute = ({ groupUuid, onAttributeAdd, types }) => {
-  const [attrType, setAttrType] = useState({})
+  const [attrType, setAttrType] = useState(null)
   const [attrTouched, setAttrTouched] = useState(false)
 
   useEffect(() => {
-    if (!Object.keys(attrType).length && attrTouched) {
+    if (!attrType && attrTouched) {
       const topPos = 50
       const cards = [...document.querySelectorAll('.type-card')]
       // If an attribute type is not selected,
@@ -34,7 +34,7 @@ const ReAddAttribute = ({ groupUuid, onAttributeAdd, types }) => {
     // Get array of card elements
     const cards = [...document.querySelectorAll('.type-card')]
 
-    if (!Object.keys(attrType).length) {
+    if (!attrType) {
       // For each card calcuate the position from the top
       // And add the collapse animation
       cards.forEach((card, idx) => {
@@ -58,7 +58,7 @@ const ReAddAttribute = ({ groupUuid, onAttributeAdd, types }) => {
 
   return (
     <div className="add-attribute">
-      {Object.keys(attrType).length ? (
+      {attrType ? (
         <ReAddAttributeForm
           groupUuid={groupUuid}
           onCardClick={handleTypeChange}

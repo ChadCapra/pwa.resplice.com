@@ -12,15 +12,9 @@ import ReInputRegion from '../Form/ReInputRegion'
 import ReButton from '../Button/ReButton'
 
 class ReAddAttributeForm extends Component {
-  onSubmit = async ({
-    groupUuid,
-    attribute_type,
-    collection,
-    name,
-    ...formValues
-  }) => {
+  onSubmit = async ({ attribute_type, collection, name, ...formValues }) => {
     let attributeAdd = {
-      group_uuid: groupUuid,
+      group_uuid: this.props.groupUuid,
       attribute_type_id: this.props.attrType.id,
       name,
       collection,

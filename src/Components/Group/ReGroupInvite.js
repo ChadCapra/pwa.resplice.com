@@ -1,15 +1,22 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 import ReInput from '../Form/ReInput'
 import ReInputPhone from '../Form/ReInputPhone'
 import ReShareDropdown from '../Share/ReShareDropdown'
 import MdMail from 'react-ionicons/lib/MdMail'
 import MdCall from 'react-ionicons/lib/MdCall'
+import MdClose from 'react-ionicons/lib/MdClose'
+import MdExit from 'react-ionicons/lib/MdExit'
 import ReAvatarThumbnail from '../Profile/Avatar/ReAvatarThumbnail'
 import ReButton from '../Button/ReButton'
+import ReProfileHeaderSummary from '../Profile/ReProfileHeaderSummary'
+import ReModal from '../Modal/ReModal'
+import ComingSoon from '../Util/ComingSoon'
 
 import { inviteMembers } from '../../state/actions'
+import ReExit from '../Util/ReExit'
 
 const QUERY_TYPES = {
   PHONE: 'PHONE',
@@ -18,34 +25,37 @@ const QUERY_TYPES = {
   NONE: ''
 }
 
-const ReGroupInvite = ({ inviteMembers, loading }) => {
+const ReGroupInvite = ({ group, inviteMembers, loading, match }) => {
   const [query, setQuery] = useState('')
   const [queryType, setQueryType] = useState(QUERY_TYPES.NONE)
-  const [shareList, setShareList] = useState(null)
-  const [showDropdown, setShowDropdown] = useState(false)
+  const [shareList, setShareList] = useState([])
+  const [showImportModal, setShowImportModal] = useState(false)
 
   const handleItemClick = () => {
-    setShowDropdown(false)
-    setShareList(...shareList.push({ type: queryType, value: query }))
+    if (queryType === QUERY_TYPES.NONE) return
+    const newShareList = [...shareList]
+    newShareList.push({ type: queryType, value: query })
+    setShareList(newShareList)
     setQuery('')
     setQueryType(QUERY_TYPES.NONE)
   }
 
   const handleContactClick = contact => {
-    setShowDropdown(false)
-    setShareList(
-      ...shareList.push({
-        type: QUERY_TYPES.CONTACT,
-        value: contact.uuid,
-        contact
-      })
-    )
+    const newShareList = [...shareList]
+    newShareList.push({
+      type: QUERY_TYPES.CONTACT,
+      value: contact.uuid,
+      contact
+    })
+    setShareList(newShareList)
     setQuery('')
     setQueryType(QUERY_TYPES.NONE)
   }
 
   const removeShareItem = idx => {
-    setShareList(...shareList.splice(idx, 1))
+    const newShareList = [...shareList]
+    newShareList.splice(idx, 1)
+    setShareList(newShareList)
   }
 
   const handleInputChange = value => {
@@ -83,50 +93,89 @@ const ReGroupInvite = ({ inviteMembers, loading }) => {
   }
 
   const handleInvite = () => {
-    const list = shareList.map(item => {
+    const members = shareList.map(item => {
       return {
         type: item.type.toLowerCase(),
         value: item.value
       }
     })
-    inviteMembers(list)
+    inviteMembers(match.params.uuid, members)
   }
 
-  return (
-    <div className="share-list">
-      <h1 className="invite-header">Group Name</h1>
+  if (!group) return <Redirect to="/" />
 
-      <div className="share-list-input-container">
-        {queryType === QUERY_TYPES.PHONE ? (
-          <ReInputPhone
-            label="Phone"
-            meta={{
-              pristine: true,
-              touched: false,
-              error: '',
-              warning: ''
-            }}
-            onChange={value => {
-              handleInputChange(value)
-            }}
-            input={{ value: this.state.query }}
-            inputExtraProps={{ autoFocus: true }}
-          />
-        ) : (
-          <ReInput
-            type="text"
-            label="Email or Phone"
-            meta={{
-              pristine: true,
-              touched: false,
-              error: '',
-              warning: ''
-            }}
-            onChange={e => this.handleInputChange(e.target.value)}
-            input={{ value: this.state.query }}
-            autoFocus
-          />
-        )}
+  return (
+    <div className="group-invite">
+      <div className="group-invite-top">
+        <div className="share-list-header">
+          <ReProfileHeaderSummary profile={group} />
+          <ReExit exitRoute={`/group/${match.params.uuid}`} />
+        </div>
+
+        <div
+          className="import-info-btn"
+          onClick={() => setShowImportModal(true)}
+        >
+          Import Contact Information
+          <MdExit color="white" fontSize="1.75em" />
+        </div>
+
+        <div className="share-list-input-container">
+          {queryType === QUERY_TYPES.PHONE ? (
+            <ReInputPhone
+              label="Phone"
+              meta={{
+                pristine: true,
+                touched: false,
+                error: '',
+                warning: ''
+              }}
+              onChange={value => {
+                handleInputChange(value)
+              }}
+              input={{ value: query }}
+              inputExtraProps={{ autoFocus: true }}
+            />
+          ) : (
+            <ReInput
+              type="text"
+              label="Email, Phone, or Name"
+              meta={{
+                pristine: true,
+                touched: false,
+                error: '',
+                warning: ''
+              }}
+              onChange={e => handleInputChange(e.target.value)}
+              input={{ value: query }}
+              autoFocus
+            />
+          )}
+          {query.length > 0 && (
+            <ReShareDropdown
+              query={query}
+              queryType={queryType}
+              handleAttrClick={handleItemClick}
+              handleContactClick={handleContactClick}
+            />
+          )}
+        </div>
+      </div>
+
+      <div className="invite-attribute-container">
+        {shareList.map((item, idx) => (
+          <div key={idx} className="share-list-item">
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <div className="share-list-icon">{renderIcon(item)}</div>
+              <div>{item.value}</div>
+            </div>
+            <MdClose
+              fontSize="2em"
+              color="#1BBC9B"
+              onClick={() => removeShareItem(idx)}
+            />
+          </div>
+        ))}
       </div>
 
       <div className="share-list-footer">
@@ -139,13 +188,22 @@ const ReGroupInvite = ({ inviteMembers, loading }) => {
           Invite
         </ReButton>
       </div>
+
+      <ReModal
+        show={showImportModal}
+        headerText="Import"
+        onClose={() => setShowImportModal(false)}
+      >
+        <ComingSoon />
+      </ReModal>
     </div>
   )
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    loading: state.shareState.loading
+    loading: state.shareState.loading,
+    group: state.groupState.groups[ownProps.match.params.uuid]
   }
 }
 

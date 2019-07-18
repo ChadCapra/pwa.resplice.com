@@ -111,26 +111,6 @@ input:-webkit-autofill {
   }
 }
 
-.re-input-card {
-  margin-top: -15px;
-  padding-left: 20px;
-}
-.re-input-card-code {
-  outline: 0;
-  border: 0;
-  background: #e5e5e5;
-  border-radius: 10px;
-  text-align: left;
-  height: 30px;
-  max-width: 300px;
-  padding-left: 10px;
-
-  &::placeholder {
-    font-style: italic;
-    text-align: left;
-  }
-}
-
 .input-row {
   width: 100%;
   display: flex;
@@ -291,4 +271,43 @@ $fontSize: 60px;
   background-color: rgba(0, 0, 0, 0.5);
   width: 20px;
   height: 20px;
+}
+
+.re-switch-alt {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 85px;
+  height: 30px;
+  border: 1px solid #e5e5e5;
+  border-radius: 50px;
+  cursor: pointer;
+
+  &--active {
+    & .re-switch-on {
+      color: #1bbc9b;
+      border: 2px solid #1bbc9b;
+      padding: 4px;
+    }
+    & .re-switch-off {
+      color: #e5e5e5;
+      border-color: transparent;
+    }
+  }
+  transition: 0.3s ease all;
+}
+.re-switch-on,
+.re-switch-off {
+  text-align: center;
+  border-radius: 50px;
+  height: 20px;
+  width: 35px;
+  padding: 5px;
+}
+.re-switch-on {
+  color: #e5e5e5;
+}
+.re-switch-off {
+  color: #c4c4c4;
+  border: 2px solid #c4c4c4;
 }

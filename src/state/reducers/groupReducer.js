@@ -78,6 +78,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: false,
+        error: null,
         groups: processProfile({ ...state.groups }, action.payload, state.types)
       }
     case CREATE_GROUP_SUCCESS:
@@ -126,7 +127,7 @@ export default (state = INITIAL_STATE, action) => {
         groups: {
           ...state.groups,
           [action.payload.uuid]: updateShares(
-            ...state.groups[action.payload.uuid],
+            { ...state.groups[action.payload.uuid] },
             action.payload.attribute_uuid,
             action.payload.share_expiry
           )
@@ -136,7 +137,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: false,
-        groups: removeProfile(...state.groups, action.payload.uuid)
+        groups: removeProfile({ ...state.groups }, action.payload.uuid)
       }
 
     case FETCH_GROUP_LIST_FAILURE:

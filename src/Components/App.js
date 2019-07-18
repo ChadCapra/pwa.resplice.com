@@ -22,7 +22,7 @@ const App = props => {
     })
 
     return () => {
-      window.removeEventListener('beforeinstallprompt')
+      window.removeEventListener('beforeinstallprompt', null)
     }
   }, [])
   return (
@@ -33,7 +33,7 @@ const App = props => {
         <Route path="/profile" exact component={ReUserView} />
         <Route path="/share" exact component={ReShareView} />
         <Route path="/share/bulk" exact component={ReBulkShare} />
-        <Route path="/group/:uuid" component={ReGroupView} />
+        <Route path="/group/:uuid" exact component={ReGroupView} />
         <Route path="/group/:uuid/invite" component={ReGroupInvite} />
       </>
     </div>

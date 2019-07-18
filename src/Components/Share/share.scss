@@ -43,7 +43,6 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  border-top: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 .share-list-input-container {
@@ -59,11 +58,6 @@
 }
 .re-invite-modal {
   margin-top: 25px;
-}
-
-.invite-attribute-container {
-  width: 90%;
-  max-width: 575px;
 }
 
 .invite-message-container {

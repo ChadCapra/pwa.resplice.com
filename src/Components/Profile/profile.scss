@@ -49,14 +49,14 @@
   }
   cursor: pointer;
 }
-.profile-list-item-name {
+.profile-list-item-text {
   display: flex;
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
   width: calc(100% - 80px);
 }
-.profile-list-item-group {
+.profile-list-item-subtext {
   opacity: 0.5;
 }
 .profile-checked {
