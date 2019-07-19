@@ -9,10 +9,21 @@ import ReBulkShare from '../Share/ReBulkShare'
 import ReModal from '../Modal/ReModal'
 
 import { setBulkShares } from '../../state/actions'
-import { handleBulkAction, alphabetSort } from '../../helpers'
+import { alphabetSort } from '../../helpers'
+
+const buildGroupList = (groups, selectedUuids) => {
+  return groups.map(({ ...group }) => {
+    const selected = selectedUuids.includes(group.uuid)
+    group.selected = selected
+    return group
+  })
+}
 
 const ReGroupList = ({ groups, setBulkShares }) => {
   const [selectedUuids, setSelectedUuids] = useState([])
+  const [groupList, setGroupList] = useState(
+    buildGroupList(groups, selectedUuids)
+  )
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [showBulkShareModal, setShowBulkShareModal] = useState(false)
   const [showBulkActionModal, setShowBulkActionModal] = useState(false)
@@ -22,23 +33,18 @@ const ReGroupList = ({ groups, setBulkShares }) => {
   const handleAction = action => {
     switch (action) {
       case 'share':
-        setBulkShares(
-          this.props.groups.filter(groups =>
-            this.state.selectedUuids.includes(groups.uuid)
-          )
-        )
+        setBulkShares(this.props.groupList.filter(group => group.selected))
         setShowBulkShareModal(true)
         break
       case 'email':
         setShowBulkActionModal(true)
-        // handleBulkAction(action, [])
         break
       case 'sms':
         setShowBulkActionModal(true)
-        // handleBulkAction(action, [])
         break
       case 'clear':
         setSelectedUuids([])
+        setGroupList(buildGroupList(groups, []))
         break
       default:
     }
@@ -48,19 +54,20 @@ const ReGroupList = ({ groups, setBulkShares }) => {
     const newSelectedUuids = [...selectedUuids]
     newSelectedUuids.push(uuid)
     setSelectedUuids(newSelectedUuids)
+    setGroupList(buildGroupList(groups, newSelectedUuids))
   }
   const handleDeselect = uuid => {
     const newSelectedUuids = [...selectedUuids]
     const idx = newSelectedUuids.findIndex(u => u === uuid)
     newSelectedUuids.splice(idx, 1)
     setSelectedUuids(newSelectedUuids)
+    setGroupList(buildGroupList(groups, newSelectedUuids))
   }
 
   return (
     <>
       <ReProfileList
-        list={groups}
-        selectedUuids={selectedUuids}
+        list={groupList}
         handleSelect={handleSelect}
         handleDeselect={handleDeselect}
       />

@@ -11,8 +11,7 @@ class ReProfileList extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      toBulkShare: false,
-      selectedUuids: []
+      toBulkShare: false
     }
     this.listRef = React.createRef()
   }
@@ -23,12 +22,10 @@ class ReProfileList extends Component {
 
   renderProfileItem = ({ index, style }) => {
     const profile = this.props.list[index]
-    const selected = this.props.selectedUuids.includes(profile.uuid)
 
     return (
       <ReProfileItem
         profile={profile}
-        selected={selected}
         style={style}
         onSelect={this.props.handleSelect}
         onDeselect={this.props.handleDeselect}
@@ -57,7 +54,7 @@ class ReProfileList extends Component {
           )}
         </AutoSizer>
 
-        {this.props.list.length > 0 && (
+        {this.props.list.length > 10 && (
           <AlphaNumericSlider
             list={this.props.list}
             onClick={this.handleLetterClick}
@@ -70,7 +67,6 @@ class ReProfileList extends Component {
 
 ReProfileList.propTypes = {
   list: PropTypes.array.isRequired,
-  selectedUuids: PropTypes.array.isRequired,
   handleSelect: PropTypes.func.isRequired,
   handleDeselect: PropTypes.func.isRequired
 }
