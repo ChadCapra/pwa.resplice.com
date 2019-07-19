@@ -189,3 +189,25 @@
   box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
     0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
 }
+
+.re-cropper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 85%;
+  & img {
+    max-width: 100%;
+  }
+  & .cropper-view-box {
+    outline-color: #1bbc9b;
+  }
+  & .cropper-view-box,
+  .cropper-face {
+    border-radius: 50%;
+  }
+  & .cropper-line,
+  .cropper-point {
+    background-color: #1bbc9b;
+  }
+}

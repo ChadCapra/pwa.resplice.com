@@ -1,32 +1,54 @@
-import React, { useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+
 import { editAvatar } from '../../../state/actions'
+
 import Identicon from 'react-identicons'
 import MdCamera from 'react-ionicons/lib/MdCamera'
 import MdUpload from 'react-ionicons/lib/MdCloudUpload'
+import ReCropper from '../../Util/ReCropper'
+import ReButton from '../../Button/ReButton'
 
-const AvatarUploadModal = ({ uuid, onComplete, editAvatar, uploaded }) => {
-  if (uploaded) {
-    onComplete()
-  }
-  const container = useRef()
+const AvatarUploadModal = ({ uuid, onComplete, editAvatar }) => {
+  const [imgData, setImgData] = useState(null)
+  const [cameraOpen, setCameraOpen] = useState(false)
+  const container = useRef(null)
+  const player = useRef(null)
   const cameraSupported = 'mediaDevices' in navigator
 
-  const openCamera = () => {
-    if (!cameraSupported) {
-      return
+  useEffect(() => {
+    if (cameraOpen) {
+      const openCamera = async () => {
+        if (!cameraSupported) {
+          return
+        }
+
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: false
+          })
+          player.current.srcObject = stream
+          player.current.play()
+        } catch (err) {
+          console.log(err)
+        }
+      }
+      openCamera()
     }
+  }, [cameraOpen, cameraSupported])
 
-    // const player = document.getElementById('player');
-    // const canvas = document.getElementById('canvas');
-    // const context = canvas.getContext('2d');
-    // const captureButton = document.getElementById('capture');
-
-    navigator.mediaDevices.getUserMedia({ video: true })
-
+  const takePicture = () => {
+    const canvas = document.createElement('canvas')
+    const context = canvas.getContext('2d')
+    const { height, width } = player.current.getBoundingClientRect()
+    canvas.height = height
+    canvas.width = width
+    context.drawImage(player.current, 0, 0, width, height)
+    canvas.toBlob(blob => setImgData(blob))
     // Stop all video streams.
-    // player.srcObject.getVideoTracks().forEach(track => track.stop());
+    player.current.srcObject.getVideoTracks().forEach(track => track.stop())
   }
 
   const uploadFile = () => {
@@ -34,20 +56,64 @@ const AvatarUploadModal = ({ uuid, onComplete, editAvatar, uploaded }) => {
     input.setAttribute('type', 'file')
     input.setAttribute('accept', 'image/*')
     input.setAttribute('hidden', '')
-    input.addEventListener('change', e => {
-      editAvatar(e.target.files[0])
-    })
+    input.setAttribute('style', 'display: none')
+    input.addEventListener(
+      'change',
+      e => {
+        e.preventDefault()
+        setImgData(e.target.files[0])
+      },
+      false
+    )
     container.current.appendChild(input)
     input.click()
     container.current.removeChild(input)
   }
 
+  const onCrop = async blob => {
+    try {
+      await editAvatar(blob)
+      onComplete()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  if (imgData) return <ReCropper img={imgData} onCrop={onCrop} />
+
+  if (cameraOpen) {
+    return (
+      <div className="flex-col--center camera ">
+        <video
+          ref={player}
+          id="player"
+          onCanPlay={() => {
+            player.current.setAttribute('width', '100%')
+            player.current.setAttribute('height', '100%')
+          }}
+        >
+          Camera Stream not available
+        </video>
+        <ReButton
+          style={{ position: 'absolute', bottom: '10px' }}
+          type="primary"
+          onClick={takePicture}
+        >
+          Take Photo
+        </ReButton>
+      </div>
+    )
+  }
+
   return (
-    <div className="avatar-upload-container" ref={container}>
+    <div className="avatar-upload-container">
       <h3 className="avatar-upload-header">
         Adding a profile picture will help people recognize you!
       </h3>
-      <div className="upload-option" onClick={openCamera}>
+      <div
+        className="upload-option"
+        onClick={cameraSupported ? () => setCameraOpen(true) : null}
+      >
         <div className="upload-option-icon">
           <MdCamera color="#fff" fontSize="2.5em" />
         </div>
@@ -58,8 +124,8 @@ const AvatarUploadModal = ({ uuid, onComplete, editAvatar, uploaded }) => {
         )}
       </div>
 
-      <div className="upload-option" onClick={uploadFile}>
-        <div className="upload-option-icon">
+      <div className="upload-option" ref={container}>
+        <div className="upload-option-icon" onClick={e => uploadFile()}>
           <MdUpload color="#fff" fontSize="2.5em" />
         </div>
         <p>Upload a picture</p>
@@ -69,7 +135,7 @@ const AvatarUploadModal = ({ uuid, onComplete, editAvatar, uploaded }) => {
         <div className="upload-option-icon">
           <Identicon string={uuid} size={40} fontSize="2.5em" />
         </div>
-        <p>Use the identicon</p>
+        <p>Use your identicon</p>
       </div>
     </div>
   )
@@ -77,14 +143,12 @@ const AvatarUploadModal = ({ uuid, onComplete, editAvatar, uploaded }) => {
 
 AvatarUploadModal.propTypes = {
   uuid: PropTypes.string.isRequired,
-  onComplete: PropTypes.func.isRequired,
-  uploaded: PropTypes.oneOfType([PropTypes.bool, PropTypes.symbol])
+  onComplete: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {
   return {
-    loading: state.userState.loading,
-    uploaded: state.userState.profile.avatarUploaded
+    loading: state.userState.loading
   }
 }
 

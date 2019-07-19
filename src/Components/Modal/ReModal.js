@@ -9,7 +9,7 @@ import './modal.scss'
 const ReModal = ({
   show,
   onClose,
-  full,
+  full = false,
   closeOnOutside,
   headerText,
   children

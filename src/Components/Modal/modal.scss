@@ -55,6 +55,9 @@
 }
 
 .modal-exit-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   top: 5px;
   right: 5px;
