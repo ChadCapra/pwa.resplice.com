@@ -83,7 +83,7 @@ export const createGroup = group => async dispatch => {
   }
 }
 
-export const editName = (uuid, name) => async dispatch => {
+export const editGroupName = (uuid, name) => async dispatch => {
   dispatch({ type: EDIT_GROUP_NAME })
 
   try {
@@ -97,7 +97,7 @@ export const editName = (uuid, name) => async dispatch => {
   }
 }
 
-export const editAvatar = (uuid, avatar) => async dispatch => {
+export const editGroupAvatar = (uuid, avatar) => async dispatch => {
   dispatch({ type: EDIT_GROUP_NAME })
 
   try {
@@ -115,7 +115,7 @@ export const inviteMembers = (uuid, members) => async dispatch => {
   dispatch({ type: INVITE_MEMBERS })
 
   try {
-    await api.post(`group/${uuid}/invite_members`, {
+    await api.patch(`group/${uuid}/invite_members`, {
       invitees: members
     })
     dispatch({ type: INVITE_MEMBERS_SUCCESS })
@@ -129,7 +129,7 @@ export const removeMembers = (uuid, member_uuids) => async dispatch => {
   dispatch({ type: REMOVE_MEMBERS })
 
   try {
-    await api.delete(`group/${uuid}/remove_members`, {
+    await api.patch(`group/${uuid}/remove_members`, {
       contact_uuids: member_uuids
     })
     dispatch({ type: REMOVE_MEMBERS_SUCCESS })
@@ -143,7 +143,7 @@ export const addModerators = (uuid, member_uuids) => async dispatch => {
   dispatch({ type: ADD_MODERATORS })
 
   try {
-    await api.post(`/group/${uuid}/add_moderators`, {
+    await api.patch(`/group/${uuid}/add_moderators`, {
       contact_uuids: member_uuids
     })
     dispatch({ type: ADD_MODERATORS_SUCCESS })
@@ -157,7 +157,7 @@ export const removeModerators = (uuid, member_uuids) => async dispatch => {
   dispatch({ type: REMOVE_MODERATORS })
 
   try {
-    await api.delete(`/group/${uuid}/remove_moderators`, {
+    await api.patch(`/group/${uuid}/remove_moderators`, {
       contact_uuids: member_uuids
     })
     dispatch({ type: REMOVE_MODERATORS_SUCCESS })
@@ -171,7 +171,7 @@ export const addGroupShare = (uuid, share) => async dispatch => {
   dispatch({ type: ADD_GROUP_SHARE, payload: { uuid, ...share } })
 
   try {
-    await api.post(`/group/${uuid}/add_share`, share)
+    await api.patch(`/group/${uuid}/add_share`, share)
   } catch (err) {
     dispatch({ type: GROUP_SHARE_ERROR, payload: err })
     dispatch({ type: REMOVE_GROUP_SHARE, payload: { uuid, ...share } })
@@ -182,8 +182,8 @@ export const removeGroupShare = (uuid, share) => async dispatch => {
   dispatch({ type: REMOVE_GROUP_SHARE, payload: { uuid, ...share } })
 
   try {
-    await api.delete(`/group/${uuid}/remove_share`, {
-      params: { attribute_uuid: share.attribute_uuid }
+    await api.patch(`/group/${uuid}/remove_share`, {
+      attribute_uuid: share.attribute_uuid
     })
   } catch (err) {
     dispatch({ type: GROUP_SHARE_ERROR, payload: err })
@@ -195,7 +195,7 @@ export const leaveGroup = uuid => async dispatch => {
   dispatch({ type: LEAVE_GROUP })
 
   try {
-    await api.delete(`/group/${uuid}/leave_group`)
+    await api.patch(`/group/${uuid}/leave_group`)
     dispatch({ type: LEAVE_GROUP_SUCCESS, payload: { uuid } })
   } catch (err) {
     dispatch({ type: LEAVE_GROUP_FAILURE, payload: err })

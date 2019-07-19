@@ -60,9 +60,10 @@ const ViewCard = ({ item, handleAction, ...props }) => {
               <ReDropdown
                 isUserAttribute
                 items={attr.actions}
-                onClick={action =>
+                onClick={action => {
                   handleAction(action, { uuid: attr.uuid, value: attr.value })
-                }
+                  setDropdownIdx(-1)
+                }}
                 close={() => setDropdownIdx(-1)}
               />
             )}

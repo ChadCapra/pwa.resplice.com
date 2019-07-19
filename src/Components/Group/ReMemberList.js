@@ -6,11 +6,11 @@ import ReProfileList from '../Profile/ReProfileList'
 import FABActionMenu from '../Util/FABActionMenu'
 import RePlusFAB from '../Button/RePlusFAB'
 
-const ReMemberList = ({ uuid, members }) => {
+const ReMemberList = ({ ruuid, members }) => {
   const [selectedUuids, setSelectedUuids] = useState([])
   const [toGroupInvite, setToGroupInvite] = useState(false)
 
-  if (toGroupInvite) return <Redirect push to={`/group/${uuid}/invite`} />
+  if (toGroupInvite) return <Redirect push to={`/group/${ruuid}/invite`} />
 
   const selected = selectedUuids.length > 0
 

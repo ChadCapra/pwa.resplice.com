@@ -70,16 +70,13 @@ export const editName = name => async dispatch => {
   }
 }
 
-export const editAvatar = blob => async dispatch => {
+export const editAvatar = blob => async (dispatch, getState) => {
   dispatch({ type: EDIT_AVATAR })
 
   try {
-    let formData = new FormData()
-    formData.append('avatar', blob)
-    console.log(blob, formData)
-    const response = await api.patch('/user/upload-avatar', {
-      avatar: formData
-    })
+    const { uuid } = getState().userState.profile
+    const avatar = new File([blob], `avatar_${uuid}.png`)
+    const response = await api.patch('/user/edit_avatar', avatar)
     dispatch({ type: EDIT_AVATAR_SUCCESS, payload: response.data })
   } catch (err) {
     dispatch({ type: EDIT_AVATAR_FAILURE, payload: err })

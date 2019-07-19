@@ -32,14 +32,16 @@ import {
   ADD_MODERATORS_FAILURE,
   REMOVE_MODERATORS_FAILURE,
   GROUP_SHARE_ERROR,
-  LEAVE_GROUP_FAILURE
+  LEAVE_GROUP_FAILURE,
+  ADD_GROUP_ATTRIBUTE_SUCCESS
 } from '../actions/types'
 
 import {
   processSummaries,
   processProfile,
   removeProfile,
-  updateShares
+  updateShares,
+  processAttributes
 } from '../../helpers'
 
 const INITIAL_STATE = {
@@ -131,6 +133,21 @@ export default (state = INITIAL_STATE, action) => {
             action.payload.attribute_uuid,
             action.payload.share_expiry
           )
+        }
+      }
+    case ADD_GROUP_ATTRIBUTE_SUCCESS:
+      return {
+        ...state,
+        groups: {
+          ...state.groups,
+          [action.payload.groupUuid]: {
+            ...state.groups[action.payload.groupUuid],
+            ...processAttributes(
+              { ...state.groups[action.payload.groupUuid].attributes },
+              state.types,
+              { action: 'add', data: action.payload.attribute }
+            )
+          }
         }
       }
     case LEAVE_GROUP_SUCCESS:

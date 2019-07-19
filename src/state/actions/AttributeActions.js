@@ -5,6 +5,7 @@ import {
   FETCH_ATTRIBUTE_TYPES_FAILURE,
   ADD_ATTRIBUTE,
   ADD_ATTRIBUTE_SUCCESS,
+  ADD_GROUP_ATTRIBUTE_SUCCESS,
   ADD_ATTRIBUTE_FAILURE,
   EDIT_ATTRIBUTE,
   EDIT_ATTRIBUTE_SUCCESS,
@@ -39,8 +40,23 @@ export const addAttribute = attribute => async dispatch => {
 
   try {
     const response = await api.post('/attribute/add', attribute)
-    dispatch({ type: ADD_ATTRIBUTE_SUCCESS, payload: response.data })
+    const { ok: attr, requested_at } = response.data
+    attr.requested_at = requested_at
+    attribute.group_uuid
+      ? dispatch({
+          type: ADD_GROUP_ATTRIBUTE_SUCCESS,
+          payload: {
+            groupUuid: attribute.group_uuid,
+            attribute: attr,
+            requested_at
+          }
+        })
+      : dispatch({
+          type: ADD_ATTRIBUTE_SUCCESS,
+          payload: response.data
+        })
   } catch (err) {
+    console.log(err)
     dispatch({ type: ADD_ATTRIBUTE_FAILURE, payload: err })
   }
 }
@@ -63,9 +79,8 @@ export const deleteAttribute = uuid => async dispatch => {
   dispatch({ type: DELETE_ATTRIBUTE })
 
   try {
-    await api.delete(`/user/attributes/${uuid}`)
-    const payload = { data: { uuid } }
-    dispatch({ type: DELETE_ATTRIBUTE_SUCCESS, payload })
+    await api.delete(`/attribute/${uuid}/delete`)
+    dispatch({ type: DELETE_ATTRIBUTE_SUCCESS, payload: { uuid } })
   } catch (err) {
     dispatch({ type: DELETE_ATTRIBUTE_FAILURE, payload: err })
   }

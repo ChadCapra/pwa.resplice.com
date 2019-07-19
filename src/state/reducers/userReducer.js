@@ -82,7 +82,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         ...processAttributes({ ...state.attributes }, state.types, {
           action: 'delete',
-          data: action.payload.ok
+          data: action.payload.uuid
         })
       }
     case ENABLE_QR_SHARE:

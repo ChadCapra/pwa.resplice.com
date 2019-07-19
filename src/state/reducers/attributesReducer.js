@@ -16,7 +16,8 @@ import {
   VERIFY_ATTRIBUTE_FAILURE,
   RESEND_VERIFY_ATTRIBUTE,
   RESEND_VERIFY_ATTRIBUTE_SUCCESS,
-  RESEND_VERIFY_ATTRIBUTE_FAILURE
+  RESEND_VERIFY_ATTRIBUTE_FAILURE,
+  ADD_GROUP_ATTRIBUTE_SUCCESS
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -36,6 +37,7 @@ export default (state = INITIAL_STATE, action) => {
     case ADD_ATTRIBUTE:
       return { ...state, loading: true }
     case ADD_ATTRIBUTE_SUCCESS:
+    case ADD_GROUP_ATTRIBUTE_SUCCESS:
       return { ...state, loading: false }
     case ADD_ATTRIBUTE_FAILURE:
       return { ...state, loading: false, error: action.payload }

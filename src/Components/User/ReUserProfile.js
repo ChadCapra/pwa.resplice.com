@@ -16,18 +16,25 @@ import { handleAttributeAction } from '../../helpers'
 
 const ReUserProfile = ({
   profile: { uuid, name, avatar, unique_contacts, total_shares },
-  collections
+  collections,
+  deleteAttribute
 }) => {
   const [showBadgeModal, setBadgeModal] = useState(false)
   const [actionAttributeId, setActionAttributeId] = useState(null)
   const [actionType, setActionType] = useState(null)
 
   const handleAction = (actionType, { uuid, value }) => {
-    if (actionType === 'edit' || actionType === 'verify') {
-      setActionAttributeId(uuid)
-      setActionType(actionType)
-    } else {
-      handleAttributeAction(actionType, value)
+    switch (actionType) {
+      case 'edit':
+      case 'verify':
+        setActionAttributeId(uuid)
+        setActionType(actionType)
+        break
+      case 'delete':
+        deleteAttribute(uuid)
+        break
+      default:
+        handleAttributeAction(actionType, value)
     }
   }
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import ReactSwipe from 'react-swipe'
-import { swiped } from '../../state/actions'
+import { swiped, deleteAttribute } from '../../state/actions'
 
 import ReUserProfile from '../User/ReUserProfile'
 import ReUserSettings from '../User/ReUserSettings'
@@ -13,7 +13,13 @@ import ReModal from '../Modal/ReModal'
 import '../Profile/profile.scss'
 import '../User/user.scss'
 
-const ReUserView = ({ profile, collections, types, swiped }) => {
+const ReUserView = ({
+  profile,
+  collections,
+  types,
+  swiped,
+  deleteAttribute
+}) => {
   const [showAddAttributeModal, setAddAttributeModal] = useState(false)
   let reactSwipeEl = useRef(null)
 
@@ -43,7 +49,11 @@ const ReUserView = ({ profile, collections, types, swiped }) => {
           ref={reactSwipeEl}
         >
           <div className="swipe-item-container">
-            <ReUserProfile profile={profile} collections={collections} />
+            <ReUserProfile
+              profile={profile}
+              collections={collections}
+              deleteAttribute={deleteAttribute}
+            />
             <RePlusFAB onClick={() => setAddAttributeModal(true)} />
           </div>
           <div className="swipe-item-container">
@@ -76,5 +86,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { swiped }
+  { swiped, deleteAttribute }
 )(ReUserView)

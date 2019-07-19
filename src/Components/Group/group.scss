@@ -6,6 +6,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  height: 100%;
 }
 
 .group-invite-top {
@@ -20,6 +21,7 @@
   max-width: 575px;
   overflow: auto;
   flex: 1 1;
+  padding-bottom: 65px;
 }
 
 .share-list-header {

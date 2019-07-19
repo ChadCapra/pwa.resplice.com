@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import CardList from '../Card/CardList'
 import ViewCard from '../Card/ViewCard'
-import ReAvatar from '../Profile/Avatar/ReAvatarContact'
+import ReAvatar from '../Profile/Avatar/ReAvatar'
 import ReModal from '../Modal/ReModal'
 import ReNotification from '../Util/ReNotification'
 import RePlusFAB from '../Button/RePlusFAB'
@@ -17,6 +17,7 @@ import {
 } from '../../helpers'
 
 const ReGroupProfile = ({
+  ruuid,
   profile: {
     uuid,
     name,
@@ -53,7 +54,11 @@ const ReGroupProfile = ({
       <ReAvatar uuid={uuid} avatar={avatar} viewOnly />
       <div>
         <h1 className="profile-name">{name}</h1>
-        <div className="profile-tags">{member_count}</div>
+        <div className="profile-tags">
+          {member_count === 1
+            ? `${member_count} person`
+            : `${member_count} people`}
+        </div>
       </div>
 
       {collectionsArray.length ? (
