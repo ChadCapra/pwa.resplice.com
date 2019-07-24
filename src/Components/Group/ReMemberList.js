@@ -33,12 +33,15 @@ const ReMemberList = ({ ruuid, members }) => {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  const group = state.groupState.groups[ownProps.ruuid]
   return {
-    members: Object.values(state.contactState.contacts).filter(
-      contact =>
-        contact.uuid !== state.userState.profile.uuid &&
-        ownProps.memberUuids.includes(contact.uuid)
-    )
+    members: group.member_uuids
+      ? Object.values(state.contactState.contacts).filter(
+          contact =>
+            contact.uuid !== state.userState.profile.uuid &&
+            group.member_uuids.includes(contact.uuid)
+        )
+      : []
   }
 }
 
