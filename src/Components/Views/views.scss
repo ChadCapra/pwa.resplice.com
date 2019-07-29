@@ -5,6 +5,10 @@
   flex-direction: column;
 }
 
+.view-header {
+  padding: 16px;
+}
+
 .view-body {
   flex-grow: 1;
   overflow-y: scroll;

@@ -1,4 +1,4 @@
-import api from '../../api'
+import api, { mockApi } from '../../api'
 import {
   FETCH_GROUP_LIST,
   FETCH_GROUP_LIST_SUCCESS,
@@ -36,7 +36,7 @@ export const fetchGroupList = () => async dispatch => {
   dispatch({ type: FETCH_GROUP_LIST })
 
   try {
-    const response = await api.get('/groups')
+    const response = await mockApi.get('/groups')
     const { requested_at, ok: groups } = response.data
     dispatch({
       type: FETCH_GROUP_LIST_SUCCESS,
@@ -51,7 +51,7 @@ export const fetchGroup = uuid => async dispatch => {
   dispatch({ type: FETCH_GROUP })
 
   try {
-    const response = await api.get(`/group/${uuid}`)
+    const response = await mockApi.get(`/group/${uuid}`)
     const {
       ok: { attributes, shares, ...profile },
       requested_at

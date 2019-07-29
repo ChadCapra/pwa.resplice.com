@@ -1,5 +1,14 @@
 import api from '../../api'
-import { SWIPED, LOAD, LOAD_SUCCESS, LOAD_FAILURE } from './types'
+import {
+  SWIPED,
+  LOAD,
+  LOAD_SUCCESS,
+  LOAD_FAILURE,
+  UPDATE_QUERY,
+  CLEAR_QUERY,
+  UPDATE_SEARCH_TAGS,
+  CLEAR_SEARCH_TAGS
+} from './types'
 import { fetchAttributeTypes } from './AttributeActions'
 import { fetchUserProfile } from './UserActions'
 import { fetchGroupList } from './GroupActions'
@@ -22,6 +31,22 @@ export const swiped = idx => {
     type: SWIPED,
     payload: idx
   }
+}
+
+export const updateQuery = query => {
+  return { type: UPDATE_QUERY, payload: query }
+}
+
+export const clearQuery = () => {
+  return { type: CLEAR_QUERY }
+}
+
+export const updateSearchTags = tags => {
+  return { type: UPDATE_SEARCH_TAGS, payload: tags }
+}
+
+export const clearSearchTags = () => {
+  return { type: CLEAR_SEARCH_TAGS }
 }
 
 export const loadApplication = () => async dispatch => {

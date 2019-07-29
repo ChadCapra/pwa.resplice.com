@@ -128,6 +128,7 @@ interface ContactSummary {
   avatar: string | null
   tags: string[]
   pending_expiration: string | null
+  searchable_values: string[]
 }
 interface ContactDetails extends ContactSummary {
   attributes: ContactAttribute[]

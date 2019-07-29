@@ -16,7 +16,7 @@ input:-webkit-autofill {
   width: 100%;
   text-align: left;
   margin: 10px 0px;
-  height: 54px;
+  height: 50px;
   border: 1px solid #c8ccd4;
   border-radius: 5px;
   transition: 0.2s all ease;
@@ -42,12 +42,15 @@ input:-webkit-autofill {
 }
 
 .re-input-search {
-  margin-left: 15px;
-  width: calc(100% - 15px);
-  & svg {
+  & svg:first-child {
     position: absolute;
     left: 5px;
-    top: 7px;
+    top: 5px;
+  }
+
+  & svg:last-child {
+    position: absolute;
+    right: 0;
   }
 
   & .re-input-label {
@@ -61,13 +64,13 @@ input:-webkit-autofill {
 }
 
 .re-input select {
-  height: 52px;
+  height: 48px;
   left: 10px;
 }
 
 .re-field {
   position: absolute;
-  height: 40px;
+  height: 38px;
   background: none;
   width: calc(100% - 15px);
   padding-top: 12px;

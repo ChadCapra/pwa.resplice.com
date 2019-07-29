@@ -57,3 +57,11 @@ export const updateTags = (contact, tag) => {
   contact.tags = newTags
   return contact
 }
+
+export const buildSelectedList = (list, selectedUuids) => {
+  return list.map(({ ...item }) => {
+    const selected = selectedUuids.includes(item.uuid)
+    item.selected = selected
+    return item
+  })
+}

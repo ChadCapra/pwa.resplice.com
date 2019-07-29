@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { FC, useEffect } from 'react'
 import {
   BrowserRouter as Router,
   Route,
@@ -20,7 +20,12 @@ interface Props {
   loadApplication: AsyncAction
 }
 
-const Secure = ({ isAuthorized, loading, offline, loadApplication }: Props) => {
+const Secure: FC<Props> = ({
+  isAuthorized,
+  loading,
+  offline,
+  loadApplication
+}) => {
   useEffect(() => {
     loadApplication()
   }, [loadApplication])

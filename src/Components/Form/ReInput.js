@@ -9,6 +9,7 @@ const ReInput = ({
   label,
   meta: { pristine, touched, error, warning },
   autoFocus,
+  style,
   ...props
 }) => {
   const field = useRef(null)
@@ -23,6 +24,7 @@ const ReInput = ({
       className={`re-input${error && touched ? ' re-input--error' : ''}${
         input.value || type === 'date' ? ' re-input--filled' : ''
       }`}
+      style={style}
     >
       <label className="re-input-label">{label}</label>
       <input

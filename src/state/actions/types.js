@@ -151,6 +151,12 @@ export const SHARE_BULK_ERROR = 'SHARE_BULK_ERROR'
 export const SWIPED = 'SWIPED'
 export const REMOVE_ERROR = 'REMOVE_ERROR'
 
+export const UPDATE_QUERY = 'UPDATE_QUERY'
+export const CLEAR_QUERY = 'CLEAR_QUERY'
+
+export const UPDATE_SEARCH_TAGS = 'UPDATE_SEARCH_TAGS'
+export const CLEAR_SEARCH_TAGS = 'CLEAR_SEARCH_TAGS'
+
 export const LOAD = 'LOAD'
 export const LOAD_SUCCESS = 'LOAD_SUCCESS'
 export const LOAD_FAILURE = 'LOAD_FAILURE'
