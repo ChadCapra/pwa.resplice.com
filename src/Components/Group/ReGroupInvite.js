@@ -8,15 +8,14 @@ import ReShareDropdown from '../Share/ReShareDropdown'
 import MdMail from 'react-ionicons/lib/MdMail'
 import MdCall from 'react-ionicons/lib/MdCall'
 import MdClose from 'react-ionicons/lib/MdClose'
-import MdExit from 'react-ionicons/lib/MdExit'
 import ReAvatarThumbnail from '../Profile/Avatar/ReAvatarThumbnail'
 import ReButton from '../Button/ReButton'
 import ReProfileHeaderSummary from '../Profile/ReProfileHeaderSummary'
-import ReModal from '../Modal/ReModal'
-import ComingSoon from '../Util/ComingSoon'
+import ReDropdown from '../Form/ReDropdown'
+import ReExit from '../Util/ReExit'
+import ImportContact from '../Util/ImportContact'
 
 import { inviteMembers } from '../../state/actions'
-import ReExit from '../Util/ReExit'
 
 const QUERY_TYPES = {
   PHONE: 'PHONE',
@@ -29,7 +28,6 @@ const ReGroupInvite = ({ group, inviteMembers, loading, match }) => {
   const [query, setQuery] = useState('')
   const [queryType, setQueryType] = useState(QUERY_TYPES.NONE)
   const [shareList, setShareList] = useState([])
-  const [showImportModal, setShowImportModal] = useState(false)
 
   const handleItemClick = () => {
     if (queryType === QUERY_TYPES.NONE) return
@@ -112,12 +110,23 @@ const ReGroupInvite = ({ group, inviteMembers, loading, match }) => {
           <ReExit exitRoute={`/group/${match.params.uuid}`} />
         </div>
 
-        <div
-          className="import-info-btn"
-          onClick={() => setShowImportModal(true)}
-        >
-          Import Contact Information
-          <MdExit color="white" fontSize="1.75em" />
+        <div style={{ width: '90%', maxWidth: '575px' }}>
+          <ReDropdown
+            type="primary"
+            title="Import Contact Information"
+            list={[
+              <ImportContact>
+                <ImportContact.Google />
+              </ImportContact>,
+              <ImportContact>
+                <ImportContact.Apple />
+              </ImportContact>,
+              <ImportContact>
+                <ImportContact.Microsoft />
+              </ImportContact>
+            ]}
+            onSelect={id => console.log(id)}
+          />
         </div>
 
         <div className="share-list-input-container">
@@ -188,14 +197,6 @@ const ReGroupInvite = ({ group, inviteMembers, loading, match }) => {
           Invite
         </ReButton>
       </div>
-
-      <ReModal
-        show={showImportModal}
-        headerText="Import"
-        onClose={() => setShowImportModal(false)}
-      >
-        <ComingSoon />
-      </ReModal>
     </div>
   )
 }

@@ -4,31 +4,31 @@ import PropTypes from 'prop-types'
 // import MdMap from 'react-ionicons/lib/MdMap'
 import MdText from 'react-ionicons/lib/MdText'
 import MdMail from 'react-ionicons/lib/MdMail'
-import MdAddCircle from 'react-ionicons/lib/MdAddCircle'
-import MdCloseCircle from 'react-ionicons/lib/MdCloseCircle'
+import MdClose from 'react-ionicons/lib/MdClose'
 
 import './utils.scss'
 
-const FABActionMenu = ({ onClick }) => {
+const FABActionMenu = ({ count, onClick }) => {
   return (
     <div className="fab-action-menu">
-      <MdCloseCircle
-        color="#E5E5E5"
-        fontSize="3em"
-        onClick={() => onClick('clear')}
-      />
-      <MdText color="white" fontSize="3em" onClick={() => onClick('text')} />
-      <MdMail color="white" fontSize="3em" onClick={() => onClick('email')} />
-      <MdAddCircle
-        color="white"
-        fontSize="3em"
-        onClick={() => onClick('share')}
-      />
+      <div className="fab-action-menu-count">
+        <MdClose
+          color="#363636"
+          fontSize="1.2em"
+          onClick={() => onClick('clear')}
+        />{' '}
+        {count === 1 ? `${count} person selected` : `${count} people selected`}
+      </div>
+      <div className="fab-action-menu-actions">
+        <MdText color="white" fontSize="3em" onClick={() => onClick('sms')} />
+        <MdMail color="white" fontSize="3em" onClick={() => onClick('email')} />
+      </div>
     </div>
   )
 }
 
 FABActionMenu.propTypes = {
+  count: PropTypes.number.isRequired,
   onClick: PropTypes.func
 }
 

@@ -6,7 +6,7 @@ interface Props {
   loading?: boolean
   disabled?: boolean
   onClick?(e: object): void
-  children: any
+  children: import('react').ReactNode
 }
 
 /**

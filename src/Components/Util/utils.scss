@@ -178,11 +178,30 @@
 
 .fab-action-menu {
   position: sticky;
-  bottom: 15px;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+}
+.fab-action-menu-count {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e5e5e5;
+  margin-bottom: 16px;
+  padding: 8px;
+  border-radius: 10px;
+  width: max-content;
+  & svg {
+    margin-right: 4px;
+  }
+}
+.fab-action-menu-actions {
+  width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin: 15px;
   height: 65px;
   background-color: #1bbc9b;
   border-radius: 10px;

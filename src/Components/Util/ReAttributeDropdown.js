@@ -3,8 +3,15 @@ import ReactDOM from 'react-dom'
 
 import ActionIcon from '../Util/ActionIcon'
 
-const ReDropdown = ({ onClick, close, items: [, , ...actions] }) => {
+const ReAttributeDropdown = ({ onClick, close, items: [, , ...actions] }) => {
   useEffect(() => {
+    const handleClick = e => {
+      if (!ReactDOM.findDOMNode(dropdown.current).contains(e.target)) {
+        // the click was outside of the dropdown, so handle closing here
+        close()
+      }
+    }
+
     // add event listener for clicks on the page
     document.addEventListener('click', handleClick)
 
@@ -12,16 +19,9 @@ const ReDropdown = ({ onClick, close, items: [, , ...actions] }) => {
       // remove event listener for clicks on the page
       document.removeEventListener('click', handleClick)
     }
-  })
+  }, [close])
 
   const dropdown = useRef(null)
-
-  const handleClick = e => {
-    if (!ReactDOM.findDOMNode(dropdown.current).contains(e.target)) {
-      // the click was outside of the dropdown, so handle closing here
-      close()
-    }
-  }
 
   return (
     <div className="drop-down" ref={dropdown}>
@@ -43,4 +43,4 @@ const ReDropdown = ({ onClick, close, items: [, , ...actions] }) => {
   )
 }
 
-export default ReDropdown
+export default ReAttributeDropdown

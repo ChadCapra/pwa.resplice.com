@@ -1,0 +1,1 @@
+const contactWorker = new Worker('')

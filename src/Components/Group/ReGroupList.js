@@ -5,37 +5,61 @@ import ReProfileList from '../Profile/ReProfileList'
 import ReCreateGroup from './ReCreateGroup'
 import RePlusFAB from '../Button/RePlusFAB'
 import FABActionMenu from '../Util/FABActionMenu'
-import ReBulkShare from '../Share/ReBulkShare'
+import ReBulkAction from '../Util/ReBulkAction'
 import ReModal from '../Modal/ReModal'
 
-import { setBulkShares } from '../../state/actions'
-import { alphabetSort } from '../../helpers'
+import { alphabetSort, buildSelectedList } from '../../helpers'
 
-const buildGroupList = (groups, selectedUuids) => {
-  return groups.map(({ ...group }) => {
-    const selected = selectedUuids.includes(group.uuid)
-    group.selected = selected
-    return group
+const filterByQuery = (groups, query) => {
+  if (!query) return groups
+  return groups.filter(group => {
+    // const searchable = [...group.searchable_values]
+    const searchable = [group.name.toLowerCase()]
+    return searchable.find(val => {
+      return val.includes(query.toLowerCase())
+    })
   })
 }
 
-const ReGroupList = ({ groups, setBulkShares }) => {
+const filterByTags = (groups, tags) => {
+  if (tags.length <= 0) return groups
+  return groups.filter(group =>
+    group.tags.reduce((_bool, tag) => {
+      return tags.includes(tag)
+    }, false)
+  )
+}
+
+const ReGroupList = ({ groups, search: { query, tags } }) => {
   const [selectedUuids, setSelectedUuids] = useState([])
   const [groupList, setGroupList] = useState(
-    buildGroupList(groups, selectedUuids)
+    buildSelectedList(groups, selectedUuids)
   )
   const [showCreateModal, setShowCreateModal] = useState(false)
-  const [showBulkShareModal, setShowBulkShareModal] = useState(false)
   const [showBulkActionModal, setShowBulkActionModal] = useState(false)
 
   const selecting = selectedUuids.length > 0
 
+  const handleSelect = uuid => {
+    const newSelectedUuids = [...selectedUuids]
+    newSelectedUuids.push(uuid)
+    setSelectedUuids(newSelectedUuids)
+    setGroupList(buildSelectedList(groups, newSelectedUuids))
+  }
+  const handleDeselect = uuid => {
+    const newSelectedUuids = [...selectedUuids]
+    const idx = newSelectedUuids.findIndex(u => u === uuid)
+    newSelectedUuids.splice(idx, 1)
+    setSelectedUuids(newSelectedUuids)
+    setGroupList(buildSelectedList(groups, newSelectedUuids))
+  }
+
+  const filteredGroups = () => {
+    return filterByTags(filterByQuery(groupList, query), tags)
+  }
+
   const handleAction = action => {
     switch (action) {
-      case 'share':
-        setBulkShares(this.props.groupList.filter(group => group.selected))
-        setShowBulkShareModal(true)
-        break
       case 'email':
         setShowBulkActionModal(true)
         break
@@ -44,35 +68,21 @@ const ReGroupList = ({ groups, setBulkShares }) => {
         break
       case 'clear':
         setSelectedUuids([])
-        setGroupList(buildGroupList(groups, []))
+        setGroupList(buildSelectedList(groups, []))
         break
       default:
     }
   }
 
-  const handleSelect = uuid => {
-    const newSelectedUuids = [...selectedUuids]
-    newSelectedUuids.push(uuid)
-    setSelectedUuids(newSelectedUuids)
-    setGroupList(buildGroupList(groups, newSelectedUuids))
-  }
-  const handleDeselect = uuid => {
-    const newSelectedUuids = [...selectedUuids]
-    const idx = newSelectedUuids.findIndex(u => u === uuid)
-    newSelectedUuids.splice(idx, 1)
-    setSelectedUuids(newSelectedUuids)
-    setGroupList(buildGroupList(groups, newSelectedUuids))
-  }
-
   return (
     <>
       <ReProfileList
-        list={groupList}
+        list={filteredGroups()}
         handleSelect={handleSelect}
         handleDeselect={handleDeselect}
       />
       {selecting ? (
-        <FABActionMenu onClick={handleAction} />
+        <FABActionMenu count={selectedUuids.length} onClick={handleAction} />
       ) : (
         <RePlusFAB onClick={() => setShowCreateModal(true)} />
       )}
@@ -86,20 +96,11 @@ const ReGroupList = ({ groups, setBulkShares }) => {
       </ReModal>
 
       <ReModal
-        show={showBulkShareModal}
-        onClose={() => setShowBulkShareModal(false)}
-        headerText="Bulk Share"
-      >
-        <ReBulkShare />
-      </ReModal>
-
-      <ReModal
         show={showBulkActionModal}
         onClose={() => setShowBulkActionModal(false)}
         headerText="Bulk Action"
       >
-        Bulk Actions
-        {/* <ReBulkAction /> */}
+        <ReBulkAction list={groupList} selectedUuids={selectedUuids} />
       </ReModal>
     </>
   )
@@ -109,11 +110,9 @@ const mapStateToProps = state => {
   return {
     groups: Object.values(state.groupState.groups).sort((a, b) =>
       alphabetSort(a.name, b.name)
-    )
+    ),
+    search: state.utilState.search
   }
 }
 
-export default connect(
-  mapStateToProps,
-  { setBulkShares }
-)(ReGroupList)
+export default connect(mapStateToProps)(ReGroupList)

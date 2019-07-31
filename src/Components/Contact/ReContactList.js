@@ -5,23 +5,22 @@ import { Redirect } from 'react-router-dom'
 import RePlusFAB from '../Button/RePlusFAB'
 import FABActionMenu from '../Util/FABActionMenu'
 import ReProfileList from '../Profile/ReProfileList'
-import ReBulkShare from '../Share/ReBulkShare'
+import ReBulkAction from '../Util/ReBulkAction'
 import ReModal from '../Modal/ReModal'
 
-import { setBulkShares } from '../../state/actions'
-import {
-  handleBulkAction,
-  alphabetSort,
-  buildSelectedList
-} from '../../helpers'
+import { alphabetSort, buildSelectedList } from '../../helpers'
 
 const filterByQuery = (contacts, query) => {
   if (!query) return contacts
-  return contacts.filter(contact =>
-    contact.searchable_values.find(val => {
-      return val.includes(query)
+  return contacts.filter(contact => {
+    const searchable = [
+      contact.name.toLowerCase(),
+      ...contact.searchable_values
+    ]
+    return searchable.find(val => {
+      return val.includes(query.toLowerCase())
     })
-  )
+  })
 }
 
 const filterByTags = (contacts, tags) => {
@@ -33,17 +32,12 @@ const filterByTags = (contacts, tags) => {
   )
 }
 
-const ReContactList = ({
-  contacts,
-  setBulkShares,
-  search: { query, tags }
-}) => {
+const ReContactList = ({ contacts, search: { query, tags } }) => {
   const [toShare, setToShare] = useState(false)
   const [selectedUuids, setSelectedUuids] = useState([])
   const [contactList, setContactList] = useState(
     buildSelectedList(contacts, selectedUuids)
   )
-  const [showBulkShareModal, setShowBulkShareModal] = useState(false)
   const [showBulkActionModal, setShowBulkActionModal] = useState(false)
 
   const selecting = selectedUuids.length > 0
@@ -71,24 +65,15 @@ const ReContactList = ({
 
   const handleAction = action => {
     switch (action) {
-      case 'share':
-        setBulkShares(
-          this.props.contacts.filter(contact =>
-            this.state.selectedUuids.includes(contact.uuid)
-          )
-        )
-        setShowBulkShareModal(true)
-        break
       case 'email':
         setShowBulkActionModal(true)
-        // handleBulkAction(action, [])
         break
       case 'sms':
         setShowBulkActionModal(true)
-        // handleBulkAction(action, [])
         break
       case 'clear':
         setSelectedUuids([])
+        setContactList(buildSelectedList(contacts, []))
         break
       default:
     }
@@ -102,25 +87,17 @@ const ReContactList = ({
         handleDeselect={handleDeselect}
       />
       {selecting ? (
-        <FABActionMenu onClick={handleAction} />
+        <FABActionMenu count={selectedUuids.length} onClick={handleAction} />
       ) : (
         <RePlusFAB onClick={() => setToShare(true)} />
       )}
 
       <ReModal
-        show={showBulkShareModal}
-        onClose={() => setShowBulkShareModal(false)}
-        headerText="Bulk Share"
-      >
-        <ReBulkShare />
-      </ReModal>
-      <ReModal
         show={showBulkActionModal}
         onClose={() => setShowBulkActionModal(false)}
-        headerText="Bulk Action"
+        headerText="Select Values"
       >
-        Bulk Actions
-        {/* <ReBulkAction /> */}
+        <ReBulkAction list={contactList} selectedUuids={selectedUuids} />
       </ReModal>
     </>
   )
@@ -135,7 +112,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  { setBulkShares }
-)(ReContactList)
+export default connect(mapStateToProps)(ReContactList)

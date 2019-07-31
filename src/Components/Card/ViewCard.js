@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Columns from 'react-bulma-components/lib/components/columns'
 
-import ReDropdown from '../Util/ReDropdown'
+import ReAttributeDropdown from '../Util/ReAttributeDropdown'
 import ActionIcon from '../Util/ActionIcon'
 
 import './card.scss'
@@ -57,7 +57,7 @@ const ViewCard = ({ item, handleAction, ...props }) => {
             <span className="card-attribute-text-name">{attr.name}</span>
             <span>{combineAttrValues(attr.value, ' ')}</span>
             {idx === showDropdownIdx && (
-              <ReDropdown
+              <ReAttributeDropdown
                 isUserAttribute
                 items={attr.actions}
                 onClick={action => {
