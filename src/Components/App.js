@@ -6,10 +6,10 @@ import ReContactView from './Views/ReContactView'
 import ReUserView from './Views/ReUserView'
 import ReShareView from './Views/ReShareView'
 import ReGroupView from './Views/ReGroupView'
-import ReBulkShare from './Share/ReBulkShare'
 import ReGroupInvite from './Group/ReGroupInvite'
+import ReImportInvite from './Group/ReImportInvite'
 
-import './App.scss'
+import './App.global.scss'
 
 const App = props => {
   useEffect(() => {
@@ -32,9 +32,9 @@ const App = props => {
         <Route path="/contact/:uuid" component={ReContactView} />
         <Route path="/profile" exact component={ReUserView} />
         <Route path="/share" exact component={ReShareView} />
-        <Route path="/share/bulk" exact component={ReBulkShare} />
         <Route path="/group/:uuid" exact component={ReGroupView} />
         <Route path="/group/:uuid/invite" component={ReGroupInvite} />
+        <Route path="/group/:uuid/import" component={ReImportInvite} />
       </>
     </div>
   )

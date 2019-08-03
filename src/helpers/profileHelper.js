@@ -58,6 +58,15 @@ export const updateTags = (contact, tag) => {
   return contact
 }
 
+export const combineTags = tags => {
+  return tags.reduce((tag, t, idx) => {
+    if (idx === tags.length - 1) {
+      return `${tag}${t}`
+    }
+    return `${tag}${t} | `
+  }, '')
+}
+
 export const buildSelectedList = (list, selectedUuids) => {
   return list.map(({ ...item }) => {
     const selected = selectedUuids.includes(item.uuid)

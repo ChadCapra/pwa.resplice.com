@@ -43,7 +43,7 @@ const ReDropdown: FC<Props> = ({ type, title, list, onSelect }) => {
         <ul className="re-dropdown-list">
           {list.map((item, idx) => {
             return (
-              <li key={idx} className=" flex--center list-item">
+              <li key={idx} className="list-item">
                 {item}
               </li>
             )

@@ -33,7 +33,10 @@ import {
   REMOVE_MODERATORS_FAILURE,
   GROUP_SHARE_ERROR,
   LEAVE_GROUP_FAILURE,
-  ADD_GROUP_ATTRIBUTE_SUCCESS
+  ADD_GROUP_ATTRIBUTE_SUCCESS,
+  IMPORT_CONTACTS,
+  IMPORT_CONTACTS_SUCCESS,
+  IMPORT_CONTACTS_FAILURE
 } from '../actions/types'
 
 import {
@@ -50,7 +53,9 @@ const INITIAL_STATE = {
   requested_at: null,
   groups: null,
   types: null,
-  createdGroupUuid: null
+  createdGroupUuid: null,
+  importLoading: false,
+  importingContacts: null
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -66,6 +71,8 @@ export default (state = INITIAL_STATE, action) => {
     case REMOVE_MODERATORS:
     case LEAVE_GROUP:
       return { ...state, loading: true }
+    case IMPORT_CONTACTS:
+      return { ...state, importLoading: true }
 
     case FETCH_ATTRIBUTE_TYPES_SUCCESS:
       return { ...state, types: action.payload }
@@ -156,6 +163,12 @@ export default (state = INITIAL_STATE, action) => {
         loading: false,
         groups: removeProfile({ ...state.groups }, action.payload.uuid)
       }
+    case IMPORT_CONTACTS_SUCCESS:
+      return {
+        ...state,
+        importLoading: false,
+        importingContacts: action.payload
+      }
 
     case FETCH_GROUP_LIST_FAILURE:
     case FETCH_GROUP_FAILURE:
@@ -169,6 +182,8 @@ export default (state = INITIAL_STATE, action) => {
     case GROUP_SHARE_ERROR:
     case LEAVE_GROUP_FAILURE:
       return { ...state, loading: false, error: action.payload.message }
+    case IMPORT_CONTACTS_FAILURE:
+      return { ...state, importLoading: false, error: action.payload }
     default:
       return state
   }

@@ -6,9 +6,10 @@ import './avatar.scss'
 interface Props {
   avatar: string
   uuid: string
+  selected?: boolean
 }
 
-const ReAvatar = ({ avatar, uuid, ...props }: Props) => {
+const ReAvatar = ({ avatar, uuid, selected, ...props }: Props) => {
   if (avatar) {
     return (
       <div

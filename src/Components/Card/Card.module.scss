@@ -1,0 +1,23 @@
+.Card {
+  margin: 24px;
+  max-width: 575px;
+  border-radius: 10px;
+  box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.CardHeader {
+  color: #1bbc9b;
+  font-size: 24px;
+  font-weight: normal;
+  border-bottom: 1px solid #e5e5e5;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 16px;
+  &.NoBorder {
+    border-bottom: none;
+  }
+}
+
+.CardBody {
+  padding: 16px;
+}

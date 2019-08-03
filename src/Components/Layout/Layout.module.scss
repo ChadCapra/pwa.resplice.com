@@ -1,0 +1,18 @@
+.view {
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.viewHeader {
+  flex: 0;
+}
+
+.viewBody {
+  flex: 1;
+  overflow-y: auto;
+}

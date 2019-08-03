@@ -354,7 +354,6 @@ $fontSize: 60px;
   border-radius: 10px;
   box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.15);
   & .list-item {
-    padding: 18px;
     transition: 0.2s all ease;
     cursor: pointer;
     justify-content: flex-start;
@@ -366,6 +365,9 @@ $fontSize: 60px;
     &:hover {
       color: white;
       background-color: #1bbc9b;
+      & svg {
+        fill: white;
+      }
     }
   }
   & .list-item:first-child {
