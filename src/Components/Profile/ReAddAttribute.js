@@ -52,7 +52,7 @@ const ReAddAttribute = ({ groupUuid, onAttributeAdd, types }) => {
       }, 500)
     } else {
       // Reset the attribute type
-      setAttrType({})
+      setAttrType(null)
     }
   }
 
