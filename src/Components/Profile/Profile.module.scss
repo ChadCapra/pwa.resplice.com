@@ -16,7 +16,6 @@
     padding: 0 16px;
   }
 }
-
 .Summary {
   width: calc(100% - 68px);
   & div:first-of-type {
@@ -29,8 +28,7 @@
   flex: 0 0 80px;
   color: lighten($text, 30%);
 }
-
-.Text {
+.SummaryText {
   min-width: 0;
   & span {
     white-space: nowrap;

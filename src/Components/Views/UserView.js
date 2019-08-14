@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom'
 
 import SwipeLayout from '../Layout/SwipeLayout'
 import Header from '../Header/Header'
-import UserProfile from '../User/ReUserProfile'
+import UserProfile from '../User/UserProfile'
 import UserSettings from '../User/ReUserSettings'
 import RePlusFAB from '../Button/RePlusFAB'
 import ReAddAttribute from '../Profile/ReAddAttribute'

@@ -49,7 +49,7 @@ const ProfileSummary = ({
           pad={pad}
         />
         <FlexBox
-          className={styles.Text}
+          className={styles.SummaryText}
           direction="column"
           justify="center"
           onClick={() => onClick(uuid)}
