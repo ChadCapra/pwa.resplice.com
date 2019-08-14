@@ -39,10 +39,16 @@ export const importGoogleContacts = () => async dispatch => {
           const avatar = connection.photos && connection.photos[0].url
           const emails =
             connection.emailAddresses &&
-            connection.emailAddresses.map(email => email.value)
+            connection.emailAddresses.map(email => ({
+              value: email.value,
+              invited: false
+            }))
           const phones =
             connection.phoneNumbers &&
-            connection.phoneNumbers.map(phone => phone.value)
+            connection.phoneNumbers.map(phone => ({
+              value: phone.value,
+              invited: false
+            }))
           return {
             name,
             avatar,

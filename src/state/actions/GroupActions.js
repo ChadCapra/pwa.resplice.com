@@ -101,7 +101,7 @@ export const editGroupAvatar = (uuid, avatar) => async dispatch => {
   dispatch({ type: EDIT_GROUP_NAME })
 
   try {
-    const response = await api.patch(`/group/${uuid}edit_avatar`, { avatar })
+    const response = await api.patch(`/group/${uuid}/edit_avatar`, { avatar })
     dispatch({
       type: EDIT_GROUP_NAME_SUCCESS,
       payload: { uuid, avatar: response.data.ok }
@@ -111,12 +111,12 @@ export const editGroupAvatar = (uuid, avatar) => async dispatch => {
   }
 }
 
-export const inviteMembers = (uuid, members) => async dispatch => {
+export const inviteMember = (uuid, phone_or_email) => async dispatch => {
   dispatch({ type: INVITE_MEMBERS })
 
   try {
-    await api.patch(`group/${uuid}/invite_members`, {
-      invitees: members
+    await api.patch(`group/${uuid}/invite_member`, {
+      phone_or_email
     })
     dispatch({ type: INVITE_MEMBERS_SUCCESS })
     dispatch(fetchGroup(uuid))

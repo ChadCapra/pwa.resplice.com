@@ -1,5 +1,4 @@
 import React, { FC, useState } from 'react'
-import ReactDOM from 'react-dom'
 
 import MdArrowDropdown from 'react-ionicons/lib/MdArrowDropdown'
 import MdArrowDropup from 'react-ionicons/lib/MdArrowDropup'

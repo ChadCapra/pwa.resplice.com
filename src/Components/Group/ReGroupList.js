@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 
-import ReProfileList from '../Profile/ReProfileList'
+import ProfileList from '../Profile/ProfileList'
 import ReCreateGroup from './ReCreateGroup'
 import RePlusFAB from '../Button/RePlusFAB'
 import FABActionMenu from '../Util/FABActionMenu'
@@ -76,7 +76,7 @@ const ReGroupList = ({ groups, search: { query, tags } }) => {
 
   return (
     <>
-      <ReProfileList
+      <ProfileList
         list={filteredGroups()}
         handleSelect={handleSelect}
         handleDeselect={handleDeselect}

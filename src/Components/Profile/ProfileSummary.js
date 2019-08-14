@@ -12,11 +12,14 @@ import { combineTags, getTimeRemaining } from '../../helpers'
 const ProfileSummary = ({
   profile: { uuid, name, avatar, tags, pending_expiration, admin, selected },
   groupName,
-  pad
+  pad,
+  handleSelect,
+  handleDeselect,
+  onClick,
+  ...props
 }) => {
   const summaryStyle = cx(styles.ProfileSummary, {
-    [styles.Pending]: pending_expiration,
-    [styles.Pad]: pad
+    [styles.Pending]: pending_expiration
   })
 
   const infoText = (() => {
@@ -30,15 +33,37 @@ const ProfileSummary = ({
   })()
 
   return (
-    <FlexBox className={summaryStyle} justify="between" align="center">
+    <FlexBox
+      className={summaryStyle}
+      justify="between"
+      align="center"
+      {...props}
+    >
       <FlexBox className={styles.Summary} justify="start" align="center">
-        <ReAvatarThumbnail uuid={uuid} avatar={avatar} selected={selected} />
-        <FlexBox className={styles.Text} direction="column" justify="center">
+        <ReAvatarThumbnail
+          uuid={uuid || name}
+          avatar={avatar}
+          selected={selected}
+          onSelect={handleSelect}
+          onDeselect={handleDeselect}
+          pad={pad}
+        />
+        <FlexBox
+          className={styles.Text}
+          direction="column"
+          justify="center"
+          onClick={() => onClick(uuid)}
+        >
           <span>{name}</span>
           {infoText && <span>{infoText}</span>}
         </FlexBox>
       </FlexBox>
-      <FlexBox className={styles.SummaryRight} justify="end" align="center">
+      <FlexBox
+        className={styles.SummaryRight}
+        justify="end"
+        align="center"
+        onClick={() => onClick(uuid)}
+      >
         {(pending_expiration && (
           <span>
             Expires in{' '}

@@ -2,8 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
-// import { offline } from '@redux-offline/redux-offline'
-// import offlineConfig from '@redux-offline/redux-offline/lib/defaults'
 import reduxThunk from 'redux-thunk'
 
 import Secure from './Secure'

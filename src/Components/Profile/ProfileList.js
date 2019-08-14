@@ -1,18 +1,16 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Redirect } from 'react-router-dom'
 import { FixedSizeList as VList } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
 
-import ReProfileItem from './ReProfileItem'
+import ProfileSummary from './ProfileSummary'
 import AlphaNumericSlider from '../Util/AlphaNumericSlider'
 
-class ReProfileList extends Component {
+import styles from './Profile.module.scss'
+
+class ProfileList extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      toBulkShare: false
-    }
     this.listRef = React.createRef()
   }
 
@@ -22,22 +20,21 @@ class ReProfileList extends Component {
 
   renderProfileItem = ({ index, style }) => {
     const profile = this.props.list[index]
-
     return (
-      <ReProfileItem
+      <ProfileSummary
         profile={profile}
         style={style}
-        onSelect={this.props.handleSelect}
-        onDeselect={this.props.handleDeselect}
+        pad
+        onClick={this.props.onClick}
+        handleSelect={this.props.handleSelect}
+        handleDeselect={this.props.handleDeselect}
       />
     )
   }
 
   render() {
-    if (this.state.toBulkShare) return <Redirect push to="/share/bulk" />
-
     return (
-      <div className="re-profile-list">
+      <div className={styles.ProfileList}>
         <AutoSizer>
           {({ height, width }) => (
             <VList
@@ -65,10 +62,10 @@ class ReProfileList extends Component {
   }
 }
 
-ReProfileList.propTypes = {
+ProfileList.propTypes = {
   list: PropTypes.array.isRequired,
   handleSelect: PropTypes.func.isRequired,
   handleDeselect: PropTypes.func.isRequired
 }
 
-export default ReProfileList
+export default ProfileList

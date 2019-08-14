@@ -1,0 +1,33 @@
+@import '../../config.scss';
+
+.Dropdown {
+  position: fixed;
+  width: 220px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: $card-shadow;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  z-index: 10;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+
+  & li {
+    padding: 16px;
+    transition: 0.2s ease all;
+
+    &:hover {
+      color: white;
+      background-color: $brand;
+    }
+  }
+  & li:first-child {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  & li:last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+}

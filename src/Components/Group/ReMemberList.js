@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router'
 
-import ReProfileList from '../Profile/ReProfileList'
+import ProfileList from '../Profile/ProfileList'
 import FABActionMenu from '../Util/FABActionMenu'
 import RePlusFAB from '../Button/RePlusFAB'
 
@@ -36,7 +36,7 @@ const ReMemberList = ({ ruuid, members }) => {
 
   return (
     <>
-      <ReProfileList
+      <ProfileList
         list={memberList}
         handleSelect={handleSelect}
         handleDeselect={handleDeselect}

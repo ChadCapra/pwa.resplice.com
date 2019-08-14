@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import ReSearch from '../Form/ReSearch'
 import ReSearchTags from '../Util/ReSearchTags'
-import ReProfileList from '../Profile/ReProfileList'
+import ReProfileList from '../Profile/ProfileList'
 
 import { alphabetSort } from '../../helpers'
 
