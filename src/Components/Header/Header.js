@@ -1,18 +1,18 @@
-import React, { memo } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import MdExit from 'react-ionicons/lib/MdExit'
 import MdHome from 'react-ionicons/lib/MdHome'
 
-import styles from './Header.module.css'
+import styles from './Header.module.scss'
 
-const Header = memo(({ children, icon }) => {
+const Header = React.memo(({ children, icon, onIconClick }) => {
   const renderIcon = () => {
     switch (icon) {
       case 'exit':
-        return <MdExit fontSize="2em" color={styles.Brand} />
+        return <MdExit fontSize="2.5em" color="#1bbc9b" onClick={onIconClick} />
       case 'home':
-        return <MdHome fontSize="2em" color={styles.Brand} />
+        return <MdHome fontSize="2.5em" color="#1bbc9b" onClick={onIconClick} />
       default:
         throw new Error('Icon prop must be `exit` or `home`')
     }

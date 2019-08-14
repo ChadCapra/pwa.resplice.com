@@ -32,7 +32,7 @@ const ReHeader = ({
   const [toUser, setToUser] = useState(false)
   const [searching, setSearching] = useState(false)
 
-  if (toUser) return <Redirect push to="/profile" />
+  if (toUser) return <Redirect push to="/user" />
 
   const toggleTag = tag => {
     const newTags = [...search.tags]

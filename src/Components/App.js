@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom'
 
 import ReHomeView from './Views/ReHomeView'
 import ReContactView from './Views/ReContactView'
-import ReUserView from './Views/ReUserView'
+import UserView from './Views/UserView'
 import ReShareView from './Views/ReShareView'
 import ReGroupView from './Views/ReGroupView'
 import ReGroupInvite from './Group/ReGroupInvite'
@@ -11,7 +11,7 @@ import ReImportInvite from './Group/ReImportInvite'
 
 import './App.global.scss'
 
-const App = props => {
+const App = _props => {
   useEffect(() => {
     window.addEventListener('beforeinstallprompt', e => {
       e.preventDefault()
@@ -30,7 +30,7 @@ const App = props => {
       <>
         <Route path="/" exact component={ReHomeView} />
         <Route path="/contact/:uuid" component={ReContactView} />
-        <Route path="/profile" exact component={ReUserView} />
+        <Route path="/user" exact component={UserView} />
         <Route path="/share" exact component={ReShareView} />
         <Route path="/group/:uuid" exact component={ReGroupView} />
         <Route path="/group/:uuid/invite" component={ReGroupInvite} />

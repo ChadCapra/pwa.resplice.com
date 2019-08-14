@@ -1,8 +1,14 @@
 @import '../../config.scss';
 
 .Header {
+  position: relative;
   padding: 16px;
-  height: 60px;
+  min-height: 24px;
+  & > svg {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+  }
 }
 .Brand {
   color: $brand;

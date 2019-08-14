@@ -9,10 +9,6 @@ export default class ViewLayout extends Component {
   static Header = Header
   static Body = Body
 
-  shouldComponentUpdate() {
-    return false
-  }
-
   render() {
     const { children } = this.props
     const header = children.find(child => child.type === Header)
