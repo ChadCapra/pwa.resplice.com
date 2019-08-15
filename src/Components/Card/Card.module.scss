@@ -3,10 +3,11 @@
 .Card {
   width: 90%;
   margin-top: 24px;
-  margin: 32px auto;
+  margin: 0 auto;
+  margin-bottom: 32px;
   max-width: 575px;
   border-radius: 10px;
-  box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: $card-shadow-2;
 
   & .Attribute:first-child {
     margin-top: 0;

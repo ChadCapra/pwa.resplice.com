@@ -7,19 +7,22 @@ import fakeQR from '../../assets/fakeQR.png'
 import ReShareCamera from './ReShareCamera'
 import ReModal from '../Modal/ReModal'
 import ReInviteModal from './ReInviteModal'
+import FlexBox from '../Layout/FlexBox'
+
+import styles from './Share.module.scss'
 
 const CameraFab = ({ onClick }) => {
   return (
-    <div className="camera-fab" onClick={onClick}>
+    <div className={styles.CameraFAB} onClick={onClick}>
       <MdCamera color="#fff" fontSize="3em" />
     </div>
   )
 }
 
-const QrLoading = ({ expiry }) => {
+const QrCountdown = ({ expiry }) => {
   return (
-    <div className="qr-outer-loading">
-      <div className="qr-inner-loading" />
+    <div className={styles.QrCountdownOuter}>
+      <div className={styles.QrCountdownInner} />
     </div>
   )
 }
@@ -27,7 +30,7 @@ const QrLoading = ({ expiry }) => {
 /**
  * Share list component to show current share list
  */
-const ReInvite = ({ qrCode }) => {
+const Invite = ({ qrCode }) => {
   const [showInvite, setShowInvite] = useState(false)
   const [showCamera, setShowCamera] = useState(false)
 
@@ -35,23 +38,25 @@ const ReInvite = ({ qrCode }) => {
   return showCamera ? (
     <ReShareCamera onClose={() => setShowCamera(false)} />
   ) : (
-    <div className="re-invite">
-      <div className="qr-code">
-        <div
-          className="qr-code-container"
-          style={{ backgroundImage: `url(${fakeQR})` }}
-        />
-        <h1 className="qr-code-pin">
-          {`${pin.toString().substring(0, 3)} ${pin.toString().substring(3)}`}
-          <QrLoading />
-        </h1>
-      </div>
+    <>
+      <FlexBox fill direction="column" style={{ postion: 'relative' }}>
+        <FlexBox direction="column" justify="center" align="center">
+          <div
+            className={styles.QrCodeContainer}
+            style={{ backgroundImage: `url(${fakeQR})` }}
+          />
+          <h1 className={styles.QrCodePin}>
+            {`${pin.toString().substring(0, 3)} ${pin.toString().substring(3)}`}
+            <QrCountdown />
+          </h1>
+        </FlexBox>
 
-      <div className="invite-attr-link" onClick={() => setShowInvite(true)}>
-        Invite via phone or email
-      </div>
+        <span className={styles.InviteLink} onClick={() => setShowInvite(true)}>
+          Invite via phone or email
+        </span>
 
-      <CameraFab onClick={() => setShowCamera(true)} />
+        <CameraFab onClick={() => setShowCamera(true)} />
+      </FlexBox>
 
       <ReModal
         show={showInvite}
@@ -60,7 +65,7 @@ const ReInvite = ({ qrCode }) => {
       >
         <ReInviteModal onInvite={() => setShowInvite(false)} />
       </ReModal>
-    </div>
+    </>
   )
 }
 
@@ -68,8 +73,8 @@ const mapStateToProps = state => {
   return { qrCode: state.userState.profile.qrCode }
 }
 
-ReInvite.propTypes = {
+Invite.propTypes = {
   qrCode: PropTypes.string
 }
 
-export default connect(mapStateToProps)(ReInvite)
+export default connect(mapStateToProps)(Invite)

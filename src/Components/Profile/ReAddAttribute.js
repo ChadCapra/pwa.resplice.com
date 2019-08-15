@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import ReAddAttributeForm from './ReAddAttributeForm'
@@ -84,4 +85,10 @@ ReAddAttribute.propTypes = {
   types: PropTypes.object.isRequired
 }
 
-export default ReAddAttribute
+const mapStateToProps = state => {
+  return {
+    types: state.userState.types
+  }
+}
+
+export default connect(mapStateToProps)(ReAddAttribute)

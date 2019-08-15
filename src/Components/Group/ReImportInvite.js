@@ -85,7 +85,8 @@ const ReImportInvite = ({ match, importingContacts, inviteMember }) => {
                         value: { email: email.value },
                         actions: emailActions
                       }}
-                      immutable
+                      immutableActions
+                      noDropdown
                     >
                       <Attribute.RightChild>
                         <Button
@@ -112,7 +113,8 @@ const ReImportInvite = ({ match, importingContacts, inviteMember }) => {
                         value: { phone: phone.value },
                         actions: phoneActions
                       }}
-                      immutable
+                      immutableActions
+                      noDropdown
                     >
                       <Attribute.RightChild>
                         <Button

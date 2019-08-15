@@ -4,7 +4,7 @@ const Offline = () => {
   return (
     <div>
       Looks like you don't have a network connection.. Connect to wifi or data
-      and refresh Offline support coming soon!
+      and refresh. Offline support coming soon!
     </div>
   )
 }

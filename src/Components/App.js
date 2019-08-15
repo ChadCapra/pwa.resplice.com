@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom'
 import ReHomeView from './Views/ReHomeView'
 import ReContactView from './Views/ReContactView'
 import UserView from './Views/UserView'
-import ReShareView from './Views/ReShareView'
+import ShareView from './Views/ShareView'
 import ReGroupView from './Views/ReGroupView'
 import ReGroupInvite from './Group/ReGroupInvite'
 import ReImportInvite from './Group/ReImportInvite'
@@ -31,7 +31,7 @@ const App = _props => {
         <Route path="/" exact component={ReHomeView} />
         <Route path="/contact/:uuid" component={ReContactView} />
         <Route path="/user" exact component={UserView} />
-        <Route path="/share" exact component={ReShareView} />
+        <Route path="/share" exact component={ShareView} />
         <Route path="/group/:uuid" exact component={ReGroupView} />
         <Route path="/group/:uuid/invite" component={ReGroupInvite} />
         <Route path="/group/:uuid/import" component={ReImportInvite} />

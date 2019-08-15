@@ -21,8 +21,13 @@ export default class Attribute extends Component {
 
   attributeRef = createRef()
 
+  onSelect = idx => {
+    const action = this.props.attribute.actions[idx]
+    this.props.handleAction(action.name, this.props.attribute)
+  }
+
   render() {
-    const { children, attribute, immutable } = this.props
+    const { children, attribute, immutableActions, noDropdown } = this.props
     let childArr = []
     if (children && typeof children !== Array) {
       childArr.push(children)
@@ -31,6 +36,14 @@ export default class Attribute extends Component {
     }
     const leftChild = childArr.find(child => child.type === LeftChild)
     const rightChild = childArr.find(child => child.type === RightChild)
+    const dropdownActions = attribute.actions.map(action => {
+      return (
+        <FlexBox direction="row" justify="start" align="center">
+          <ActionIcon name={action.icon} fill="#1bbc9b" width="2em" />
+          <span style={{ marginLeft: '8px' }}>{action.display_name}</span>
+        </FlexBox>
+      )
+    })
     return (
       <div className={styles.Attribute}>
         {leftChild ? (
@@ -46,33 +59,33 @@ export default class Attribute extends Component {
           <FlexBox justify="start" align="center" className={styles.Left}>
             <ActionIcon
               name={attribute.actions[0].icon}
-              fill={immutable ? '#C4C4C4' : '#1bbc9b'}
+              fill={immutableActions ? '#C4C4C4' : '#1bbc9b'}
               width="2.5em"
             />
           </FlexBox>
         )}
-        <FlexBox
-          direction="column"
-          justify="center"
-          align="start"
-          className={styles.Middle}
-          ref={this.attributeRef}
-          onClick={() =>
-            this.setState({ showDropdown: !this.state.showDropdown })
-          }
-        >
-          <span className={styles.Name}>{attribute.name}</span>
-          <span className={styles.Value}>
-            {formatAttrValues(attribute.value)}
-          </span>
-        </FlexBox>
-        {!immutable && this.state.showDropdown && (
+        <div className={styles.Middle} ref={this.attributeRef}>
+          <FlexBox
+            direction="column"
+            justify="center"
+            align="start"
+            onClick={() =>
+              this.setState({ showDropdown: !this.state.showDropdown })
+            }
+          >
+            <span className={styles.Name}>{attribute.name}</span>
+            <span className={styles.Value}>
+              {formatAttrValues(attribute.value)}
+            </span>
+          </FlexBox>
+        </div>
+        {!noDropdown && this.state.showDropdown && (
           <Dropdown
             show={this.state.showDropdown}
             parent={this.attributeRef.current}
-            items={['item 1', 'item 2', 'item 3', 'item 4']}
+            items={dropdownActions}
             close={() => this.setState({ showDropdown: false })}
-            onSelect={idx => console.log(idx)}
+            onSelect={this.onSelect}
           />
         )}
         {rightChild ? (
@@ -83,7 +96,7 @@ export default class Attribute extends Component {
           <FlexBox justify="end" align="center" className={styles.Right}>
             <ActionIcon
               name={attribute.actions[1].icon}
-              fill={immutable ? '#C4C4C4' : '#1bbc9b'}
+              fill={immutableActions ? '#C4C4C4' : '#1bbc9b'}
               width="2.5em"
             />
           </FlexBox>

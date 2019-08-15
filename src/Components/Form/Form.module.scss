@@ -14,12 +14,15 @@
   cursor: pointer;
 
   & li {
-    padding: 16px;
+    padding: 8px;
     transition: 0.2s ease all;
 
     &:hover {
       color: white;
       background-color: $brand;
+      & svg {
+        fill: white;
+      }
     }
   }
   & li:first-child {

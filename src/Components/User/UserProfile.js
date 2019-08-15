@@ -3,14 +3,14 @@ import { connect } from 'react-redux'
 
 import FlexBox from '../Layout/FlexBox'
 import Avatar from '../Profile/Avatar/ReAvatar'
-import styles from './User.module.scss'
-import ViewCard from '../Card/ViewCard'
-import CardList from '../Card/CardList'
+import CardList from './CardList'
 import ReUserRanks from './ReUserRanks'
 import ReModal from '../Modal/ReModal'
 import ReEditAttribute from '../Profile/ReEditAttribute'
 import ReVerifyAttribute from '../Profile/ReVerifyAttribute'
 import { ReactComponent as Shield } from '../../assets/Copper_3.svg'
+
+import styles from './User.module.scss'
 
 import { deleteAttribute } from '../../state/actions'
 import { handleAttributeAction } from '../../helpers'
@@ -80,7 +80,6 @@ const UserProfile = ({
 
         <CardList
           list={Object.entries(collections)}
-          Card={ViewCard}
           handleAction={handleAction}
         />
       </FlexBox>
