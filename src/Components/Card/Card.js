@@ -6,27 +6,26 @@ import styles from './Card.module.scss'
 const Header = () => {}
 const Body = () => {}
 
-export default class CardLayout extends Component {
+export default class Card extends Component {
   static Header = Header
   static Body = Body
 
-  shouldComponentUpdate() {
-    return false
-  }
-
   render() {
-    const { children, border } = this.props
+    const { children, pending, border } = this.props
     const header = children.find(child => child.type === Header)
     const body = children.find(child => child.type === Body)
+    const CardStyle = cx(styles.Card, {
+      [styles.Pending]: pending
+    })
 
-    const headerStyle = cx(styles.CardHeader, {
+    const HeaderStyle = cx(styles.CardHeader, {
       [styles.NoBorder]: !border
     })
 
     return (
-      <div className={styles.Card}>
+      <div className={CardStyle}>
         {header ? (
-          <div className={headerStyle}>{header.props.children}</div>
+          <div className={HeaderStyle}>{header.props.children}</div>
         ) : null}
         {body ? (
           <div className={styles.CardBody}>{body.props.children}</div>

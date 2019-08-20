@@ -9,6 +9,8 @@ import RePlusFAB from '../Button/RePlusFAB'
 import ReAddAttribute from '../Profile/ReAddAttribute'
 import ReModal from '../Modal/ReModal'
 
+import '../User/user.scss'
+
 const UserView = () => {
   const [toHome, setToHome] = useState(false)
   const [showAddAttribute, setShowAddAttribute] = useState(false)

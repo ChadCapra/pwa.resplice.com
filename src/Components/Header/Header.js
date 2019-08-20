@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import MdExit from 'react-ionicons/lib/MdExit'
+import MdClose from 'react-ionicons/lib/MdClose'
 import MdHome from 'react-ionicons/lib/MdHome'
 
 import styles from './Header.module.scss'
@@ -11,6 +12,10 @@ const Header = React.memo(({ children, icon, onIconClick }) => {
     switch (icon) {
       case 'exit':
         return <MdExit fontSize="2.5em" color="#1bbc9b" onClick={onIconClick} />
+      case 'close':
+        return (
+          <MdClose fontSize="2.5em" color="#1bbc9b" onClick={onIconClick} />
+        )
       case 'home':
         return <MdHome fontSize="2.5em" color="#1bbc9b" onClick={onIconClick} />
       default:
@@ -27,7 +32,7 @@ const Header = React.memo(({ children, icon, onIconClick }) => {
 })
 
 Header.propTypes = {
-  icon: PropTypes.oneOf(['exit', 'home'])
+  icon: PropTypes.oneOf(['exit', 'close', 'home'])
 }
 
 export default Header

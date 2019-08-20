@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Route } from 'react-router-dom'
 
 import ReHomeView from './Views/ReHomeView'
-import ReContactView from './Views/ReContactView'
+import ContactView from './Views/ContactView'
 import UserView from './Views/UserView'
 import ShareView from './Views/ShareView'
 import ReGroupView from './Views/ReGroupView'
@@ -29,7 +29,7 @@ const App = _props => {
     <div className="App">
       <>
         <Route path="/" exact component={ReHomeView} />
-        <Route path="/contact/:uuid" component={ReContactView} />
+        <Route path="/contact/:uuid" component={ContactView} />
         <Route path="/user" exact component={UserView} />
         <Route path="/share" exact component={ShareView} />
         <Route path="/group/:uuid" exact component={ReGroupView} />

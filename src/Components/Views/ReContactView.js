@@ -14,7 +14,7 @@ import {
 import { buildPendingAttributeValues } from '../../helpers'
 
 import ReContactProfile from '../Contact/ReContactProfile'
-import ReContactShares from '../Contact/ReContactShares'
+import ReContactShares from '../Contact/ContactShares'
 import ReHeader from '../Header/ReHeader'
 import ReProfileLoading from '../Loading/ReProfileLoading'
 import ReProfileError from '../Profile/ReProfileError'

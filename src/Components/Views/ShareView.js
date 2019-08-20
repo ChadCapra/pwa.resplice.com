@@ -3,8 +3,10 @@ import { Redirect } from 'react-router-dom'
 
 import SwipeLayout from '../Layout/SwipeLayout'
 import Header from '../Header/Header'
-import Invite from '../Share/ReInvite'
-import ShareAttributes from '../Share/ReShareAttributes'
+import Invite from '../Share/Invite'
+import ShareAttributes from '../Share/ShareAttributes'
+
+import '../Share/share.scss'
 
 const ShareView = () => {
   const [toHome, setToHome] = useState(false)

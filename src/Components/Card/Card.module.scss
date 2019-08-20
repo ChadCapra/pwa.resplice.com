@@ -2,9 +2,7 @@
 
 .Card {
   width: 90%;
-  margin-top: 24px;
-  margin: 0 auto;
-  margin-bottom: 32px;
+  margin: 16px auto;
   max-width: 575px;
   border-radius: 10px;
   box-shadow: $card-shadow-2;
@@ -15,18 +13,27 @@
   & .Attribute:last-child {
     margin-bottom: 0;
   }
+
+  &.Pending {
+    background-color: rgba(108, 125, 213, 0.1);
+    border: 1px solid $neutral-1;
+  }
 }
 
 .CardHeader {
-  color: #1bbc9b;
-  font-size: 24px;
-  font-weight: normal;
   border-bottom: 1px solid #e5e5e5;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   padding: 16px;
   &.NoBorder {
     border-bottom: none;
+  }
+
+  h1 {
+    color: #1bbc9b;
+    font-size: 24px;
+    font-weight: normal;
+    margin: 0;
   }
 }
 
@@ -39,6 +46,12 @@
   flex-direction: row;
   justify-content: space-between;
   margin: 16px 0;
+
+  &.Pending {
+    background-color: rgba(108, 125, 213, 0.1);
+    border: 1px solid $neutral-1;
+    border-radius: 15px;
+  }
 
   & .Left {
     flex: 0 0 50px;

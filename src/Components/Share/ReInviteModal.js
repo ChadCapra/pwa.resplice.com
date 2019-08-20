@@ -10,6 +10,9 @@ import ReInputPhone from '../Form/ReInputPhone'
 import ReShareDropdown from './ReShareDropdown'
 import MdClose from 'react-ionicons/lib/MdClose'
 import ReButton from '../Button/ReButton'
+import FlexBox from '../Layout/FlexBox'
+
+import styles from './Share.module.scss'
 
 const QUERY_TYPES = {
   EMAIL: 'Email',
@@ -35,8 +38,8 @@ const ReInviteModal = ({ loading, inviteContact, onInvite }) => {
   const handleInputChange = value => {
     let numsOnly = /^[+0-9()-\s]+$/
     // eslint-disable-next-line
-    let email = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    if (email.test(value)) {
+    let emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    if (emailReg.test(value)) {
       setQueryType(QUERY_TYPES.EMAIL)
     } else if (numsOnly.test(value) && value.length > 2) {
       if (queryType !== QUERY_TYPES.PHONE && value[0] !== '+') {
@@ -64,10 +67,10 @@ const ReInviteModal = ({ loading, inviteContact, onInvite }) => {
   }
 
   return (
-    <div className="re-invite-modal flex-col--center">
+    <FlexBox direction="column" align="center" justify="center">
       <div className="invite-label">Invite via phone or email</div>
       {!attribute && (
-        <div className="share-list-input-container">
+        <div className={styles.ShareListInputContainer}>
           {queryType === QUERY_TYPES.PHONE ? (
             <ReInputPhone
               label="Phone"
@@ -131,7 +134,7 @@ const ReInviteModal = ({ loading, inviteContact, onInvite }) => {
           Invite
         </ReButton>
       </div>
-    </div>
+    </FlexBox>
   )
 }
 

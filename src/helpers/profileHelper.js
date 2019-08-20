@@ -74,3 +74,15 @@ export const buildSelectedList = (list, selectedUuids) => {
     return item
   })
 }
+
+export const getPendingValues = attributes => {
+  let pendingValues = []
+  Object.values(attributes).forEach(attr => {
+    if (attr.pending_attribute_value) {
+      Object.values(attr.pending_attribute_value).forEach(val =>
+        pendingValues.push(val)
+      )
+    }
+  })
+  return [...new Set(pendingValues)]
+}

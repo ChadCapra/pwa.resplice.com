@@ -44,7 +44,7 @@ export const fetchContact = uuid => async dispatch => {
   dispatch({ type: FETCH_CONTACT })
 
   try {
-    const response = await api.get(`/contact/${uuid}`)
+    const response = await mockApi.get(`/contact/${uuid}`)
     const {
       ok: { attributes, shares, ...profile },
       requested_at

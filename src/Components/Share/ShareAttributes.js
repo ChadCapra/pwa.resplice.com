@@ -2,8 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { enableQrShare, disableQrShare } from '../../state/actions'
 
-import CardList from '../Card/CardList'
-import ShareCard from '../Card/ShareCard'
+import CardList from './CardList'
+import FlexBox from '../Layout/FlexBox'
 
 const ReShareAttributes = ({ collections, enableQrShare, disableQrShare }) => {
   const toggleShare = (on, uuid) => {
@@ -12,16 +12,13 @@ const ReShareAttributes = ({ collections, enableQrShare, disableQrShare }) => {
   }
 
   return (
-    <div className="share-attributes">
-      <div className="share-attributes-body">
-        <CardList
-          list={Object.entries(collections)}
-          Card={ShareCard}
-          toggleKey="qr_sharable"
-          toggleAttribute={toggleShare}
-        />
-      </div>
-    </div>
+    <FlexBox direction="column" align="center" style={{ padding: '1.5em 0' }}>
+      <CardList
+        list={Object.entries(collections)}
+        toggleKey="qr_sharable"
+        toggleAttribute={toggleShare}
+      />
+    </FlexBox>
   )
 }
 

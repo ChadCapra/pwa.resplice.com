@@ -4,6 +4,7 @@ import ActionIcon from '../Util/ActionIcon'
 import FlexBox from '../Layout/FlexBox'
 import Dropdown from '../Form/Dropdown'
 
+import cx from 'classnames'
 import styles from './Card.module.scss'
 
 import { formatAttrValues } from '../../helpers'
@@ -27,7 +28,18 @@ export default class Attribute extends Component {
   }
 
   render() {
-    const { children, attribute, immutableActions, noDropdown } = this.props
+    const {
+      children,
+      attribute,
+      immutableActions,
+      pending,
+      noDropdown
+    } = this.props
+
+    const AttributeStyle = cx(styles.Attribute, {
+      [styles.Pending]: pending
+    })
+
     let childArr = []
     if (children && typeof children !== Array) {
       childArr.push(children)
@@ -36,6 +48,7 @@ export default class Attribute extends Component {
     }
     const leftChild = childArr.find(child => child.type === LeftChild)
     const rightChild = childArr.find(child => child.type === RightChild)
+
     const dropdownActions = attribute.actions.map(action => {
       return (
         <FlexBox direction="row" justify="start" align="center">
@@ -44,8 +57,9 @@ export default class Attribute extends Component {
         </FlexBox>
       )
     })
+
     return (
-      <div className={styles.Attribute}>
+      <div className={AttributeStyle}>
         {leftChild ? (
           <FlexBox
             direction="column"
@@ -59,7 +73,7 @@ export default class Attribute extends Component {
           <FlexBox justify="start" align="center" className={styles.Left}>
             <ActionIcon
               name={attribute.actions[0].icon}
-              fill={immutableActions ? '#C4C4C4' : '#1bbc9b'}
+              fill={immutableActions || pending ? '#C4C4C4' : '#1bbc9b'}
               width="2.5em"
             />
           </FlexBox>
@@ -96,7 +110,7 @@ export default class Attribute extends Component {
           <FlexBox justify="end" align="center" className={styles.Right}>
             <ActionIcon
               name={attribute.actions[1].icon}
-              fill={immutableActions ? '#C4C4C4' : '#1bbc9b'}
+              fill={immutableActions || pending ? '#C4C4C4' : '#1bbc9b'}
               width="2.5em"
             />
           </FlexBox>

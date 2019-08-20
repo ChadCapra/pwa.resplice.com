@@ -1,29 +1,39 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
-import CardList from '../Card/CardList'
-import ShareCard from '../Card/ShareCard'
+import FlexBox from '../Layout/FlexBox'
+import CardList from '../Share/CardList'
 import ReButton from '../Button/ReButton'
+import CardListLoading from '../Loading/ReCardListLoading'
 
-const ReContactShares = ({
-  profile: { uuid, name, shares },
+import { getPendingValues } from '../../helpers'
+import { addShare, removeShare, deleteContact } from '../../state/actions'
+
+const ContactShares = ({
+  profile: { uuid, name, shares, attributes },
   collections,
-  pendingValues,
   addShare,
   removeShare,
   deleteContact
 }) => {
+  if (!attributes) return <CardListLoading />
+
   const toggleShare = (on, attribute_uuid, share_expiry) => {
     if (on) addShare(uuid, { attribute_uuid, share_expiry })
     else removeShare(uuid, { attribute_uuid, share_expiry })
   }
 
+  const pendingValues = getPendingValues(attributes)
+
   const shareCollections = Object.entries(collections).map(collection => {
-    collection[1] = collection[1].map(attr => {
+    collection[1] = collection[1].map(a => {
+      const attr = { ...a }
       const value = Object.values(attr.value)
         .map(value => value)
         .join('')
       if (pendingValues.length && !pendingValues.includes(value))
-        attr.share_disabled = true
+        attr.shareDisabled = true
+      else attr.shareDisabled = false
       if (shares[attr.uuid]) attr.checked = true
       else attr.checked = false
       return attr
@@ -34,14 +44,13 @@ const ReContactShares = ({
   const numOfShares = Object.values(shares).length
 
   return (
-    <div className="re-contact-shares">
+    <FlexBox direction="column" align="center" style={{ padding: '16px 0' }}>
       <h3>
         <span>{numOfShares}</span> shares with {name}
       </h3>
 
       <CardList
         list={shareCollections}
-        Card={ShareCard}
         toggleKey="checked"
         toggleAttribute={toggleShare}
       />
@@ -55,8 +64,18 @@ const ReContactShares = ({
           Delete Contact
         </ReButton>
       )}
-    </div>
+    </FlexBox>
   )
 }
 
-export default ReContactShares
+const mapStateToProps = (state, ownProps) => {
+  return {
+    collections: state.userState.collections,
+    profile: state.contactState.contacts[ownProps.uuid]
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  { addShare, removeShare, deleteContact }
+)(ContactShares)
