@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 
 import ReSearch from '../Form/ReSearch'
-import ReSearchTags from '../Util/ReSearchTags'
+import ReSearchTags from '../Util/SearchTags'
 import ReProfileList from '../Profile/ProfileList'
 
 import { alphabetSort } from '../../helpers'

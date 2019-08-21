@@ -6,6 +6,7 @@ import ReactSwipe from 'react-swipe'
 
 import cx from 'classnames'
 import styles from './Layout.module.scss'
+import './overrides.scss'
 
 const SwipeLayoutNav = ({ menus, swipeIndex, handleNavClick }) => {
   return (
@@ -41,6 +42,7 @@ const SwipeLayoutBody = React.memo(
           continuous: false,
           callback
         }}
+        // style={{ height: '100%' }}
         ref={ref}
       >
         {body.props.children.map((child, idx) => {

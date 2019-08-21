@@ -18,7 +18,7 @@ import {
 } from '../../state/actions'
 
 import './header.scss'
-import ReSearchTags from '../Util/ReSearchTags'
+import ReSearchTags from '../Util/SearchTags'
 
 const ReHeader = ({
   user: { uuid, avatar, tags },

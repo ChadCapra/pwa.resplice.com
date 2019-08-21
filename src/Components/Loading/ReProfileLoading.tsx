@@ -1,5 +1,4 @@
 import React from 'react'
-import ReHeader from '../Header/ReHeader'
 import ReAvatarLoading from './ReAvatarLoading'
 import ReCardListLoading from './ReCardListLoading'
 

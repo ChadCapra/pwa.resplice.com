@@ -2,8 +2,8 @@ import React from 'react'
 
 import SwipeLayout from '../Layout/SwipeLayout'
 import HomeHeader from '../Header/HomeHeader'
-import ReGroupList from '../Group/ReGroupList'
-import ReContactList from '../Contact/ReContactList'
+import GroupList from '../Group/GroupList'
+import ContactList from '../Contact/ReContactList'
 
 const HomeView = () => {
   return (
@@ -13,8 +13,8 @@ const HomeView = () => {
       </SwipeLayout.Header>
 
       <SwipeLayout.Body>
-        <ReGroupList />
-        <ReContactList />
+        <GroupList />
+        <ContactList />
       </SwipeLayout.Body>
     </SwipeLayout>
   )

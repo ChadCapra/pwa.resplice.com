@@ -30,7 +30,7 @@ const filterByTags = (groups, tags) => {
   )
 }
 
-const ReGroupList = ({ groups, search: { query, tags } }) => {
+const GroupList = ({ groups, search: { query, tags } }) => {
   const [selectedUuids, setSelectedUuids] = useState([])
   const [groupList, setGroupList] = useState(
     buildSelectedList(groups, selectedUuids)
@@ -54,9 +54,7 @@ const ReGroupList = ({ groups, search: { query, tags } }) => {
     setGroupList(buildSelectedList(groups, newSelectedUuids))
   }
 
-  const filteredGroups = () => {
-    return filterByTags(filterByQuery(groupList, query), tags)
-  }
+  const filteredGroups = filterByTags(filterByQuery(groupList, query), tags)
 
   const handleAction = action => {
     switch (action) {
@@ -73,11 +71,10 @@ const ReGroupList = ({ groups, search: { query, tags } }) => {
       default:
     }
   }
-
   return (
     <>
       <ProfileList
-        list={filteredGroups()}
+        list={filteredGroups}
         handleSelect={handleSelect}
         handleDeselect={handleDeselect}
       />
@@ -115,4 +112,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(ReGroupList)
+export default connect(mapStateToProps)(GroupList)

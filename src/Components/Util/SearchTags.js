@@ -1,6 +1,8 @@
 import React from 'react'
 import RePill from './RePill'
 
+import styles from './Util.module.scss'
+
 const ReSearchTags = ({
   tags = ['Work', 'Friends', 'Family', 'Service', 'School'],
   selectedTags,
@@ -8,7 +10,7 @@ const ReSearchTags = ({
   ...props
 }) => {
   return (
-    <div className="re-search-tags" {...props}>
+    <div className={styles.SearchTags} {...props}>
       {tags.map(tag => {
         const selected = selectedTags.includes(tag)
         return (
