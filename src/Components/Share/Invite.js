@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import React, { useState, useEffect } from 'react'
+import { mockApi } from '../../api'
+import { differenceInMilliseconds, addMinutes } from 'date-fns'
 
 import MdCamera from 'react-ionicons/lib/MdCamera'
 import fakeQR from '../../assets/fakeQR.png'
@@ -19,10 +19,13 @@ const CameraFab = ({ onClick }) => {
   )
 }
 
-const QrCountdown = ({ expiry }) => {
+const QrCountdown = ({ timerPercentage }) => {
   return (
     <div className={styles.QrCountdownOuter}>
-      <div className={styles.QrCountdownInner} />
+      <div
+        className={styles.QrCountdownInner}
+        style={{ width: `${timerPercentage}%` }}
+      />
     </div>
   )
 }
@@ -30,11 +33,51 @@ const QrCountdown = ({ expiry }) => {
 /**
  * Share list component to show current share list
  */
-const Invite = ({ qrCode }) => {
+const Invite = () => {
   const [showInvite, setShowInvite] = useState(false)
   const [showCamera, setShowCamera] = useState(false)
+  const [qrCode, setQrCode] = useState('')
+  const [timerPercentage, setTimerPercentage] = useState(100)
 
-  const pin = 362096
+  const fetchQrCode = async () => {
+    const response = await mockApi.post('/user/generate_qr_pin')
+    setQrCode(response.data.ok.qr_pin)
+  }
+
+  const startQrCode = () => {
+    fetchQrCode()
+
+    // Replace with qr_pin_expiry when api is done
+    const nowPlusFive = addMinutes(new Date(), 1)
+    const millisecondsBeforeRefresh = differenceInMilliseconds(
+      nowPlusFive,
+      new Date()
+    )
+
+    let timer = startTimer(millisecondsBeforeRefresh)
+
+    return setInterval(() => {
+      clearInterval(timer)
+      setTimerPercentage(100)
+      fetchQrCode()
+      timer = startTimer(millisecondsBeforeRefresh)
+    }, millisecondsBeforeRefresh)
+  }
+
+  const startTimer = millisecondsBeforeRefresh => {
+    const interval = millisecondsBeforeRefresh / 100
+    return setInterval(() => {
+      setTimerPercentage(timerPercentage => timerPercentage - 1)
+    }, interval)
+  }
+
+  useEffect(() => {
+    let fetchTimer = startQrCode()
+    return () => {
+      clearInterval(fetchTimer)
+    }
+  }, [])
+
   return showCamera ? (
     <ReShareCamera onClose={() => setShowCamera(false)} />
   ) : (
@@ -46,8 +89,12 @@ const Invite = ({ qrCode }) => {
             style={{ backgroundImage: `url(${fakeQR})` }}
           />
           <h1 className={styles.QrCodePin}>
-            {`${pin.toString().substring(0, 3)} ${pin.toString().substring(3)}`}
-            <QrCountdown />
+            {qrCode
+              ? `${qrCode
+                  .toString()
+                  .substring(0, 3)} ${qrCode.toString().substring(3)}`
+              : '000 000'}
+            <QrCountdown timerPercentage={timerPercentage} />
           </h1>
         </FlexBox>
 
@@ -69,12 +116,4 @@ const Invite = ({ qrCode }) => {
   )
 }
 
-const mapStateToProps = state => {
-  return { qrCode: state.userState.profile.qrCode }
-}
-
-Invite.propTypes = {
-  qrCode: PropTypes.string
-}
-
-export default connect(mapStateToProps)(Invite)
+export default Invite
