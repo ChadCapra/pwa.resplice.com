@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { mockApi } from '../../api'
-import { differenceInMilliseconds, addMinutes } from 'date-fns'
+import api from '../../api'
+import { differenceInMilliseconds } from 'date-fns'
 
 import MdCamera from 'react-ionicons/lib/MdCamera'
 import fakeQR from '../../assets/fakeQR.png'
@@ -40,17 +40,15 @@ const Invite = () => {
   const [timerPercentage, setTimerPercentage] = useState(100)
 
   const fetchQrCode = async () => {
-    const response = await mockApi.post('/user/generate_qr_pin')
+    const response = await api.post('/user/generate_qr_pin')
     setQrCode(response.data.ok.qr_pin)
+    return response.data.ok.qr_pin_expiry
   }
 
-  const startQrCode = () => {
-    fetchQrCode()
-
-    // Replace with qr_pin_expiry when api is done
-    const nowPlusFive = addMinutes(new Date(), 1)
+  const startQrCode = async () => {
+    const qrExpiry = await fetchQrCode()
     const millisecondsBeforeRefresh = differenceInMilliseconds(
-      nowPlusFive,
+      new Date(qrExpiry),
       new Date()
     )
 
@@ -82,6 +80,7 @@ const Invite = () => {
       clearInterval(timers.fetchTimer)
       clearInterval(timers.percentTimer)
     }
+    // eslint-disable-next-line
   }, [])
 
   return showCamera ? (
