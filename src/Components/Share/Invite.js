@@ -54,14 +54,19 @@ const Invite = () => {
       new Date()
     )
 
-    let timer = startTimer(millisecondsBeforeRefresh)
+    const timers = {
+      percentTimer: startTimer(millisecondsBeforeRefresh),
+      fetchTimer: null
+    }
 
-    return setInterval(() => {
-      clearInterval(timer)
+    timers.fetchTimer = setInterval(() => {
+      clearInterval(timers.percentTimer)
       setTimerPercentage(100)
       fetchQrCode()
-      timer = startTimer(millisecondsBeforeRefresh)
+      timers.percentTimer = startTimer(millisecondsBeforeRefresh)
     }, millisecondsBeforeRefresh)
+
+    return timers
   }
 
   const startTimer = millisecondsBeforeRefresh => {
@@ -72,9 +77,10 @@ const Invite = () => {
   }
 
   useEffect(() => {
-    let fetchTimer = startQrCode()
+    const timers = startQrCode()
     return () => {
-      clearInterval(fetchTimer)
+      clearInterval(timers.fetchTimer)
+      clearInterval(timers.percentTimer)
     }
   }, [])
 
