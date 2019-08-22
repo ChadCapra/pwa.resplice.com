@@ -33,7 +33,7 @@ const filterByTags = (contacts, tags) => {
 }
 
 const ReContactList = ({ contacts, search: { query, tags } }) => {
-  const [toShare, setToShare] = useState(false)
+  const [toInvite, setToInvite] = useState(false)
   const [contactUuid, setContactUuid] = useState('')
   const [selectedUuids, setSelectedUuids] = useState([])
   const [contactList, setContactList] = useState(
@@ -62,7 +62,7 @@ const ReContactList = ({ contacts, search: { query, tags } }) => {
     return filterByTags(filterByQuery(contactList, query), tags)
   }
 
-  if (toShare) return <Redirect push to="/share" />
+  if (toInvite) return <Redirect push to="/invite" />
   if (contactUuid) return <Redirect push to={`/contact/${contactUuid}`} />
 
   const handleAction = action => {
@@ -92,7 +92,7 @@ const ReContactList = ({ contacts, search: { query, tags } }) => {
       {selecting ? (
         <FABActionMenu count={selectedUuids.length} onClick={handleAction} />
       ) : (
-        <RePlusFAB onClick={() => setToShare(true)} />
+        <RePlusFAB onClick={() => setToInvite(true)} />
       )}
 
       <ReModal

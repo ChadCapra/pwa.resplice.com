@@ -4,7 +4,6 @@ import { Redirect } from 'react-router-dom'
 
 import ReProfileHeaderSummary from '../Profile/ReProfileHeaderSummary'
 import ReDropdown from '../Form/ReDropdown'
-import ReQrCode from '../Profile/ReQrCode'
 import ReExit from '../Util/ReExit'
 import ImportContact from '../Util/ImportContact'
 import ReGroupInviteModal from './ReGroupInviteModal'
@@ -52,7 +51,7 @@ const ReGroupInvite = ({
         </div>
       </div>
 
-      <ReQrCode uuid={match.params.uuid} />
+      {/* <ReQrCode uuid={match.params.uuid} /> */}
 
       <ReModal show={showInviteModal} onClose={() => setShowInviteModal(false)}>
         <ReGroupInviteModal

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import api from '../../api'
 import { differenceInMilliseconds } from 'date-fns'
 
 import MdCamera from 'react-ionicons/lib/MdCamera'
-import fakeQR from '../../assets/fakeQR.png'
-import ReShareCamera from './ReShareCamera'
+import QRCode from 'react-qr-code'
+import ShareCamera from './ShareCamera'
 import ReModal from '../Modal/ReModal'
 import ReInviteModal from './ReInviteModal'
+import QrCodeUnlock from './QrCodeUnlock'
 import FlexBox from '../Layout/FlexBox'
 
 import styles from './Share.module.scss'
@@ -33,9 +35,11 @@ const QrCountdown = ({ timerPercentage }) => {
 /**
  * Share list component to show current share list
  */
-const Invite = () => {
+const Invite = ({ params, uuid }) => {
   const [showInvite, setShowInvite] = useState(false)
   const [showCamera, setShowCamera] = useState(false)
+  const [showUnlock, setShowUnlock] = useState(params.contact ? true : false)
+  const [scannedUuid, setScannedUuid] = useState(params.contact)
   const [qrCode, setQrCode] = useState('')
   const [timerPercentage, setTimerPercentage] = useState(100)
 
@@ -77,6 +81,7 @@ const Invite = () => {
   useEffect(() => {
     const timers = startQrCode()
     return () => {
+      // This may introduce memory leaks despite the cleanup effort below
       clearInterval(timers.fetchTimer)
       clearInterval(timers.percentTimer)
     }
@@ -84,14 +89,25 @@ const Invite = () => {
   }, [])
 
   return showCamera ? (
-    <ReShareCamera onClose={() => setShowCamera(false)} />
+    <ShareCamera
+      onScan={uuid => {
+        setShowCamera(false)
+        setScannedUuid(uuid)
+        setShowUnlock(true)
+      }}
+      onClose={() => setShowCamera(false)}
+    />
   ) : (
     <>
-      <FlexBox fill direction="column" style={{ postion: 'relative' }}>
+      <FlexBox
+        fill
+        direction="column"
+        style={{ postion: 'relative', padding: '16px 0' }}
+      >
         <FlexBox direction="column" justify="center" align="center">
-          <div
-            className={styles.QrCodeContainer}
-            style={{ backgroundImage: `url(${fakeQR})` }}
+          <QRCode
+            value={`https://app.resplice.com/invite?contact=${uuid}`}
+            size={300}
           />
           <h1 className={styles.QrCodePin}>
             {qrCode
@@ -117,8 +133,22 @@ const Invite = () => {
       >
         <ReInviteModal onInvite={() => setShowInvite(false)} />
       </ReModal>
+
+      <ReModal
+        show={showUnlock}
+        headerText="Unlock Contact"
+        onClose={() => setShowUnlock(false)}
+      >
+        <QrCodeUnlock uuid={scannedUuid} />
+      </ReModal>
     </>
   )
 }
 
-export default Invite
+const mapStateToProps = state => {
+  return {
+    uuid: state.userState.profile.uuid
+  }
+}
+
+export default connect(mapStateToProps)(Invite)

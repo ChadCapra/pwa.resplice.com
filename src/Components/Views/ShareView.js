@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
+import qs from 'query-string'
 
 import SwipeLayout from '../Layout/SwipeLayout'
 import Header from '../Header/Header'
@@ -8,10 +9,10 @@ import ShareAttributes from '../Share/ShareAttributes'
 
 import '../Share/share.scss'
 
-const ShareView = () => {
+const ShareView = ({ location }) => {
   const [toHome, setToHome] = useState(false)
-
   if (toHome) return <Redirect push to="/" />
+  const params = qs.parse(location.search)
 
   return (
     <SwipeLayout swipeIndex={0} menus={['Invite', 'Shares']}>
@@ -20,7 +21,7 @@ const ShareView = () => {
       </SwipeLayout.Header>
 
       <SwipeLayout.Body>
-        <Invite />
+        <Invite params={params} />
         <ShareAttributes />
       </SwipeLayout.Body>
     </SwipeLayout>

@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import qs from 'query-string'
+import { withRouter } from 'react-router-dom'
 
 import View from './View'
 import FlexBox from './FlexBox'
@@ -63,12 +65,13 @@ const SwipeLayoutBody = React.memo(
 const Header = () => {}
 const Body = () => {}
 
-export default class SwipeLayout extends Component {
+class SwipeLayout extends Component {
   constructor(props) {
     super(props)
+    const params = qs.parse(this.props.location.search)
     this.reactSwipeEl = React.createRef()
     this.state = {
-      swipeIndex: this.props.swipeIndex
+      swipeIndex: parseInt(params.swipeIndex) || this.props.swipeIndex
     }
   }
   static Header = Header
@@ -112,3 +115,5 @@ export default class SwipeLayout extends Component {
     )
   }
 }
+
+export default withRouter(SwipeLayout)

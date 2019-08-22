@@ -31,7 +31,7 @@ const App = _props => {
         <Route path="/" exact component={HomeView} />
         <Route path="/contact/:uuid" component={ContactView} />
         <Route path="/user" exact component={UserView} />
-        <Route path="/share" exact component={ShareView} />
+        <Route path="/invite" exact component={ShareView} />
         <Route path="/group/:uuid" exact component={ReGroupView} />
         <Route path="/group/:uuid/invite" component={ReGroupInvite} />
         <Route path="/group/:uuid/import" component={ReImportInvite} />
