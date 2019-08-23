@@ -15,14 +15,14 @@ import {
   INVITE_MEMBERS,
   INVITE_MEMBERS_SUCCESS,
   INVITE_MEMBERS_FAILURE,
-  REMOVE_MEMBERS,
-  REMOVE_MEMBERS_SUCCESS,
-  ADD_MODERATORS,
-  ADD_MODERATORS_SUCCESS,
-  ADD_MODERATORS_FAILURE,
-  REMOVE_MODERATORS_SUCCESS,
-  REMOVE_MODERATORS,
-  REMOVE_MODERATORS_FAILURE,
+  REMOVE_MEMBER,
+  REMOVE_MEMBER_SUCCESS,
+  ADD_MODERATOR,
+  ADD_MODERATOR_SUCCESS,
+  ADD_MODERATOR_FAILURE,
+  REMOVE_MODERATOR_SUCCESS,
+  REMOVE_MODERATOR,
+  REMOVE_MODERATOR_FAILURE,
   ADD_GROUP_SHARE,
   REMOVE_GROUP_SHARE,
   GROUP_SHARE_ERROR,
@@ -125,45 +125,45 @@ export const inviteMember = (uuid, phone_or_email) => async dispatch => {
   }
 }
 
-export const removeMembers = (uuid, member_uuids) => async dispatch => {
-  dispatch({ type: REMOVE_MEMBERS })
+export const removeMember = (uuid, member_uuid) => async dispatch => {
+  dispatch({ type: REMOVE_MEMBER })
 
   try {
     await api.patch(`group/${uuid}/remove_members`, {
-      contact_uuids: member_uuids
+      contact_uuids: member_uuid
     })
-    dispatch({ type: REMOVE_MEMBERS_SUCCESS })
+    dispatch({ type: REMOVE_MEMBER_SUCCESS })
     dispatch(fetchGroup(uuid))
   } catch (err) {
-    dispatch({ type: REMOVE_MEMBERS_SUCCESS, payload: err })
+    dispatch({ type: REMOVE_MEMBER_SUCCESS, payload: err })
   }
 }
 
-export const addModerators = (uuid, member_uuids) => async dispatch => {
-  dispatch({ type: ADD_MODERATORS })
+export const addModerator = (uuid, member_uuid) => async dispatch => {
+  dispatch({ type: ADD_MODERATOR })
 
   try {
     await api.patch(`/group/${uuid}/add_moderators`, {
-      contact_uuids: member_uuids
+      contact_uuids: member_uuid
     })
-    dispatch({ type: ADD_MODERATORS_SUCCESS })
+    dispatch({ type: ADD_MODERATOR_SUCCESS })
     dispatch(fetchGroup(uuid))
   } catch (err) {
-    dispatch({ type: ADD_MODERATORS_FAILURE, payload: err })
+    dispatch({ type: ADD_MODERATOR_FAILURE, payload: err })
   }
 }
 
-export const removeModerators = (uuid, member_uuids) => async dispatch => {
-  dispatch({ type: REMOVE_MODERATORS })
+export const removeModerator = (uuid, member_uuid) => async dispatch => {
+  dispatch({ type: REMOVE_MODERATOR })
 
   try {
     await api.patch(`/group/${uuid}/remove_moderators`, {
-      contact_uuids: member_uuids
+      contact_uuids: member_uuid
     })
-    dispatch({ type: REMOVE_MODERATORS_SUCCESS })
+    dispatch({ type: REMOVE_MODERATOR_SUCCESS })
     dispatch(fetchGroup(uuid))
   } catch (err) {
-    dispatch({ type: REMOVE_MODERATORS_FAILURE, payload: err })
+    dispatch({ type: REMOVE_MODERATOR_FAILURE, payload: err })
   }
 }
 

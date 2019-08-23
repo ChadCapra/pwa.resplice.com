@@ -45,6 +45,12 @@ const ProfileSummary = ({
     }
   })()
 
+  const determineAvatarIcon = () => {
+    if (selected) {
+      return 'check'
+    }
+  }
+
   return (
     <FlexBox
       className={summaryStyle}
@@ -56,7 +62,7 @@ const ProfileSummary = ({
         <ReAvatarThumbnail
           uuid={uuid || name}
           avatar={avatar}
-          selected={selected}
+          icon={determineAvatarIcon()}
           onSelect={handleSelect}
           onDeselect={handleDeselect}
           pad={pad}

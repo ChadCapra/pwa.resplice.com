@@ -39,7 +39,6 @@ const GroupList = ({ groups, search: { query, tags } }) => {
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [showBulkActionModal, setShowBulkActionModal] = useState(false)
   const [groupUuid, setGroupUuid] = useState(false)
-
   const selecting = selectedUuids.length > 0
 
   const handleSelect = uuid => {

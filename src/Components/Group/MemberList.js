@@ -4,17 +4,22 @@ import { Redirect } from 'react-router'
 
 import ProfileList from '../Profile/ProfileList'
 import FABActionMenu from '../Util/FABActionMenu'
-import RePlusFAB from '../Button/RePlusFAB'
-import MdCreate from 'react-ionicons/lib/MdCreate'
+import ExpandableFAB from '../Button/ExpandableFAB'
+import FAB from '../Button/FAB'
 
 import { buildSelectedList } from '../../helpers'
-import FlexBox from '../Layout/FlexBox'
+import {
+  removeMember,
+  addModerator,
+  removeModerator
+} from '../../state/actions'
 
 const ReMemberList = ({ uuid, members, isModerator }) => {
   const [selectedUuids, setSelectedUuids] = useState([])
   const [toGroupInvite, setToGroupInvite] = useState(false)
   const [memberUuid, setMemberUuid] = useState('')
-  const [editing, setEditing] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
+  const [isRemoving, setIsRemoving] = useState(false)
 
   const memberList = buildSelectedList(members, selectedUuids)
 
@@ -43,7 +48,8 @@ const ReMemberList = ({ uuid, members, isModerator }) => {
         handleSelect={handleSelect}
         handleDeselect={handleDeselect}
         onClick={uuid => setMemberUuid(uuid)}
-        editing={editing}
+        isEditing={isEditing}
+        isRemoving={isRemoving}
       />
 
       {selecting ? (
@@ -52,7 +58,23 @@ const ReMemberList = ({ uuid, members, isModerator }) => {
           onClick={() => setSelectedUuids([])}
         />
       ) : (
-        <RePlusFAB onClick={() => setToGroupInvite(true)} />
+        <ExpandableFAB>
+          <FAB
+            type="edit"
+            text="Edit Moderators"
+            onClick={() => setIsEditing(true)}
+          />
+          <FAB
+            type="remove"
+            text="Remove Members"
+            onClick={() => setIsRemoving(true)}
+          />
+          <FAB
+            type="add"
+            text="Add Members"
+            onClick={() => setToGroupInvite(true)}
+          />
+        </ExpandableFAB>
       )}
     </>
   )
@@ -72,4 +94,7 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps)(ReMemberList)
+export default connect(
+  mapStateToProps,
+  { removeMember, addModerator, removeModerator }
+)(ReMemberList)
