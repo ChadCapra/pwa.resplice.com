@@ -47,20 +47,12 @@ const ReMemberList = ({ uuid, members, isModerator }) => {
       />
 
       {selecting ? (
-        <FABActionMenu count={selectedUuids.length} onClick={() => {}} />
+        <FABActionMenu
+          count={selectedUuids.length}
+          onClick={() => setSelectedUuids([])}
+        />
       ) : (
-        <>
-          <FlexBox
-            justify="center"
-            align="center"
-            className="fab outline"
-            style={{ bottom: '28px' }}
-            onClick={() => setEditing(true)}
-          >
-            <MdCreate color="#1bbc9b" fontSize="2.5em" />
-          </FlexBox>
-          <RePlusFAB onClick={() => setToGroupInvite(true)} />
-        </>
+        <RePlusFAB onClick={() => setToGroupInvite(true)} />
       )}
     </>
   )

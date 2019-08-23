@@ -26,7 +26,8 @@ const GroupInvite = ({
   if (!group) return <Redirect to="/" />
   if (importingContacts)
     return <Redirect to={`/group/${match.params.uuid}/import`} />
-  if (toGroup) return <Redirect to={`/group/${match.params.uuid}`} />
+  if (toGroup)
+    return <Redirect to={`/group/${match.params.uuid}?swipeIndex=0`} />
 
   return (
     <>
