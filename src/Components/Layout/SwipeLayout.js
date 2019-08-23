@@ -15,7 +15,7 @@ const SwipeLayoutNav = ({ menus, swipeIndex, handleNavClick }) => {
     <FlexBox direction="row" justify="around" align="center">
       {menus.map((menu, idx) => {
         const SwipeNavStyle = cx(styles.SwipeNav, {
-          [styles.Active]: swipeIndex === idx
+          [styles.Active]: parseInt(swipeIndex) === idx
         })
         return (
           <FlexBox
@@ -40,11 +40,10 @@ const SwipeLayoutBody = React.memo(
     return (
       <ReactSwipe
         swipeOptions={{
-          startSlide: swipeIndex,
+          startSlide: parseInt(swipeIndex),
           continuous: false,
           callback
         }}
-        // style={{ height: '100%' }}
         ref={ref}
       >
         {body.props.children.map((child, idx) => {
@@ -71,7 +70,7 @@ class SwipeLayout extends Component {
     const params = qs.parse(this.props.location.search)
     this.reactSwipeEl = React.createRef()
     this.state = {
-      swipeIndex: parseInt(params.swipeIndex) || this.props.swipeIndex
+      swipeIndex: params.swipeIndex || this.props.swipeIndex
     }
   }
   static Header = Header
