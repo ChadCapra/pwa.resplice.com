@@ -5,17 +5,21 @@ import { Redirect } from 'react-router'
 import ProfileList from '../Profile/ProfileList'
 import FABActionMenu from '../Util/FABActionMenu'
 import RePlusFAB from '../Button/RePlusFAB'
+import MdCreate from 'react-ionicons/lib/MdCreate'
 
 import { buildSelectedList } from '../../helpers'
+import FlexBox from '../Layout/FlexBox'
 
-const ReMemberList = ({ ruuid, members }) => {
+const ReMemberList = ({ uuid, members, isModerator }) => {
   const [selectedUuids, setSelectedUuids] = useState([])
-  const [memberList, setMemberList] = useState(
-    buildSelectedList(members, selectedUuids)
-  )
   const [toGroupInvite, setToGroupInvite] = useState(false)
+  const [memberUuid, setMemberUuid] = useState('')
+  const [editing, setEditing] = useState(false)
 
-  if (toGroupInvite) return <Redirect push to={`/group/${ruuid}/invite`} />
+  const memberList = buildSelectedList(members, selectedUuids)
+
+  if (toGroupInvite) return <Redirect push to={`/group/${uuid}/invite`} />
+  if (memberUuid) return <Redirect push to={`/contact/${memberUuid}`} />
 
   const selecting = selectedUuids.length > 0
 
@@ -23,7 +27,6 @@ const ReMemberList = ({ ruuid, members }) => {
     const newSelectedUuids = [...selectedUuids]
     newSelectedUuids.push(uuid)
     setSelectedUuids(newSelectedUuids)
-    setMemberList(buildSelectedList(members, newSelectedUuids))
   }
 
   const handleDeselect = uuid => {
@@ -31,7 +34,6 @@ const ReMemberList = ({ ruuid, members }) => {
     const idx = newSelectedUuids.findIndex(u => u === uuid)
     newSelectedUuids.splice(idx, 1)
     setSelectedUuids(newSelectedUuids)
-    setMemberList(buildSelectedList(members, newSelectedUuids))
   }
 
   return (
@@ -40,19 +42,32 @@ const ReMemberList = ({ ruuid, members }) => {
         list={memberList}
         handleSelect={handleSelect}
         handleDeselect={handleDeselect}
+        onClick={uuid => setMemberUuid(uuid)}
+        editing={editing}
       />
 
       {selecting ? (
-        <FABActionMenu onClick={() => {}} />
+        <FABActionMenu count={selectedUuids.length} onClick={() => {}} />
       ) : (
-        <RePlusFAB onClick={() => setToGroupInvite(true)} />
+        <>
+          <FlexBox
+            justify="center"
+            align="center"
+            className="fab outline"
+            style={{ bottom: '28px' }}
+            onClick={() => setEditing(true)}
+          >
+            <MdCreate color="#1bbc9b" fontSize="2.5em" />
+          </FlexBox>
+          <RePlusFAB onClick={() => setToGroupInvite(true)} />
+        </>
       )}
     </>
   )
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const group = state.groupState.groups[ownProps.ruuid]
+  const group = state.groupState.groups[ownProps.uuid]
   return {
     members: group.member_uuids
       ? Object.values(state.contactState.contacts).filter(
@@ -60,7 +75,8 @@ const mapStateToProps = (state, ownProps) => {
             contact.uuid !== state.userState.profile.uuid &&
             group.member_uuids.includes(contact.uuid)
         )
-      : []
+      : [],
+    isModerator: group.is_moderator
   }
 }
 

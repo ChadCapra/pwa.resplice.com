@@ -1,8 +1,11 @@
 import React from 'react'
 
+import FlexBox from '../Layout/FlexBox'
 import CardList from '../Card/CardList'
 import ShareCard from '../Card/ShareCard'
 import ReButton from '../Button/ReButton'
+
+import styles from './Profile.module.scss'
 
 const ReProfileShares = ({
   profile: { uuid, name, shares = {} },
@@ -36,8 +39,8 @@ const ReProfileShares = ({
   const numOfShares = Object.values(shares).length
 
   return (
-    <div className="re-contact-shares">
-      <h3>
+    <FlexBox direction="column" align="center">
+      <h3 className={styles.ProfileShareHeader}>
         <span>{numOfShares}</span> shares with {name}
       </h3>
 
@@ -57,7 +60,7 @@ const ReProfileShares = ({
           {noShareBtnText}
         </ReButton>
       )}
-    </div>
+    </FlexBox>
   )
 }
 

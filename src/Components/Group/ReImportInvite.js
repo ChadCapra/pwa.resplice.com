@@ -39,7 +39,7 @@ const ReImportInvite = ({ match, importingContacts, inviteMember }) => {
   if (toGroup || !importingContacts)
     return <Redirect to={`/group/${match.params.uuid}`} />
 
-  const invite = async value => {}
+  // const invite = async value => {}
 
   // const cleanup =
 

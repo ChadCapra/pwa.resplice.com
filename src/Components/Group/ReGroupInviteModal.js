@@ -16,7 +16,7 @@ const QUERY_TYPES = {
   NONE: ''
 }
 
-const ReGroupInviteModal = ({ uuid, loading, inviteMembers }) => {
+const ReGroupInviteModal = ({ uuid, loading, inviteMember }) => {
   const [shareList, setShareList] = useState([])
   const [query, setQuery] = useState('')
   const [queryType, setQueryType] = useState(QUERY_TYPES.NONE)
@@ -89,7 +89,7 @@ const ReGroupInviteModal = ({ uuid, loading, inviteMembers }) => {
         value: item.value
       }
     })
-    inviteMembers(uuid, members)
+    inviteMember(uuid, members)
   }
 
   return (

@@ -68,10 +68,10 @@ export const combineTags = tags => {
 }
 
 export const buildSelectedList = (list, selectedUuids) => {
-  return list.map(({ ...item }) => {
-    const selected = selectedUuids.includes(item.uuid)
-    item.selected = selected
-    return item
+  return list.map(({ ...profile }) => {
+    const selected = selectedUuids.includes(profile.uuid)
+    profile.selected = selected
+    return profile
   })
 }
 

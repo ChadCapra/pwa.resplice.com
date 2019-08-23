@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 import ProfileList from '../Profile/ProfileList'
 import ReCreateGroup from './ReCreateGroup'
@@ -37,6 +38,7 @@ const GroupList = ({ groups, search: { query, tags } }) => {
   )
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [showBulkActionModal, setShowBulkActionModal] = useState(false)
+  const [groupUuid, setGroupUuid] = useState(false)
 
   const selecting = selectedUuids.length > 0
 
@@ -71,12 +73,16 @@ const GroupList = ({ groups, search: { query, tags } }) => {
       default:
     }
   }
+
+  if (groupUuid) return <Redirect push to={`/group/${groupUuid}`} />
+
   return (
     <>
       <ProfileList
         list={filteredGroups}
         handleSelect={handleSelect}
         handleDeselect={handleDeselect}
+        onClick={uuid => setGroupUuid(uuid)}
       />
       {selecting ? (
         <FABActionMenu count={selectedUuids.length} onClick={handleAction} />

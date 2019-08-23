@@ -22,9 +22,10 @@ const CardList = ({ list, handleAction }) =>
               <Attribute
                 key={attribute.uuid}
                 attribute={attribute}
-                pending={!cardPending && attribute.pending_attribute_value}
                 handleAction={handleAction}
-                immutableActions={cardPending}
+                pending={!cardPending && attribute.pending_attribute_value}
+                immutableActions={attribute.pending_attribute_value}
+                noDropdown={attribute.pending_attribute_value}
               />
             )
           })}

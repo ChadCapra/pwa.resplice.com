@@ -5,11 +5,11 @@ import ReactSwipe from 'react-swipe'
 import { swiped, fetchGroup } from '../../state/actions'
 
 import ReGroupProfile from '../Group/ReGroupProfile'
-import ReGroupShares from '../Group/ReGroupShares'
+import ReGroupShares from '../Group/GroupShares'
 import ReHeader from '../Header/ReHeader'
 import ReProfileError from '../Profile/ReProfileError'
 import ReProfileLoading from '../Loading/ReProfileLoading'
-import ReMemberList from '../Group/ReMemberList'
+import ReMemberList from '../Group/MemberList'
 
 import '../Group/group.scss'
 

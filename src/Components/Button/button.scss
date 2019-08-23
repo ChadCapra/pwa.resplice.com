@@ -71,7 +71,7 @@ $button-bg-light: #77d3c0;
   margin: 15px;
   width: 65px;
   height: 65px;
-  background-color: #1bbc9b;
+  background-color: $button-bg;
   border-radius: 50%;
   box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
     0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
@@ -81,6 +81,12 @@ $button-bg-light: #77d3c0;
     transform: scale(0.9);
     background-color: darken($button-bg, 5%);
     box-shadow: none;
+  }
+
+  &.outline {
+    box-sizing: border-box;
+    background-color: white;
+    border: 3px solid $button-bg;
   }
   transition: 0.2s ease all;
 }

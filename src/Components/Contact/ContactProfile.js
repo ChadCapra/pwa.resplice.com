@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import FlexBox from '../Layout/FlexBox'
 import Notification from '../Util/ReNotification'
-import ReProfileLoading from '../Loading/ReProfileLoading'
+import ProfileLoading from '../Loading/ReProfileLoading'
 import Avatar from '../Profile/Avatar/ReAvatar'
 import ReModal from '../Modal/ReModal'
 import Tags from '../Util/ReTags'
@@ -34,7 +34,7 @@ const ContactProfile = ({ uuid, profile, fetchContact, declinePending }) => {
     fetchContact(uuid)
   }, [fetchContact, uuid])
 
-  if (!profile.collections) return <ReProfileLoading />
+  if (!profile.collections) return <ProfileLoading />
 
   const handleTagChange = value => {
     console.log(value)

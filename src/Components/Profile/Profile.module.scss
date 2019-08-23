@@ -48,3 +48,14 @@
 .Brand {
   color: $brand;
 }
+
+.ProfileShareHeader {
+  text-align: center;
+  font-size: 24px;
+  margin: 0;
+
+  & > span {
+    color: #1bbc9b;
+    font-size: 28px;
+  }
+}

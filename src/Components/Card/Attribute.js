@@ -31,8 +31,8 @@ export default class Attribute extends Component {
     const {
       children,
       attribute,
-      immutableActions,
       pending,
+      immutableActions,
       noDropdown
     } = this.props
 
@@ -73,7 +73,7 @@ export default class Attribute extends Component {
           <FlexBox justify="start" align="center" className={styles.Left}>
             <ActionIcon
               name={attribute.actions[0].icon}
-              fill={immutableActions || pending ? '#C4C4C4' : '#1bbc9b'}
+              fill={immutableActions ? '#C4C4C4' : '#1bbc9b'}
               width="2.5em"
             />
           </FlexBox>
@@ -89,7 +89,7 @@ export default class Attribute extends Component {
           >
             <span className={styles.Name}>{attribute.name}</span>
             <span className={styles.Value}>
-              {formatAttrValues(attribute.value)}
+              {attribute.value ? formatAttrValues(attribute.value) : 'Hidden'}
             </span>
           </FlexBox>
         </div>
@@ -110,7 +110,7 @@ export default class Attribute extends Component {
           <FlexBox justify="end" align="center" className={styles.Right}>
             <ActionIcon
               name={attribute.actions[1].icon}
-              fill={immutableActions || pending ? '#C4C4C4' : '#1bbc9b'}
+              fill={immutableActions ? '#C4C4C4' : '#1bbc9b'}
               width="2.5em"
             />
           </FlexBox>

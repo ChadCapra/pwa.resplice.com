@@ -10,7 +10,16 @@ import styles from './Profile.module.scss'
 import { combineTags, getTimeRemaining } from '../../helpers'
 
 const ProfileSummary = ({
-  profile: { uuid, name, avatar, tags, pending_expiration, admin, selected },
+  profile: {
+    uuid,
+    name,
+    avatar,
+    tags,
+    pending_expiration,
+    admin,
+    member_count,
+    selected
+  },
   groupName,
   pad,
   handleSelect,
@@ -29,6 +38,10 @@ const ProfileSummary = ({
       return groupName
     } else if (tags) {
       return combineTags(tags)
+    } else if (member_count) {
+      return member_count === 1
+        ? `${member_count} person`
+        : `${member_count} people`
     }
   })()
 

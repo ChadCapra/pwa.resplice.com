@@ -5,8 +5,8 @@ import HomeView from './Views/HomeView'
 import ContactView from './Views/ContactView'
 import UserView from './Views/UserView'
 import ShareView from './Views/ShareView'
-import ReGroupView from './Views/ReGroupView'
-import ReGroupInvite from './Group/ReGroupInvite'
+import GroupView from './Views/GroupView'
+import GroupInvite from './Group/GroupInvite'
 import ReImportInvite from './Group/ReImportInvite'
 
 import './App.global.scss'
@@ -32,8 +32,8 @@ const App = _props => {
         <Route path="/contact/:uuid" component={ContactView} />
         <Route path="/user" exact component={UserView} />
         <Route path="/invite" exact component={ShareView} />
-        <Route path="/group/:uuid" exact component={ReGroupView} />
-        <Route path="/group/:uuid/invite" component={ReGroupInvite} />
+        <Route path="/group/:uuid" exact component={GroupView} />
+        <Route path="/group/:uuid/invite" component={GroupInvite} />
         <Route path="/group/:uuid/import" component={ReImportInvite} />
       </>
     </div>
