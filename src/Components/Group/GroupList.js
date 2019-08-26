@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
 import ProfileList from '../Profile/ProfileList'
+import ProfileSummary from '../Profile/ProfileSummary'
 import ReCreateGroup from './ReCreateGroup'
 import RePlusFAB from '../Button/RePlusFAB'
 import FABActionMenu from '../Util/FABActionMenu'
@@ -22,16 +23,7 @@ const filterByQuery = (groups, query) => {
   })
 }
 
-const filterByTags = (groups, tags) => {
-  if (tags.length <= 0) return groups
-  return groups.filter(group =>
-    group.tags.reduce((_bool, tag) => {
-      return tags.includes(tag)
-    }, false)
-  )
-}
-
-const GroupList = ({ groups, search: { query, tags } }) => {
+const GroupList = ({ groups, search: { query } }) => {
   const [selectedUuids, setSelectedUuids] = useState([])
   const [groupList, setGroupList] = useState(
     buildSelectedList(groups, selectedUuids)
@@ -47,6 +39,7 @@ const GroupList = ({ groups, search: { query, tags } }) => {
     setSelectedUuids(newSelectedUuids)
     setGroupList(buildSelectedList(groups, newSelectedUuids))
   }
+
   const handleDeselect = uuid => {
     const newSelectedUuids = [...selectedUuids]
     const idx = newSelectedUuids.findIndex(u => u === uuid)
@@ -55,7 +48,7 @@ const GroupList = ({ groups, search: { query, tags } }) => {
     setGroupList(buildSelectedList(groups, newSelectedUuids))
   }
 
-  const filteredGroups = filterByTags(filterByQuery(groupList, query), tags)
+  const filteredGroups = filterByQuery(groupList, query)
 
   const handleAction = action => {
     switch (action) {
@@ -77,12 +70,14 @@ const GroupList = ({ groups, search: { query, tags } }) => {
 
   return (
     <>
-      <ProfileList
-        list={filteredGroups}
-        handleSelect={handleSelect}
-        handleDeselect={handleDeselect}
-        onClick={uuid => setGroupUuid(uuid)}
-      />
+      <ProfileList list={filteredGroups}>
+        <ProfileSummary
+          pad
+          handleSelect={handleSelect}
+          handleDeselect={handleDeselect}
+          onClick={uuid => setGroupUuid(uuid)}
+        />
+      </ProfileList>
       {selecting ? (
         <FABActionMenu count={selectedUuids.length} onClick={handleAction} />
       ) : (

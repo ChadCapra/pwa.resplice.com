@@ -4,22 +4,30 @@ import { Redirect } from 'react-router'
 
 import ProfileList from '../Profile/ProfileList'
 import FABActionMenu from '../Util/FABActionMenu'
-import ExpandableFAB from '../Button/ExpandableFAB'
 import FAB from '../Button/FAB'
+import ProfileSummary from '../Profile/ProfileSummary'
+import MemberEdit from './MemberEdit'
 
 import { buildSelectedList } from '../../helpers'
 import {
-  removeMember,
   addModerator,
-  removeModerator
+  removeModerator,
+  removeMember
 } from '../../state/actions'
 
-const ReMemberList = ({ uuid, members, isModerator }) => {
+import styles from '../Button/Button.module.scss'
+
+const ReMemberList = ({
+  uuid,
+  members,
+  isModerator,
+  addModerator,
+  removeModerator,
+  removeMember
+}) => {
   const [selectedUuids, setSelectedUuids] = useState([])
   const [toGroupInvite, setToGroupInvite] = useState(false)
   const [memberUuid, setMemberUuid] = useState('')
-  const [isEditing, setIsEditing] = useState(false)
-  const [isRemoving, setIsRemoving] = useState(false)
 
   const memberList = buildSelectedList(members, selectedUuids)
 
@@ -48,9 +56,22 @@ const ReMemberList = ({ uuid, members, isModerator }) => {
         handleSelect={handleSelect}
         handleDeselect={handleDeselect}
         onClick={uuid => setMemberUuid(uuid)}
-        isEditing={isEditing}
-        isRemoving={isRemoving}
-      />
+      >
+        <ProfileSummary
+          pad
+          handleSelect={handleSelect}
+          handleDeselect={handleDeselect}
+          rightChild={
+            isModerator && (
+              <MemberEdit
+                addModerator={mUuid => addModerator(uuid, mUuid)}
+                removeModerator={mUuid => removeModerator(uuid, mUuid)}
+                removeMember={mUuid => removeMember(uuid, mUuid)}
+              />
+            )
+          }
+        />
+      </ProfileList>
 
       {selecting ? (
         <FABActionMenu
@@ -58,23 +79,9 @@ const ReMemberList = ({ uuid, members, isModerator }) => {
           onClick={() => setSelectedUuids([])}
         />
       ) : (
-        <ExpandableFAB>
-          <FAB
-            type="edit"
-            text="Edit Moderators"
-            onClick={() => setIsEditing(true)}
-          />
-          <FAB
-            type="remove"
-            text="Remove Members"
-            onClick={() => setIsRemoving(true)}
-          />
-          <FAB
-            type="add"
-            text="Add Members"
-            onClick={() => setToGroupInvite(true)}
-          />
-        </ExpandableFAB>
+        <div className={styles.FABContainer}>
+          <FAB type="add" onClick={() => setToGroupInvite(true)} />
+        </div>
       )}
     </>
   )

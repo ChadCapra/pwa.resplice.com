@@ -6,14 +6,22 @@ import styles from './Form.module.scss'
 interface Props {
   parent: HTMLElement | null
   items: import('react').ReactElement[]
-  offset?: number
+  xOffset?: number
+  yOffset?: number
   close: () => {}
   onSelect: (idx: number) => {}
 }
 
 const dropdownRoot = document.querySelector('#dropdown-root') as HTMLElement
 
-const Dropdown = ({ parent, items, offset, close, onSelect }: Props) => {
+const Dropdown = ({
+  parent,
+  items,
+  xOffset = 0,
+  yOffset = 0,
+  close,
+  onSelect
+}: Props) => {
   useEffect(() => {
     document.addEventListener('click', handleOutsideClick)
     window.addEventListener('scroll', close, true)
@@ -32,14 +40,14 @@ const Dropdown = ({ parent, items, offset, close, onSelect }: Props) => {
     const posBottom = window.innerHeight - (pos.top - window.pageYOffset)
     if (posBottom > 350) {
       return {
-        top: offset ? pos.bottom + offset : pos.bottom,
-        left: pos.left
+        top: pos.bottom + yOffset,
+        left: pos.left + xOffset
       }
     } else {
       const top = pos.top - 200
       return {
-        top: offset ? top + offset : top,
-        left: pos.left
+        top: top + yOffset,
+        left: pos.left + xOffset
       }
     }
   }

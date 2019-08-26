@@ -39,6 +39,7 @@ const GroupInvite = ({
               handleSelect={() => {}}
               handleDeselect={() => {}}
               onClick={() => {}}
+              hideInfo
             />
           </Header>
         </View.Header>

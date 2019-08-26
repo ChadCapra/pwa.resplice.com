@@ -16,12 +16,14 @@ const ProfileSummary = ({
     avatar,
     tags,
     pending_expiration,
-    admin,
+    is_moderator,
     member_count,
     selected
   },
   groupName,
   pad,
+  rightChild,
+  hideInfo,
   handleSelect,
   handleDeselect,
   onClick,
@@ -45,9 +47,17 @@ const ProfileSummary = ({
     }
   })()
 
-  const determineAvatarIcon = () => {
-    if (selected) {
-      return 'check'
+  const renderSummaryRight = () => {
+    if (hideInfo) return null
+    if (pending_expiration) {
+      return (
+        <span>
+          Expires in{' '}
+          {getTimeRemaining(new Date(), new Date(pending_expiration))}
+        </span>
+      )
+    } else if (is_moderator) {
+      return <MdRibbon fontSize="2em" color="#1bbc9b" />
     }
   }
 
@@ -62,7 +72,7 @@ const ProfileSummary = ({
         <ReAvatarThumbnail
           uuid={uuid || name}
           avatar={avatar}
-          icon={determineAvatarIcon()}
+          selected={selected}
           onSelect={handleSelect}
           onDeselect={handleDeselect}
           pad={pad}
@@ -77,20 +87,24 @@ const ProfileSummary = ({
           {infoText && <span>{infoText}</span>}
         </FlexBox>
       </FlexBox>
-      <FlexBox
-        className={styles.SummaryRight}
-        justify="end"
-        align="center"
-        onClick={() => onClick(uuid)}
-      >
-        {(pending_expiration && (
-          <span>
-            Expires in{' '}
-            {getTimeRemaining(new Date(), new Date(pending_expiration))}
-          </span>
-        )) ||
-          (groupName && admin && <MdRibbon fontSize="2em" color="#1bbc9b" />)}
-      </FlexBox>
+      {rightChild ? (
+        <FlexBox
+          className={styles.SummaryRight}
+          justify="center"
+          align="center"
+        >
+          {React.cloneElement(rightChild, { uuid, name })}
+        </FlexBox>
+      ) : (
+        <FlexBox
+          className={styles.SummaryRight}
+          justify="center"
+          align="center"
+          onClick={() => onClick(uuid)}
+        >
+          {renderSummaryRight()}
+        </FlexBox>
+      )}
     </FlexBox>
   )
 }

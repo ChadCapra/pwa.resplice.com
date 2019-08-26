@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { FixedSizeList as VList } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
 
-import ProfileSummary from './ProfileSummary'
 import AlphaNumericSlider from '../Util/AlphaNumericSlider'
 
 import styles from './Profile.module.scss'
@@ -20,16 +19,7 @@ class ProfileList extends Component {
 
   renderProfileItem = ({ index, style }) => {
     const profile = this.props.list[index]
-    return (
-      <ProfileSummary
-        profile={profile}
-        style={style}
-        pad
-        onClick={this.props.onClick}
-        handleSelect={this.props.handleSelect}
-        handleDeselect={this.props.handleDeselect}
-      />
-    )
+    return React.cloneElement(this.props.children, { profile, style })
   }
 
   render() {
@@ -63,9 +53,7 @@ class ProfileList extends Component {
 }
 
 ProfileList.propTypes = {
-  list: PropTypes.array.isRequired,
-  handleSelect: PropTypes.func.isRequired,
-  handleDeselect: PropTypes.func.isRequired
+  list: PropTypes.array.isRequired
 }
 
 export default ProfileList

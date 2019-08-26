@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom'
 import RePlusFAB from '../Button/RePlusFAB'
 import FABActionMenu from '../Util/FABActionMenu'
 import ProfileList from '../Profile/ProfileList'
+import ProfileSummary from '../Profile/ProfileSummary'
 import ReBulkAction from '../Util/ReBulkAction'
 import ReModal from '../Modal/ReModal'
 
@@ -58,9 +59,7 @@ const ReContactList = ({ contacts, search: { query, tags } }) => {
     setContactList(buildSelectedList(contacts, newSelectedUuids))
   }
 
-  const filteredContacts = () => {
-    return filterByTags(filterByQuery(contactList, query), tags)
-  }
+  const filteredContacts = filterByTags(filterByQuery(contactList, query), tags)
 
   if (toInvite) return <Redirect push to="/invite" />
   if (contactUuid) return <Redirect push to={`/contact/${contactUuid}`} />
@@ -83,12 +82,14 @@ const ReContactList = ({ contacts, search: { query, tags } }) => {
 
   return (
     <>
-      <ProfileList
-        list={filteredContacts()}
-        handleSelect={handleSelect}
-        handleDeselect={handleDeselect}
-        onClick={uuid => setContactUuid(uuid)}
-      />
+      <ProfileList list={filteredContacts}>
+        <ProfileSummary
+          pad
+          handleSelect={handleSelect}
+          handleDeselect={handleDeselect}
+          onClick={uuid => setContactUuid(uuid)}
+        />
+      </ProfileList>
       {selecting ? (
         <FABActionMenu count={selectedUuids.length} onClick={handleAction} />
       ) : (

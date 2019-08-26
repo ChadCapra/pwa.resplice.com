@@ -2,15 +2,13 @@ import React from 'react'
 import Identicon from 'react-identicons'
 
 import MdCheckmark from 'react-ionicons/lib/MdCheckmark'
-import MdAdd from 'react-ionicons/lib/MdAdd'
-import MdRemove from 'react-ionicons/lib/MdRemove'
 
 import './avatar.scss'
 
 interface Props {
   avatar: string
   uuid: string
-  icon?: 'check' | 'add' | 'remove' | 'remove-alt'
+  selected?: boolean
   pad?: boolean
   onSelect: (uuid: string) => {}
   onDeselect: (uuid: string) => {}
@@ -19,26 +17,13 @@ interface Props {
 const ReAvatarThumbnail = ({
   avatar,
   uuid,
-  icon,
+  selected,
   pad,
   onSelect,
   onDeselect,
   ...props
 }: Props) => {
-  const renderIcon = () => {
-    switch (icon) {
-      case 'check':
-        return <MdCheckmark color="white" fontSize="3.5em" />
-      case 'add':
-        return <MdAdd color="white" fontSize="3.5em" />
-      case 'remove':
-        return <MdRemove color="white" fontSize="3.5em" />
-      case 'remove-alt':
-      default:
-        throw new Error('This icon is not supported')
-    }
-  }
-  if (icon) {
+  if (selected) {
     return (
       <div
         className="avatar-thumbnail checked"
@@ -46,7 +31,7 @@ const ReAvatarThumbnail = ({
         onClick={() => onDeselect && onDeselect(uuid)}
         {...props}
       >
-        {renderIcon()}
+        <MdCheckmark color="white" fontSize="3.5em" />
       </div>
     )
   } else {

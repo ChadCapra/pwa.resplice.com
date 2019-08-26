@@ -73,6 +73,7 @@ const ReImportInvite = ({ match, importingContacts, inviteMember }) => {
                     name: contact.name,
                     avatar: contact.avatar
                   }}
+                  hideInfo
                 />
               </Card.Header>
               <Card.Body>
