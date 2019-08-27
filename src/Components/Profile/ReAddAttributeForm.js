@@ -3,7 +3,8 @@ import { Field, reduxForm, formValueSelector, getFormValues } from 'redux-form'
 import { connect } from 'react-redux'
 import { addAttribute } from '../../state/actions'
 
-import TypeCard from '../Card/TypeCard'
+import Card from '../Card/Card'
+import Attribute from '../Card/Attribute'
 import ReInput from '../Form/ReInput'
 import ReInputPhone from '../Form/ReInputPhone'
 import ReInputCombo from '../Form/ReInputCombo'
@@ -36,14 +37,30 @@ class ReAddAttributeForm extends Component {
   }
 
   render() {
+    const attribute = {
+      id: this.props.attrType.id,
+      collection: this.props.attrType.default_collection,
+      name: this.props.attrType.preview_name,
+      value: this.props.attrType.preview_value,
+      actions: this.props.attrType.actions
+    }
+
     return (
       <>
-        <TypeCard
+        {/* <TypeCard
           className="attribute-preview-card"
           item={this.props.attrType}
           onClick={this.props.onCardClick}
           previewValues={this.props.formValues}
-        />
+        /> */}
+        <Card border onClick={this.props.onCardClick}>
+          <Card.Header>
+            <h1>{attribute.collection}</h1>
+          </Card.Header>
+          <Card.Body>
+            <Attribute attribute={attribute} immutableActions noDropdown />
+          </Card.Body>
+        </Card>
         <div className="add-attribute-body">
           <form
             onSubmit={this.props.handleSubmit(this.onSubmit)}

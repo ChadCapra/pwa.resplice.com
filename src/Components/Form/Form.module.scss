@@ -1,5 +1,16 @@
 @import '../../config.scss';
 
+@-webkit-keyframes autofill {
+  to {
+    color: #6c7dd5;
+    background: transparent;
+  }
+}
+input:-webkit-autofill {
+  -webkit-animation-name: autofill;
+  -webkit-animation-fill-mode: both;
+}
+
 .Dropdown {
   position: fixed;
   width: 220px;
@@ -42,5 +53,65 @@
     & svg {
       fill: white;
     }
+  }
+}
+
+.Input {
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  text-align: left;
+  margin: 10px 0px;
+  height: 50px;
+  border: 1px solid #c8ccd4;
+  border-radius: 5px;
+  transition: 0.2s all ease;
+
+  &:focus-within {
+    border: 1px solid #1bbc9b;
+    .InputLabel {
+      transform: translateY(-10px) scale(0.8);
+    }
+  }
+
+  &.Filled {
+    .InputLabel {
+      transform: translateY(-10px) scale(0.8);
+    }
+  }
+  &.Error {
+    border: 1px solid #ff3860;
+  }
+  &.Warning {
+    border: 1px solid #f6cd2b;
+  }
+}
+
+.Field {
+  position: absolute;
+  height: 38px;
+  background: none;
+  width: calc(100% - 15px);
+  padding-top: 12px;
+  top: 0;
+  left: 15px;
+  outline: 0;
+  border: 0;
+  font-size: 16px;
+}
+
+.Label {
+  position: absolute;
+  top: 16px;
+  left: 15px;
+  font-size: 16px;
+  color: #5a667f;
+  font-weight: 500;
+  transform-origin: 0 0;
+  transition: all 0.2s ease;
+
+  &.Phone {
+    transform: translateY(-10px) scale(0.8);
+    left: 50px;
   }
 }

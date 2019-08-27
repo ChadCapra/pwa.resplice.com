@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import FlexBox from '../Layout/FlexBox'
-import Notification from '../Util/ReNotification'
+import Notification from '../Util/Notification'
 import ProfileLoading from '../Loading/ReProfileLoading'
 import Avatar from '../Profile/Avatar/ReAvatar'
 import ReModal from '../Modal/ReModal'

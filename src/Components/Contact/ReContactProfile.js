@@ -6,7 +6,7 @@ import CardList from '../Card/CardList'
 import ViewCard from '../Card/ViewCard'
 import ReModal from '../Modal/ReModal'
 import ReTags from '../Util/ReTags'
-import ReNotification from '../Util/ReNotification'
+import ReNotification from '../Util/Notification'
 import ReButton from '../Button/ReButton'
 
 import { handleAttributeAction, getTimeRemaining } from '../../helpers'

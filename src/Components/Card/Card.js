@@ -11,10 +11,10 @@ export default class Card extends Component {
   static Body = Body
 
   render() {
-    const { children, pending, border } = this.props
+    const { children, pending, border, className, ...props } = this.props
     const header = children.find(child => child.type === Header)
     const body = children.find(child => child.type === Body)
-    const CardStyle = cx(styles.Card, {
+    const CardStyle = cx(styles.Card, className, {
       [styles.Pending]: pending
     })
 
@@ -23,7 +23,7 @@ export default class Card extends Component {
     })
 
     return (
-      <div className={CardStyle}>
+      <div className={CardStyle} {...props}>
         {header ? (
           <div className={HeaderStyle}>{header.props.children}</div>
         ) : null}

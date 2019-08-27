@@ -3,8 +3,9 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import ReAddAttributeForm from './ReAddAttributeForm'
-import CardList from '../Card/CardList'
-import TypeCard from '../Card/TypeCard'
+import TypeCardList from './TypeCardList'
+
+import cardStyles from '../Card/Card.module.scss'
 
 const ReAddAttribute = ({ groupUuid, onAttributeAdd, types }) => {
   const [attrType, setAttrType] = useState(null)
@@ -13,18 +14,18 @@ const ReAddAttribute = ({ groupUuid, onAttributeAdd, types }) => {
   useEffect(() => {
     if (!attrType && attrTouched) {
       const topPos = 50
-      const cards = [...document.querySelectorAll('.type-card')]
+      const cards = [...document.querySelectorAll(`.${cardStyles.TypeCard}`)]
       // If an attribute type is not selected,
       // For each card calculate the position from default pos
       // And add the expand animation
       cards.forEach(card => {
         const posFromTop = topPos - card.getBoundingClientRect().y
         card.style.setProperty('--pixels-from-pos', `${posFromTop}px`)
-        card.classList.add('expand-card')
+        card.classList.add(cardStyles.ExpandCard)
 
         // Remove expand animation after animation has finished
         setTimeout(() => {
-          card.classList.remove('expand-card')
+          card.classList.remove(cardStyles.ExpandCard)
         }, 500)
       })
     }
@@ -33,7 +34,7 @@ const ReAddAttribute = ({ groupUuid, onAttributeAdd, types }) => {
   const handleTypeChange = (newAttrType, cardIdx) => {
     const topPos = 50
     // Get array of card elements
-    const cards = [...document.querySelectorAll('.type-card')]
+    const cards = [...document.querySelectorAll(`.${cardStyles.TypeCard}`)]
 
     if (!attrType) {
       // For each card calcuate the position from the top
@@ -41,9 +42,9 @@ const ReAddAttribute = ({ groupUuid, onAttributeAdd, types }) => {
       cards.forEach((card, idx) => {
         const posFromTop = topPos - card.getBoundingClientRect().y
         card.style.setProperty('--pixels-from-top', `${posFromTop}px`)
-        card.classList.add('collapse-card')
+        card.classList.add(cardStyles.CollapseCard)
         if (idx === cardIdx) {
-          card.classList.add('top-card')
+          card.classList.add(cardStyles.TopCard)
         }
       })
       // Set the attribute after animation has finished
@@ -68,9 +69,8 @@ const ReAddAttribute = ({ groupUuid, onAttributeAdd, types }) => {
         />
       ) : (
         <div className="add-attribute-body">
-          <CardList
+          <TypeCardList
             list={Object.values(types)}
-            Card={TypeCard}
             onClick={handleTypeChange}
           />
         </div>

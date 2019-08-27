@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import {
   BrowserRouter as Router,
   Route,
@@ -9,23 +9,18 @@ import { connect } from 'react-redux'
 import { loadApplication } from './state/actions'
 
 import App from './components/App'
-import ReAuth from './components/Auth/ReAuth'
+import Auth from './components/Auth/Auth'
 import GlobalLoading from './components/Loading/GlobalLoading'
 import Offline from './components/Util/Offline'
 
-interface Props {
+type Props = {
   isAuthorized: boolean
   loading?: boolean
   offline: boolean
   loadApplication: AsyncAction
 }
 
-const Secure: FC<Props> = ({
-  isAuthorized,
-  loading,
-  offline,
-  loadApplication
-}) => {
+const Secure = ({ isAuthorized, loading, offline, loadApplication }: Props) => {
   useEffect(() => {
     loadApplication()
   }, [loadApplication])
@@ -39,7 +34,7 @@ const Secure: FC<Props> = ({
         <Route
           path="/auth"
           render={props =>
-            isAuthorized ? <Redirect to="/" /> : <ReAuth {...props} />
+            isAuthorized ? <Redirect to="/" /> : <Auth {...props} />
           }
         />
         <Route

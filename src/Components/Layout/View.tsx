@@ -2,10 +2,14 @@ import React, { Component } from 'react'
 
 import styles from './Layout.module.scss'
 
-const Header = () => {}
-const Body = () => {}
+type Props = {
+  children: Array<React.ReactElement>
+}
 
-export default class ViewLayout extends Component {
+const Header: React.FC<{}> = () => null
+const Body: React.FC<{}> = () => null
+
+export default class ViewLayout extends Component<Props> {
   static Header = Header
   static Body = Body
 

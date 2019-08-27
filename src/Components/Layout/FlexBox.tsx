@@ -4,17 +4,33 @@ import PropTypes from 'prop-types'
 import cx from 'classnames'
 import styles from './FlexBox.module.scss'
 
+type Props = {
+  children: import('react').ReactChild | Array<import('react').ReactChild>
+  className?: string
+  fill?: boolean
+  direction?: 'column' | 'row'
+  justify?:
+    | 'center'
+    | 'start'
+    | 'end'
+    | 'between'
+    | 'around'
+    | 'evenly'
+    | 'stretch'
+    | 'normal'
+  align?: 'center' | 'start' | 'end' | 'stretch' | 'normal'
+}
+
 const FlexBox = ({
   children,
   className,
   fill,
-  direction,
-  justify,
-  align,
+  direction = 'row',
+  justify = 'start',
+  align = 'start',
   ...props
-}) => {
-  const FlexStyle = cx(styles.FlexBox, {
-    [className]: className,
+}: Props) => {
+  const FlexStyle = cx(styles.FlexBox, className, {
     [styles.Fill]: fill,
     [styles.DirectionColumn]: direction === 'column',
     [styles.DirectionRow]: direction === 'row',

@@ -9,7 +9,9 @@ const CardList = ({ list, handleAction }) =>
     const attributes = item[1]
     return (
       <Card key={idx} border>
-        <Card.Header>{collection}</Card.Header>
+        <Card.Header>
+          <h1>{collection}</h1>
+        </Card.Header>
         <Card.Body>
           {attributes.map(attribute => {
             return (

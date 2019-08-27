@@ -1,6 +1,7 @@
 @import '../../config.scss';
 
-.Card {
+.Card,
+.TypeCard {
   width: 90%;
   margin: 16px auto;
   max-width: 575px;
@@ -72,4 +73,40 @@
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.CollapseCard {
+  --pixels-from-top: 0;
+  background-color: white;
+  animation: collapseCard 0.5s ease-out forwards;
+  box-shadow: none;
+}
+.ExpandCard {
+  --pixels-from-pos: 0;
+  animation: expandCard 0.5s ease-out forwards;
+  background-color: white;
+}
+
+.TopCard {
+  z-index: 10;
+  box-shadow: 1px 1px 15px #0000001a;
+  transform-style: preserve-3d;
+}
+
+@keyframes collapseCard {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(var(--pixels-from-top));
+  }
+}
+
+@keyframes expandCard {
+  from {
+    transform: translateY(var(--pixels-from-pos));
+  }
+  to {
+    transform: translateY(0);
+  }
 }

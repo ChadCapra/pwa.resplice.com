@@ -9,7 +9,7 @@ import {
 import { connect } from 'react-redux'
 import { loadApplication, createProfile } from '../../state/actions'
 
-import ReAuthHeader from './Header/ReAuthHeader'
+import ReAuthHeader from './AuthHeader'
 import ReInput from '../Form/ReInput'
 import ReInputCountry from '../Form/ReInputCountry'
 import ReInputRegion from '../Form/ReInputRegion'

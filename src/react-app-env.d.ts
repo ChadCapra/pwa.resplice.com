@@ -1,15 +1,15 @@
 /// <reference types="react-scripts" />
 
 // Utility Types
-interface Dictionary {
+type Dictionary = {
   [index: string]: any
 }
 
-interface ObjectDictionary {
+type ObjectDictionary = {
   [index: string]: object
 }
 
-interface Match {
+type Match = {
   path: string
 }
 
@@ -23,7 +23,7 @@ interface StateSlice {
   loading: boolean
   error: Error | null
 }
-interface Error {
+type Error = {
   item: string
   msg: string
   statusCode: number
@@ -43,22 +43,22 @@ interface RespliceState {
 interface AuthState extends StateSlice {
   isAuthorized: boolean
   isVerified: boolean
-  login: Login | null
+  session: Session | null
   verification: Verification | null
 }
-interface Login {
-  login_uuid
+type Session = {
+  session_uuid: string
   values: LoginValues
   verify_token_1: number
   verify_token_2: number
   expry: string
   requested_at: string
 }
-interface LoginValues {
+type LoginValues = {
   phone: string
   email: string
 }
-interface Verification {
+type Verification = {
   token_1_valid: boolean
   token_2_valid: boolean
 }

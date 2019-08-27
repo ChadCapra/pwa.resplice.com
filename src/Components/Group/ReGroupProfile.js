@@ -6,7 +6,7 @@ import CardList from '../Card/CardList'
 import ViewCard from '../Card/ViewCard'
 import ReAvatar from '../Profile/Avatar/ReAvatar'
 import ReModal from '../Modal/ReModal'
-import ReNotification from '../Util/ReNotification'
+import ReNotification from '../Util/Notification'
 import RePlusFAB from '../Button/RePlusFAB'
 import ReAddAttribute from '../Profile/ReAddAttribute'
 

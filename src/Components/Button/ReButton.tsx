@@ -5,6 +5,7 @@ interface Props {
   type: 'primary' | 'secondary'
   loading?: boolean
   disabled?: boolean
+  submit?: boolean
   onClick?(e: object): void
   children: import('react').ReactNode
 }
@@ -16,6 +17,7 @@ const ReButton: FC<Props> = ({
   type,
   loading,
   disabled,
+  submit,
   onClick,
   children,
   ...props
