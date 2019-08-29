@@ -153,7 +153,7 @@ export const SHARE_BULK_ERROR = 'SHARE_BULK_ERROR'
 
 // Util & Settings Types
 export const SWIPED = 'SWIPED'
-export const REMOVE_ERROR = 'REMOVE_ERROR'
+export const CLEAR_ERROR = 'CLEAR_ERROR'
 
 export const UPDATE_QUERY = 'UPDATE_QUERY'
 export const CLEAR_QUERY = 'CLEAR_QUERY'

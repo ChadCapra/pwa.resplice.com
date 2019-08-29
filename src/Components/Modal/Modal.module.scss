@@ -1,6 +1,8 @@
 .Alert {
+  box-sizing: border-box;
   position: fixed;
-  top: 16px;
-  width: 90%;
+  top: 0;
+  width: 100%;
+  padding: 16px;
   max-width: 575px;
 }

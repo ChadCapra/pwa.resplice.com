@@ -64,5 +64,34 @@ export const alphabetSort = (strA: string, strB: string): number => {
   return 0
 }
 
+/**
+ * Parses an error to shape it for error handling
+ * @param {Error} error
+ * @returns {ErrorObj}
+ */
+export const parseError = (error: Error): ErrorObj => {
+  const type: ErrorType = (() => {
+    if (error.message === 'Network Error') return 'network'
+
+    return 'generic'
+  })()
+  const message: string = (() => {
+    switch (type) {
+      case 'network':
+        return 'It looks like you are offline, please check your network connection.'
+      default:
+        return 'Something went wrong...'
+    }
+  })()
+  const parsedError: ErrorObj = {
+    type,
+    name: error.message,
+    message,
+    timestamp: new Date(),
+    raw: error
+  }
+  return parsedError
+}
+
 export * from './attributeHelper'
 export * from './profileHelper'

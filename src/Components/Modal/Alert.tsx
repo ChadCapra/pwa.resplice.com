@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom'
 
 import MdClose from 'react-ionicons/lib/MdClose'
@@ -8,21 +8,29 @@ import FlexBox from '../Layout/FlexBox'
 import styles from './Modal.module.scss'
 
 type Props = {
-  close: () => {}
+  close: () => void
   type: 'info' | 'success' | 'warning' | 'danger'
   header?: string
-  children: Array<React.ReactChild>
+  children: React.ReactNode | Array<React.ReactNode>
 }
 
 const Alert = ({ close, type, header, children }: Props) => {
-  setTimeout(() => close(), 6000)
+  useEffect(() => {
+    const timeout = setTimeout(close, 10000)
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [])
+
   return ReactDOM.createPortal(
     <div className={styles.Alert}>
       <Notification type={type}>
         <Notification.Header>
-          <FlexBox>
-            {header ? header : type.charAt(0).toUpperCase() + type.slice(1)}
-            <MdClose fontSize="2em" color="white" />
+          <FlexBox justify="between" align="start">
+            <h2 style={{ margin: '0', fontSize: '24px' }}>
+              {header ? header : type.charAt(0).toUpperCase() + type.slice(1)}
+            </h2>
+            <MdClose fontSize="1.5em" color="white" onClick={close} />
           </FlexBox>
         </Notification.Header>
 

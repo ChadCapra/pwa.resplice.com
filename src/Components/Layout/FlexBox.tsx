@@ -19,6 +19,7 @@ type Props = {
     | 'stretch'
     | 'normal'
   align?: 'center' | 'start' | 'end' | 'stretch' | 'normal'
+  [prop: string]: any
 }
 
 const FlexBox = ({

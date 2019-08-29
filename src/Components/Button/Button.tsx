@@ -5,51 +5,49 @@ import Ring from '../Loading/Ring'
 
 import styles from './Button.module.scss'
 
-interface Props {
-  type: 'primary' | 'secondary'
+type Props = {
+  type?: 'button' | 'submit'
+  variant: 'primary' | 'secondary'
   className?: string
   loading?: boolean
   disabled?: boolean
-  submit?: boolean
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
   children: React.ReactChild
+  [prop: string]: any
 }
 
 /**
  * Primary Button for Resplice. Used on forms, in modals, etc.
  */
-const ReButton = ({
+const Button = ({
   type,
+  variant,
   className,
   loading,
   disabled,
-  submit,
   onClick,
-  children
+  children,
+  ...props
 }: Props) => {
   const ButtonStyle = cx(styles.Button, className, {
     [styles.Loading]: loading,
     [styles.Disabled]: disabled,
-    [styles.Primary]: type === 'primary',
-    [styles.Secondary]: type === 'secondary'
+    [styles.Primary]: variant === 'primary',
+    [styles.Secondary]: variant === 'secondary'
   })
-
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (loading || disabled) return
-    if (onClick) onClick(e)
-  }
 
   return (
     <button
       className={ButtonStyle}
-      type={submit ? 'submit' : 'button'}
-      disabled={disabled}
-      onClick={handleClick}
+      type={type}
+      disabled={disabled || loading}
+      onClick={onClick}
+      {...props}
     >
       {children}
-      {loading && <Ring style={{ marginLeft: '8px ' }} />}
+      {loading && <Ring style={{ marginLeft: '16px' }} />}
     </button>
   )
 }
 
-export default ReButton
+export default Button

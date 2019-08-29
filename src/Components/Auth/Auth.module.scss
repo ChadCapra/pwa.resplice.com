@@ -1,11 +1,44 @@
+@import '../../config';
+
 .AuthHeader {
   padding: 16px 0;
   flex: 0 0 150px;
-  height: 150px;
+  height: 125px;
   width: 100vw;
   align-self: flex-start;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.LoginSubtitles {
+  padding: 16px;
+  text-align: center;
+  width: 85%;
+
+  p {
+    color: $text;
+    font-size: 24px;
+    width: 100%;
+  }
+}
+
+.LoginForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  width: 85%;
+  max-width: $mobile-max-px;
+}
+.LoginButton {
+  margin-top: 15%;
+  width: 100%;
+}
+.LoginHelpIcon {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
 }

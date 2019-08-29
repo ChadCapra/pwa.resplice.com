@@ -9,7 +9,6 @@ import {
 import { connect } from 'react-redux'
 import { loadApplication, createProfile } from '../../state/actions'
 
-import ReAuthHeader from './AuthHeader'
 import ReInput from '../Form/ReInput'
 import ReInputCountry from '../Form/ReInputCountry'
 import ReInputRegion from '../Form/ReInputRegion'
@@ -42,10 +41,6 @@ const ReCreateProfile: FC<Props & InjectedFormProps<{}, Props>> = ({
 
   return (
     <div className="create-profile">
-      <ReAuthHeader>
-        <h1>Signup!</h1>
-      </ReAuthHeader>
-
       <form onSubmit={handleSubmit(createProfile)} className="form">
         {/* <p>
           Signing up is easy!

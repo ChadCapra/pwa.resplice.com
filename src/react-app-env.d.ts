@@ -23,10 +23,13 @@ interface StateSlice {
   loading: boolean
   error: Error | null
 }
-type Error = {
-  item: string
-  msg: string
-  statusCode: number
+type ErrorType = 'unauthorized' | 'network' | 'server' | 'generic'
+type ErrorObj = {
+  type: ErrorType
+  name: string
+  message: string
+  timestamp: Date
+  raw: Error
 }
 
 interface RespliceState {
@@ -44,15 +47,17 @@ interface AuthState extends StateSlice {
   isAuthorized: boolean
   isVerified: boolean
   session: Session | null
+  login: LoginValues | null
   verification: Verification | null
 }
 type Session = {
-  session_uuid: string
-  values: LoginValues
-  verify_token_1: number
-  verify_token_2: number
-  expry: string
-  requested_at: string
+  uuid: string
+  user_agent: string
+  access_token: string
+  phone_verified_at: string
+  email_verified_at: string
+  authorized_at: string
+  expiry: string
 }
 type LoginValues = {
   phone: string

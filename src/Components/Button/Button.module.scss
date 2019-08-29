@@ -32,7 +32,7 @@
   }
 
   &.Loading {
-    background-color: lighten($brand, 5%);
+    background-color: darken($brand, 5%);
     cursor: wait;
     & span {
       margin-right: 15px;
@@ -40,7 +40,7 @@
   }
 
   &.Disabled {
-    background-color: lighten($brand, 5%);
+    background-color: $light-3;
     cursor: not-allowed;
   }
 

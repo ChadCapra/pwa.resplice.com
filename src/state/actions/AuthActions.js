@@ -1,4 +1,5 @@
 import api from '../../api'
+import { parseError } from '../../helpers'
 import {
   LOGIN,
   LOGIN_SUCCESS,
@@ -7,7 +8,7 @@ import {
   VERIFY,
   VERIFY_SUCCESS,
   VERIFY_FAILURE,
-  REMOVE_ERROR,
+  CLEAR_ERROR,
   CLEAR_LOGIN
 } from './types'
 import { fetchAttributeTypes } from './AttributeActions'
@@ -15,21 +16,21 @@ import { fetchUserProfile } from './UserActions'
 import { fetchContactList } from './ContactActions'
 import { fetchGroupList } from './GroupActions'
 
-export const login = formValues => async dispatch => {
+export const login = values => async dispatch => {
   dispatch({ type: LOGIN })
 
   try {
-    const response = await api.post('/login', formValues)
+    const response = await api.post('/login', values)
     const {
       requested_at,
       ok: { ...data }
     } = response.data
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: { values: formValues, requested_at, ...data }
+      payload: { values: values, requested_at, ...data }
     })
   } catch (err) {
-    dispatch({ type: LOGIN_FAILURE, payload: err.response })
+    dispatch({ type: LOGIN_FAILURE, payload: parseError(err) })
   }
 }
 
@@ -70,8 +71,6 @@ export const verifyAttributes = verifyObject => async dispatch => {
 
     dispatch({ type: VERIFY_SUCCESS, payload: { requested_at, ...data } })
   } catch (err) {
-    console.log(err)
-    console.log(JSON.stringify(err))
     dispatch({ type: VERIFY_FAILURE, payload: err })
   }
 }
@@ -80,6 +79,6 @@ export const clearLogin = () => {
   return { type: CLEAR_LOGIN }
 }
 
-export const removeError = () => {
-  return { type: REMOVE_ERROR }
+export const clearError = () => {
+  return { type: CLEAR_ERROR }
 }

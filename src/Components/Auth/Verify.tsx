@@ -3,12 +3,12 @@ import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { verifyAttributes, clearLogin } from '../../state/actions'
 
-import ReAuthHeader from './AuthHeader'
 import ReInputCode from '../Form/ReInputCode'
 import ReButton from '../Button/ReButton'
 
 interface Props {
-  login: Login | null
+  login: LoginValues | null
+  session: Session | null
   verifyAttributes: AsyncAction
   clearLogin: Action
   verified: boolean
@@ -18,6 +18,7 @@ interface Props {
 
 const ReVerify: FC<Props> = ({
   login,
+  session,
   verifyAttributes,
   clearLogin,
   verification,
@@ -34,7 +35,7 @@ const ReVerify: FC<Props> = ({
     const token = parseInt(tokenStr)
     setTokenOne(token)
     verifyAttributes({
-      login_uuid: login.login_uuid,
+      login_uuid: session!.uuid,
       verify_token_1: token,
       verify_token_2: tokenTwo
     })
@@ -44,7 +45,7 @@ const ReVerify: FC<Props> = ({
     const token = parseInt(tokenStr)
     setTokenTwo(token)
     verifyAttributes({
-      login_uuid: login.login_uuid,
+      login_uuid: session!.uuid,
       verify_token_1: tokenOne,
       verify_token_2: token
     })
@@ -64,17 +65,13 @@ const ReVerify: FC<Props> = ({
 
   return (
     <div className="re-verify">
-      <ReAuthHeader>
-        <h2>Verify</h2>
-      </ReAuthHeader>
-
       <div className="form">
         <p>
           We just need to verify some info!
           <br />
           Please verify your attributes
           <br />
-          {login.values.phone} & {login.values.email}
+          {login.phone} & {login.email}
         </p>
         <div className="inputs">
           <ReInputCode

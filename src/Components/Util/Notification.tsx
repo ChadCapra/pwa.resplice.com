@@ -17,7 +17,7 @@ class Notification extends Component<Props> {
   static Body = Body
 
   render() {
-    const { type = 'info', className, children } = this.props
+    const { type, className, children } = this.props
     const header = children.find(child => child.type === Header)
     const body = children.find(child => child.type === Body)
     const NotificationStyle = cx(styles.Notification, className, {
@@ -29,8 +29,8 @@ class Notification extends Component<Props> {
 
     return (
       <div className={NotificationStyle}>
-        <div className="header">{header!.props.children}</div>
-        <div className="body">{body!.props.children}</div>
+        <div className={styles.Header}>{header!.props.children}</div>
+        <div className={styles.Body}>{body!.props.children}</div>
       </div>
     )
   }

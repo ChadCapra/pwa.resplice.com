@@ -5,7 +5,7 @@ import styles from './Form.module.scss'
 
 type Props = {
   name: string
-  type: string
+  type?: string
   value: string
   label: string
   meta: {
@@ -15,6 +15,7 @@ type Props = {
     warning?: boolean
   }
   autoFocus?: boolean
+  component?: React.ReactElement
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -25,12 +26,14 @@ const Input = ({
   label,
   meta: { touched, error, warning },
   autoFocus,
+  component,
   onChange
 }: Props) => {
   const field = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     if (field && field.current && autoFocus) {
+      console.log(field.current)
       field.current.focus()
     }
   }, [autoFocus])
@@ -39,17 +42,25 @@ const Input = ({
     [styles.Error]: error && touched,
     [styles.Filled]: value || type === 'date'
   })
+  const LabelStyle = cx(styles.Label, {
+    [styles.Phone]: type === 'phone'
+  })
 
   return (
     <div className={InputStyle}>
-      <label className={styles.Label}>{label}</label>
-      <input
-        ref={field}
-        className={styles.Field}
-        name={name}
-        type={type}
-        onChange={onChange}
-      />
+      <label className={LabelStyle}>{label}</label>
+      {component ? (
+        React.cloneElement(component, { name, type, value, onChange })
+      ) : (
+        <input
+          ref={field}
+          className={styles.Field}
+          name={name}
+          type={type}
+          value={value}
+          onChange={onChange}
+        />
+      )}
       {touched &&
         ((error && <span className="input-error-text">{error}</span>) ||
           (warning && <span className="input-warning-text">{warning}</span>))}

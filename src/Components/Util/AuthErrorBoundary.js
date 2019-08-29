@@ -22,9 +22,12 @@ export default class ErrorBoundary extends Component {
   render() {
     if (this.state.error) {
       return (
-        <Alert type="danger" header="Error" close={this.clearError}>
-          {this.state.error}
-        </Alert>
+        <>
+          <Alert type="danger" header="Error" close={this.clearError}>
+            {this.state.error}
+          </Alert>
+          {/* {this.props.children} */}
+        </>
       )
     }
 

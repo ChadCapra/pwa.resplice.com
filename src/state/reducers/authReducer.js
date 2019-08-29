@@ -11,7 +11,7 @@ import {
   AUTHORIZE,
   FETCH_PROFILE_FAILURE,
   FETCH_CONTACT_LIST_FAILURE,
-  REMOVE_ERROR,
+  CLEAR_ERROR,
   LOGOUT,
   CLEAR_LOGIN
 } from '../actions/types'
@@ -21,6 +21,7 @@ const INITIAL_STATE = {
   error: null,
   isAuthorized: false,
   isVerified: false,
+  session: null,
   login: null,
   verification: null
 }
@@ -37,7 +38,7 @@ export default (state = INITIAL_STATE, action) => {
       return INITIAL_STATE
     case CLEAR_LOGIN:
       return INITIAL_STATE
-    case REMOVE_ERROR:
+    case CLEAR_ERROR:
       return { ...state, error: null }
 
     case LOGIN_SUCCESS:
