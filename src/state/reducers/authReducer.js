@@ -22,7 +22,7 @@ const INITIAL_STATE = {
   isAuthorized: false,
   isVerified: false,
   session: null,
-  login: null,
+  loginValues: null,
   verification: null
 }
 
@@ -42,7 +42,12 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, error: null }
 
     case LOGIN_SUCCESS:
-      return { ...state, loading: false, login: action.payload }
+      return {
+        ...state,
+        loading: false,
+        session: action.payload.session,
+        loginValues: action.payload.values
+      }
     case CREATE_PROFILE_SUCCESS:
       return { ...state, loading: false, profile: action.payload }
     case VERIFY_SUCCESS:

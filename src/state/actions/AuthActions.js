@@ -27,7 +27,7 @@ export const login = values => async dispatch => {
     } = response.data
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: { values: values, requested_at, ...data }
+      payload: { values, session: { requested_at, ...data } }
     })
   } catch (err) {
     dispatch({ type: LOGIN_FAILURE, payload: parseError(err) })
@@ -46,7 +46,7 @@ export const logout = tokens => async dispatch => {
   dispatch({ type: LOGOUT })
 }
 
-export const verifyAttributes = verifyObject => async dispatch => {
+export const authenticateSession = verifyObject => async dispatch => {
   dispatch({ type: VERIFY })
 
   try {

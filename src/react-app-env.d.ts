@@ -21,7 +21,7 @@ type AsyncAction = (...args: any[]) => Promise<void>
 type Action = (...args: any[]) => { type: string; payload?: any }
 interface StateSlice {
   loading: boolean
-  error: Error | null
+  error: ErrorObj | null
 }
 type ErrorType = 'unauthorized' | 'network' | 'server' | 'generic'
 type ErrorObj = {
@@ -47,8 +47,7 @@ interface AuthState extends StateSlice {
   isAuthorized: boolean
   isVerified: boolean
   session: Session | null
-  login: LoginValues | null
-  verification: Verification | null
+  loginValues: LoginValues | null
 }
 type Session = {
   uuid: string

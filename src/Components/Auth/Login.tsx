@@ -65,14 +65,14 @@ const Login = ({
         align="center"
         style={{ height: '100%' }}
       >
-        <div className={styles.LoginSubtitles}>
+        <div className={styles.AuthSubtitles}>
           <p>Welcome to the world's most up-to-date address book!</p>
         </div>
 
         <Form
           onSubmit={onSubmit}
           validate={validate}
-          render={({ handleSubmit, submitting, pristine }) => {
+          render={({ handleSubmit, pristine }) => {
             return (
               <form className={styles.LoginForm} onSubmit={handleSubmit}>
                 <Field name="phone">
@@ -99,11 +99,11 @@ const Login = ({
                 </Field>
 
                 <Button
-                  className={styles.LoginButton}
                   type="submit"
                   variant="primary"
                   loading={loading}
                   disabled={pristine}
+                  style={{ marginTop: '15%' }}
                 >
                   Start
                 </Button>

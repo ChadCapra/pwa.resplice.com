@@ -20,7 +20,7 @@ const Alert = ({ close, type, header, children }: Props) => {
     return () => {
       clearTimeout(timeout)
     }
-  }, [])
+  }, [close])
 
   return ReactDOM.createPortal(
     <div className={styles.Alert}>
