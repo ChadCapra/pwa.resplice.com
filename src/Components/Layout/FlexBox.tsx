@@ -5,7 +5,7 @@ import cx from 'classnames'
 import styles from './FlexBox.module.scss'
 
 type Props = {
-  children: import('react').ReactChild | Array<import('react').ReactChild>
+  children: React.ReactNode | Array<React.ReactNode>
   className?: string
   fill?: boolean
   direction?: 'column' | 'row'

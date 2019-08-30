@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom'
+import { useSpring, animated } from 'react-spring'
 
 import MdClose from 'react-ionicons/lib/MdClose'
 import Notification from '../Util/Notification'
@@ -15,6 +16,11 @@ type Props = {
 }
 
 const Alert = ({ close, type, header, children }: Props) => {
+  const animation = useSpring({
+    from: { transform: 'translate(0, -300px)' },
+    to: { transform: 'translate(0, 0)' },
+    config: { tension: 200 }
+  })
   useEffect(() => {
     const timeout = setTimeout(close, 10000)
     return () => {
@@ -23,7 +29,7 @@ const Alert = ({ close, type, header, children }: Props) => {
   }, [close])
 
   return ReactDOM.createPortal(
-    <div className={styles.Alert}>
+    <animated.div className={styles.Alert} style={animation}>
       <Notification type={type}>
         <Notification.Header>
           <FlexBox justify="between" align="start">
@@ -36,7 +42,7 @@ const Alert = ({ close, type, header, children }: Props) => {
 
         <Notification.Body>{children}</Notification.Body>
       </Notification>
-    </div>,
+    </animated.div>,
     document.querySelector('#alert-root')!
   )
 }

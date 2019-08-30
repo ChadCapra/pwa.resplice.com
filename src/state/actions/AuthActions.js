@@ -1,4 +1,4 @@
-import api from '../../api'
+import api, { mockApi } from '../../api'
 import { parseError } from '../../helpers'
 import {
   LOGIN,
@@ -17,17 +17,13 @@ import { fetchContactList } from './ContactActions'
 import { fetchGroupList } from './GroupActions'
 
 export const login = values => async dispatch => {
-  dispatch({ type: LOGIN })
+  dispatch({ type: LOGIN, payload: values })
 
   try {
-    const response = await api.post('/login', values)
-    const {
-      requested_at,
-      ok: { ...data }
-    } = response.data
+    const response = await mockApi.post('/session/create', values)
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: { values, session: { requested_at, ...data } }
+      payload: response.data
     })
   } catch (err) {
     dispatch({ type: LOGIN_FAILURE, payload: parseError(err) })
@@ -46,30 +42,31 @@ export const logout = tokens => async dispatch => {
   dispatch({ type: LOGOUT })
 }
 
-export const authenticateSession = verifyObject => async dispatch => {
+export const authenticateSession = code => async dispatch => {
   dispatch({ type: VERIFY })
 
   try {
-    const response = await api.patch('/verify_login', verifyObject)
-    const {
-      requested_at,
-      ok: { ...data }
-    } = response.data
+    const { data: session } = await api.patch('/session/authenticate', {
+      verify_token: code
+    })
 
-    if (data.access_token) {
+    if (session.authorized_at) {
       // Set auth header on axios instance
-      api.defaults.headers.common['access_token'] = data.access_token
-      api.defaults.headers.common['user_uuid'] = data.user_uuid
+      api.defaults.headers.common['access_token'] = session.access_token
+      api.defaults.headers.common['session_uuid'] = session.uuid
       // Set auth token and uuid in browser storage
-      localStorage.setItem('access_token', data.access_token)
-      localStorage.setItem('user_uuid', data.user_uuid)
+      localStorage.setItem('access_token', session.access_token)
+      localStorage.setItem('session_uuid', session.uuid)
       await dispatch(fetchAttributeTypes())
       await dispatch(fetchUserProfile())
       await dispatch(fetchGroupList())
       await dispatch(fetchContactList())
     }
 
-    dispatch({ type: VERIFY_SUCCESS, payload: { requested_at, ...data } })
+    dispatch({
+      type: VERIFY_SUCCESS,
+      payload: session
+    })
   } catch (err) {
     dispatch({ type: VERIFY_FAILURE, payload: err })
   }

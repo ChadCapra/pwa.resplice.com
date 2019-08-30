@@ -29,6 +29,7 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case LOGIN:
+      return { ...state, loading: true, loginValues: action.payload }
     case CREATE_PROFILE:
     case VERIFY:
       return { ...state, loading: true }
@@ -45,8 +46,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: false,
-        session: action.payload.session,
-        loginValues: action.payload.values
+        session: action.payload
       }
     case CREATE_PROFILE_SUCCESS:
       return { ...state, loading: false, profile: action.payload }

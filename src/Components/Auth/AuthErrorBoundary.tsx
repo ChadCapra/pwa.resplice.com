@@ -2,16 +2,16 @@ import React, { Component } from 'react'
 
 import Alert from '../Modal/Alert'
 
-export default class ErrorBoundary extends Component {
+class AuthErrorBoundary extends Component {
   state = {
     error: null
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError(error: Error) {
     return { error }
   }
 
-  componentDidCatch(error, errorInfo) {
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     console.log(error, errorInfo)
   }
 
@@ -26,7 +26,7 @@ export default class ErrorBoundary extends Component {
           <Alert type="danger" header="Error" close={this.clearError}>
             {this.state.error}
           </Alert>
-          {/* {this.props.children} */}
+          There was an unhandled exception
         </>
       )
     }
@@ -34,3 +34,5 @@ export default class ErrorBoundary extends Component {
     return this.props.children
   }
 }
+
+export default AuthErrorBoundary

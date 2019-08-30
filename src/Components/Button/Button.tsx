@@ -12,7 +12,7 @@ type Props = {
   loading?: boolean
   disabled?: boolean
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
-  children: React.ReactChild
+  children: React.ReactNode
   [prop: string]: any
 }
 

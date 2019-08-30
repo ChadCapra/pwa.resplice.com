@@ -21,34 +21,51 @@
     color: white;
     background-color: $brand;
     max-width: 350px;
-  }
 
-  &.Secondary {
-    color: #1bbc9b;
-    background-color: white;
-    border: 1px solid #1bbc9b;
-    max-width: 350px;
-    margin: 10px 0;
-  }
-
-  &.Loading {
-    background-color: darken($brand, 5%);
-    cursor: wait;
-    & span {
-      margin-right: 15px;
+    &.Loading {
+      background-color: darken($brand, 5%);
+      cursor: wait;
+      & span {
+        margin-right: 15px;
+      }
+    }
+    &.Disabled {
+      background-color: $light-3;
+      cursor: not-allowed;
+    }
+    &:active {
+      color: white;
+      transform: scale(0.9);
+      background-color: darken($brand, 5%);
+      box-shadow: 0 2px 25px rgba(255, 0, 130, 0.2);
     }
   }
 
-  &.Disabled {
-    background-color: $light-3;
-    cursor: not-allowed;
-  }
+  &.Secondary {
+    color: $brand;
+    background-color: white;
+    border: 1px solid $brand;
+    max-width: 350px;
+    margin: 10px 0;
 
-  &:active {
-    color: white;
-    transform: scale(0.9);
-    background-color: darken($brand, 5%);
-    box-shadow: 0 2px 25px rgba(255, 0, 130, 0.2);
+    &.Loading {
+      border: 1px solid $light-2;
+      color: $light-2;
+      cursor: wait;
+      & span {
+        margin-right: 15px;
+      }
+    }
+    &.Disabled {
+      border: 1px solid $light-2;
+      color: $light-2;
+      cursor: not-allowed;
+    }
+    &:active {
+      color: white;
+      transform: scale(0.9);
+      box-shadow: 0 2px 25px rgba(255, 0, 130, 0.2);
+    }
   }
 }
 

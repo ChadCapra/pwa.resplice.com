@@ -2,7 +2,7 @@ import React from 'react'
 import { Route } from 'react-router-dom'
 
 import View from '../Layout/View'
-import AuthErrorBoundary from '../Util/AuthErrorBoundary'
+import AuthErrorBoundary from './AuthErrorBoundary'
 import AuthHeader from './AuthHeader'
 import Login from './Login'
 import ReCreateProfile from './ReCreateProfile'
