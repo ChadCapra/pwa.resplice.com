@@ -19,7 +19,7 @@ interface Props {
   profile: UserProfile | null
   loading: boolean
   pristine: boolean
-  isVerified: boolean
+  session: Session | null
   isAuthorized: boolean
   country: string
   createProfile: AsyncAction
@@ -30,13 +30,13 @@ const ReCreateProfile: FC<Props & InjectedFormProps<{}, Props>> = ({
   profile,
   loading,
   pristine,
-  isVerified,
+  session,
   isAuthorized,
   country,
   createProfile,
   handleSubmit
 }) => {
-  if (!isVerified) return <Redirect to="/auth/login" />
+  if (!session) return <Redirect to="/auth/login" />
   if (isAuthorized) return <Redirect to="/" />
 
   return (
@@ -143,9 +143,9 @@ const mapStateToProps = (state: RespliceState) => {
   const country = selector(state, 'country')
   return {
     loading: state.authState.loading,
-    profile: state.userState.profile,
-    isVerified: state.authState.isVerified,
+    session: state.authState.session,
     isAuthorized: state.authState.isAuthorized,
+    profile: state.userState.profile,
     country
   }
 }

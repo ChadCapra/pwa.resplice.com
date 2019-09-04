@@ -45,7 +45,6 @@ interface RespliceState {
 // AuthState
 interface AuthState extends StateSlice {
   isAuthorized: boolean
-  isVerified: boolean
   session: Session | null
   loginValues: LoginValues | null
 }

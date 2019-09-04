@@ -20,10 +20,8 @@ const INITIAL_STATE = {
   loading: false,
   error: null,
   isAuthorized: false,
-  isVerified: false,
   session: null,
-  loginValues: null,
-  verification: null
+  loginValues: null
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -54,8 +52,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: false,
-        verification: action.payload,
-        isVerified: action.payload.access_token ? true : false
+        session: action.payload
       }
 
     case LOGIN_FAILURE:

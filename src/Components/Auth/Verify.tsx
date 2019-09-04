@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { useSpring, animated } from 'react-spring'
@@ -38,14 +38,25 @@ const Verify = ({
   const animation = useSpring({
     from: { transform: 'translate(-350px)' },
     to: { transform: 'translate(0)' },
-    config: { tension: 225 }
+    config: { tension: 215 },
+    reset: secondCodeRequired
   })
+
+  const { phone_verified_at = '', email_verified_at = '' } = session || {}
+
+  useEffect(() => {
+    if (phone_verified_at || email_verified_at) {
+      setSecondCodeRequired(true)
+    }
+  }, [session, phone_verified_at, email_verified_at])
 
   if (!session || !loginValues) return <Redirect to="/auth/login" />
   if (session.authorized_at) return <Redirect to="/auth/create-profile" />
 
   const subtitles = (() => {
-    const secondAttribute = loginValues.email
+    const secondAttribute = phone_verified_at
+      ? loginValues.email
+      : loginValues.phone
     if (secondCodeRequired) {
       return <p>Please verify {secondAttribute}</p>
     }
@@ -74,14 +85,25 @@ const Verify = ({
         <div className={styles.AuthSubtitles}>{subtitles}</div>
 
         <FlexBox direction="column" justify="center" align="center">
-          <animated.div style={animation}>
-            <InputCode
-              length={6}
-              label={`Verification Code ${secondCodeRequired ? '#2' : '#1'}`}
-              loading={loading}
-              onComplete={authenticateSession}
-            />
-          </animated.div>
+          {secondCodeRequired ? (
+            <animated.div key="code2" style={animation}>
+              <InputCode
+                length={6}
+                label="Verification Code #2"
+                loading={loading}
+                onComplete={authenticateSession}
+              />
+            </animated.div>
+          ) : (
+            <animated.div key="code1" style={animation}>
+              <InputCode
+                length={6}
+                label={`Verification Code ${secondCodeRequired ? '#2' : '#1'}`}
+                loading={loading}
+                onComplete={authenticateSession}
+              />
+            </animated.div>
+          )}
           <Button
             variant="secondary"
             loading={loading}

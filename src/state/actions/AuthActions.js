@@ -46,7 +46,7 @@ export const authenticateSession = code => async dispatch => {
   dispatch({ type: VERIFY })
 
   try {
-    const { data: session } = await api.patch('/session/authenticate', {
+    const { data: session } = await mockApi.patch('/session/authenticate', {
       verify_token: code
     })
 
