@@ -50,7 +50,7 @@ export const authenticateSession = code => async dispatch => {
       verify_token: code
     })
 
-    if (session.authorized_at) {
+    if (session.authorized_at && session.profile_complete) {
       // Set auth header on axios instance
       api.defaults.headers.common['access_token'] = session.access_token
       api.defaults.headers.common['session_uuid'] = session.uuid

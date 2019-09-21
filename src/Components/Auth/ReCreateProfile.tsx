@@ -7,7 +7,7 @@ import {
   formValueSelector
 } from 'redux-form'
 import { connect } from 'react-redux'
-import { loadApplication, createProfile } from '../../state/actions'
+import { loadApplication, completeProfile } from '../../state/actions'
 
 import ReInput from '../Form/ReInput'
 import ReInputCountry from '../Form/ReInputCountry'
@@ -22,7 +22,7 @@ interface Props {
   session: Session | null
   isAuthorized: boolean
   country: string
-  createProfile: AsyncAction
+  completeProfile: AsyncAction
   handleSubmit(fn: AsyncAction): () => {}
 }
 
@@ -33,7 +33,7 @@ const ReCreateProfile: FC<Props & InjectedFormProps<{}, Props>> = ({
   session,
   isAuthorized,
   country,
-  createProfile,
+  completeProfile,
   handleSubmit
 }) => {
   if (!session) return <Redirect to="/auth/login" />
@@ -41,7 +41,7 @@ const ReCreateProfile: FC<Props & InjectedFormProps<{}, Props>> = ({
 
   return (
     <div className="create-profile">
-      <form onSubmit={handleSubmit(createProfile)} className="form">
+      <form onSubmit={handleSubmit(completeProfile)} className="form">
         {/* <p>
           Signing up is easy!
           <br />
@@ -157,5 +157,5 @@ const createProfileForm = reduxForm<{}, Props>({
 
 export default connect(
   mapStateToProps,
-  { createProfile, loadApplication }
+  { completeProfile, loadApplication }
 )(createProfileForm)

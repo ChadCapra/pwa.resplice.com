@@ -5,7 +5,7 @@ import View from '../Layout/View'
 import AuthErrorBoundary from './AuthErrorBoundary'
 import AuthHeader from './AuthHeader'
 import Login from './Login'
-import ReCreateProfile from './ReCreateProfile'
+import CreateProfile from './CreateProfile'
 import Verify from './Verify'
 
 import './auth.scss'
@@ -26,7 +26,7 @@ const Auth = ({ match }: Props) => {
           <Route path={`${match.path}/login`} component={Login} />
           <Route
             path={`${match.path}/create-profile`}
-            component={ReCreateProfile}
+            component={CreateProfile}
           />
           <Route path={`${match.path}/verify`} component={Verify} />
         </AuthErrorBoundary>

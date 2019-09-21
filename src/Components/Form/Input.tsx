@@ -33,7 +33,6 @@ const Input = ({
 
   useEffect(() => {
     if (field && field.current && autoFocus) {
-      console.log(field.current)
       field.current.focus()
     }
   }, [autoFocus])

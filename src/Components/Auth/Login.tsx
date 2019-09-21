@@ -31,7 +31,7 @@ const Login = ({
   login,
   clearError
 }: Props) => {
-  const onSubmit = async (values: LoginValues) => {
+  const onSubmit = (values: LoginValues) => {
     login(values)
   }
   const validate = (values: LoginValues): Dictionary => {

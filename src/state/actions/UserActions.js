@@ -39,7 +39,7 @@ export const fetchUserProfile = () => async dispatch => {
   }
 }
 
-export const createProfile = formValues => async dispatch => {
+export const completeProfile = formValues => async dispatch => {
   dispatch({ type: CREATE_PROFILE })
 
   try {

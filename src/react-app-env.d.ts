@@ -55,6 +55,8 @@ type Session = {
   phone_verified_at: string
   email_verified_at: string
   authorized_at: string
+  user_uuid: string
+  profile_complete: boolean
   expiry: string
 }
 type LoginValues = {

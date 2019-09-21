@@ -51,6 +51,7 @@ const Verify = ({
   }, [session, phone_verified_at, email_verified_at])
 
   if (!session || !loginValues) return <Redirect to="/auth/login" />
+  if (session.authorized_at && session.profile_complete) return <Redirect to="/" />
   if (session.authorized_at) return <Redirect to="/auth/create-profile" />
 
   const subtitles = (() => {
