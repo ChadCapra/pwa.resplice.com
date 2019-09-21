@@ -1,4 +1,4 @@
-import api, { mockApi } from '../../api'
+import api, { updateLocationHeaders, mockApi } from '../../api'
 import { parseError } from '../../helpers'
 import {
   LOGIN,
@@ -16,11 +16,12 @@ import { fetchUserProfile } from './UserActions'
 import { fetchContactList } from './ContactActions'
 import { fetchGroupList } from './GroupActions'
 
-export const login = values => async dispatch => {
+export const login = (values, pos) => async dispatch => {
   dispatch({ type: LOGIN, payload: values })
 
   try {
-    const response = await mockApi.post('/session/create', values)
+    updateLocationHeaders(api, pos)
+    const response = await api.post('/session/create', values)
     dispatch({
       type: LOGIN_SUCCESS,
       payload: response.data

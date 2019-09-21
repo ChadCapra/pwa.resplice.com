@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router'
 import { Form, Field } from 'react-final-form'
 import FlexBox from '../Layout/FlexBox'
 
 import Input from '../Form/Input'
+import Checkbox from '../Form/Checkbox'
 import Button from '../Button/Button'
 import InputPhone from '../Form/InputPhone'
 import MdHelpCircle from 'react-ionicons/lib/MdHelpCircle'
@@ -31,8 +32,31 @@ const Login = ({
   login,
   clearError
 }: Props) => {
+  const [locationChecked, setLocationChecked] = useState(false)
+  const [currentPosition, setCurrentPosition] = useState<Position | null>(null)
+  useEffect(() => {
+    const handleGeoError = (err: any) => {
+      console.log(err)
+      setLocationChecked(false)
+    }
+    if (locationChecked && 'geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        setCurrentPosition,
+        handleGeoError,
+        { enableHighAccuracy: true }
+      )
+    }
+  }, [locationChecked])
+
+  const handleLocationCheck = () => {
+    if (locationChecked) {
+      setCurrentPosition(null)
+    }
+    setLocationChecked(!locationChecked)
+  }
+
   const onSubmit = async (values: LoginValues) => {
-    login(values)
+    login(values, currentPosition)
   }
   const validate = (values: LoginValues): Dictionary => {
     const errors: Dictionary = {}
@@ -97,6 +121,13 @@ const Login = ({
                     />
                   )}
                 </Field>
+
+                <FlexBox>
+                  <Checkbox
+                    checked={locationChecked}
+                    onClick={handleLocationCheck}
+                  />
+                </FlexBox>
 
                 <Button
                   type="submit"
