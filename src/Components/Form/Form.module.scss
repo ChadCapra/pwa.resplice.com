@@ -144,6 +144,7 @@
 .Checkbox {
   height: 35px;
   width: 35px;
+  min-width: 35px;
   border-radius: 5px;
   border: 1px solid $dark-1;
   &.Checked {

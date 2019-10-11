@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { Form, Field } from 'react-final-form'
@@ -7,6 +7,7 @@ import FlexBox from '../Layout/FlexBox'
 import Input from '../Form/Input'
 import InputCountry from '../Form/InputCountry'
 import InputRegion from '../Form/InputRegion'
+import Avatar from '../Profile/Avatar/ReAvatar'
 import Button from '../Button/Button'
 import Alert from '../Modal/Alert'
 
@@ -41,6 +42,7 @@ const CreateProfile = ({
   loading,
   error
 }: Props) => {
+  const [avatar, setAvatar] = useState('')
   const validate = (values: CreateProfileValues): Dictionary => {
     const errors: Dictionary = {}
     if (!values.name) {
@@ -59,7 +61,8 @@ const CreateProfile = ({
     return errors
   }
 
-  if (!session || !session.authorized_at) return <Redirect to="/auth/login" />
+  if (!session || !session.authenticated_at)
+    return <Redirect to="/auth/login" />
   if (session.profile_complete) return <Redirect to="/" />
 
   return (
@@ -74,6 +77,8 @@ const CreateProfile = ({
         <div className={styles.AuthSubtitles}>
           <p>Add some other pieces of information to get started</p>
         </div>
+
+        <Avatar uuid={session.uuid} avatar={avatar} editAvatar={setAvatar} />
 
         <Form
           onSubmit={completeProfile}

@@ -18,7 +18,7 @@
 
   p {
     color: $text;
-    font-size: 24px;
+    font-size: 20px;
     width: 100%;
   }
 }
@@ -37,4 +37,28 @@
   position: absolute;
   bottom: 8px;
   right: 8px;
+}
+
+.CardOverride {
+  margin: 0px auto 24px auto;
+}
+.CardHeaderOverride {
+  padding: 16px 24px;
+  & p {
+    margin: 0px;
+    margin-top: 8px;
+  }
+}
+.CardBodyOverride {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  padding: 16px 24px;
+  transition: 0.2s ease all;
+  &:hover {
+    cursor: pointer;
+    background-color: lighten($dark-3, 50%);
+    // background-color: $light-1;
+  }
 }

@@ -5,7 +5,7 @@ import styles from './Util.module.scss'
 
 type Props = {
   type: 'info' | 'success' | 'warning' | 'danger'
-  className?: 'string'
+  className?: string
   children: Array<React.ReactElement>
 }
 

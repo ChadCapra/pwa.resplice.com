@@ -9,18 +9,14 @@ import InputCode from '../Form/InputCode'
 import Button from '../Button/Button'
 import Alert from '../Modal/Alert'
 
-import {
-  authenticateSession,
-  clearLogin,
-  clearError
-} from '../../state/actions'
+import { verifySession, clearLogin, clearError } from '../../state/actions'
 
 type Props = {
   session: Session | null
   loginValues: LoginValues | null
   loading: boolean
   error: ErrorObj | null
-  authenticateSession: AsyncAction
+  verifySession: AsyncAction
   clearLogin: Action
   clearError: Action
 }
@@ -30,7 +26,7 @@ const Verify = ({
   loginValues,
   loading,
   error,
-  authenticateSession,
+  verifySession,
   clearLogin,
   clearError
 }: Props) => {
@@ -51,14 +47,15 @@ const Verify = ({
   }, [session, phone_verified_at, email_verified_at])
 
   if (!session || !loginValues) return <Redirect to="/auth/login" />
-  if (session.authorized_at && session.profile_complete) return <Redirect to="/" />
-  if (session.authorized_at) return <Redirect to="/auth/create-profile" />
+  if (session.authenticated_at && session.profile_complete)
+    return <Redirect to="/" />
+  if (session.authenticated_at) return <Redirect to="/auth/eula" />
 
   const subtitles = (() => {
-    const secondAttribute = phone_verified_at
-      ? loginValues.email
-      : loginValues.phone
     if (secondCodeRequired) {
+      const secondAttribute = phone_verified_at
+        ? loginValues.email
+        : loginValues.phone
       return <p>Please verify {secondAttribute}</p>
     }
 
@@ -92,7 +89,7 @@ const Verify = ({
                 length={6}
                 label="Verification Code #2"
                 loading={loading}
-                onComplete={authenticateSession}
+                onComplete={verifySession}
               />
             </animated.div>
           ) : (
@@ -101,7 +98,7 @@ const Verify = ({
                 length={6}
                 label={`Verification Code ${secondCodeRequired ? '#2' : '#1'}`}
                 loading={loading}
-                onComplete={authenticateSession}
+                onComplete={verifySession}
               />
             </animated.div>
           )}
@@ -130,5 +127,5 @@ const mapStateToProps = (state: RespliceState) => {
 
 export default connect(
   mapStateToProps,
-  { authenticateSession, clearLogin, clearError }
+  { verifySession, clearLogin, clearError }
 )(Verify)

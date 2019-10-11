@@ -7,6 +7,7 @@ import AuthHeader from './AuthHeader'
 import Login from './Login'
 import CreateProfile from './CreateProfile'
 import Verify from './Verify'
+import Agreements from './Agreements'
 
 import './auth.scss'
 
@@ -24,11 +25,12 @@ const Auth = ({ match }: Props) => {
       <View.Body>
         <AuthErrorBoundary>
           <Route path={`${match.path}/login`} component={Login} />
+          <Route path={`${match.path}/verify`} component={Verify} />
+          <Route path={`${match.path}/eula`} component={Agreements} />
           <Route
             path={`${match.path}/create-profile`}
             component={CreateProfile}
           />
-          <Route path={`${match.path}/verify`} component={Verify} />
         </AuthErrorBoundary>
       </View.Body>
     </View>

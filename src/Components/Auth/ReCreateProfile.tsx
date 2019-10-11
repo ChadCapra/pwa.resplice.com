@@ -49,7 +49,11 @@ const ReCreateProfile: FC<Props & InjectedFormProps<{}, Props>> = ({
         </p> */}
 
         <div style={{ margin: '25px 0' }}>
-          <ReAvatar uuid={profile!.uuid} avatar={profile!.avatar} />
+          <ReAvatar
+            uuid={profile!.uuid}
+            avatar={profile!.avatar}
+            editAvatar={() => {}}
+          />
         </div>
 
         <div className="inputs">

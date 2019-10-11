@@ -8,13 +8,14 @@ import AvatarUpload from './ReAvatarUpload'
 
 import './avatar.scss'
 
-interface Props {
+type Props = {
   uuid: string
   avatar: string
   viewOnly?: boolean
+  editAvatar: (...args: any[]) => any
 }
 
-const ReAvatar = ({ uuid, avatar, viewOnly }: Props) => {
+const ReAvatar = ({ uuid, avatar, viewOnly, editAvatar }: Props) => {
   const [showAvatarModal, setShowModal] = useState(false)
 
   return (
@@ -41,7 +42,14 @@ const ReAvatar = ({ uuid, avatar, viewOnly }: Props) => {
             headerText="Upload"
             onClose={() => setShowModal(false)}
           >
-            <AvatarUpload uuid={uuid} onComplete={() => setShowModal(false)} />
+            <AvatarUpload
+              uuid={uuid}
+              editAvatar={editAvatar}
+              onComplete={() => {
+                console.log('close Modal')
+                setShowModal(false)
+              }}
+            />
           </ReModal>
         </>
       )}

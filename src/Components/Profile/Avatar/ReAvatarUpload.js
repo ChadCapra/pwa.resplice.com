@@ -1,14 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-
-import { editAvatar } from '../../../state/actions'
 
 import Identicon from 'react-identicons'
 import MdCamera from 'react-ionicons/lib/MdCamera'
 import MdUpload from 'react-ionicons/lib/MdCloudUpload'
 import ReCropper from '../../Util/ReCropper'
-import ReButton from '../../Button/ReButton'
+import Button from '../../Button/Button'
 
 const AvatarUploadModal = ({ uuid, onComplete, editAvatar }) => {
   const [imgData, setImgData] = useState(null)
@@ -94,13 +91,13 @@ const AvatarUploadModal = ({ uuid, onComplete, editAvatar }) => {
         >
           Camera Stream not available
         </video>
-        <ReButton
+        <Button
           style={{ position: 'absolute', bottom: '10px' }}
-          type="primary"
+          variant="primary"
           onClick={takePicture}
         >
           Take Photo
-        </ReButton>
+        </Button>
       </div>
     )
   }
@@ -132,7 +129,13 @@ const AvatarUploadModal = ({ uuid, onComplete, editAvatar }) => {
       </div>
 
       <div className="upload-option">
-        <div className="upload-option-icon">
+        <div
+          className="upload-option-icon"
+          onClick={async () => {
+            await editAvatar('')
+            onComplete()
+          }}
+        >
           <Identicon string={uuid} size={40} fontSize="2.5em" />
         </div>
         <p>Use your identicon</p>
@@ -143,16 +146,8 @@ const AvatarUploadModal = ({ uuid, onComplete, editAvatar }) => {
 
 AvatarUploadModal.propTypes = {
   uuid: PropTypes.string.isRequired,
+  editAvatar: PropTypes.func.isRequired,
   onComplete: PropTypes.func.isRequired
 }
 
-const mapStateToProps = state => {
-  return {
-    loading: state.userState.loading
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  { editAvatar }
-)(AvatarUploadModal)
+export default AvatarUploadModal

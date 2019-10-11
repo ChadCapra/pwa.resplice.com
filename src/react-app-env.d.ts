@@ -54,7 +54,7 @@ type Session = {
   access_token: string
   phone_verified_at: string
   email_verified_at: string
-  authorized_at: string
+  authenticated_at: string
   user_uuid: string
   profile_complete: boolean
   expiry: string

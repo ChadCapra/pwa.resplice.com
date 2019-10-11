@@ -1,4 +1,4 @@
-import api, { updateLocationHeaders, mockApi } from '../../api'
+import api, { updateLocationHeaders } from '../../api'
 import { parseError } from '../../helpers'
 import {
   LOGIN,
@@ -21,10 +21,16 @@ export const login = (values, pos) => async dispatch => {
 
   try {
     updateLocationHeaders(api, pos)
-    const response = await api.post('/session/create', values)
+    const { data: session } = await api.post('/session/create', values)
+
+    api.defaults.headers.common['access-token'] = session.access_token
+    api.defaults.headers.common['session-uuid'] = session.uuid
+    localStorage.setItem('access-token', session.access_token)
+    localStorage.setItem('session-uuid', session.uuid)
+
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: response.data
+      payload: session
     })
   } catch (err) {
     dispatch({ type: LOGIN_FAILURE, payload: parseError(err) })
@@ -43,21 +49,15 @@ export const logout = tokens => async dispatch => {
   dispatch({ type: LOGOUT })
 }
 
-export const authenticateSession = code => async dispatch => {
+export const verifySession = code => async dispatch => {
   dispatch({ type: VERIFY })
 
   try {
-    const { data: session } = await mockApi.patch('/session/authenticate', {
+    const { data: session } = await api.patch('/session/verify', {
       verify_token: code
     })
 
-    if (session.authorized_at && session.profile_complete) {
-      // Set auth header on axios instance
-      api.defaults.headers.common['access_token'] = session.access_token
-      api.defaults.headers.common['session_uuid'] = session.uuid
-      // Set auth token and uuid in browser storage
-      localStorage.setItem('access_token', session.access_token)
-      localStorage.setItem('session_uuid', session.uuid)
+    if (session.authenticated_at && session.profile_complete) {
       await dispatch(fetchAttributeTypes())
       await dispatch(fetchUserProfile())
       await dispatch(fetchGroupList())
