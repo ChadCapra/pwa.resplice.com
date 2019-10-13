@@ -1,6 +1,9 @@
 import api from '../../api'
 import {
   AUTHORIZE,
+  CREATE_USER,
+  CREATE_USER_SUCCESS,
+  CREATE_USER_FAILURE,
   FETCH_PROFILE,
   FETCH_PROFILE_SUCCESS,
   FETCH_PROFILE_FAILURE,
@@ -16,6 +19,18 @@ import {
 } from './types'
 
 import { objectArrToDict } from '../../helpers'
+
+export const createUser = agreements => async dispatch => {
+  dispatch({ type: CREATE_USER })
+
+  try {
+    const response = await api.post('/user/create', agreements)
+    const profile = response.data
+    dispatch({ type: CREATE_PROFILE_SUCCESS, payload: { profile } })
+  } catch (err) {
+    dispatch({ type: CREATE_PROFILE_FAILURE, payload: err })
+  }
+}
 
 export const fetchUserProfile = () => async dispatch => {
   dispatch({ type: FETCH_PROFILE })

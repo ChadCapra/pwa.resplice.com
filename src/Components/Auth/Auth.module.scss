@@ -48,17 +48,21 @@
     margin: 0px;
     margin-top: 8px;
   }
+  & h1 {
+    color: $dark-1;
+  }
 }
 .CardBodyOverride {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  font-size: 20px;
   padding: 16px 24px;
   transition: 0.2s ease all;
-  &:hover {
-    cursor: pointer;
-    background-color: lighten($dark-3, 50%);
-    // background-color: $light-1;
-  }
+}
+.CardCaption {
+  font-size: 20px;
+  color: $brand;
+  margin: 0;
+  margin-top: 8px;
+  cursor: pointer;
 }
