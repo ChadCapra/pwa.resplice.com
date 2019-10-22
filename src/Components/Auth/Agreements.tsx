@@ -26,7 +26,7 @@ const Agreements = ({ loading, session, user, createUser }: Props) => {
   const [eulaAccepted, setEulaAccepted] = useState(false)
   const [privacyAccepted, setPrivacyAccepted] = useState(false)
 
-  if (!session) return <Redirect to="/auth/login" />
+  // if (!session) return <Redirect to="/auth/login" />
   if (!!user) return <Redirect to="/auth/create-profile" />
 
   const handleGeoError = (err: PositionError) => {
@@ -124,6 +124,8 @@ const Agreements = ({ loading, session, user, createUser }: Props) => {
       >
         Accept
       </Button>
+
+      <div id="scroll-anchor" />
     </FlexBox>
   )
 }

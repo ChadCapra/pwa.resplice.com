@@ -19,7 +19,7 @@ export default class ViewLayout extends Component<Props> {
     const body = children.find(child => child.type === Body)
 
     return (
-      <div className={styles.view}>
+      <div className={styles.view} id="view">
         {header ? (
           <div className={styles.viewHeader}>{header.props.children}</div>
         ) : null}

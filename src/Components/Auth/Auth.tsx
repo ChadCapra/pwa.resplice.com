@@ -10,6 +10,7 @@ import Verify from './Verify'
 import Agreements from './Agreements'
 
 import './auth.scss'
+import './Auth.global.scss'
 
 type Props = {
   match: Match
