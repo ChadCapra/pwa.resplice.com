@@ -1,4 +1,4 @@
-import api, { updateLocationHeaders } from '../../api'
+import api, { updateAuthHeaders } from '../../api'
 import { parseError } from '../../helpers'
 import {
   LOGIN,
@@ -16,15 +16,13 @@ import { fetchUserProfile } from './UserActions'
 import { fetchContactList } from './ContactActions'
 import { fetchGroupList } from './GroupActions'
 
-export const login = (values, pos) => async dispatch => {
+export const login = values => async dispatch => {
   dispatch({ type: LOGIN, payload: values })
 
   try {
-    updateLocationHeaders(api, pos)
     const { data: session } = await api.post('/session/create', values)
+    updateAuthHeaders(session)
 
-    api.defaults.headers.common['access-token'] = session.access_token
-    api.defaults.headers.common['session-uuid'] = session.uuid
     localStorage.setItem('access-token', session.access_token)
     localStorage.setItem('session-uuid', session.uuid)
 

@@ -47,7 +47,7 @@ const Verify = ({
   }, [session, phone_verified_at, email_verified_at])
 
   if (!session || !loginValues) return <Redirect to="/auth/login" />
-  if (session.authenticated_at && session.profile_complete)
+  if (session.authenticated_at && session.profile_completed_at)
     return <Redirect to="/" />
   if (session.authenticated_at) return <Redirect to="/auth/eula" />
 
@@ -96,7 +96,7 @@ const Verify = ({
             <animated.div key="code1" style={animation}>
               <InputCode
                 length={6}
-                label={`Verification Code ${secondCodeRequired ? '#2' : '#1'}`}
+                label="Verification Code #1"
                 loading={loading}
                 onComplete={verifySession}
               />

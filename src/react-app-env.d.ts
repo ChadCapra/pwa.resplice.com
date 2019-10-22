@@ -46,17 +46,22 @@ interface RespliceState {
 interface AuthState extends StateSlice {
   isAuthorized: boolean
   session: Session | null
+  lastLocation: Position | null
   loginValues: LoginValues | null
 }
 type Session = {
   uuid: string
   user_agent: string
   access_token: string
-  phone_verified_at: string
-  email_verified_at: string
   authenticated_at: string
-  user_uuid: string
-  profile_complete: boolean
+  authorized_at: string
+  phone_verified_at: string
+  phone_verified_token: string
+  email_verified_at: string
+  email_verified_token: string
+  failed_verifications: 0
+  location_enabled: boolean
+  profile_completed_at: boolean
   expiry: string
 }
 type LoginValues = {
@@ -219,12 +224,12 @@ interface ShareState extends StateSlice {
   shareList: ShareItem[] | null
   shareAttributes: ShareAttribute[] | null
 }
-interface ShareItem {
+type ShareItem = {
   uuid: string
   name: string
   avatar: string
 }
-interface ShareAttribute {
+type ShareAttribute = {
   uuid: string
   share_expiry: string | null
 }

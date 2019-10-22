@@ -63,7 +63,7 @@ const CreateProfile = ({
 
   if (!session || !session.authenticated_at)
     return <Redirect to="/auth/login" />
-  if (session.profile_complete) return <Redirect to="/" />
+  if (session.profile_completed_at) return <Redirect to="/" />
 
   return (
     <>

@@ -21,6 +21,7 @@ const INITIAL_STATE = {
   error: null,
   isAuthorized: false,
   session: null,
+  lastLocation: null,
   loginValues: null
 }
 
