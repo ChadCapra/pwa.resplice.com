@@ -1,0 +1,61 @@
+@import '../../config.scss';
+
+.ProfileList {
+  position: relative;
+  height: 100%;
+}
+
+.ProfileSummary {
+  color: $text;
+  font-size: 18px;
+
+  &.Pending {
+    background-color: rgba($neutral-1, 0.2);
+  }
+  &.Pad {
+    padding: 0 16px;
+  }
+}
+.Summary {
+  width: calc(100% - 68px);
+  & div:first-of-type {
+    flex: 0 0 50px;
+    margin-right: 16px;
+  }
+}
+.SummaryRight {
+  font-size: 16px;
+  flex: 0 0 80px;
+  color: lighten($text, 30%);
+}
+.SummaryText {
+  min-width: 0;
+  & span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  & span:last-of-type {
+    font-size: 16px;
+    color: lighten($text, 30%);
+  }
+  & span:first-of-type {
+    font-size: 18px;
+    color: $text;
+  }
+}
+
+.Brand {
+  color: $brand;
+}
+
+.ProfileShareHeader {
+  text-align: center;
+  font-size: 24px;
+  margin: 0;
+
+  & > span {
+    color: #1bbc9b;
+    font-size: 28px;
+  }
+}

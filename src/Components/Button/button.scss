@@ -1,0 +1,175 @@
+$button-bg: #1bbc9b;
+$button-bg-secondary: #c6c8c8;
+$button-bg-light: #77d3c0;
+
+/*************************
+* Button Styles 
+*************************/
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 24px;
+  text-align: center;
+  height: 50px;
+  transition: all 0.2s ease;
+  width: 300px;
+
+  &--primary {
+    color: white;
+    background-color: $button-bg;
+    max-width: 350px;
+  }
+
+  &--secondary {
+    color: #1bbc9b;
+    background-color: white;
+    border: 1px solid #1bbc9b;
+    max-width: 350px;
+    margin: 10px 0;
+  }
+
+  &--loading {
+    background-color: $button-bg-light;
+    cursor: wait;
+    & span {
+      margin-right: 15px;
+    }
+  }
+
+  &--disabled {
+    background-color: $button-bg-light;
+    cursor: not-allowed;
+  }
+
+  &:active {
+    color: white;
+    transform: scale(0.9);
+    background-color: darken($button-bg, 5%);
+    box-shadow: 0 2px 25px rgba(255, 0, 130, 0.2);
+  }
+
+  .re-ring {
+    margin-left: 10px;
+  }
+}
+
+/*************************
+* FAB Styles 
+*************************/
+.fab {
+  position: sticky;
+  bottom: 15px;
+  left: calc(100vw - 75px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px;
+  width: 65px;
+  height: 65px;
+  background-color: $button-bg;
+  border-radius: 50%;
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+
+  &:active {
+    transform: scale(0.9);
+    background-color: darken($button-bg, 5%);
+    box-shadow: none;
+  }
+
+  &.outline {
+    box-sizing: border-box;
+    background-color: white;
+    border: 3px solid $button-bg;
+  }
+  transition: 0.2s ease all;
+}
+
+@media only screen and (min-width: 768px) {
+  .fab {
+    &:hover {
+      background-color: darken($button-bg, 5%);
+    }
+  }
+
+  .btn {
+    &:hover {
+      background-color: darken($button-bg, 5%);
+    }
+  }
+}
+
+/*************************
+* Button Loading Styles 
+*************************/
+.re-ring {
+  width: 1em;
+  height: 1em;
+  position: relative;
+  color: inherit;
+  display: inline-block;
+  &:after {
+    position: absolute;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: ' ';
+    display: inline-block;
+    background: center center no-repeat;
+    background-size: cover;
+    border-radius: 50%;
+    border-style: solid;
+    border-width: 0.15em;
+    background-clip: padding-box;
+    -webkit-background-clip: padding-box;
+    border-color: currentColor currentColor currentColor transparent;
+    box-sizing: border-box;
+  }
+}
+
+@keyframes re-spin {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  50% {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes re-spin {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  50% {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.re-spin {
+  -webkit-animation: re-spin 1s infinite;
+  animation: re-spin 1s infinite;
+}

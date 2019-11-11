@@ -1,27 +1,29 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
 
 import MdClose from 'react-ionicons/lib/MdClose'
 
 import './utils.scss'
 
-class ReExit extends Component {
-  state = {
-    exit: false
-  }
+const ReExit = ({ exitRoute, ...props }) => {
+  const [exit, setExit] = useState(false)
 
-  render() {
-    if (this.state.exit) return <Redirect push to="/" />
+  if (exit) return <Redirect push to={exitRoute} />
 
-    return (
-      <MdClose
-        color="#1bbc9b"
-        fontSize="2.5em"
-        className="re-exit-icon"
-        onClick={() => this.setState({ exit: true })}
-      />
-    )
-  }
+  return (
+    <MdClose
+      color="#1bbc9b"
+      fontSize="2.5em"
+      className="re-exit-icon"
+      onClick={() => setExit(true)}
+      {...props}
+    />
+  )
+}
+
+ReExit.propTypes = {
+  exitRoute: PropTypes.string.isRequired
 }
 
 export default ReExit

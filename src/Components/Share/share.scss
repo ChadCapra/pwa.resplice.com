@@ -22,37 +22,222 @@
   padding: 0px 5px;
 }
 
-.share-list-header,
-.qr-code-header,
-.share-camera-header {
-  font-size: 18px;
-  text-align: center;
+.share-camera {
+  width: 100%;
+  padding: 0;
+  height: 100%;
+}
+
+.share-list {
+  height: 100%;
+  overflow: auto;
+  justify-content: flex-start;
+}
+
+.share-list-footer {
+  position: fixed;
+  bottom: 0;
+  padding: 0 0 15px 0;
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .share-list-input-container {
   width: 90%;
-  max-width: 500px;
+  max-width: 575px;
   position: relative;
+  margin-bottom: 25px;
 }
 
-.share-list-container {
-  width: 100vw;
-  max-width: 500px;
+.re-invite {
+  position: relative;
+  height: 100%;
+}
+.re-invite-modal {
+  margin-top: 25px;
+}
+
+.invite-message-container {
+  position: relative;
+  width: 90%;
+  max-width: 575px;
+
+  & label {
+    position: absolute;
+    top: 55px;
+    left: 10px;
+    color: rgba(0, 0, 0, 0.5);
+  }
 }
 
 .share-list-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #e5e5e5;
-  margin-left: 25px;
-  & svg {
-    margin-right: 10px;
-  }
-  padding-bottom: 5px;
-  margin-bottom: 10px;
+  width: 100%;
+  margin: 15px 0;
 }
 
+.share-list-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: #1bbc9b;
+  margin-right: 15px;
+}
+
+/*************************
+* Bulk Share Styles
+*************************/
+.re-bulk-share,
+.share-attributes {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.bulk-share-header {
+  flex: 0 0 65px;
+  display: flex;
+  max-width: 800px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+
+  & > span {
+    font-family: 'Sanchez', serif;
+  }
+}
+.bulk-share-dropdown-header {
+  flex: 0 0 65px;
+  display: flex;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 800px;
+  padding: 0 20px;
+  cursor: pointer;
+
+  & > p > span {
+    font-family: 'Sanchez', serif;
+    color: #1bbc9b;
+    font-size: 36px;
+  }
+
+  & p {
+    font-size: 18px;
+    margin: 0;
+    color: rgba(0, 0, 0, 0.5);
+  }
+}
+.bulk-share-dropdown-container {
+  position: absolute;
+  top: 65px;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 65px);
+  background-color: #e6e6e699;
+  z-index: 10;
+}
+.bulk-share-dropdown {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding-bottom: 15px;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+
+.bulk-share-body,
+.share-attributes-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto;
+  flex: 1 1;
+  padding: 2em 0;
+}
+.bulk-share-card-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-bottom: 65px;
+}
+.bulk-share-footer {
+  position: absolute;
+  bottom: 0;
+  height: 70px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  background-color: transparent;
+
+  & .btn {
+    box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+      0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+  }
+
+  & .btn--disabled {
+    box-shadow: none;
+  }
+}
+
+.bulk-share-icons {
+  display: flex;
+  align-items: center;
+  & > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #1bbc9b;
+    margin: 0 8px;
+    padding: 0;
+  }
+  & .avatar {
+    margin: 0;
+  }
+}
+.dropdown-icon {
+  width: 50px;
+  height: 50px;
+  background-color: #1bbc9b;
+  border-radius: 50%;
+  margin: 5px 15px;
+}
+
+.bulk-share-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  & span {
+    color: #1bbc9b;
+    font-size: 24px;
+  }
+
+  & p {
+    margin: 0;
+    color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+/*************************
+* QR Code Styles
+*************************/
 .qr-code-container {
   background-position: center;
   background-size: contain;
@@ -62,15 +247,51 @@
   height: 400px;
 }
 
+.camera-fab {
+  position: sticky;
+  bottom: 15px;
+  left: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1bbc9b;
+  color: white;
+  height: 75px;
+  width: 75px;
+  margin-right: 15px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+
+  &:active {
+    color: white;
+    transform: scale(0.9);
+    background-color: darken(#1bbc9b, 5%);
+    box-shadow: 0 2px 25px rgba(255, 0, 130, 0.2);
+  }
+}
+
+.qr-outer-loading {
+  width: 100%;
+  height: 7px;
+  background-color: #e5e5e5;
+  border-radius: 25px;
+}
+.qr-inner-loading {
+  height: 7px;
+  background-color: #1bbc9b;
+  border-radius: 25px;
+}
+
 .qr-code-pin {
-  margin-top: -35px;
+  margin-top: -10px;
   margin-bottom: 25px;
   font-size: 64px;
+  font-weight: 300;
 }
 
 .share-dropdown {
   position: absolute;
-  top: 60px;
+  top: 65px;
   border-radius: 10px;
   background-color: white;
   width: calc(100% - 20px);
@@ -80,6 +301,23 @@
   & svg {
     margin: 0 10px 0 2.5px;
   }
+}
+
+.invite-attr-link {
+  text-align: center;
+  margin: 25px 0;
+  color: #1bbc9b;
+  font-size: 24px;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.invite-label {
+  color: #1bbc9b;
+  width: 90%;
 }
 
 .dropdown-query {

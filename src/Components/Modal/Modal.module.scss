@@ -1,0 +1,9 @@
+.Alert {
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 16px;
+  max-width: 575px;
+  will-change: transform;
+}

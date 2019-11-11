@@ -1,0 +1,99 @@
+@import '../../config';
+
+/*************************
+* Button Styles 
+*************************/
+.Button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 24px;
+  text-align: center;
+  height: 50px;
+  transition: all 0.2s ease;
+  width: 300px;
+
+  &.Primary {
+    color: white;
+    background-color: $brand;
+    max-width: 350px;
+
+    &.Loading {
+      background-color: darken($brand, 5%);
+      cursor: wait;
+      & span {
+        margin-right: 15px;
+      }
+    }
+    &.Disabled {
+      background-color: $light-3;
+      cursor: not-allowed;
+    }
+    &:active {
+      color: white;
+      transform: scale(0.9);
+      background-color: darken($brand, 5%);
+      box-shadow: 0 2px 25px rgba(255, 0, 130, 0.2);
+    }
+  }
+
+  &.Secondary {
+    color: $brand;
+    background-color: white;
+    border: 1px solid $brand;
+    max-width: 350px;
+    margin: 10px 0;
+
+    &.Loading {
+      border: 1px solid $light-2;
+      color: $light-2;
+      cursor: wait;
+      & span {
+        margin-right: 15px;
+      }
+    }
+    &.Disabled {
+      border: 1px solid $light-2;
+      color: $light-2;
+      cursor: not-allowed;
+    }
+    &:active {
+      transform: scale(0.9);
+      box-shadow: 0 2px 25px rgba(68, 8, 39, 0.144);
+    }
+  }
+}
+
+/*************************
+* FAB Styles 
+*************************/
+.FAB {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: 0.2s ease all;
+
+  &:active {
+    transform: scale(0.9);
+    box-shadow: none;
+  }
+}
+
+.FABContainer,
+.ExpandableFABContainer {
+  position: sticky;
+  bottom: 0px;
+  left: calc(100vw - 95px);
+  width: max-content;
+}

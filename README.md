@@ -1,5 +1,7 @@
 # Resplice
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/cef2d9ea-ff7d-48c1-89fa-8d9eee3b3561/deploy-status)](https://app.netlify.com/sites/resplice-app/deploys)
+
 Front-end codebase for Resplice
 
 ## Pull Requests
@@ -25,7 +27,15 @@ Please delete options that are not relevant.
 
 # How Has This Been Tested?
 
+<<<<<<< HEAD
+
 Please describe the tests that you ran to verify your changes. Provide instructions so we can reproduce. Please also list any relevant details for your test configuration
+
+=======
+
+Please describe the tests that you ran to verify your changes. Provide instructions so we can reproduce. Please also list any relevant details for your test configuration
+
+> > > > > > > react
 
 - [ ] Test A
 - [ ] Test B

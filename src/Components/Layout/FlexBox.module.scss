@@ -1,0 +1,57 @@
+.FlexBox {
+  display: flex;
+  position: relative;
+}
+
+.Fill {
+  height: 100%;
+  width: 100%;
+}
+
+.DirectionColumn {
+  flex-direction: column;
+}
+.DirectionRow {
+  flex-direction: row;
+}
+
+.JustifyCenter {
+  justify-content: center;
+}
+.JustifyStart {
+  justify-content: flex-start;
+}
+.JustifyEnd {
+  justify-content: flex-end;
+}
+.JustifyBetween {
+  justify-content: space-between;
+}
+.JustifyAround {
+  justify-content: space-around;
+}
+.JustifyEvenly {
+  justify-content: space-evenly;
+}
+.JustifyStretch {
+  justify-content: stretch;
+}
+.JustifyNormal {
+  justify-content: normal;
+}
+
+.AlignCenter {
+  align-items: center;
+}
+.AlignStart {
+  align-items: flex-start;
+}
+.AlignEnd {
+  align-items: flex-end;
+}
+.AlignStretch {
+  align-items: stretch;
+}
+.AlignNormal {
+  align-items: normal;
+}

@@ -1,28 +1,30 @@
-.contact,
-.char-avatar,
-.contact-name {
-  display: flex;
+.contact-list {
+  position: relative;
+  padding-top: 15px;
 }
 
-.avatar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-position: center;
-  background-size: cover;
-  background-color: #e5e5e5;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin: 5px 15px;
+.profile-tags {
+  text-align: center;
+  color: rgba(0, 0, 0, 0.5);
+  margin-top: -20px;
+  margin-bottom: 25px;
 }
 
-.contact-name {
-  justify-content: center;
-  align-items: flex-start;
+.profile-tag-modal {
+  margin-top: 25px;
+}
+
+.re-contact-shares {
+  display: flex;
   flex-direction: column;
-}
+  align-items: center;
+  & h3 {
+    text-align: center;
+    font-size: 24px;
 
-.contact-group {
-  opacity: 0.5;
+    & > span {
+      color: #1bbc9b;
+      font-size: 28px;
+    }
+  }
 }
