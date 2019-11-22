@@ -16,7 +16,7 @@ type Match = {
 type Callback = (...args: any[]) => void
 // End Utility Types
 
-// Redux State Types
+// Shared Types
 type AsyncAction = (...args: any[]) => Promise<void>
 type Action = (...args: any[]) => { type: string; payload?: any }
 interface StateSlice {
@@ -33,48 +33,65 @@ type ErrorObj = {
 }
 
 interface RespliceState {
+  utilState: UtilState
   authState: AuthState
   userState: UserState
   contactState: ContactState
   groupState: GroupState
-  attributeState: AttributeState
-  shareState: ShareState
-  utilState: UtilState
 }
+
+// UtilState
+interface UtilState extends StateSlice {
+  offline: boolean
+  globalLoading: fale
+  swipeIndex: number
+  attribute_types: AttributeType[]
+}
+interface AttributeType {
+  id: number
+  sort_order: int
+  name: string
+  verify_seconds: string
+  preview_name: string
+  empty_value: { [index: string]: string }
+  actions: AttributeAction[]
+}
+interface AttributeAction {
+  sort_order: number
+  name: string
+  display_name: string
+  icon: string
+  user_only: boolean
+  unverified_only: boolean
+  action_value: string
+}
+// End UtilState
 
 // AuthState
 interface AuthState extends StateSlice {
-  isAuthorized: boolean
+  access_token: string
   session: Session | null
   lastLocation: Position | null
-  loginValues: LoginValues | null
+  loginValues: LoginValues
+}
+type LoginValues = {
+  phone: string
+  email: string
 }
 type Session = {
   uuid: string
+  user_uuid: string
   user_agent: string
-  access_token: string
   authenticated_at: string
   authorized_at: string
   phone_verified_at: string
   phone_verified_token: string
   email_verified_at: string
   email_verified_token: string
-  failed_verifications: 0
+  failed_verifications: number
   location_enabled: boolean
   profile_completed_at: boolean
   expiry: string
-}
-type LoginValues = {
-  phone: string
-  email: string
-}
-type Verification = {
-  token_1_valid: boolean
-  token_2_valid: boolean
-}
-interface VerifiedVerification {
-  user_uuid: string
-  access_token: string
 }
 interface CreateProfileValues {
   name: string
@@ -92,60 +109,60 @@ interface CreateProfileValues {
 interface UserState extends StateSlice {
   profile: UserProfile | null
   attributes: { [index: string]: UserAttribute } | null
-  collections: { [index: string]: UserAttribute[] } | null
-  types: { [index: number]: AttributeType } | null
-  settings: Settings | null
-  requested_at: string | null
+  attributes_loaded_at: Date | null
 }
 interface UserProfile {
   uuid: string
   name: string
   avatar: string
-  profile_complete: boolean
+  tags: { [index: string]: string }
+  unlock_pin: string
+  unlock_pin_expiry: string
   registered_at: string
-  unique_contacts: number
-  total_shares: number
+  share_count: number
+  attribute_count: number
+  location_enabled: boolean
+  notification_value_uuid: string
 }
-interface Settings {}
 interface UserAttribute {
   uuid: string
   attribute_type_id: number
-  collection: string
   name: string
+  collection: string
+  value_uuid: string
   value: { [index: string]: string }
-  verified_recency: number
-  qr_shareable: boolean
+  verified_at: string
+  latest_to_verify: boolean
+  verify_expiry: string | null
   expiry: string | null
-  created_at: string
-  updated_at: string
+  qr_shareable: boolean
   verify_token: number | null
-  actions: AttributeAction[]
 }
 // End UserState
 
 // ContactState
 interface ContactState extends StateSlice {
   contacts: Contacts | null
-  types: { [index: number]: AttributeType } | null
-  requested_at: string | null
+  contacts_loaded_at: Date | null
 }
 interface Contacts {
-  [index: string]: ContactSummary | ContactDetails
+  [index: string]: Contact
 }
-interface ContactSummary {
+interface Contact {
   uuid: string
   name: string
   avatar: string | null
   tags: string[]
+  description
   pending_expiration: string | null
-  searchable_values: string[]
-}
-interface ContactDetails extends ContactSummary {
-  attributes: ContactAttribute[]
-  shares: ContactShare[]
+  attributes_updated_at: string
+  shares_updated_at: string
+  attributes: { [index: string]: ContactAttribute }
+  shares: { [index: string]: ContactShare }
 }
 interface ContactAttribute {
-  uuid: string
+  contact_uuid: string
+  attribute_uuid: string
   attribute_type_id: number
   collection: string
   name: string
@@ -155,6 +172,7 @@ interface ContactAttribute {
   shared_at: string
 }
 interface ContactShare {
+  contact_uuid: string
   attribute_uuid: string
   expiry: string
 }
@@ -163,12 +181,12 @@ interface ContactShare {
 // GroupState
 interface GroupState extends StateSlice {
   groups: Groups | null
-  types: { [index: number]: AttributeType } | null
+  groups_loaded_at: string
 }
 interface Groups {
-  [index: string]: GroupSummary | GroupDetails
+  [index: string]: Group
 }
-interface GroupSummary {
+interface Group {
   uuid: string
   name: string
   avatar: string | null
@@ -177,67 +195,26 @@ interface GroupSummary {
   member_uuids: string[]
   pending_attribute_value: { [index: string]: string }
   requested_at: string
+  members: { [index: string]: GroupMember }
+  attributes: { [index: string]: GroupAttribute }
+  shares: { [index: string]: GroupShare }
 }
-interface GroupDetails extends GroupSummary {
-  attributes: GroupAttribute[]
-  shares: GroupShare[]
+interface GroupMember {
+  group_uuid: string
+  contact_uuid: string
+  name: string
 }
 interface GroupAttribute {
-  uuid: string
+  group_uuid: string
+  attribute_uuid: string
   attribute_type_id: number
   collection: string
   name: string
   value: { [index: string]: string }
 }
 interface GroupShare {
+  group_uuid: string
   attribute_uuid: string
   expiry: string
 }
 // End GroupState
-
-// AttributeState
-interface AttributeState extends StateSlice {
-  verify: null
-}
-interface AttributeType {
-  id: number
-  name: string
-  default_collection: string
-  verify_seconds: string
-  preview_name: string
-  preview_value: { [index: string]: string }
-  value_rules: null
-  actions: AttributeAction[]
-}
-interface AttributeAction {
-  name: string
-  display_name: string
-  icon: string
-  user_only: boolean
-  unverified_only: boolean
-  action_value: string
-}
-// End AttributeState
-
-// ShareState
-interface ShareState extends StateSlice {
-  shareList: ShareItem[] | null
-  shareAttributes: ShareAttribute[] | null
-}
-type ShareItem = {
-  uuid: string
-  name: string
-  avatar: string
-}
-type ShareAttribute = {
-  uuid: string
-  share_expiry: string | null
-}
-// End ShareState
-
-// UtilState
-interface UtilState extends StateSlice {
-  offline: boolean
-  swipeIndex: number
-}
-// End UtilState

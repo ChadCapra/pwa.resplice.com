@@ -28,17 +28,10 @@ import {
 import { processAttributes } from '../../helpers'
 
 const INITIAL_STATE = {
-  loading: false,
-  error: null,
-  requested_at: null,
-  profile: null,
+  user: null, // user settings is nested
   attributes: null,
-  collections: null,
-  types: null,
-  settings: {
-    sessions: null,
-    notifications: true
-  }
+  user_loaded_at: '',
+  attributes_loaded_at: ''
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -127,7 +120,10 @@ export default (state = INITIAL_STATE, action) => {
     case ENABLE_NOTIFICATIONS:
       return { ...state, settings: { ...state.settings, notifications: true } }
     case DISABLE_NOTIFICAITONS:
-      return { ...state, settings: { ...state.settings, notifications: false } }
+      return {
+        ...state,
+        settings: { ...state.settings, notifications: false }
+      }
 
     case CREATE_PROFILE_FAILURE:
     case FETCH_PROFILE_FAILURE:

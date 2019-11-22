@@ -48,14 +48,14 @@ import {
 } from '../../helpers'
 
 const INITIAL_STATE = {
-  loading: false,
-  error: null,
-  requested_at: null,
   groups: null,
-  types: null,
-  createdGroupUuid: null,
-  importLoading: false,
-  importingContacts: null
+  members: null,
+  attributes: null,
+  shares: null,
+  groups_loaded_at: null,
+  members_loaded_at: null,
+  attributes_loaded_at: null,
+  shares_loaded_at: null
 }
 
 export default (state = INITIAL_STATE, action) => {

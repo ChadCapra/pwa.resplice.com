@@ -32,11 +32,12 @@ import {
 } from '../../helpers'
 
 const INITIAL_STATE = {
-  loading: false,
-  error: null,
-  requested_at: null,
   contacts: null,
-  types: null
+  attributes: null,
+  shares: null,
+  contacts_loaded_at: null,
+  attributes_loaded_at: null,
+  shares_loaded_at: null
 }
 
 export default (state = INITIAL_STATE, action) => {

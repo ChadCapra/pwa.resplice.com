@@ -17,8 +17,6 @@ import {
 } from '../actions/types'
 
 const INITIAL_STATE = {
-  loading: false,
-  error: null,
   isAuthorized: false,
   session: null,
   lastLocation: null,

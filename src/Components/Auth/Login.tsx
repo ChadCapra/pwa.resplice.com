@@ -17,20 +17,18 @@ import { login, clearError } from '../../state/actions'
 type Props = {
   loading: boolean
   session: Session | null
-  isAuthorized: boolean
   error: Error | null
   login: AsyncAction
   clearError: Action
 }
 
-const Login = ({
-  loading,
-  session,
-  isAuthorized,
-  error,
-  login,
-  clearError
-}: Props) => {
+type LoginValues = {
+  phone: string
+  email: string
+}
+
+const Login = ({ loading, session, error, login, clearError }: Props) => {
+  const isAuthorized = session && session.authorized_at
   const onSubmit = async (values: LoginValues) => {
     login(values)
   }
@@ -129,12 +127,8 @@ const mapStateToProps = (state: RespliceState) => {
   return {
     loading: state.authState.loading,
     session: state.authState.session,
-    isAuthorized: state.authState.isAuthorized,
     error: state.authState.error
   }
 }
 
-export default connect(
-  mapStateToProps,
-  { login, clearError }
-)(Login)
+export default connect(mapStateToProps, { login, clearError })(Login)

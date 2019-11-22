@@ -31,11 +31,11 @@ const ReCreateProfile: FC<Props & InjectedFormProps<{}, Props>> = ({
   loading,
   pristine,
   session,
-  isAuthorized,
   country,
   completeProfile,
   handleSubmit
 }) => {
+  const isAuthorized = session!.authorized_at
   if (!session) return <Redirect to="/auth/login" />
   if (isAuthorized) return <Redirect to="/" />
 
@@ -148,7 +148,6 @@ const mapStateToProps = (state: RespliceState) => {
   return {
     loading: state.authState.loading,
     session: state.authState.session,
-    isAuthorized: state.authState.isAuthorized,
     profile: state.userState.profile,
     country
   }
@@ -159,7 +158,6 @@ const createProfileForm = reduxForm<{}, Props>({
   validate
 })(ReCreateProfile)
 
-export default connect(
-  mapStateToProps,
-  { completeProfile, loadApplication }
-)(createProfileForm)
+export default connect(mapStateToProps, { completeProfile, loadApplication })(
+  createProfileForm
+)

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   BrowserRouter as Router,
   Route,
@@ -14,18 +14,24 @@ import GlobalLoading from './components/Loading/GlobalLoading'
 import Offline from './components/Util/Offline'
 
 type Props = {
-  isAuthorized: boolean
-  loading?: boolean
+  session: Session | null
+  globalLoading: boolean
   offline: boolean
   loadApplication: AsyncAction
 }
 
-const Secure = ({ isAuthorized, loading, offline, loadApplication }: Props) => {
+const Secure = ({
+  session,
+  globalLoading,
+  offline,
+  loadApplication
+}: Props) => {
   useEffect(() => {
     loadApplication()
   }, [loadApplication])
+  const isAuthorized = session && session.authorized_at
 
-  if (loading) return <GlobalLoading />
+  if (globalLoading) return <GlobalLoading />
   if (offline) return <Offline />
 
   return (
@@ -50,13 +56,10 @@ const Secure = ({ isAuthorized, loading, offline, loadApplication }: Props) => {
 
 const mapStateToProps = (state: RespliceState) => {
   return {
-    isAuthorized: state.authState.isAuthorized,
-    loading: state.utilState.loading,
+    session: state.authState.session,
+    globalLoading: state.utilState.globalLoading,
     offline: state.utilState.offline
   }
 }
 
-export default connect(
-  mapStateToProps,
-  { loadApplication }
-)(Secure)
+export default connect(mapStateToProps, { loadApplication })(Secure)

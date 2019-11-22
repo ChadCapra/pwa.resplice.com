@@ -10,14 +10,15 @@ import {
 } from '../actions/types'
 
 const INITIAL_STATE = {
-  loading: true,
-  error: null,
+  globalLoading: true,
+  globalError: null,
   offline: false,
   swipeIndex: 0,
   search: {
     query: '',
     tags: []
-  }
+  },
+  attributeTypes: null
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -33,11 +34,21 @@ export default (state = INITIAL_STATE, action) => {
     case CLEAR_SEARCH_TAGS:
       return { ...state, search: { ...state.search, tags: [] } }
     case LOAD:
-      return { ...state, loading: true }
+      return { ...state, globalLoading: true }
     case LOAD_SUCCESS:
-      return { ...state, loading: false }
+      return {
+        ...state,
+        offline: false,
+        globalLoading: false,
+        globalError: null
+      }
     case LOAD_FAILURE:
-      return { ...state, offline: true, loading: false }
+      return {
+        ...state,
+        offline: true,
+        globalLoading: false,
+        globalError: action.payload
+      }
     default:
       return state
   }

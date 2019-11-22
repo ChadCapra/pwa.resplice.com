@@ -125,7 +125,8 @@ const mapStateToProps = (state: RespliceState) => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  { verifySession, clearLogin, clearError }
-)(Verify)
+export default connect(mapStateToProps, {
+  verifySession,
+  clearLogin,
+  clearError
+})(Verify)
