@@ -43,7 +43,7 @@ interface RespliceState {
 // UtilState
 interface UtilState extends StateSlice {
   offline: boolean
-  globalLoading: fale
+  globalLoading: boolean
   swipeIndex: number
   attribute_types: AttributeType[]
 }
