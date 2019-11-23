@@ -1,0 +1,112 @@
+.Card,
+.TypeCard {
+  width: 90%;
+  margin: 16px auto;
+  max-width: 575px;
+  border-radius: 10px;
+  box-shadow: var(--card-shadow-2);
+
+  & .Attribute:first-child {
+    margin-top: 0;
+  }
+  & .Attribute:last-child {
+    margin-bottom: 0;
+  }
+
+  &.Pending {
+    background-color: rgba(108, 125, 213, 0.1);
+    border: 1px solid var(--neutral-1);
+  }
+}
+
+.CardHeader {
+  border-bottom: 1px solid #e5e5e5;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 16px;
+  &.NoBorder {
+    border-bottom: none;
+  }
+
+  h1 {
+    color: var(--brand-primary);
+    font-size: 24px;
+    font-weight: normal;
+    margin: 0;
+  }
+}
+
+.CardBody {
+  padding: 16px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.Attribute {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 16px 0;
+
+  &.Pending {
+    background-color: rgba(108, 125, 213, 0.1);
+    border: 1px solid var(--neutral-1);
+    border-radius: 15px;
+  }
+
+  & .Left {
+    flex: 0 0 50px;
+  }
+  & .Middle {
+    padding-left: 8px;
+    flex: 1 1;
+    max-width: calc(100% - 139px);
+  }
+  & .Right {
+    flex: 0 0 50px;
+  }
+}
+.Name {
+  color: var(--dark-3);
+}
+.Value {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.CollapseCard {
+  --pixels-from-top: 0;
+  background-color: white;
+  animation: collapseCard 0.5s ease-out forwards;
+  box-shadow: none;
+}
+.ExpandCard {
+  --pixels-from-pos: 0;
+  animation: expandCard 0.5s ease-out forwards;
+  background-color: white;
+}
+
+.TopCard {
+  z-index: 10;
+  box-shadow: 1px 1px 15px #0000001a;
+  transform-style: preserve-3d;
+}
+
+@keyframes collapseCard {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(var(--pixels-from-top));
+  }
+}
+
+@keyframes expandCard {
+  from {
+    transform: translateY(var(--pixels-from-pos));
+  }
+  to {
+    transform: translateY(0);
+  }
+}

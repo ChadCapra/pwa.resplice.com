@@ -2,60 +2,33 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router'
 
-import FlexBox from '../Layout/FlexBox'
-import Card from '../Card/Card'
-import Button from '../Button/Button'
-import Ring from '../Loading/Ring'
-import Checkbox from '../Form/Checkbox'
+import Flex from '../shared/layout/Flex'
+import Card from '../shared/card/Card'
+import Button from '../shared/button/Button'
+import Ring from '../skeleton/Ring'
+import Checkbox from '../shared/form/Checkbox'
 
 import styles from './Auth.module.scss'
 
-import { createUser } from '../../state/actions'
+// import { createUser } from '../../state/actions'
 
-type Props = {
-  loading: boolean
-  session: Session | null
-  user: UserProfile | null
-  error: ErrorObj | null
-  createUser: AsyncAction
-}
+// type Props = {
+//   loading: boolean
+//   session: Session | null
+//   user: UserProfile | null
+//   error: ErrorObj | null
+//   createUser: AsyncAction
+// }
 
-const Agreements = ({ loading, session, user, createUser }: Props) => {
-  const [currentPosition, setCurrentPosition] = useState<Position | null>(null)
-  const [fetchingPosition, setFetchingPosition] = useState(false)
+const Agreements = ({ loading, session, user, createUser }: any) => {
   const [eulaAccepted, setEulaAccepted] = useState(false)
   const [privacyAccepted, setPrivacyAccepted] = useState(false)
 
   // if (!session) return <Redirect to="/auth/login" />
-  if (!!user) return <Redirect to="/auth/create-profile" />
-
-  const handleGeoError = (err: PositionError) => {
-    console.log(err)
-    setFetchingPosition(false)
-  }
-
-  const getLocation = () => {
-    if (!currentPosition && 'geolocation' in navigator) {
-      setFetchingPosition(true)
-      navigator.geolocation.getCurrentPosition(
-        pos => {
-          console.log(pos)
-          setCurrentPosition(pos)
-          setFetchingPosition(false)
-        },
-        handleGeoError,
-        { enableHighAccuracy: false }
-      )
-    }
-  }
-
-  const renderCheckbox = () => {
-    if (fetchingPosition) return <Ring />
-    return <Checkbox checked={!!currentPosition} />
-  }
+  // if (!!user) return <Redirect to="/auth/create-profile" />
 
   return (
-    <FlexBox
+    <Flex
       justify="start"
       align="center"
       direction="column"
@@ -100,25 +73,13 @@ const Agreements = ({ loading, session, user, createUser }: Props) => {
         </Card.Body>
       </Card>
 
-      <Card border className={styles.CardOverride}>
-        <Card.Header className={styles.CardHeaderOverride}>
-          <h1>Location-based Security</h1>
-          <p>Protect my account even more by allowing access to my location</p>
-        </Card.Header>
-        <Card.Body className={styles.CardBodyOverride} onClick={getLocation}>
-          <span>Allow access to my location</span>
-          {renderCheckbox()}
-        </Card.Body>
-      </Card>
-
       <Button
         variant="primary"
         disabled={!eulaAccepted || !privacyAccepted}
         onClick={() =>
           createUser({
             eula_accepted: eulaAccepted,
-            privacy_accepted: privacyAccepted,
-            location_enabled: !!currentPosition
+            privacy_accepted: privacyAccepted
           })
         }
       >
@@ -126,11 +87,11 @@ const Agreements = ({ loading, session, user, createUser }: Props) => {
       </Button>
 
       <div id="scroll-anchor" />
-    </FlexBox>
+    </Flex>
   )
 }
 
-const mapStateToProps = (state: RespliceState) => {
+const mapStateToProps = (state: any) => {
   return {
     loading: state.authState.loading,
     session: state.authState.session,
@@ -140,6 +101,6 @@ const mapStateToProps = (state: RespliceState) => {
 }
 
 export default connect(
-  mapStateToProps,
-  { createUser }
+  mapStateToProps
+  // { createUser }
 )(Agreements)

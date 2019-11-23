@@ -2,23 +2,23 @@ import React, { useState, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { useSpring, animated } from 'react-spring'
+import { RespliceState, Session } from '../../store/store'
 
 import styles from './Auth.module.scss'
-import FlexBox from '../Layout/FlexBox'
-import InputCode from '../Form/InputCode'
-import Button from '../Button/Button'
-import Alert from '../Modal/Alert'
+import Flex from '../shared/layout/Flex'
+import InputCode from '../shared/form/InputCode'
+import Button from '../shared/button/Button'
+import Alert from '../shared/modal/Alert'
 
-import { verifySession, clearLogin, clearError } from '../../state/actions'
+import { verifySession } from '../../store/auth/authActions'
 
+type LoginValues = { phone: string; email: string }
 type Props = {
   session: Session | null
   loginValues: LoginValues | null
   loading: boolean
-  error: ErrorObj | null
-  verifySession: AsyncAction
-  clearLogin: Action
-  clearError: Action
+  error: string | null
+  verifySession: (code: string) => void
 }
 
 const Verify = ({
@@ -26,9 +26,7 @@ const Verify = ({
   loginValues,
   loading,
   error,
-  verifySession,
-  clearLogin,
-  clearError
+  verifySession
 }: Props) => {
   const [secondCodeRequired, setSecondCodeRequired] = useState(false)
   const animation = useSpring({
@@ -47,9 +45,11 @@ const Verify = ({
   }, [session, phone_verified_at, email_verified_at])
 
   if (!session || !loginValues) return <Redirect to="/auth/login" />
-  if (session.authenticated_at && session.profile_completed_at)
+  if (session.authenticated_at && session.user_registered_at)
     return <Redirect to="/" />
-  if (session.authenticated_at) return <Redirect to="/auth/eula" />
+  if (session.authenticated_at) return <Redirect to="/auth/create-profile" />
+  if (session.email_verified_at && session.phone_verified_at)
+    return <Redirect to="/auth/eula" />
 
   const subtitles = (() => {
     if (secondCodeRequired) {
@@ -69,12 +69,12 @@ const Verify = ({
 
   return (
     <>
-      {error && (
+      {/* {error && (
         <Alert type="danger" header={error.name} close={clearError}>
           {error.message}
         </Alert>
-      )}
-      <FlexBox
+      )} */}
+      <Flex
         direction="column"
         justify="start"
         align="center"
@@ -82,7 +82,7 @@ const Verify = ({
       >
         <div className={styles.AuthSubtitles}>{subtitles}</div>
 
-        <FlexBox direction="column" justify="center" align="center">
+        <Flex direction="column" justify="center" align="center">
           {secondCodeRequired ? (
             <animated.div key="code2" style={animation}>
               <InputCode
@@ -105,13 +105,13 @@ const Verify = ({
           <Button
             variant="secondary"
             loading={loading}
-            onClick={clearLogin}
+            // onClick={clearLogin}
             style={{ marginTop: '15%' }}
           >
             {loading ? 'Verifying' : 'Cancel'}
           </Button>
-        </FlexBox>
-      </FlexBox>
+        </Flex>
+      </Flex>
     </>
   )
 }
@@ -126,7 +126,5 @@ const mapStateToProps = (state: RespliceState) => {
 }
 
 export default connect(mapStateToProps, {
-  verifySession,
-  clearLogin,
-  clearError
+  verifySession
 })(Verify)

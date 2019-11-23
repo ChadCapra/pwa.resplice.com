@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import cx from 'classnames'
+import styled from 'styled-components'
 
-import FlexBox from '../Layout/FlexBox'
+import Flex from '../shared/layout/Flex'
 
 import { ReactComponent as RespliceLogo } from '../../assets/resplice_wide_logo.svg'
-import styles from './Auth.module.scss'
+
+const StyledHeader = styled(Flex)`
+  padding: 16px 0;
+  flex: 0 0 150px;
+  height: 125px;
+  width: 100vw;
+  align-self: flex-start;
+  ${props =>
+    props.scrolled ? 'box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.5);' : ''}
+`
 
 const AuthHeader = () => {
   const [scrolled, setScrolled] = useState(false)
@@ -22,14 +31,10 @@ const AuthHeader = () => {
     }
   }, [])
 
-  const AuthHeaderStyle = cx(styles.AuthHeader, {
-    [styles.AuthHeaderShadow]: scrolled
-  })
-
   return (
-    <FlexBox justify="center" align="center" className={AuthHeaderStyle}>
+    <StyledHeader justify="center" align="center" scrolled={scrolled}>
       <RespliceLogo />
-    </FlexBox>
+    </StyledHeader>
   )
 }
 

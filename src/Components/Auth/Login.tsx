@@ -1,134 +1,106 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router'
-import { Form, Field } from 'react-final-form'
-import FlexBox from '../Layout/FlexBox'
+import { Formik, Form, Field, FieldProps } from 'formik'
+import styled from 'styled-components'
+import { RespliceState, Session } from '../../store/store'
+import { createSession } from '../../store/auth/authActions'
 
-import Input from '../Form/Input'
-import Button from '../Button/Button'
-import InputPhone from '../Form/InputPhone'
-import MdHelpCircle from 'react-ionicons/lib/MdHelpCircle'
-import Alert from '../Modal/Alert'
+import Flex from '../shared/layout/Flex'
+import Input from '../shared/form/Input'
+import InputPhone from '../shared/form/InputPhone'
+import Button from '../shared/button/Button'
 
-import styles from './Auth.module.scss'
+type LoginValues = { phone: string; email: string }
 
-import { login, clearError } from '../../state/actions'
+const StyledFlex = styled(Flex)`
+  max-width: 768px;
+  padding: 1rem 2rem;
+`
 
 type Props = {
-  loading: boolean
   session: Session | null
-  error: Error | null
-  login: AsyncAction
-  clearError: Action
+  createSession: (values: LoginValues) => void
+  loading: boolean
+  error: string | null
 }
 
-type LoginValues = {
-  phone: string
-  email: string
-}
-
-const Login = ({ loading, session, error, login, clearError }: Props) => {
-  const isAuthorized = session && session.authorized_at
-  const onSubmit = async (values: LoginValues) => {
-    login(values)
+const Login = ({ session, createSession, loading, error }: Props) => {
+  const handleSubmit = (values: LoginValues) => {
+    createSession(values)
   }
-  const validate = (values: LoginValues): Dictionary => {
+
+  const validate = (values: LoginValues) => {
     const errors: Dictionary = {}
     if (!values.phone) {
-      errors.phone = 'Phone Required'
+      errors.phone = 'Please enter a phone number'
     }
-    if (values.phone && values.phone.replace(/\D/g, '').length < 8) {
-      errors.phone = 'You must enter a valid phone number'
-    }
-    if (!values.email) {
-      errors.email = 'Email Required'
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+      errors.email = 'Please enter a valid email address'
     }
     return errors
   }
 
-  if (session) return <Redirect to="/auth/verify" />
-  if (isAuthorized) return <Redirect to="/" />
+  if (session && session.uuid) return <Redirect to="/auth/verify" />
 
   return (
-    <>
-      {error && (
-        <Alert type="danger" header={error.name} close={clearError}>
-          {error.message}
-        </Alert>
-      )}
+    <StyledFlex direction="column" justify="start">
+      <p>Welcome to the world's most up-to-date address book!</p>
 
-      <FlexBox
-        direction="column"
-        justify="start"
-        align="center"
-        style={{ height: '100%' }}
+      <Formik
+        initialValues={{ phone: '', email: '' }}
+        validate={validate}
+        onSubmit={handleSubmit}
       >
-        <div className={styles.AuthSubtitles}>
-          <p>Welcome to the world's most up-to-date address book!</p>
-        </div>
+        {formikBag => {
+          return (
+            <Form>
+              <Field name="phone">
+                {({ field, meta }: FieldProps) => (
+                  <InputPhone
+                    label="Mobile Phone"
+                    name={field.name}
+                    value={field.value}
+                    onChange={val => formikBag.setFieldValue('phone', val)}
+                    meta={meta}
+                  />
+                )}
+              </Field>
+              <Field name="email">
+                {({ field, meta }: FieldProps) => (
+                  <Input
+                    type="email"
+                    label="Email Address"
+                    {...field}
+                    meta={meta}
+                  />
+                )}
+              </Field>
 
-        <Form
-          onSubmit={onSubmit}
-          validate={validate}
-          render={({ handleSubmit, pristine }) => {
-            return (
-              <form className={styles.LoginForm} onSubmit={handleSubmit}>
-                <Field name="phone">
-                  {props => (
-                    <InputPhone
-                      {...props.input}
-                      type="phone"
-                      label="Mobile Phone"
-                      defaultCountry="us"
-                      meta={props.meta}
-                      autoFocus
-                    />
-                  )}
-                </Field>
-                <Field name="email">
-                  {props => (
-                    <Input
-                      {...props.input}
-                      type="email"
-                      label="Email Address"
-                      meta={props.meta}
-                    />
-                  )}
-                </Field>
-
+              <Flex justify="center">
                 <Button
                   type="submit"
                   variant="primary"
                   loading={loading}
-                  disabled={pristine}
-                  style={{ marginTop: '15%' }}
+                  disabled={!formikBag.dirty}
                 >
                   Start
                 </Button>
-              </form>
-            )
-          }}
-        />
-
-        <FlexBox
-          className={styles.LoginHelpIcon}
-          justify="center"
-          align="center"
-          onClick={() => window.open('https://www.resplice.com/faq', '_blank')}
-        >
-          <MdHelpCircle fontSize="3em" color="#1bbc9b" />
-        </FlexBox>
-      </FlexBox>
-    </>
+              </Flex>
+            </Form>
+          )
+        }}
+      </Formik>
+    </StyledFlex>
   )
 }
 
 const mapStateToProps = (state: RespliceState) => {
   return {
-    loading: state.authState.loading,
     session: state.authState.session,
+    loading: state.authState.loading,
     error: state.authState.error
   }
 }
 
-export default connect(mapStateToProps, { login, clearError })(Login)
+export default connect(mapStateToProps, { createSession })(Login)

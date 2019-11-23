@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css?family=Sanchez');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+/* Global styles */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  font-family: 'Open Sans', 'Droid Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Sanchez', serif;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+@keyframes autofill {
+  to {
+    color: #6c7dd5;
+    background: transparent;
+  }
+}
+input:-webkit-autofill {
+  -webkit-animation-name: autofill;
+  -webkit-animation-fill-mode: both;
+}
+
+.react-tel-input {
+  height: 48px;
+}
+.react-tel-input input[type='tel'] {
+  outline: 0 !important;
+  border: 0 !important;
+  background: none !important;
+  border-radius: 10px !important;
+  text-align: left;
+  height: 52px !important;
+  width: 100% !important;
+  padding-top: 12px;
+  font-size: 16px !important;
+}
+.react-tel-input input[type='tel']::placeholder {
+  font-style: italic;
+  text-align: left;
+}
+/* .react-tel-input input[type='tel'] {
+  border: 1px solid #fc3769;
+} */
