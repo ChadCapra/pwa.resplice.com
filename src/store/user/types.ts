@@ -10,7 +10,7 @@ export interface UserProfile {
   name: string
   avatar: string
   locale: string
-  tags: { [name: string]: string }
+  tags: Dictionary<string>
   unlock_pin: string
   unlock_pin_expiry: string
   user_registered_at: string
@@ -25,7 +25,7 @@ export interface UserAttribute {
   name: string
   collection: string
   value_uuid: string
-  value: { [name: string]: string }
+  value: Dictionary<string>
   verified_at: string
   latest_to_verify: boolean
   verify_token: number | null
