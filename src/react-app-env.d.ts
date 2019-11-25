@@ -1,12 +1,8 @@
 /// <reference types="react-scripts" />
 
 // Utility Types
-type Dictionary = {
-  [index: string]: any
-}
-
-type ObjectDictionary = {
-  [index: string]: object
+type Dictionary<T> = {
+  [key: string]: T
 }
 
 type Match = {

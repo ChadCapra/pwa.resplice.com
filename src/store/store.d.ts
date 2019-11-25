@@ -1,6 +1,6 @@
-import { UtilState } from './util/util'
+import { UtilState } from './util/types'
 import { AuthState } from './auth/types'
-import { UserState } from './user/user'
+import { UserState } from './user/types'
 
 export interface RespliceState {
   utilState: UtilState
@@ -10,6 +10,6 @@ export interface RespliceState {
   // groupState: GroupState
 }
 
-export * from './util/util'
+export * from './util/types'
 export * from './auth/types'
-export * from './user/user'
+export * from './user/types'

@@ -3,6 +3,7 @@ export interface AuthState {
   error: string | null
   session: Session | null
   loginValues: { phone: string; email: string } | null
+  locale: string
 }
 export type Session = {
   uuid: string
@@ -15,25 +16,20 @@ export type Session = {
   email_verified_at: string
   email_verified_token: string
   failed_verifications: number
-  location_enabled: boolean
   user_registered_at: string
   expiry: string
 }
 
+export const SET_LOCALE = 'SET_LOCALE'
 export const CREATE_SESSION = 'CREATE_SESSION'
 export const VERIFY_SESSION = 'VERIFY_SESSION'
-export const GET_SESSION = 'GET_SESSION'
-export const GET_SESSIONS = 'GET_SESSIONS'
 export const ACCEPT_EULA = 'ACCEPT_EULA'
 export const REGISTER = 'REGISTER'
-export const DELETE_SESSION = 'DELETE_SESSION'
 
-// interface LogoutAction {
-//   type: typeof LOGOUT
-//   meta: {
-//     timestamp: number
-//   }
-// }
+interface SetLocaleAction {
+  type: typeof SET_LOCALE
+  payload: string
+}
 
 interface CreateSessionAction {
   type: typeof CREATE_SESSION
@@ -63,32 +59,9 @@ interface RegisterAction {
   error?: string | null
 }
 
-interface GetSessionAction {
-  type: typeof GET_SESSION
-  payload?: Session
-  loading?: boolean
-  error?: string | null
-}
-
-interface GetSessionsAction {
-  type: typeof GET_SESSIONS
-  payload?: Session
-  loading?: boolean
-  error?: string | null
-}
-
-interface DeleteSessionAction {
-  type: typeof DELETE_SESSION
-  payload?: Session
-  loading?: boolean
-  error?: string | null
-}
-
 export type AuthActions =
+  | SetLocaleAction
   | CreateSessionAction
   | VerifySessionAction
   | AcceptEulaAction
   | RegisterAction
-  | GetSessionAction
-  | GetSessionsAction
-  | DeleteSessionAction

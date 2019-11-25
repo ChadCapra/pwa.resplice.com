@@ -32,7 +32,7 @@ const Resplice = ({ session, loading, error }: Props) => {
       <Switch>
         <Route
           path="/auth"
-          render={props => (isAuthorized ? <Redirect to="/" /> : <Auth />)}
+          render={() => (isAuthorized ? <Redirect to="/" /> : <Auth />)}
         />
         <Route
           path="/"

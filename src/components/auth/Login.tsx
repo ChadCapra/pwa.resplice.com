@@ -31,7 +31,7 @@ const Login = ({ session, createSession, loading, error }: Props) => {
   }
 
   const validate = (values: LoginValues) => {
-    const errors: Dictionary = {}
+    const errors: Dictionary<string> = {}
     if (!values.phone) {
       errors.phone = 'Please enter a phone number'
     }

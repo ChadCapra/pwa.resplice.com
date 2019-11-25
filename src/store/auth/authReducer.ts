@@ -1,14 +1,25 @@
-import { AuthState, AuthActions, CREATE_SESSION, VERIFY_SESSION } from './types'
+import {
+  AuthState,
+  AuthActions,
+  SET_LOCALE,
+  CREATE_SESSION,
+  VERIFY_SESSION,
+  ACCEPT_EULA,
+  REGISTER
+} from './types'
 
 const INITIAL_STATE: AuthState = {
   loading: false,
   error: null,
   session: null,
-  loginValues: null
+  loginValues: null,
+  locale: ''
 }
 
 export default (state = INITIAL_STATE, action: AuthActions): AuthState => {
   switch (action.type) {
+    case SET_LOCALE:
+      return { ...state, locale: action.payload }
     case CREATE_SESSION:
       return {
         ...state,
@@ -18,9 +29,11 @@ export default (state = INITIAL_STATE, action: AuthActions): AuthState => {
         error: action.error || null
       }
     case VERIFY_SESSION:
+    case ACCEPT_EULA:
+    case REGISTER:
       return {
         ...state,
-        session: action.payload || state.session || null,
+        session: action.payload || state.session,
         loading: action.loading || false,
         error: action.error || null
       }
