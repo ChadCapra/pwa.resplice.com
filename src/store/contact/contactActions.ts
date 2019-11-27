@@ -1,6 +1,7 @@
 import { RespliceState } from '../store'
 import {
   Contact,
+  ContactRecord,
   ContactCollection,
   ContactAttribute,
   ContactShare,
@@ -27,6 +28,8 @@ import {
 import { ThunkAction } from 'redux-thunk'
 import api from '../../api'
 
+import { toDictionary } from '../../helpers'
+
 export const fetchContacts = (): ThunkAction<
   void,
   RespliceState,
@@ -37,9 +40,13 @@ export const fetchContacts = (): ThunkAction<
   try {
     const response = await api.get('/contacts/get')
     const contacts: Contact[] = response.data
+    const contactRecords: Dictionary<ContactRecord> = toDictionary(
+      'uuid',
+      contacts
+    )
     dispatch({
       type: FETCH_CONTACTS,
-      payload: contacts
+      payload: contactRecords
     })
   } catch (err) {
     dispatch({ type: FETCH_CONTACTS, error: err })
@@ -52,10 +59,15 @@ export const fetchContact = (
   dispatch({ type: FETCH_CONTACT, loading: true })
   try {
     const response = await api.get(`/contacts/${uuid}/get`)
-    const contact: Contact = response.data
+    const contactCollection: ContactCollection = response.data
+    const contactRecord: ContactRecord = {
+      ...contactCollection.contact,
+      attributes: toDictionary('uuid', contactCollection.contact_attributes),
+      shares: toDictionary('uuid', contactCollection.contact_shares)
+    }
     dispatch({
       type: FETCH_CONTACT,
-      payload: contact
+      payload: contactRecord
     })
   } catch (err) {
     dispatch({ type: FETCH_CONTACT, error: err })
@@ -74,10 +86,15 @@ export const inviteContact = (invite: {
   dispatch({ type: INVITE_CONTACT, loading: true })
   try {
     const response = await api.post('/contacts/invite', invite)
-    const collection: ContactCollection = response.data
+    const contactCollection: ContactCollection = response.data
+    const contactRecord: ContactRecord = {
+      ...contactCollection.contact,
+      attributes: toDictionary('uuid', contactCollection.contact_attributes),
+      shares: toDictionary('uuid', contactCollection.contact_shares)
+    }
     dispatch({
       type: INVITE_CONTACT,
-      payload: collection
+      payload: contactRecord
     })
   } catch (err) {
     dispatch({ type: INVITE_CONTACT, error: err })
@@ -93,10 +110,15 @@ export const unlockContact = (
     const response = await api.post(`/contacts/${uuid}/unlock`, {
       unlock_pin: pin
     })
-    const collection: ContactCollection = response.data
+    const contactCollection: ContactCollection = response.data
+    const contactRecord: ContactRecord = {
+      ...contactCollection.contact,
+      attributes: toDictionary('uuid', contactCollection.contact_attributes),
+      shares: toDictionary('uuid', contactCollection.contact_shares)
+    }
     dispatch({
       type: UNLOCK_CONTACT,
-      payload: collection
+      payload: contactRecord
     })
   } catch (err) {
     dispatch({ type: UNLOCK_CONTACT, error: err })
@@ -179,9 +201,13 @@ export const fetchContactsAttributes = (): ThunkAction<
   try {
     const response = await api.get('/contacts/attributes/get')
     const attributes: ContactAttribute[] = response.data
+    const attributesDictionary: Dictionary<ContactAttribute> = toDictionary(
+      'attribute_uuid',
+      attributes
+    )
     dispatch({
       type: FETCH_CONTACTS_ATTRIBUTES,
-      payload: attributes
+      payload: attributesDictionary
     })
   } catch (err) {
     dispatch({ type: FETCH_CONTACTS_ATTRIBUTES, error: err })
@@ -195,9 +221,13 @@ export const fetchContactAttributes = (
   try {
     const response = await api.get(`/contacts/${uuid}/attributes/get`)
     const attributes: ContactAttribute[] = response.data
+    const attributesDictionary: Dictionary<ContactAttribute> = toDictionary(
+      'attribute_uuid',
+      attributes
+    )
     dispatch({
       type: FETCH_CONTACT_ATTRIBUTES,
-      payload: attributes
+      payload: { uuid, attributes: attributesDictionary }
     })
   } catch (err) {
     dispatch({ type: FETCH_CONTACT_ATTRIBUTES, error: err })
@@ -216,7 +246,7 @@ export const fetchContactAttribute = (
     const attribute: ContactAttribute = response.data
     dispatch({
       type: FETCH_CONTACT_ATTRIBUTE,
-      payload: attribute
+      payload: { uuid, attribute: attribute }
     })
   } catch (err) {
     dispatch({ type: FETCH_CONTACT_ATTRIBUTE, error: err })

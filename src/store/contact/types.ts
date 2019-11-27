@@ -1,4 +1,6 @@
 export interface ContactState {
+  loading: boolean
+  error: Dictionary<any> | null
   contacts: Dictionary<ContactRecord> | null
   contacts_loaded_at: Date | null
 }
@@ -61,28 +63,28 @@ export const DELETE_CONTACT_SHARE = 'DELETE_CONTACT_SHARE'
 
 interface FetchContactsAction {
   type: typeof FETCH_CONTACTS
-  payload?: Contact[]
+  payload?: Dictionary<ContactRecord>
   loading?: boolean
   error?: Dictionary<any> | null
 }
 
 interface FetchContactAction {
   type: typeof FETCH_CONTACT
-  payload?: Contact
+  payload?: ContactRecord
   loading?: boolean
   error?: Dictionary<any> | null
 }
 
 interface InviteContactAction {
   type: typeof INVITE_CONTACT
-  payload?: ContactCollection
+  payload?: ContactRecord
   loading?: boolean
   error?: Dictionary<any> | null
 }
 
 interface UnlockContactAction {
   type: typeof UNLOCK_CONTACT
-  payload?: ContactCollection
+  payload?: ContactRecord
   loading?: boolean
   error?: Dictionary<any> | null
 }
@@ -117,21 +119,21 @@ interface DeleteContactAction {
 
 interface FetchContactsAttributesAction {
   type: typeof FETCH_CONTACTS_ATTRIBUTES
-  payload?: ContactAttribute[]
+  payload?: Dictionary<ContactAttribute>
   loading?: boolean
   error?: Dictionary<any> | null
 }
 
 interface FetchContactAttributesAction {
   type: typeof FETCH_CONTACT_ATTRIBUTES
-  payload?: ContactAttribute[]
+  payload?: { uuid: string; attributes: Dictionary<ContactAttribute> }
   loading?: boolean
   error?: Dictionary<any> | null
 }
 
 interface FetchContactAttributeAction {
   type: typeof FETCH_CONTACT_ATTRIBUTE
-  payload?: ContactAttribute
+  payload?: { uuid: string; attribute: ContactAttribute }
   loading?: boolean
   error?: Dictionary<any> | null
 }
