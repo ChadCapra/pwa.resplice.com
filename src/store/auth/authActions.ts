@@ -6,7 +6,8 @@ import {
   CREATE_SESSION,
   VERIFY_SESSION,
   ACCEPT_EULA,
-  REGISTER
+  REGISTER,
+  CLEAR_SESSION
 } from './types'
 import { ThunkAction } from 'redux-thunk'
 import api from '../../api'
@@ -35,7 +36,12 @@ export const setLocale = (locale: string) => {
 export const createSession = (values: {
   phone: string
   email: string
-}): ThunkAction<void, RespliceState, null, AuthActions> => async dispatch => {
+}): ThunkAction<
+  Promise<void>,
+  RespliceState,
+  null,
+  AuthActions
+> => async dispatch => {
   dispatch({ type: CREATE_SESSION, loading: true })
   try {
     const response = await api.post('/auth/session/create', values)
@@ -51,7 +57,12 @@ export const createSession = (values: {
 
 export const verifySession = (
   code: string
-): ThunkAction<void, RespliceState, null, AuthActions> => async dispatch => {
+): ThunkAction<
+  Promise<void>,
+  RespliceState,
+  null,
+  AuthActions
+> => async dispatch => {
   dispatch({ type: VERIFY_SESSION, loading: true })
   try {
     const response = await api.patch('/auth/session/verify', {
@@ -69,7 +80,12 @@ export const verifySession = (
 
 export const acceptEula = (
   locale: string
-): ThunkAction<void, RespliceState, null, AuthActions> => async dispatch => {
+): ThunkAction<
+  Promise<void>,
+  RespliceState,
+  null,
+  AuthActions
+> => async dispatch => {
   dispatch({ type: ACCEPT_EULA, loading: true })
   try {
     const response = await api.post('/auth/accept_eula', {
@@ -89,14 +105,19 @@ export const acceptEula = (
 
 export const register = (values: {
   name: string
-  avatar: string
+  avatar: any
   street_address_1: string
   street_address_2: string
   locality: string
   region: string
   postal_code: string
   country: string
-}): ThunkAction<void, RespliceState, null, AuthActions> => async dispatch => {
+}): ThunkAction<
+  Promise<void>,
+  RespliceState,
+  null,
+  AuthActions
+> => async dispatch => {
   dispatch({ type: REGISTER, loading: true })
   try {
     const response = await api.post('/auth/register_user', values)
@@ -107,5 +128,11 @@ export const register = (values: {
     })
   } catch (err) {
     dispatch({ type: REGISTER, error: err })
+  }
+}
+
+export const clearSession = (): AuthActions => {
+  return {
+    type: CLEAR_SESSION
   }
 }

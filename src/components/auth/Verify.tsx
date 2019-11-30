@@ -8,17 +8,18 @@ import styles from './Auth.module.scss'
 import Flex from '../shared/layout/Flex'
 import InputCode from '../shared/form/InputCode'
 import Button from '../shared/button/Button'
-import Alert from '../shared/modal/Alert'
+// import Alert from '../shared/modal/Alert'
 
-import { verifySession } from '../../store/auth/authActions'
+import { verifySession, clearSession } from '../../store/auth/authActions'
 
 type LoginValues = { phone: string; email: string }
 type Props = {
   session: Session | null
   loginValues: LoginValues | null
   loading: boolean
-  error: string | null
-  verifySession: (code: string) => void
+  error: Dictionary<any> | null
+  verifySession: (code: string) => Promise<void>
+  clearSession: () => { type: string }
 }
 
 const Verify = ({
@@ -26,7 +27,8 @@ const Verify = ({
   loginValues,
   loading,
   error,
-  verifySession
+  verifySession,
+  clearSession
 }: Props) => {
   const [secondCodeRequired, setSecondCodeRequired] = useState(false)
   const animation = useSpring({
@@ -47,7 +49,7 @@ const Verify = ({
   if (!session || !loginValues) return <Redirect to="/auth/login" />
   if (session.authenticated_at && session.user_registered_at)
     return <Redirect to="/" />
-  if (session.authenticated_at) return <Redirect to="/auth/create-profile" />
+  if (session.authenticated_at) return <Redirect to="/auth/register" />
   if (session.email_verified_at && session.phone_verified_at)
     return <Redirect to="/auth/eula" />
 
@@ -105,7 +107,7 @@ const Verify = ({
           <Button
             variant="secondary"
             loading={loading}
-            // onClick={clearLogin}
+            onClick={clearSession}
             style={{ marginTop: '15%' }}
           >
             {loading ? 'Verifying' : 'Cancel'}
@@ -126,5 +128,6 @@ const mapStateToProps = (state: RespliceState) => {
 }
 
 export default connect(mapStateToProps, {
-  verifySession
+  verifySession,
+  clearSession
 })(Verify)

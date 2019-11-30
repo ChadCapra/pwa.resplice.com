@@ -21,8 +21,8 @@ type Props = {
 }
 
 type StyleProps = {
-  fill?: boolean
-  direction?: 'column' | 'row'
+  widthFill?: boolean
+  flexDirection?: 'column' | 'row'
   justify?: string
   align?: string
 }
@@ -70,19 +70,23 @@ const renderAlign = (align: string | undefined) => {
 const FlexBox = styled.div<StyleProps>`
   display: flex;
   position: relative;
-  ${props => (props.fill ? 'height: 100%; width: 100%' : '')}
+  ${props => (props.widthFill ? 'min-width: 100%;' : '')}
   ${props =>
-    props.direction === 'column'
+    props.flexDirection === 'column'
       ? 'flex-direction: column;'
-      : props.direction === 'row'
+      : props.flexDirection === 'row'
       ? 'flex-direction: row;'
       : ''}
   ${props => renderJustify(props.justify)}
   ${props => renderAlign(props.align)}
 `
 
-const Flex = (props: Props) => {
-  return <FlexBox {...props}>{props.children}</FlexBox>
+const Flex = ({ direction, fill, ...props }: Props) => {
+  return (
+    <FlexBox flexDirection={direction} widthFill={fill} {...props}>
+      {props.children}
+    </FlexBox>
+  )
 }
 
 export default Flex

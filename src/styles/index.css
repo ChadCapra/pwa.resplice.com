@@ -64,3 +64,9 @@ input:-webkit-autofill {
 /* .react-tel-input input[type='tel'] {
   border: 1px solid #fc3769;
 } */
+
+#modal-root {
+  position: fixed;
+  top: 0;
+  z-index: 999;
+}

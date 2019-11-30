@@ -139,6 +139,12 @@
   }
 }
 
+.CheckboxContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
 .Checkbox {
   height: 35px;
   width: 35px;
@@ -149,4 +155,10 @@
     background-color: var(--brand-primary);
     border: 1px solid var(--brand-primary);
   }
+}
+.CheckboxInput {
+  position: absolute;
+  opacity: 0;
+  height: 0;
+  width: 0;
 }

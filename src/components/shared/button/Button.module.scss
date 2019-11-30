@@ -1,7 +1,6 @@
 /*************************
 * Button Styles 
 *************************/
-$brand: #1bbc9b;
 .Button {
   display: flex;
   justify-content: center;
@@ -22,7 +21,7 @@ $brand: #1bbc9b;
     max-width: 350px;
 
     &.Loading {
-      background-color: darken($brand, 5%);
+      background-color: darken(#1bbc9b, 5%);
       cursor: wait;
       & span {
         margin-right: 15px;
@@ -35,7 +34,7 @@ $brand: #1bbc9b;
     &:active {
       color: white;
       transform: scale(0.9);
-      background-color: darken($brand, 5%);
+      background-color: darken(#1bbc9b, 5%);
       box-shadow: 0 2px 25px rgba(255, 0, 130, 0.2);
     }
   }

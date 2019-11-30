@@ -1,7 +1,7 @@
 export interface UtilState {
   offline: boolean
-  globalLoading: boolean
-  globalError: Dictionary | null
+  loading: boolean
+  error: Dictionary<any> | null
   attributeTypes: AttributeType[] | null
 }
 export interface AttributeType {
@@ -10,7 +10,7 @@ export interface AttributeType {
   name: string
   verify_seconds: string
   preview_name: string
-  empty_value: { [index: string]: string }
+  empty_value: Dictionary<string>
   actions: AttributeAction[]
 }
 export interface AttributeAction {
@@ -24,12 +24,18 @@ export interface AttributeAction {
 }
 
 export const FETCH_ATTRIBUTE_TYPES = 'FETCH_ATTRIBUTE_TYPES'
+export const SET_OFFLINE = 'SET_OFFLINE'
 
-interface VerifySessionAction {
+interface FetchAttributeTypesAction {
   type: typeof FETCH_ATTRIBUTE_TYPES
   payload?: AttributeType[]
   loading?: boolean
-  error?: Dictionary | null
+  error?: Dictionary<any> | null
 }
 
-export type UtilActions = VerifySessionAction
+interface SetOfflineAction {
+  type: typeof SET_OFFLINE
+  payload: boolean
+}
+
+export type UtilActions = FetchAttributeTypesAction | SetOfflineAction

@@ -19,7 +19,7 @@ import { ThunkAction } from 'redux-thunk'
 import api from '../../api'
 
 export const fetchUserProfile = (): ThunkAction<
-  void,
+  Promise<void>,
   RespliceState,
   null,
   UserActions
@@ -34,6 +34,7 @@ export const fetchUserProfile = (): ThunkAction<
     })
   } catch (err) {
     dispatch({ type: FETCH_USER_PROFILE, error: err })
+    throw err
   }
 }
 
@@ -42,7 +43,7 @@ export const editUserName = (
 ): ThunkAction<void, RespliceState, null, UserActions> => async dispatch => {
   dispatch({ type: EDIT_USER_NAME, loading: true })
   try {
-    const response = await api.patch('/user/edit_name')
+    const response = await api.patch('/user/edit_name', name)
     const profile: UserProfile = response.data
     dispatch({
       type: EDIT_USER_NAME,

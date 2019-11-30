@@ -2,36 +2,36 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router'
 
+import { acceptEula } from '../../store/auth/authActions'
+import { RespliceState, Session } from '../../store/store'
+
 import Flex from '../shared/layout/Flex'
 import Card from '../shared/card/Card'
 import Button from '../shared/button/Button'
-import Ring from '../skeleton/Ring'
 import Checkbox from '../shared/form/Checkbox'
 
 import styles from './Auth.module.scss'
 
-// import { createUser } from '../../state/actions'
+type Props = {
+  session: Session | null
+  loading: boolean
+  error: Dictionary<any> | null
+  acceptEula: (locale: string) => Promise<void>
+}
 
-// type Props = {
-//   loading: boolean
-//   session: Session | null
-//   user: UserProfile | null
-//   error: ErrorObj | null
-//   createUser: AsyncAction
-// }
-
-const Agreements = ({ loading, session, user, createUser }: any) => {
+const Agreements = ({ session, loading, error, acceptEula }: Props) => {
   const [eulaAccepted, setEulaAccepted] = useState(false)
   const [privacyAccepted, setPrivacyAccepted] = useState(false)
 
-  // if (!session) return <Redirect to="/auth/login" />
-  // if (!!user) return <Redirect to="/auth/create-profile" />
+  if (!session) return <Redirect to="/auth/login" />
+  if (!!session.user_uuid) return <Redirect to="/auth/register" />
 
   return (
     <Flex
       justify="start"
       align="center"
       direction="column"
+      fill
       style={{ paddingBottom: '24px' }}
     >
       <div className={styles.AuthSubtitles}>
@@ -54,7 +54,7 @@ const Agreements = ({ loading, session, user, createUser }: any) => {
           onClick={() => setEulaAccepted(!eulaAccepted)}
         >
           <span>I agree to the terms</span>
-          <Checkbox checked={eulaAccepted} />
+          <Checkbox name="eula" checked={eulaAccepted} />
         </Card.Body>
       </Card>
 
@@ -69,19 +69,15 @@ const Agreements = ({ loading, session, user, createUser }: any) => {
           onClick={() => setPrivacyAccepted(!privacyAccepted)}
         >
           <span>I agree to the terms</span>
-          <Checkbox checked={privacyAccepted} />
+          <Checkbox name="privacy" checked={privacyAccepted} />
         </Card.Body>
       </Card>
 
       <Button
         variant="primary"
         disabled={!eulaAccepted || !privacyAccepted}
-        onClick={() =>
-          createUser({
-            eula_accepted: eulaAccepted,
-            privacy_accepted: privacyAccepted
-          })
-        }
+        loading={loading}
+        onClick={() => acceptEula('en')}
       >
         Accept
       </Button>
@@ -91,16 +87,12 @@ const Agreements = ({ loading, session, user, createUser }: any) => {
   )
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RespliceState) => {
   return {
-    loading: state.authState.loading,
     session: state.authState.session,
-    user: state.userState.profile,
+    loading: state.authState.loading,
     error: state.authState.error
   }
 }
 
-export default connect(
-  mapStateToProps
-  // { createUser }
-)(Agreements)
+export default connect(mapStateToProps, { acceptEula })(Agreements)

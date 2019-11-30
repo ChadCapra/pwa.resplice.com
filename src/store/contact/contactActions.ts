@@ -31,7 +31,7 @@ import api from '../../api'
 import { toDictionary } from '../../helpers'
 
 export const fetchContacts = (): ThunkAction<
-  void,
+  Promise<void>,
   RespliceState,
   null,
   ContactActions

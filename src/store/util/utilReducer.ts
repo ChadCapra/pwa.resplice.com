@@ -1,10 +1,15 @@
-import { UtilState, UtilActions, FETCH_ATTRIBUTE_TYPES } from './types'
+import {
+  UtilState,
+  UtilActions,
+  FETCH_ATTRIBUTE_TYPES,
+  SET_OFFLINE
+} from './types'
 
 const INITIAL_STATE: UtilState = {
-  offline: false,
-  globalLoading: false,
-  globalError: null,
-  attributeTypes: null
+  loading: false,
+  error: null,
+  attributeTypes: null,
+  offline: false
 }
 
 export default (state = INITIAL_STATE, action: UtilActions): UtilState => {
@@ -13,8 +18,13 @@ export default (state = INITIAL_STATE, action: UtilActions): UtilState => {
       return {
         ...state,
         attributeTypes: action.payload || null,
-        globalLoading: action.loading || false,
-        globalError: action.error || null
+        loading: action.loading || false,
+        error: action.error || null
+      }
+    case SET_OFFLINE:
+      return {
+        ...state,
+        offline: action.payload
       }
     default:
       return state

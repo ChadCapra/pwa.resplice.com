@@ -13,17 +13,17 @@ import Button from '../shared/button/Button'
 
 type LoginValues = { phone: string; email: string }
 
+type Props = {
+  session: Session | null
+  loading: boolean
+  error: Dictionary<any> | null
+  createSession: (values: LoginValues) => Promise<void>
+}
+
 const StyledFlex = styled(Flex)`
   max-width: 768px;
   padding: 1rem 2rem;
 `
-
-type Props = {
-  session: Session | null
-  createSession: (values: LoginValues) => void
-  loading: boolean
-  error: string | null
-}
 
 const Login = ({ session, createSession, loading, error }: Props) => {
   const handleSubmit = (values: LoginValues) => {
