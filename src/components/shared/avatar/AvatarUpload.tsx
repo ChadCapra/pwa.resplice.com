@@ -13,7 +13,12 @@ const AvatarUpload = ({ uuid, onAvatarEdit }: Props) => {
   return (
     <>
       <div></div>
-      {openCamera && <Camera />}
+      {openCamera && (
+        <Camera
+          onShot={img => console.log(img)}
+          onClose={() => setOpenCamera(false)}
+        />
+      )}
     </>
   )
 }

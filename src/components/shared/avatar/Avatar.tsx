@@ -11,7 +11,7 @@ import styles from './Avatar.module.scss'
 
 type Props = {
   uuid: string
-  avatar: string
+  avatar?: string
   viewOnly?: boolean
   onAvatarEdit: (...args: any[]) => any
 }
@@ -32,15 +32,13 @@ const Avatar = ({ uuid, avatar, viewOnly, onAvatarEdit }: Props) => {
 
       {!viewOnly && (
         <>
-          <MdUpload
-            color="#1bbc9b"
-            fontSize="2.5em"
-            className="avatar-upload-icon"
-          />
+          <div className={styles.AvatarUploadIcon}>
+            <MdUpload color="#1bbc9b" fontSize="2em" />
+          </div>
 
           <Modal show={showAvatarModal} onClose={() => setShowModal(false)}>
             <h2>Avatar Upload</h2>
-            <AvatarUpload uuid={uuid} onAvatarEdit={() => {}} />
+            <AvatarUpload uuid={uuid} onAvatarEdit={onAvatarEdit} />
           </Modal>
         </>
       )}

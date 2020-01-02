@@ -7,9 +7,7 @@ import {
 } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { RespliceState, Session } from './store/store'
-import { fetchAttributeTypes } from './store/util/utilActions'
-import { fetchUserProfile } from './store/user/userActions'
-import { fetchContacts } from './store/contact/contactActions'
+import { getSession } from './store/auth/authActions'
 
 import GlobalLoading from './components/skeleton/GlobalLoading'
 import Auth from './components/auth/Auth'
@@ -17,36 +15,25 @@ import Main from './components/Main'
 
 type Props = {
   session: Session | null
-  fetchAttributeTypes: () => Promise<void>
-  fetchUserProfile: () => Promise<void>
-  fetchContacts: () => Promise<void>
+  getSession: () => Promise<void>
 }
 
-const Resplice = ({
-  session,
-  fetchAttributeTypes,
-  fetchContacts,
-  fetchUserProfile
-}: Props) => {
+const Resplice = ({ session, getSession }: Props) => {
   const [loading, setLoading] = useState(false)
   const [, setError] = useState(null)
 
-  const loadResplice = async () => {
-    setLoading(true)
-    try {
-      await fetchAttributeTypes()
-      await fetchUserProfile()
-      await fetchContacts()
-    } catch (err) {
-      setError(err)
-      // console.log(err.response)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   useEffect(() => {
-    loadResplice()
+    const loadSession = async () => {
+      setLoading(true)
+      try {
+        await getSession()
+      } catch (err) {
+        setError(err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadSession()
     // eslint-disable-next-line
   }, [])
 
@@ -64,7 +51,7 @@ const Resplice = ({
         <Route
           path="/"
           render={props =>
-            isAuthorized ? <Main {...props} /> : <Redirect to="/auth" />
+            isAuthorized ? <Main {...props} /> : <Redirect to="/auth/login" />
           }
         />
       </Switch>
@@ -79,7 +66,5 @@ const mapStateToProps = (state: RespliceState) => {
 }
 
 export default connect(mapStateToProps, {
-  fetchAttributeTypes,
-  fetchUserProfile,
-  fetchContacts
+  getSession
 })(Resplice)

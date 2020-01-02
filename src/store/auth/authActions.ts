@@ -4,10 +4,11 @@ import {
   AuthActions,
   SET_LOCALE,
   CREATE_SESSION,
+  GET_SESSION,
   VERIFY_SESSION,
   ACCEPT_EULA,
   REGISTER,
-  CLEAR_SESSION
+  DELETE_SESSION
 } from './types'
 import { ThunkAction } from 'redux-thunk'
 import api from '../../api'
@@ -55,6 +56,22 @@ export const createSession = (values: {
   }
 }
 
+export const getSession = (): ThunkAction<
+  Promise<void>,
+  RespliceState,
+  null,
+  AuthActions
+> => async dispatch => {
+  dispatch({ type: GET_SESSION, loading: true })
+  try {
+    const response = await api.get('/auth/session/get')
+    const session: Session = response.data.session
+    dispatch({ type: GET_SESSION, payload: session })
+  } catch (err) {
+    dispatch({ type: GET_SESSION, error: err })
+  }
+}
+
 export const verifySession = (
   code: string
 ): ThunkAction<
@@ -68,7 +85,7 @@ export const verifySession = (
     const response = await api.patch('/auth/session/verify', {
       verify_token: code
     })
-    const session: Session = response.data
+    const session: Session = response.data.session
     dispatch({
       type: VERIFY_SESSION,
       payload: session
@@ -131,8 +148,8 @@ export const register = (values: {
   }
 }
 
-export const clearSession = (): AuthActions => {
+export const deleteSession = (): AuthActions => {
   return {
-    type: CLEAR_SESSION
+    type: DELETE_SESSION
   }
 }

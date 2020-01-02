@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-// import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { Formik, Form, Field, FieldProps } from 'formik'
 
 import { RespliceState, Session } from '../../store/store'
@@ -47,6 +47,8 @@ const Register = ({ loading, error, session, register }: Props) => {
     return errors
   }
 
+  if (!session) return <Redirect to="/auth/login" />
+
   return (
     <Flex fill>
       <Formik
@@ -66,7 +68,10 @@ const Register = ({ loading, error, session, register }: Props) => {
         {formikBag => {
           return (
             <Form className={styles.RegisterForm}>
-              <Avatar uuid="marcus" avatar="" onAvatarEdit={() => {}} />
+              <Avatar
+                uuid={session.user_uuid || 'resplice'}
+                onAvatarEdit={() => {}}
+              />
               <h2>Register</h2>
               <Field name="name">
                 {({ field, meta }: FieldProps) => (

@@ -22,10 +22,11 @@ export type Session = {
 
 export const SET_LOCALE = 'SET_LOCALE'
 export const CREATE_SESSION = 'CREATE_SESSION'
+export const GET_SESSION = 'GET_SESSION'
 export const VERIFY_SESSION = 'VERIFY_SESSION'
 export const ACCEPT_EULA = 'ACCEPT_EULA'
 export const REGISTER = 'REGISTER'
-export const CLEAR_SESSION = 'CLEAR_SESSION'
+export const DELETE_SESSION = 'DELETE_SESSION'
 
 interface SetLocaleAction {
   type: typeof SET_LOCALE
@@ -35,6 +36,13 @@ interface SetLocaleAction {
 interface CreateSessionAction {
   type: typeof CREATE_SESSION
   payload?: { session: Session; loginValues: { phone: string; email: string } }
+  loading?: boolean
+  error?: Dictionary<any> | null
+}
+
+interface GetSessionAction {
+  type: typeof GET_SESSION
+  payload?: Session
   loading?: boolean
   error?: Dictionary<any> | null
 }
@@ -60,14 +68,15 @@ interface RegisterAction {
   error?: Dictionary<any> | null
 }
 
-interface ClearSessionAction {
-  type: typeof CLEAR_SESSION
+interface DeleteSessionAction {
+  type: typeof DELETE_SESSION
 }
 
 export type AuthActions =
   | SetLocaleAction
   | CreateSessionAction
+  | GetSessionAction
   | VerifySessionAction
   | AcceptEulaAction
   | RegisterAction
-  | ClearSessionAction
+  | DeleteSessionAction

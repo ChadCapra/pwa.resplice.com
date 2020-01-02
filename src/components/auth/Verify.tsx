@@ -10,16 +10,16 @@ import InputCode from '../shared/form/InputCode'
 import Button from '../shared/button/Button'
 // import Alert from '../shared/modal/Alert'
 
-import { verifySession, clearSession } from '../../store/auth/authActions'
+import { verifySession, deleteSession } from '../../store/auth/authActions'
 
 type LoginValues = { phone: string; email: string }
 type Props = {
   session: Session | null
-  loginValues: LoginValues | null
+  loginValues: LoginValues
   loading: boolean
   error: Dictionary<any> | null
   verifySession: (code: string) => Promise<void>
-  clearSession: () => { type: string }
+  deleteSession: () => { type: string }
 }
 
 const Verify = ({
@@ -28,7 +28,7 @@ const Verify = ({
   loading,
   error,
   verifySession,
-  clearSession
+  deleteSession
 }: Props) => {
   const [secondCodeRequired, setSecondCodeRequired] = useState(false)
   const animation = useSpring({
@@ -38,15 +38,13 @@ const Verify = ({
     reset: secondCodeRequired
   })
 
-  const { phone_verified_at = '', email_verified_at = '' } = session || {}
-
   useEffect(() => {
-    if (phone_verified_at || email_verified_at) {
+    if (session && (session.phone_verified_at || session.email_verified_at)) {
       setSecondCodeRequired(true)
     }
-  }, [session, phone_verified_at, email_verified_at])
+  }, [session])
 
-  if (!session || !loginValues) return <Redirect to="/auth/login" />
+  if (!session) return <Redirect to="/auth/login" />
   if (session.authenticated_at && session.user_registered_at)
     return <Redirect to="/" />
   if (session.authenticated_at) return <Redirect to="/auth/register" />
@@ -55,9 +53,10 @@ const Verify = ({
 
   const subtitles = (() => {
     if (secondCodeRequired) {
-      const secondAttribute = phone_verified_at
-        ? loginValues.email
-        : loginValues.phone
+      const secondAttribute =
+        session && session.phone_verified_at
+          ? loginValues.email
+          : loginValues.phone
       return <p>Please verify {secondAttribute}</p>
     }
 
@@ -107,7 +106,7 @@ const Verify = ({
           <Button
             variant="secondary"
             loading={loading}
-            onClick={clearSession}
+            onClick={deleteSession}
             style={{ marginTop: '15%' }}
           >
             {loading ? 'Verifying' : 'Cancel'}
@@ -121,7 +120,10 @@ const Verify = ({
 const mapStateToProps = (state: RespliceState) => {
   return {
     session: state.authState.session,
-    loginValues: state.authState.loginValues,
+    loginValues: state.authState.loginValues || {
+      phone: 'phone',
+      email: 'email'
+    },
     loading: state.authState.loading,
     error: state.authState.error
   }
@@ -129,5 +131,5 @@ const mapStateToProps = (state: RespliceState) => {
 
 export default connect(mapStateToProps, {
   verifySession,
-  clearSession
+  deleteSession
 })(Verify)

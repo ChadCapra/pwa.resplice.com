@@ -3,10 +3,11 @@ import {
   AuthActions,
   SET_LOCALE,
   CREATE_SESSION,
+  GET_SESSION,
   VERIFY_SESSION,
   ACCEPT_EULA,
   REGISTER,
-  CLEAR_SESSION
+  DELETE_SESSION
 } from './types'
 
 const INITIAL_STATE: AuthState = {
@@ -29,6 +30,7 @@ export default (state = INITIAL_STATE, action: AuthActions): AuthState => {
         loading: action.loading || false,
         error: action.error || null
       }
+    case GET_SESSION:
     case VERIFY_SESSION:
     case ACCEPT_EULA:
     case REGISTER:
@@ -38,7 +40,7 @@ export default (state = INITIAL_STATE, action: AuthActions): AuthState => {
         loading: action.loading || false,
         error: action.error || null
       }
-    case CLEAR_SESSION:
+    case DELETE_SESSION:
       return INITIAL_STATE
     default:
       return state
