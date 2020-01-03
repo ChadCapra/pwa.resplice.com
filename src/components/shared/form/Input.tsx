@@ -60,8 +60,8 @@ const Input = ({
         />
       )}
       {touched &&
-        ((error && <span className="input-error-text">{error}</span>) ||
-          (warning && <span className="input-warning-text">{warning}</span>))}
+        ((error && <span className={styles.ErrorText}>{error}</span>) ||
+          (warning && <span className={styles.WarningText}>{warning}</span>))}
     </div>
   )
 }

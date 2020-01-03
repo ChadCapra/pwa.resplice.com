@@ -73,6 +73,14 @@
     border: 1px solid #f6cd2b;
   }
 }
+.ErrorText {
+  color: #fc3769;
+  font-size: 14px;
+}
+.WarningText {
+  color: #e5bd37;
+  font-size: 14px;
+}
 
 .Field {
   position: absolute;
@@ -85,6 +93,9 @@
   outline: 0;
   border: 0;
   font-size: 16px;
+}
+.CountryOverride {
+  height: 50px;
 }
 
 .Label {

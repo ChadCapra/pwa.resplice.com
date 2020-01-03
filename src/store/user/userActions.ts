@@ -27,7 +27,7 @@ export const fetchUserProfile = (): ThunkAction<
   dispatch({ type: FETCH_USER_PROFILE, loading: true })
   try {
     const response = await api.get('/user/profile')
-    const profile: UserProfile = response.data
+    const profile: UserProfile = response.data.user
     dispatch({
       type: FETCH_USER_PROFILE,
       payload: profile

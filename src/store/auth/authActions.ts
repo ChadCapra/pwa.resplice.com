@@ -110,7 +110,7 @@ export const acceptEula = (
       privacy_accepted: true,
       locale
     })
-    const session: Session = response.data
+    const session: Session = response.data.session
     dispatch({
       type: ACCEPT_EULA,
       payload: session
@@ -137,8 +137,9 @@ export const register = (values: {
 > => async dispatch => {
   dispatch({ type: REGISTER, loading: true })
   try {
-    const response = await api.post('/auth/register_user', values)
-    const session: Session = response.data
+    await api.post('/user/complete_profile', values)
+    const response = await api.get('/auth/session/get')
+    const session: Session = response.data.session
     dispatch({
       type: REGISTER,
       payload: session

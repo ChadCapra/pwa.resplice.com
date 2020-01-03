@@ -10,6 +10,7 @@ import Flex from '../shared/layout/Flex'
 import Input from '../shared/form/Input'
 import Button from '../shared/button/Button'
 import Avatar from '../shared/avatar/Avatar'
+import CountrySelect from '../shared/form/CountrySelect'
 
 import styles from './Auth.module.scss'
 
@@ -108,6 +109,16 @@ const Register = ({ loading, error, session, register }: Props) => {
                   />
                 )}
               </Field>
+              <Field name="country">
+                {({ field, meta }: FieldProps) => (
+                  <CountrySelect
+                    label="Country"
+                    {...field}
+                    meta={meta}
+                    onChange={val => formikBag.setFieldValue('country', val)}
+                  />
+                )}
+              </Field>
               <Field name="region">
                 {({ field, meta }: FieldProps) => (
                   <Input
@@ -143,6 +154,8 @@ const Register = ({ loading, error, session, register }: Props) => {
           )
         }}
       </Formik>
+
+      <div id="scroll-anchor" />
     </Flex>
   )
 }
