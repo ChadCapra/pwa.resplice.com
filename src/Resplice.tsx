@@ -12,6 +12,7 @@ import { getSession } from './store/auth/authActions'
 import GlobalLoading from './components/skeleton/GlobalLoading'
 import Auth from './components/auth/Auth'
 import Main from './components/Main'
+import Sandbox from './components/Sandbox'
 
 type Props = {
   session: Session | null
@@ -44,6 +45,7 @@ const Resplice = ({ session, getSession }: Props) => {
   return (
     <Router>
       <Switch>
+        <Route path="/sandbox" component={Sandbox} />
         <Route
           path="/auth"
           render={() => (isAuthorized ? <Redirect to="/" /> : <Auth />)}

@@ -30,10 +30,10 @@ export default class Card extends Component<Props> {
     const { children, pending, border, className, ...props } = this.props
     const header = children.find(child => child.type === Header)
     const body = children.find(child => child.type === Body)
+
     const CardStyle = cx(styles.Card, className, {
       [styles.Pending]: pending
     })
-
     const HeaderStyle = cx(styles.CardHeader, {
       [styles.NoBorder]: !border
     })
