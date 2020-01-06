@@ -40,7 +40,7 @@ const Agreements = ({ session, loading, error, acceptEula }: Props) => {
         </p>
       </div>
 
-      <Card border className={styles.CardOverride}>
+      <Card className={styles.CardOverride}>
         <Card.Header className={styles.CardHeaderOverride}>
           <h1>EULA Agreement</h1>
           <p>
@@ -58,7 +58,7 @@ const Agreements = ({ session, loading, error, acceptEula }: Props) => {
         </Card.Body>
       </Card>
 
-      <Card border className={styles.CardOverride}>
+      <Card className={styles.CardOverride}>
         <Card.Header className={styles.CardHeaderOverride}>
           <h1>Privacy Policy</h1>
           <p>Here lies the Resplice Privacy Policy</p>

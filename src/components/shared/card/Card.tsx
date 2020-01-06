@@ -4,7 +4,7 @@ import cx from 'classnames'
 import styles from './Card.module.scss'
 
 type Props = {
-  border?: boolean
+  border?: 'small' | 'medium' | 'large'
   pending?: boolean
   className?: string
   children: Array<React.ReactElement>
@@ -27,15 +27,24 @@ export default class Card extends Component<Props> {
   static Body = Body
 
   render() {
-    const { children, pending, border, className, ...props } = this.props
+    const {
+      children,
+      pending,
+      border = 'medium',
+      className,
+      ...props
+    } = this.props
     const header = children.find(child => child.type === Header)
     const body = children.find(child => child.type === Body)
 
     const CardStyle = cx(styles.Card, className, {
-      [styles.Pending]: pending
+      [styles.Pending]: pending,
+      [styles.BorderSmall]: border === 'small',
+      [styles.BorderMedium]: border === 'medium',
+      [styles.BorderLarge]: border === 'large'
     })
     const HeaderStyle = cx(styles.CardHeader, {
-      [styles.NoBorder]: !border
+      [styles.NoBorder]: !header
     })
 
     return (

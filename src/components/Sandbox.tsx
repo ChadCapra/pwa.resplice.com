@@ -8,9 +8,18 @@ const Sandbox = () => {
       style={{
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        width: '100vw',
+        height: '100vh',
+        padding: '1.5em',
+        boxSizing: 'border-box'
       }}
-    ></div>
+    >
+      <Card>
+        <Card.Header>Card Header</Card.Header>
+        <Card.Body>Card Body</Card.Body>
+      </Card>
+    </div>
   )
 }
 
