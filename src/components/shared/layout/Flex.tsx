@@ -17,6 +17,7 @@ type Props = {
     | 'stretch'
     | 'normal'
   align?: 'center' | 'start' | 'end' | 'stretch' | 'normal'
+  grow?: boolean
   [prop: string]: any
 }
 
@@ -25,6 +26,7 @@ type StyleProps = {
   flexDirection?: 'column' | 'row'
   justify?: string
   align?: string
+  grow?: boolean
 }
 
 const renderJustify = (justify: string | undefined) => {
@@ -79,6 +81,7 @@ const FlexBox = styled.div<StyleProps>`
       : ''}
   ${props => renderJustify(props.justify)}
   ${props => renderAlign(props.align)}
+  ${props => props.grow && 'flex-grow: 1;'}
 `
 
 const Flex = ({ direction, fill, ...props }: Props) => {

@@ -10,13 +10,15 @@ html {
   --neutral-2: grey;
   --neutral-3: grey;
 
-  --light-1: #e5e5e5;
-  --light-2: #c8ccd4;
-  --light-3: #c4c4c4;
+  --light-1: #f2f2f2;
+  --light-2: #e5e5e5;
+  --light-3: #c8ccd4;
+  --light-4: #bdbdbd;
 
   --dark-1: #363636;
   --dark-2: #414a4c;
-  --dark-3: #4f5b66;
+  --dark-3: #4f4f4f;
+  --dark-4: #4f5b66;
 
   /* 
   * Breakpoints 
