@@ -1,68 +1,63 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import cx from 'classnames'
 import styles from './Card.module.scss'
 
-type Props = {
-  border?: 'small' | 'medium' | 'large'
+type ContainerProps = {
   pending?: boolean
   className?: string
-  children: Array<React.ReactElement>
+  children: React.ReactNode
 }
 
 type HeaderProps = {
+  padding?: 'small' | 'regular' | 'large'
   className?: string
+  children: React.ReactNode
 }
 
 type BodyProps = {
+  padding?: 'small' | 'regular' | 'large'
   className?: string
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+  children: React.ReactNode
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void
 }
 
-const Header: React.FC<HeaderProps> = () => null
-const Body: React.FC<BodyProps> = () => null
+const Header = ({ padding = 'regular', className, children }: HeaderProps) => {
+  const HeaderStyle = cx(styles.CardHeader, className, {
+    [styles.PaddingSmall]: padding === 'small',
+    [styles.PaddingRegular]: padding === 'regular',
+    [styles.PaddingLarge]: padding === 'large'
+  })
+  return <div className={HeaderStyle}>{children}</div>
+}
+const Body = ({
+  padding = 'regular',
+  className,
+  children,
+  onClick
+}: BodyProps) => {
+  const BodyStyle = cx(styles.CardBody, className, {
+    [styles.PaddingSmall]: padding === 'small',
+    [styles.PaddingRegular]: padding === 'regular',
+    [styles.PaddingLarge]: padding === 'large'
+  })
+  return (
+    <div className={BodyStyle} onClick={onClick}>
+      {children}
+    </div>
+  )
+}
 
-export default class Card extends Component<Props> {
-  static Header = Header
-  static Body = Body
+const Container = ({ pending, className, children }: ContainerProps) => {
+  const CardStyle = cx(styles.Card, className, {
+    [styles.Pending]: pending
+  })
 
-  render() {
-    const {
-      children,
-      pending,
-      border = 'medium',
-      className,
-      ...props
-    } = this.props
-    const header = children.find(child => child.type === Header)
-    const body = children.find(child => child.type === Body)
+  return <div className={CardStyle}>{children}</div>
+}
 
-    const CardStyle = cx(styles.Card, className, {
-      [styles.Pending]: pending,
-      [styles.BorderSmall]: border === 'small',
-      [styles.BorderMedium]: border === 'medium',
-      [styles.BorderLarge]: border === 'large'
-    })
-    const HeaderStyle = cx(styles.CardHeader, {
-      [styles.NoBorder]: !header
-    })
-
-    return (
-      <div className={CardStyle} {...props}>
-        {header ? (
-          <div className={cx(HeaderStyle, header.props.className)}>
-            {header.props.children}
-          </div>
-        ) : null}
-        {body ? (
-          <div
-            className={cx(styles.CardBody, body.props.className)}
-            onClick={body.props.onClick}
-          >
-            {body.props.children}
-          </div>
-        ) : null}
-      </div>
-    )
-  }
+export default {
+  Container,
+  Header,
+  Body
 }

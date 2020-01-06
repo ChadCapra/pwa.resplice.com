@@ -15,10 +15,10 @@ const Sandbox = () => {
         boxSizing: 'border-box'
       }}
     >
-      <Card>
-        <Card.Header>Card Header</Card.Header>
-        <Card.Body>Card Body</Card.Body>
-      </Card>
+      <Card.Container>
+        <Card.Header padding="large">Card Header</Card.Header>
+        <Card.Body padding="large">Card Body</Card.Body>
+      </Card.Container>
     </div>
   )
 }

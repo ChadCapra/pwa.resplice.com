@@ -1,5 +1,4 @@
-.Card,
-.TypeCard {
+.Card {
   margin: 16px 0;
   width: 100%;
   max-width: 575px;
@@ -19,11 +18,20 @@
   }
 }
 
+.PaddingSmall {
+  padding: 0.5em;
+}
+.PaddingRegular {
+  padding: 1em;
+}
+.PaddingLarge {
+  padding: 1.5em;
+}
+
 .CardHeader {
   border-bottom: 1px solid #e5e5e5;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  padding: 1em;
   &.NoBorder {
     border-bottom: none;
   }
@@ -37,7 +45,6 @@
 }
 
 .CardBody {
-  padding: 1em;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
