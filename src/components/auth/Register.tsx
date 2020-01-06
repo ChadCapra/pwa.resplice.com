@@ -162,6 +162,7 @@ const Register = ({ loading, error, session, register }: Props) => {
 
 const mapStateToProps = (state: RespliceState) => {
   return {
+    loading: state.authState.loading,
     session: state.authState.session
   }
 }
