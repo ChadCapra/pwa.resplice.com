@@ -6,7 +6,7 @@ import Flex from '../shared/layout/Flex'
 import styles from './Loading.module.scss'
 
 const Container = styled.div`
-  padding: 1.5em;
+  padding: 0.5em 1.5em;
   height: 100%;
   width: 100%;
   overflow: auto;
