@@ -7,6 +7,10 @@ import styles from './Loading.module.scss'
 
 const Container = styled.div`
   padding: 1.5em;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  box-sizing: border-box;
 `
 
 const AvatarSkel = styled.div`
@@ -37,8 +41,8 @@ const ContactLoading = () => {
                 grow
                 style={{ marginLeft: '1em', overflow: 'hidden' }}
               >
+                <TextSkel width="45%" />
                 <TextSkel width="75%" />
-                <TextSkel width="35%" />
               </Flex>
             </Flex>
           </Card.Body>

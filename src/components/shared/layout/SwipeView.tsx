@@ -25,10 +25,11 @@ const ViewBackground = styled.div`
   width: 100%;
   height: 100%;
   background-color: var(--light-1);
+  position: relative;
+  overflow: hidden;
 `
 
 const ChildContainer = styled.div`
-  overflow: auto;
   width: 100%;
   height: 100%;
   background-color: white;
