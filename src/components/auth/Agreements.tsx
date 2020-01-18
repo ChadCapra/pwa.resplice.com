@@ -40,7 +40,7 @@ const Agreements = ({ session, loading, error, acceptEula }: Props) => {
         </p>
       </div>
 
-      <Card.Container className={styles.CardOverride}>
+      <Card.Layout className={styles.CardOverride}>
         <Card.Header className={styles.CardHeaderOverride}>
           <h1>EULA Agreement</h1>
           <p>
@@ -56,9 +56,9 @@ const Agreements = ({ session, loading, error, acceptEula }: Props) => {
           <span>I agree to the terms</span>
           <Checkbox name="eula" checked={eulaAccepted} />
         </Card.Body>
-      </Card.Container>
+      </Card.Layout>
 
-      <Card.Container className={styles.CardOverride}>
+      <Card.Layout className={styles.CardOverride}>
         <Card.Header className={styles.CardHeaderOverride}>
           <h1>Privacy Policy</h1>
           <p>Here lies the Resplice Privacy Policy</p>
@@ -71,7 +71,7 @@ const Agreements = ({ session, loading, error, acceptEula }: Props) => {
           <span>I agree to the terms</span>
           <Checkbox name="privacy" checked={privacyAccepted} />
         </Card.Body>
-      </Card.Container>
+      </Card.Layout>
 
       <Button
         variant="primary"

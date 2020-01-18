@@ -3,7 +3,7 @@ import React from 'react'
 import cx from 'classnames'
 import styles from './Card.module.scss'
 
-type ContainerProps = {
+type LayoutProps = {
   pending?: boolean
   className?: string
   children: React.ReactNode
@@ -48,7 +48,7 @@ const Body = ({
   )
 }
 
-const Container = ({ pending, className, children }: ContainerProps) => {
+const Layout = ({ pending, className, children }: LayoutProps) => {
   const CardStyle = cx(styles.Card, className, {
     [styles.Pending]: pending
   })
@@ -57,7 +57,7 @@ const Container = ({ pending, className, children }: ContainerProps) => {
 }
 
 export default {
-  Container,
+  Layout,
   Header,
   Body
 }
