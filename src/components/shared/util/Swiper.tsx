@@ -27,6 +27,7 @@ const Swiper = ({ children }: Props) => {
       set((idx: number) => {
         if (idx < index.current - 1 || idx > index.current + 1)
           return { display: 'none' }
+        if (mx < 30 && mx > -30) return
         const x = (idx - index.current) * window.innerWidth + (down ? mx : 0)
         const scale = down ? 1 - distance / window.innerWidth / 2 : 1
         return { x, scale, display: 'block' }
