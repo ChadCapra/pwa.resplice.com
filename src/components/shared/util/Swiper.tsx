@@ -4,11 +4,13 @@ import { useSprings, animated } from 'react-spring'
 import { useDrag } from 'react-use-gesture'
 
 type Props = {
+  startPage: number
   children: React.ReactNodeArray
 }
 
-const Swiper = ({ children }: Props) => {
-  const index = useRef(0)
+const Swiper = ({ startPage, children }: Props) => {
+  // TODO: use startPage to set the x value correctly
+  const index = useRef(startPage - 1)
   const [props, set] = useSprings(children.length, (idx: number) => ({
     x: idx * window.innerWidth,
     scale: 1,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 import { useQuery } from '../../../helpers'
@@ -15,9 +15,10 @@ const StyledHeader = styled.div`
   align-items: center;
 `
 
-const NavText = styled.h2`
+const NavText = styled.h2<{ active: boolean }>`
   font-size: 2em;
-  font-weight: bold;
+  font-weight: 500;
+  ${props => !props.active && 'color: var(--light-4);'}
   cursor: pointer;
 `
 
@@ -38,7 +39,7 @@ const ChildContainer = styled.div`
 `
 
 type HeaderProps = {
-  startPage: string
+  startPage: number
   navText: Array<string>
   children: React.ReactNode
   handleNavClick: (idx: number) => void
@@ -50,8 +51,6 @@ const SwipeViewHeader = ({
   children,
   handleNavClick
 }: HeaderProps) => {
-  console.log(startPage)
-
   return (
     <StyledHeader>
       {children}
@@ -65,7 +64,11 @@ const SwipeViewHeader = ({
       >
         {navText.map((text, idx) => {
           return (
-            <NavText key={idx} onClick={() => handleNavClick(idx)}>
+            <NavText
+              key={idx}
+              active={startPage - 1 === idx}
+              onClick={() => handleNavClick(idx)}
+            >
               {text}
             </NavText>
           )
@@ -82,15 +85,14 @@ type Props = {
 }
 
 const SwipeView = ({ navText, header, children }: Props) => {
-  const query = useQuery()
-  const page = query.get('page')
+  const page = useQuery().get('page') || '1'
 
   return (
     <View.Layout>
       <View.Header>
         <SwipeViewHeader
           navText={navText}
-          startPage={page || '1'}
+          startPage={parseInt(page)}
           handleNavClick={() => {}}
         >
           {header}
@@ -98,7 +100,7 @@ const SwipeView = ({ navText, header, children }: Props) => {
       </View.Header>
       <View.Body>
         <ViewBackground>
-          <Swiper>
+          <Swiper startPage={parseInt(page)}>
             {children.map((child, idx) => {
               return <ChildContainer key={idx}>{child}</ChildContainer>
             })}
