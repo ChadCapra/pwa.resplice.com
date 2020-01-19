@@ -80,7 +80,7 @@ const SwipeViewHeader = ({
 
 type Props = {
   navText: Array<string>
-  header: React.ReactNode
+  header?: React.ReactNode
   children: React.ReactNodeArray
 }
 
