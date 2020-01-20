@@ -72,7 +72,7 @@ const renderAlign = (align: string | undefined) => {
 const FlexBox = styled.div<StyleProps>`
   display: flex;
   position: relative;
-  ${props => (props.widthFill ? 'min-width: 100%;' : '')}
+  ${props => (props.widthFill ? 'width: 100%; height: 100%;' : '')}
   ${props =>
     props.flexDirection === 'column'
       ? 'flex-direction: column;'
