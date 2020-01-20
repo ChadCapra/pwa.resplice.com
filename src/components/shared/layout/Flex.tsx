@@ -81,7 +81,7 @@ const FlexBox = styled.div<StyleProps>`
       : ''}
   ${props => renderJustify(props.justify)}
   ${props => renderAlign(props.align)}
-  ${props => props.grow && 'flex-grow: 1;'}
+  ${props => props.grow && 'flex: 1 1 0px;'}
 `
 
 const Flex = ({ direction, fill, ...props }: Props) => {

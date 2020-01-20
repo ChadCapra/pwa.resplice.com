@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import Flex from '../shared/layout/Flex'
+import Flex from '../layout/Flex'
 
 type Props = {
   title: string

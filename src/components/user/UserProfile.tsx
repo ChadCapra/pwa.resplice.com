@@ -6,8 +6,8 @@ import { UserMock } from '../../api/mockData'
 
 import Flex from '../shared/layout/Flex'
 import Avatar from '../shared/avatar/Avatar'
+import UserRanks from './UserRanks'
 import UserCollections from './UserCollections'
-import { ReactComponent as Shield } from '../../assets/Copper_3.svg'
 
 // TODO: remove line when using global state
 const { profile } = UserMock
@@ -32,6 +32,7 @@ const Stat = styled.h1`
 `
 const StatTitle = styled.h3`
   font-size: 1.5em;
+  text-align: center;
   color: var(--text-light);
 `
 
@@ -42,16 +43,22 @@ const UserProfile = () => {
   return (
     <Flex justify="center" fill>
       <UserProfileContainer>
-        <Avatar uuid={profile.uuid} onAvatarEdit={() => {}} />
+        <Avatar
+          uuid={profile.uuid}
+          avatar={profile.avatar}
+          onAvatarEdit={() => {}}
+        />
         <UserName>{profile.name}</UserName>
 
         <Flex justify="between" align="center" style={{ marginBottom: '1em' }}>
-          <Flex direction="column" justify="center">
+          <Flex direction="column" justify="center" grow>
             <Stat>{ContactCount}</Stat>
             <StatTitle>Contacts</StatTitle>
           </Flex>
-          <Shield />
-          <Flex direction="column" justify="center">
+          <Flex justify="center" grow>
+            <UserRanks />
+          </Flex>
+          <Flex direction="column" justify="center" grow>
             <Stat>{profile.share_count}</Stat>
             <StatTitle>Shares</StatTitle>
           </Flex>

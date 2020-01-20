@@ -1,8 +1,8 @@
 import React from 'react'
-import { AttributeType } from '../../store/util/types'
 import styled from 'styled-components'
+import { AttributeType } from '../../../store/util/types'
 
-import Card from '../shared/card/Card'
+import Card from '../card/Card'
 import Attribute from './Attribute'
 
 type Props = {

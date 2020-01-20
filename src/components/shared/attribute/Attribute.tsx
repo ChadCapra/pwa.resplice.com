@@ -1,11 +1,11 @@
 import React from 'react'
-import { AttributeType } from '../../store/util/types'
+import { AttributeType } from '../../../store/util/types'
 import styled from 'styled-components'
 
-import { formatAttributeValue } from '../../helpers'
+import { formatAttributeValue } from '../../../helpers'
 
-import Flex from '../shared/layout/Flex'
-import ActionIcon from '../shared/util/ActionIcon'
+import Flex from '../layout/Flex'
+import ActionIcon from '../util/ActionIcon'
 
 type Props = {
   attribute: {
