@@ -12,7 +12,7 @@ import './Auth.global.scss'
 
 const Auth = () => {
   return (
-    <View>
+    <View.Layout>
       <View.Header>
         <AuthHeader />
       </View.Header>
@@ -22,7 +22,7 @@ const Auth = () => {
         <Route path="/auth/eula" component={Agreements} />
         <Route path="/auth/register" component={Register} />
       </View.Body>
-    </View>
+    </View.Layout>
   )
 }
 

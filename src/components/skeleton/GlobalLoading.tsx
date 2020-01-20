@@ -1,6 +1,6 @@
 import React from 'react'
-
 import styled from 'styled-components'
+
 import { ReactComponent as RespliceLogo } from '../../assets/resplice_logo_alt.svg'
 
 const LoadingContainer = styled.div`

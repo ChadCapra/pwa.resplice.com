@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import styled from 'styled-components'
 
-const View = styled.div`
-  height: 100vh;
-  width: 100vw;
+const ViewLayout = styled.div`
+  height: 100%;
+  width: 100%;
   overflow: hidden;
   margin: 0;
   padding: 0;
@@ -22,29 +22,23 @@ const ViewBody = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 `
 
 type Props = {
-  children: Array<React.ReactElement>
+  children: React.ReactNode
 }
 
-const Header: React.FC<{}> = () => null
-const Body: React.FC<{}> = () => null
+const Header = ({ children }: Props) => <ViewHeader>{children}</ViewHeader>
 
-export default class ViewLayout extends Component<Props> {
-  static Header = Header
-  static Body = Body
+const Body = ({ children }: Props) => <ViewBody>{children}</ViewBody>
 
-  render() {
-    const { children } = this.props
-    const header = children.find(child => child.type === Header)
-    const body = children.find(child => child.type === Body)
+const Layout = ({ children }: Props) => (
+  <ViewLayout id="view">{children}</ViewLayout>
+)
 
-    return (
-      <View id="view">
-        {header ? <ViewHeader>{header.props.children}</ViewHeader> : null}
-        {body ? <ViewBody>{body.props.children}</ViewBody> : null}
-      </View>
-    )
-  }
+export default {
+  Layout,
+  Header,
+  Body
 }

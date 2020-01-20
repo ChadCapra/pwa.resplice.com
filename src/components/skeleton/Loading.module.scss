@@ -63,3 +63,22 @@
   -webkit-animation: spin 1s infinite;
   animation: spin 1s infinite;
 }
+
+@keyframes opacity-loading {
+  from {
+    opacity: 1;
+  }
+  25% {
+    opacity: 50%;
+  }
+  50% {
+    opacity: 40%;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.Skeleton {
+  background-color: var(--light-3);
+  animation: opacity-loading 1.5s infinite;
+}
