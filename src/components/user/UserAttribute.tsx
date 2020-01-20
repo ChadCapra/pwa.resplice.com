@@ -1,7 +1,14 @@
 import React from 'react'
+import { IEntityAttributeWithType } from '../../store/store'
 
-const UserAttribute = () => {
-  return <div>User Attribute, wraps Attribute component</div>
+import Attribute from '../shared/attribute/Attribute'
+
+type Props = {
+  attribute: IEntityAttributeWithType
+}
+
+const UserAttribute = ({ attribute }: Props) => {
+  return <Attribute attribute={attribute} />
 }
 
 export default UserAttribute

@@ -1,23 +1,14 @@
 import React from 'react'
-import { AttributeType } from '../../../store/util/types'
 import styled from 'styled-components'
 
+import { IEntityAttributeWithType } from '../../../store/store'
 import { formatAttributeValue } from '../../../helpers'
 
 import Flex from '../layout/Flex'
 import ActionIcon from '../util/ActionIcon'
 
 type Props = {
-  attribute: {
-    uuid: string
-    attribute_type: AttributeType
-    name: string
-    collection: string
-    value_uuid: string
-    value: Dictionary<string>
-    verified_at: string
-    expiry: string
-  }
+  attribute: IEntityAttributeWithType
   rightOverride?: {
     component: React.ReactNode
     onClick: (e: React.MouseEvent<HTMLElement>) => void

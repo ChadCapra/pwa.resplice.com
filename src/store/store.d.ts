@@ -1,8 +1,8 @@
-import { UtilState } from './util/types'
+import { UtilState, AttributeType } from './util/types'
 import { AuthState } from './auth/types'
-import { UserState } from './user/types'
-import { ContactState } from './contact/types'
-import { GroupState } from './group/types'
+import { UserState, UserAttribute } from './user/types'
+import { ContactState, ContactAttribute } from './contact/types'
+import { GroupState, GroupAttribute } from './group/types'
 
 export interface RespliceState {
   utilState: UtilState
@@ -10,6 +10,11 @@ export interface RespliceState {
   userState: UserState
   contactState: ContactState
   groupState: GroupState
+}
+
+export type IEntityAttribute = UserAttribute | ContactAttribute | GroupAttribute
+export type IEntityAttributeWithType = IEntityAttribute & {
+  attribute_type: AttributeType
 }
 
 export * from './util/types'

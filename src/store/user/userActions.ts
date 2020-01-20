@@ -144,7 +144,7 @@ export const editUserAttribute = (
   dispatch({ type: EDIT_USER_ATTRIBUTE, loading: true })
   try {
     const response = await api.put(
-      `/user/attributes/${attribute.uuid}/edit`,
+      `/user/attributes/${attribute.attribute_uuid}/edit`,
       attribute
     )
     const editedAttribute: UserAttribute = response.data

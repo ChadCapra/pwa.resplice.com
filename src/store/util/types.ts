@@ -6,15 +6,12 @@ export interface UtilState {
 }
 export interface AttributeType {
   id: number
-  sort_order: number
   name: string
-  verify_seconds: string
-  preview_name: string
-  empty_value: Dictionary<string>
+  verify_seconds: number | null
+  empty_value: Dictionary<string | null>
   actions: AttributeAction[]
 }
 export interface AttributeAction {
-  sort_order: number
   name: string
   display_name: string
   icon: string

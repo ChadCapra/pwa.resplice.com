@@ -20,7 +20,7 @@ export interface UserProfile {
   notification_value_uuid: string
 }
 export interface UserAttribute {
-  uuid: string
+  attribute_uuid: string
   attribute_type_id: number
   name: string
   collection: string
