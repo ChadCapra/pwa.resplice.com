@@ -1,6 +1,7 @@
 html {
   --brand-primary: #1bbc9b;
   --text: #32393d;
+  --text-secondary: #0000007e;
   --info: #6c7dd5;
   --success: #1bbc9b;
   --warning: #ffdd57;
@@ -19,6 +20,8 @@ html {
   --dark-2: #414a4c;
   --dark-3: #4f4f4f;
   --dark-4: #4f5b66;
+
+  --black-50: #0000007e;
 
   /* 
   * Breakpoints 

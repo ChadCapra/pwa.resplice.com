@@ -2,7 +2,10 @@ import React from 'react'
 import { AttributeType } from '../../store/util/types'
 import styled from 'styled-components'
 
+import { formatAttributeValue } from '../../helpers'
+
 import Flex from '../shared/layout/Flex'
+import ActionIcon from '../shared/util/ActionIcon'
 
 type Props = {
   attribute: {
@@ -21,12 +24,37 @@ type Props = {
   }
 }
 
-const AttributeContainer = styled.div``
+const AttributeName = styled.p`
+  font-size: 1.125em;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+`
+const AttributeValue = styled.p`
+  font-size: 1.125em;
+  color: var(--text);
+`
 
 const Attribute = ({ attribute, rightOverride }: Props) => {
   return (
     <Flex justify="between" align="center">
-      Attribute
+      <Flex justify="start" align="center">
+        <ActionIcon
+          name={attribute.attribute_type.actions[0].icon}
+          width="2.5em"
+          style={{ marginRight: '24px' }}
+        />
+        <Flex direction="column" justify="center" align="start">
+          <AttributeName>{attribute.name}</AttributeName>
+          <AttributeValue>
+            {formatAttributeValue(attribute.value)}
+          </AttributeValue>
+        </Flex>
+      </Flex>
+      {rightOverride ? (
+        rightOverride
+      ) : (
+        <ActionIcon width="2.5em" style={{ marginLeft: '24px' }} />
+      )}
     </Flex>
   )
 }
