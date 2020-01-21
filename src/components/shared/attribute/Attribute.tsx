@@ -5,47 +5,61 @@ import { IEntityAttributeWithType } from '../../../store/store'
 import { formatAttributeValue } from '../../../helpers'
 
 import Flex from '../layout/Flex'
-import ActionIcon from '../util/ActionIcon'
 
 type Props = {
   attribute: IEntityAttributeWithType
-  rightOverride?: {
-    component: React.ReactNode
-    onClick: (e: React.MouseEvent<HTMLElement>) => void
-  }
+  leftIcon: React.ReactNode
+  rightIcon: React.ReactNode
 }
 
-const AttributeName = styled.p`
-  font-size: 1.125em;
-  color: var(--text-secondary);
-  margin-bottom: 4px;
-`
-const AttributeValue = styled.p`
-  font-size: 1.125em;
-  color: var(--text);
+const IconContainer = styled.div`
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  &:first-of-type {
+    margin-right: 1em;
+  }
+  &:last-of-type {
+    margin-left: 1em;
+  }
 `
 
-const Attribute = ({ attribute, rightOverride }: Props) => {
+const AttributeValues = styled(Flex)`
+  overflow: hidden;
+  &:active {
+    transform: scale(0.95);
+  }
+`
+
+const AttributeName = styled.p`
+  width: 100%;
+  font-size: 1.125em;
+  line-height: 1.2;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+`
+const AttributeValue = styled.p`
+  width: 100%;
+  font-size: 1.125em;
+  line-height: 1.2;
+  color: var(--text);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+`
+
+const Attribute = ({ attribute, leftIcon, rightIcon }: Props) => {
   return (
     <Flex justify="between" align="center">
-      <Flex justify="start" align="center">
-        <ActionIcon
-          name={attribute.attribute_type.actions[0].icon}
-          width="2.5em"
-          style={{ marginRight: '24px' }}
-        />
-        <Flex direction="column" justify="center" align="start">
-          <AttributeName>{attribute.name}</AttributeName>
-          <AttributeValue>
-            {formatAttributeValue(attribute.value)}
-          </AttributeValue>
-        </Flex>
-      </Flex>
-      {rightOverride ? (
-        rightOverride
-      ) : (
-        <ActionIcon width="2.5em" style={{ marginLeft: '24px' }} />
-      )}
+      <IconContainer>{leftIcon}</IconContainer>
+      <AttributeValues direction="column" justify="center" align="start" grow>
+        <AttributeName>{attribute.name}</AttributeName>
+        <AttributeValue>{formatAttributeValue(attribute.value)}</AttributeValue>
+      </AttributeValues>
+      <IconContainer>{rightIcon}</IconContainer>
     </Flex>
   )
 }

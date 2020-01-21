@@ -10,6 +10,7 @@ const Header = styled.div`
   width: 100%;
   margin-top: -0.5em;
   margin-left: -0.5em;
+  margin-bottom: 0.5em;
   display: flex;
   align-items: center;
 `

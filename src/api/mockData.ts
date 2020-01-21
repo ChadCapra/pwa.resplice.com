@@ -59,7 +59,10 @@ export const UserMock: IUserMock = {
       name: 'Website',
       collection: 'Links',
       value_uuid: 'uuid3',
-      value: { link: 'https://starwars.com' },
+      value: {
+        link:
+          'https://starwars.com/somereallylonglinkthatwillprobablyoverflowthepage'
+      },
       verified_at: 'datetime',
       latest_to_verify: true,
       verify_token: null,

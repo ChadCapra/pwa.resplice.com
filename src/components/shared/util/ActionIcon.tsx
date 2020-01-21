@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 
 // const getViewBox = name => {
 //   switch(name) {
@@ -111,6 +112,13 @@ const getPath = (name: string, props: any) => {
           d="M128 405.429C128 428.846 147.198 448 170.667 448h170.667C364.802 448 384 428.846 384 405.429V160H128v245.429zM416 96h-80l-26.785-32H202.786L176 96H96v32h320V96z"
         />
       )
+    case 'MdEdit':
+      return (
+        <path
+          {...props}
+          d="M64 368v80h80l235.727-235.729-79.999-79.998L64 368zm377.602-217.602c8.531-8.531 8.531-21.334 0-29.865l-50.135-50.135c-8.531-8.531-21.334-8.531-29.865 0l-39.468 39.469 79.999 79.998 39.469-39.467z"
+        />
+      )
     default:
       return (
         <path
@@ -121,28 +129,37 @@ const getPath = (name: string, props: any) => {
   }
 }
 
-const Icon = ({
+const IconWrapper = styled.div<{ clickable: boolean }>`
+  &:active {
+    ${props => (props.clickable ? 'transform: scale(0.9);' : '')}
+  }
+`
+
+const ActionIcon = ({
   name = '',
   style = {},
   fill = '#000',
   viewBox = '0 0 512 512',
   width = '100%',
   className = '',
-  height = '100%'
+  height = '100%',
+  clickable = false
 }) => {
   return (
-    <svg
-      width={width}
-      style={style}
-      height={height}
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox={viewBox}
-      xmlnsXlink="http://www.w3.org/1999/xlink"
-    >
-      {getPath(name, { fill })}
-    </svg>
+    <IconWrapper clickable={clickable}>
+      <svg
+        width={width}
+        style={style}
+        height={height}
+        className={className}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox={viewBox}
+        xmlnsXlink="http://www.w3.org/1999/xlink"
+      >
+        {getPath(name, { fill })}
+      </svg>
+    </IconWrapper>
   )
 }
 
-export default Icon
+export default ActionIcon

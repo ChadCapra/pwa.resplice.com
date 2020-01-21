@@ -11,7 +11,7 @@ type Props = {
 }
 
 const Title = styled.p`
-  font-size: 18px;
+  font-size: 1.125em;
   line-height: 1.2;
   font-weight: 500;
   margin-bottom: 2px;
@@ -20,7 +20,7 @@ const Title = styled.p`
   white-space: nowrap;
 `
 const Subtitle = styled.p`
-  font-size: 18px;
+  font-size: 1.125em;
   line-height: 1.2;
   font-weight: lighter;
   color: var(--dark-4);
