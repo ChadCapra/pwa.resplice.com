@@ -1,0 +1,65 @@
+.SearchTags {
+  display: flex;
+  align-items: center;
+  overflow: auto;
+  background-color: #c8ccd4;
+  padding: 0 16px;
+}
+
+.Notification {
+  background: white;
+
+  & .Header {
+    background-color: var(--dark-1);
+    padding: 10px;
+    color: white;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border: 1px solid var(--dark-1);
+    box-sizing: border-box;
+  }
+  & .Body {
+    padding: 10px;
+    border: 1px solid var(--dark-1);
+    box-sizing: border-box;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  &.Info {
+    & .Header {
+      background-color: var(--info);
+      border-color: var(--info);
+    }
+    & .Body {
+      border-color: var(--info);
+    }
+  }
+  &.Success {
+    & .Header {
+      background-color: var(--success);
+      border-color: var(--success);
+    }
+    & .Body {
+      border-color: var(--success);
+    }
+  }
+  &.Warning {
+    & .Header {
+      background-color: var(--warning);
+      border-color: var(--warning);
+    }
+    & .Body {
+      border-color: var(--warning);
+    }
+  }
+  &.Danger {
+    & .Header {
+      background-color: var(--danger);
+      border-color: var(--danger);
+    }
+    & .Body {
+      border-color: var(--danger);
+    }
+  }
+}
