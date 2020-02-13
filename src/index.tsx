@@ -9,8 +9,7 @@ import respliceState from './store'
 import './styles/reset.css'
 import './styles/theme.css'
 import './styles/index.css'
-// import Resplice from './Resplice'
-import Sandbox from './components/Sandbox'
+import Resplice from './Resplice'
 import * as ServiceWorker from './serviceWorker'
 
 declare global {
@@ -30,8 +29,7 @@ const store = createStore(
 ReactDOM.render(
   <Provider store={store}>
     <IntlProvider locale={'en'}>
-      {/* <Resplice /> */}
-      <Sandbox />
+      <Resplice />
     </IntlProvider>
   </Provider>,
   document.getElementById('root')
