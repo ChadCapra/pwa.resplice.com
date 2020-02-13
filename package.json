@@ -1,5 +1,5 @@
 {
-  "name": "resplice-app",
+  "name": "pwa.resplice",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
