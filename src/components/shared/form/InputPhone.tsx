@@ -3,7 +3,7 @@ import PhoneInput from 'react-phone-input-2'
 
 import Input from './Input'
 
-import 'react-phone-input-2/dist/style.css'
+import 'react-phone-input-2/lib/style.css'
 
 type Props = {
   defaultCountry?: string
