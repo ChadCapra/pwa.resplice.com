@@ -25,9 +25,10 @@ const Resplice = ({ session, getSession }: Props) => {
 
   useEffect(() => {
     const loadSession = async () => {
-      setLoading(true)
       try {
-        await getSession()
+        const session = getSession()
+        setLoading(true)
+        await session
       } catch (err) {
         setError(err)
       } finally {
