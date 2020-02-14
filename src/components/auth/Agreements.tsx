@@ -32,13 +32,11 @@ const Agreements = ({ session, loading, error, acceptEula }: Props) => {
       align="center"
       direction="column"
       fill
-      style={{ paddingBottom: '24px' }}
+      style={{ padding: '1.5em', boxSizing: 'border-box' }}
     >
-      <div className={styles.AuthSubtitles}>
-        <p>
-          Please agree with our terms of service and security settings below
-        </p>
-      </div>
+      <p className={styles.AuthSubtitles}>
+        Please agree with our terms of service and security settings below
+      </p>
 
       <Card.Layout className={styles.CardOverride}>
         <Card.Header className={styles.CardHeaderOverride}>
@@ -78,11 +76,10 @@ const Agreements = ({ session, loading, error, acceptEula }: Props) => {
         disabled={!eulaAccepted || !privacyAccepted}
         loading={loading}
         onClick={() => acceptEula('en')}
+        style={{ marginTop: '1em' }}
       >
         Accept
       </Button>
-
-      <div id="scroll-anchor" />
     </Flex>
   )
 }

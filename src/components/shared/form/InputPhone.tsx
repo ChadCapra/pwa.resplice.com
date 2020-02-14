@@ -3,7 +3,7 @@ import PhoneInput from 'react-phone-input-2'
 
 import Input from './Input'
 
-import 'react-phone-input-2/lib/style.css'
+import 'react-phone-input-2/lib/high-res.css'
 
 type Props = {
   defaultCountry?: string
@@ -28,11 +28,14 @@ const InputPhone = ({ defaultCountry = 'us', ...props }: Props) => {
       {...props}
       component={
         <PhoneInput
-          defaultCountry={defaultCountry}
-          inputExtraProps={{
+          country={defaultCountry}
+          inputProps={{
             name: props.name,
             autoFocus: props.autoFocus
           }}
+          enableSearch
+          disableSearchIcon
+          autoFormat
         />
       }
       autoFocus

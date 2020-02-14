@@ -51,7 +51,7 @@ const Register = ({ loading, error, session, register }: Props) => {
   if (!session) return <Redirect to="/auth/login" />
 
   return (
-    <Flex fill>
+    <Flex style={{ width: '100%' }}>
       <Formik
         initialValues={{
           name: '',
@@ -154,8 +154,6 @@ const Register = ({ loading, error, session, register }: Props) => {
           )
         }}
       </Formik>
-
-      <div id="scroll-anchor" />
     </Flex>
   )
 }

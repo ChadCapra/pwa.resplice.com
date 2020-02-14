@@ -11,6 +11,7 @@ const StyledHeader = styled(Flex)`
   height: 125px;
   width: 100vw;
   align-self: flex-start;
+  z-index: 10;
   ${props =>
     props.scrolled ? 'box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.5);' : ''}
 `
@@ -20,15 +21,15 @@ const AuthHeader = () => {
 
   useEffect(() => {
     const target = document.querySelector('#scroll-anchor')
-    if (target) {
-      const observer = new IntersectionObserver(
-        entries => setScrolled(entries[0].isIntersecting),
-        {
-          root: document.querySelector('#view')
-        }
-      )
-      observer.observe(target)
-    }
+    if (!target) return
+    const observer = new IntersectionObserver(
+      entries => setScrolled(entries[0].isIntersecting),
+      {
+        root: document.querySelector('#view')
+      }
+    )
+    observer.observe(target)
+    return () => observer.disconnect()
   }, [])
 
   return (

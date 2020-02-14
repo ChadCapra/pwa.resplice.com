@@ -13,15 +13,11 @@
   box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.5);
 }
 .AuthSubtitles {
-  padding: 16px;
+  color: var(--text);
+  font-size: 20px;
+  width: 100%;
   text-align: center;
-  width: 85%;
-
-  p {
-    color: var(--text);
-    font-size: 20px;
-    width: 100%;
-  }
+  padding: 1em 0;
 }
 
 .LoginHelpIcon {
@@ -49,6 +45,7 @@
   align-items: center;
   padding: 16px 24px;
   transition: 0.2s ease all;
+  cursor: pointer;
 }
 .CardCaption {
   font-size: 20px;

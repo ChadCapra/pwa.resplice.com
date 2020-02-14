@@ -21,6 +21,7 @@ const Auth = () => {
         <Route path="/auth/verify" component={Verify} />
         <Route path="/auth/eula" component={Agreements} />
         <Route path="/auth/register" component={Register} />
+        <div id="scroll-anchor" />
       </View.Body>
     </View.Layout>
   )
