@@ -31,8 +31,7 @@ const Agreements = ({ session, loading, error, acceptEula }: Props) => {
       justify="start"
       align="center"
       direction="column"
-      fill
-      style={{ padding: '1.5em', boxSizing: 'border-box' }}
+      style={{ padding: '1.5em', boxSizing: 'border-box', width: '100%' }}
     >
       <p className={styles.AuthSubtitles}>
         Please agree with our terms of service and security settings below
