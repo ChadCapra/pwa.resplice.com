@@ -31,7 +31,7 @@ type Props = {
   text?: string
 }
 
-const BackHeader = ({ route, text = 'Back' }: Props) => {
+const ViewHeader = ({ route, text = 'Back' }: Props) => {
   return (
     <Header>
       <BackLink to="/">
@@ -41,4 +41,4 @@ const BackHeader = ({ route, text = 'Back' }: Props) => {
   )
 }
 
-export default BackHeader
+export default ViewHeader
