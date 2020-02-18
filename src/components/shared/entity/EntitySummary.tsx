@@ -8,6 +8,7 @@ type Props = {
   subtitle: string
   thumbnail: React.ReactNode
   icon?: React.ReactNode
+  style?: React.CSSProperties
 }
 
 const Title = styled.p`
@@ -29,9 +30,9 @@ const Subtitle = styled.p`
   white-space: nowrap;
 `
 
-const EntitySummary = ({ title, subtitle, thumbnail, icon }: Props) => {
+const EntitySummary = ({ title, subtitle, thumbnail, icon, style }: Props) => {
   return (
-    <Flex justify="start">
+    <Flex justify="start" style={style}>
       {thumbnail}
       <Flex
         direction="column"

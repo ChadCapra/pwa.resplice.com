@@ -1,4 +1,4 @@
-import { GroupState, GroupActions } from './types'
+import { GroupState, GroupActions, FETCH_GROUPS } from './types'
 
 const INITIAL_STATE: GroupState = {
   loading: false,
@@ -8,7 +8,14 @@ const INITIAL_STATE: GroupState = {
 }
 
 export default (state = INITIAL_STATE, action: GroupActions): GroupState => {
-  switch (action.payload) {
+  switch (action.type) {
+    case FETCH_GROUPS:
+      return {
+        ...state,
+        groups: action.payload || state.groups,
+        loading: action.loading || false,
+        error: action.error || null
+      }
     default:
       return state
   }

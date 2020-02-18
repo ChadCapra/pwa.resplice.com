@@ -1,10 +1,25 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { RespliceState, GroupRecord } from '../../store/store'
 
 import EntityList from '../shared/entity/EntityList'
-import EntitySummary from '../shared/entity/EntitySummary'
 
-const GroupList = () => {
-  return <div>Group List</div>
+type Props = {
+  groups: Dictionary<GroupRecord> | null
 }
 
-export default GroupList
+const GroupList = ({ groups }: Props) => {
+  return groups ? (
+    <>
+      <EntityList list={groups} />
+    </>
+  ) : null
+}
+
+const mapStateToProps = (state: RespliceState) => {
+  return {
+    groups: state.groupState.groups
+  }
+}
+
+export default connect(mapStateToProps)(GroupList)

@@ -1,7 +1,9 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
-import MdSearch from 'react-ionicons/lib/MdSearch'
+import { RespliceState } from '../../store/store'
 
+import MdSearch from 'react-ionicons/lib/MdSearch'
 import Flex from '../shared/layout/Flex'
 import AvatarThumbnail from '../shared/avatar/AvatarThumbnail'
 import AvatarLoading from '../skeleton/AvatarLoading'
@@ -39,7 +41,7 @@ type Props = {
 
 const HomeHeader = ({ uuid }: Props) => {
   return (
-    <Flex justify="between">
+    <Flex justify="between" style={{ width: '100%' }}>
       <Search>
         <MdSearch fontSize="2.8em" color="#1bbc9b" />
         <Label>Resplice</Label>
@@ -55,4 +57,10 @@ const HomeHeader = ({ uuid }: Props) => {
   )
 }
 
-export default HomeHeader
+const mapStateToProps = (state: RespliceState) => {
+  return {
+    uuid: state.userState.profile?.uuid
+  }
+}
+
+export default connect(mapStateToProps)(HomeHeader)
