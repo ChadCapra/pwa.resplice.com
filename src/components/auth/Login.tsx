@@ -57,7 +57,7 @@ const Login = ({ session, createSession, loading, error }: Props) => {
         initialValues={{
           phone: '',
           email: '',
-          location: null,
+          location: 'unknown',
           remember_me: false
         }}
         validate={validate}

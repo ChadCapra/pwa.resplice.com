@@ -27,14 +27,14 @@ const BackLink = styled(Link)`
 `
 
 type Props = {
-  route: string
+  backRoute: string
   text?: string
 }
 
-const ViewHeader = ({ route, text = 'Back' }: Props) => {
+const ViewHeader = ({ backRoute, text = 'Back' }: Props) => {
   return (
     <Header>
-      <BackLink to="/">
+      <BackLink to={backRoute}>
         <IosArrowBack fontSize="1.5em" /> {text}
       </BackLink>
     </Header>

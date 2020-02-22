@@ -1,6 +1,6 @@
 import { RespliceState } from '../store'
 import {
-  UserProfile,
+  IUserProfile,
   UserAttribute,
   UserActions,
   FETCH_USER_PROFILE,
@@ -27,7 +27,7 @@ export const fetchUserProfile = (): ThunkAction<
   dispatch({ type: FETCH_USER_PROFILE, loading: true })
   try {
     const response = await api.get('/user/profile')
-    const profile: UserProfile = response.data.user
+    const profile: IUserProfile = response.data.user
     dispatch({
       type: FETCH_USER_PROFILE,
       payload: profile
@@ -44,7 +44,7 @@ export const editUserName = (
   dispatch({ type: EDIT_USER_NAME, loading: true })
   try {
     const response = await api.patch('/user/edit_name', name)
-    const profile: UserProfile = response.data
+    const profile: IUserProfile = response.data
     dispatch({
       type: EDIT_USER_NAME,
       payload: profile
@@ -60,7 +60,7 @@ export const editUserAvatar = (
   dispatch({ type: EDIT_USER_AVATAR, loading: true })
   try {
     const response = await api.patch('/user/edit_avatar')
-    const profile: UserProfile = response.data
+    const profile: IUserProfile = response.data
     dispatch({
       type: EDIT_USER_AVATAR,
       payload: profile

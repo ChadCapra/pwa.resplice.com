@@ -1,7 +1,8 @@
 import React from 'react'
 
 // TODO: remove line when using global state
-import { UserMock, attributeTypes } from '../../api/mockData'
+import { UserMock } from '../../store/__mock_store__/user'
+import { attributeTypes } from '../../store/__mock_store__/attributeTypes'
 import { buildCollections } from '../../helpers'
 
 import Flex from '../shared/layout/Flex'

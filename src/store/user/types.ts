@@ -1,11 +1,11 @@
 export interface UserState {
   loading: boolean
   error: Dictionary<any> | null
-  profile: UserProfile | null
+  profile: IUserProfile | null
   attributes: Dictionary<UserAttribute> | null
   attributes_loaded_at: Date | null
 }
-export interface UserProfile {
+export interface IUserProfile {
   uuid: string
   name: string
   avatar: string
@@ -49,21 +49,21 @@ export const DELETE_USER_ATTRIBUTE = 'DELETE_USER_ATTRIBUTE'
 
 interface FetchUserProfileAction {
   type: typeof FETCH_USER_PROFILE
-  payload?: UserProfile
+  payload?: IUserProfile
   loading?: boolean
   error?: Dictionary<any> | null
 }
 
 interface EditUserNameAction {
   type: typeof EDIT_USER_NAME
-  payload?: UserProfile
+  payload?: IUserProfile
   loading?: boolean
   error?: Dictionary<any> | null
 }
 
 interface EditUserAvatarAction {
   type: typeof EDIT_USER_AVATAR
-  payload?: UserProfile
+  payload?: IUserProfile
   loading?: boolean
   error?: Dictionary<any> | null
 }

@@ -39,7 +39,7 @@ export const fetchContacts = (): ThunkAction<
   dispatch({ type: FETCH_CONTACTS, loading: true })
   try {
     const response = await api.get('/contacts/get')
-    const contacts: Contact[] = response.data
+    const contacts: Contact[] = response.data.contacts
     const contactRecords: Dictionary<ContactRecord> = toDictionary(
       'uuid',
       contacts

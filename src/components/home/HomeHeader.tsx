@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import styled from 'styled-components'
 import { RespliceState } from '../../store/store'
 
@@ -40,6 +41,8 @@ type Props = {
 }
 
 const HomeHeader = ({ uuid }: Props) => {
+  const [toUserProfile, setToUserProfile] = useState(false)
+  if (toUserProfile) return <Redirect push to="/user" />
   return (
     <Flex justify="between" style={{ width: '100%' }}>
       <Search>
@@ -48,7 +51,7 @@ const HomeHeader = ({ uuid }: Props) => {
       </Search>
       <ThumbnailContainer>
         {uuid ? (
-          <AvatarThumbnail uuid={uuid} onClick={() => {}} />
+          <AvatarThumbnail uuid={uuid} onClick={() => setToUserProfile(true)} />
         ) : (
           <AvatarLoading />
         )}

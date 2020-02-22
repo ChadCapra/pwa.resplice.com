@@ -8,15 +8,14 @@ export interface AuthState {
 export type Session = {
   uuid: string
   user_uuid: string
-  user_agent: string
   authenticated_at: string
-  authorized_at: string
   phone_verified_at: string
-  phone_verified_token: string
+  phone_verify_token: string | null
   email_verified_at: string
-  email_verified_token: string
+  email_verify_token: string | null
   failed_verifications: number
   user_registered_at: string
+  remember_me: boolean
   expiry: string
 }
 

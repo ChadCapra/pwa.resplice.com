@@ -20,14 +20,13 @@ type Props = {
 }
 
 const Resplice = ({ session, getSession }: Props) => {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [, setError] = useState(null)
 
   useEffect(() => {
     const loadSession = async () => {
       try {
         const session = getSession()
-        setLoading(true)
         await session
       } catch (err) {
         setError(err)
