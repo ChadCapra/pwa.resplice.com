@@ -26,7 +26,7 @@ export interface GroupMember {
 }
 export interface GroupAttribute {
   group_uuid: string
-  attribute_uuid: string
+  uuid: string
   attribute_type_id: number
   collection: string
   name: string

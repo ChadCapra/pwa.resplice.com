@@ -16,7 +16,7 @@ export const fetchAttributeTypes = (): ThunkAction<
 > => async dispatch => {
   try {
     const response = await api.get('/util/attribute_types')
-    const attributeTypes: AttributeType[] = response.data
+    const attributeTypes: AttributeType[] = response.data.attribute_types
     dispatch({
       type: FETCH_ATTRIBUTE_TYPES,
       payload: attributeTypes

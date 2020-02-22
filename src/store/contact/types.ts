@@ -25,7 +25,7 @@ export interface ContactRecord extends Contact {
 }
 export interface ContactAttribute {
   contact_uuid: string
-  attribute_uuid: string
+  uuid: string
   attribute_type_id: number
   collection: string
   name: string

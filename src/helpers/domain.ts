@@ -1,11 +1,11 @@
 import {
-  UserAttribute,
+  IUserAttribute,
   ContactAttribute,
   GroupAttribute,
   AttributeType
 } from '../store/store'
 
-type Attribute = UserAttribute | ContactAttribute | GroupAttribute
+type Attribute = IUserAttribute | ContactAttribute | GroupAttribute
 
 export const formatAttributeValue = (value: Dictionary<string>): string => {
   return Object.values(value).reduce((formatted, val, idx) => {

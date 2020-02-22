@@ -38,7 +38,7 @@ type Props = {
 }
 
 const UserProfile = ({ profile, contactCount }: Props) => {
-  if (!profile) return <p>Error fetching profile</p>
+  if (!profile) return <p>Loading</p>
   return (
     <Flex justify="center" fill>
       <UserProfileContainer>

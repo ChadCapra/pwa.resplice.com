@@ -1,4 +1,4 @@
-import { IUserProfile, UserAttribute } from '../user/types'
+import { IUserProfile, IUserAttribute } from '../user/types'
 
 type Dictionary<T> = {
   [key: string]: T
@@ -6,7 +6,7 @@ type Dictionary<T> = {
 
 interface IUserMock {
   profile: IUserProfile
-  attributes: Dictionary<UserAttribute>
+  attributes: Dictionary<IUserAttribute>
 }
 
 export const UserMock: IUserMock = {
@@ -30,7 +30,7 @@ export const UserMock: IUserMock = {
   },
   attributes: {
     uuidphone: {
-      attribute_uuid: 'uuidphone',
+      uuid: 'uuidphone',
       attribute_type_id: 1,
       name: 'Mobile Phone',
       collection: 'Phones',
@@ -44,7 +44,7 @@ export const UserMock: IUserMock = {
       expiry: null
     },
     uuidemail: {
-      attribute_uuid: 'uuidemail',
+      uuid: 'uuidemail',
       attribute_type_id: 2,
       name: 'Primary Email',
       collection: 'Emails',
@@ -58,7 +58,7 @@ export const UserMock: IUserMock = {
       expiry: null
     },
     uuidlink: {
-      attribute_uuid: 'uuidlink',
+      uuid: 'uuidlink',
       attribute_type_id: 5,
       name: 'Website',
       collection: 'Links',
