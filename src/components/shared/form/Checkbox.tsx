@@ -5,30 +5,38 @@ import styles from './Form.module.scss'
 
 type Props = {
   checked: boolean
-  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   [prop: string]: any
 }
 
-const Checkbox = ({ name, label, checked, onChange, ...props }: Props) => {
+const Checkbox = ({
+  name,
+  label,
+  checked,
+  onChange,
+  style,
+  ...props
+}: Props) => {
   const CheckboxStyle = cx(styles.Checkbox, {
     [styles.Checked]: checked
   })
-  // TODO: Use actual input element for accessibility
-  // return <div className={CheckboxStyle} onClick={onClick} {...props} />
+  console.log(onChange)
   return (
-    <div className={styles.CheckboxContainer}>
+    <div className={styles.CheckboxContainer} style={style}>
       <div className={CheckboxStyle} />
       <input
         className={styles.CheckboxInput}
         type="checkbox"
         name={name}
         checked={checked}
-        onChange={() => onChange(!checked)}
+        onChange={onChange}
         {...props}
       />
-      <label htmlFor={name} style={{ cursor: 'pointer' }}>
-        {label}
-      </label>
+      {label && (
+        <label htmlFor={name} style={{ cursor: 'pointer', marginLeft: '1em' }}>
+          {label}
+        </label>
+      )}
     </div>
   )
 }

@@ -9,9 +9,15 @@ import { createSession } from '../../store/auth/authActions'
 import Flex from '../shared/layout/Flex'
 import Input from '../shared/form/Input'
 import InputPhone from '../shared/form/InputPhone'
+import Checkbox from '../shared/form/Checkbox'
 import Button from '../shared/button/Button'
 
-type LoginValues = { phone: string; email: string }
+type LoginValues = {
+  phone: string
+  email: string
+  location: string | null
+  remember_me: boolean
+}
 
 type Props = {
   session: Session | null
@@ -48,7 +54,12 @@ const Login = ({ session, createSession, loading, error }: Props) => {
       <p>Welcome to the world's most up-to-date address book!</p>
 
       <Formik
-        initialValues={{ phone: '', email: '' }}
+        initialValues={{
+          phone: '',
+          email: '',
+          location: null,
+          remember_me: false
+        }}
         validate={validate}
         onSubmit={handleSubmit}
       >
@@ -66,6 +77,7 @@ const Login = ({ session, createSession, loading, error }: Props) => {
                   />
                 )}
               </Field>
+
               <Field name="email">
                 {({ field, meta }: FieldProps) => (
                   <Input
@@ -73,6 +85,18 @@ const Login = ({ session, createSession, loading, error }: Props) => {
                     label="Email Address"
                     {...field}
                     meta={meta}
+                  />
+                )}
+              </Field>
+
+              <Field name="remember_me">
+                {({ field, meta }: FieldProps) => (
+                  <Checkbox
+                    label="Remember Me"
+                    checked={field.checked || false}
+                    {...field}
+                    meta={meta}
+                    style={{ margin: '1.5em 0' }}
                   />
                 )}
               </Field>
