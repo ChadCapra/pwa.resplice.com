@@ -93,7 +93,7 @@ const Login = ({ session, createSession, loading, error }: Props) => {
                 {({ field, meta }: FieldProps) => (
                   <Checkbox
                     label="Remember Me"
-                    checked={field.checked || false}
+                    checked={field.value}
                     {...field}
                     meta={meta}
                     style={{ margin: '1.5em 0' }}
