@@ -8,12 +8,12 @@ import styles from './Modal.module.scss'
 
 type Props = {
   show: boolean
-  full?: boolean
+  height?: string
   children: React.ReactNode
   onClose: () => void
 }
 
-const Modal = ({ show, onClose, full = false, children }: Props) => {
+const Modal = ({ show, onClose, height = '75%', children }: Props) => {
   const [closing, setClosing] = useState(false)
 
   const animateAndClose = () => {
@@ -25,7 +25,6 @@ const Modal = ({ show, onClose, full = false, children }: Props) => {
   }
 
   const ModalStyle = cx(styles.ModalContent, {
-    [styles.Full]: full,
     [styles.ModalClosing]: closing
   })
 
@@ -36,7 +35,7 @@ const Modal = ({ show, onClose, full = false, children }: Props) => {
             className={styles.ModalBackground}
             onClick={() => animateAndClose()}
           />
-          <div className={ModalStyle}>
+          <div className={ModalStyle} style={{ height }}>
             <div className={styles.ModalExit} onClick={() => animateAndClose()}>
               <MdClose color="#1bbc9b" fontSize="2.5em" />
             </div>
