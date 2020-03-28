@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import ReactDOM from 'react-dom'
 import cx from 'classnames'
 
@@ -13,8 +13,26 @@ type Props = {
   onClose: () => void
 }
 
+const buildModalRoot = () => {
+  const root = document.createElement('div')
+  root.setAttribute('id', 'modal-root')
+  return root
+}
+
 const Modal = ({ show, onClose, height = '75%', children }: Props) => {
   const [closing, setClosing] = useState(false)
+  const [rootAppended, setRootAppended] = useState(false)
+  const ModalRoot = useRef<HTMLDivElement>(buildModalRoot())
+
+  useEffect(() => {
+    if (show) {
+      document.body.appendChild(ModalRoot.current)
+      setRootAppended(true)
+    } else {
+      setRootAppended(false)
+      ModalRoot.current.remove()
+    }
+  }, [show])
 
   const animateAndClose = () => {
     setClosing(true)
@@ -28,7 +46,7 @@ const Modal = ({ show, onClose, height = '75%', children }: Props) => {
     [styles.ModalClosing]: closing
   })
 
-  return show
+  return show && rootAppended
     ? ReactDOM.createPortal(
         <div className={styles.ModalContainer}>
           <div
