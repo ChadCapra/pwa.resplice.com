@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Card from '../card/Card'
 
 type Props = {
-  collection: string
+  collectionName: string
   children: React.ReactNode
 }
 
@@ -14,11 +14,11 @@ const CardHeading = styled.h2`
   color: var(--brand-primary);
 `
 
-const AttributeCard = ({ collection, children }: Props) => {
+const AttributeCard = ({ collectionName, children }: Props) => {
   return (
     <Card.Layout>
       <Card.Header>
-        <CardHeading>{collection}</CardHeading>
+        <CardHeading>{collectionName}</CardHeading>
       </Card.Header>
       <Card.Body>{children}</Card.Body>
     </Card.Layout>

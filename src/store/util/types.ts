@@ -12,6 +12,7 @@ export interface AttributeType {
   actions: AttributeAction[]
 }
 export interface AttributeAction {
+  sort_order: number
   name: string
   display_name: string
   icon: string

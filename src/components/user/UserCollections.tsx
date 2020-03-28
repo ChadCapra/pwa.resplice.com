@@ -18,9 +18,9 @@ const UserCollections = ({ attributes, attributeTypes }: Props) => {
 
   return (
     <Flex direction="column">
-      {Object.entries(collections).map(([collection, attrs]) => {
+      {Object.entries(collections).map(([collectionName, attrs]) => {
         return (
-          <AttributeCard key={collection} collection={collection}>
+          <AttributeCard key={collectionName} collectionName={collectionName}>
             {attrs.map(attr => {
               return <UserAttribute key={attr.uuid} attribute={attr} />
             })}

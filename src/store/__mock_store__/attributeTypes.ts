@@ -10,6 +10,7 @@ export const attributeTypes: AttributeType[] = [
     },
     actions: [
       {
+        sort_order: 6,
         name: 'delete',
         display_name: 'Delete',
         icon: 'MdTrash',
@@ -18,6 +19,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{uuid}'
       },
       {
+        sort_order: 5,
         name: 'edit',
         display_name: 'Edit',
         icon: 'MdCreate',
@@ -26,6 +28,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{uuid}'
       },
       {
+        sort_order: 4,
         name: 'verify',
         display_name: 'Verify Phone',
         icon: 'MdPaperPlane',
@@ -34,6 +37,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{uuid}'
       },
       {
+        sort_order: 3,
         name: 'copy',
         display_name: 'Copy to Clipboard',
         icon: 'MdClipboard',
@@ -42,6 +46,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{phone}'
       },
       {
+        sort_order: 2,
         name: 'sms',
         display_name: 'Send Message',
         icon: 'MdText',
@@ -50,6 +55,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{phone}'
       },
       {
+        sort_order: 1,
         name: 'call',
         display_name: 'Call',
         icon: 'MdCall',
@@ -58,6 +64,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{phone}'
       },
       {
+        sort_order: 0,
         name: 'verify',
         display_name: 'Verify Attribute',
         icon: 'MdPaperPlane',
@@ -66,6 +73,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{uuid}'
       },
       {
+        sort_order: 0,
         name: 'verify',
         display_name: 'Verify Attribute',
         icon: 'MdPaperPlane',
@@ -84,6 +92,7 @@ export const attributeTypes: AttributeType[] = [
     },
     actions: [
       {
+        sort_order: 5,
         name: 'delete',
         display_name: 'Delete',
         icon: 'MdTrash',
@@ -92,6 +101,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{uuid}'
       },
       {
+        sort_order: 4,
         name: 'edit',
         display_name: 'Edit',
         icon: 'MdCreate',
@@ -100,6 +110,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{uuid}'
       },
       {
+        sort_order: 3,
         name: 'verify',
         display_name: 'Verify Email',
         icon: 'MdPaperPlane',
@@ -108,6 +119,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{uuid}'
       },
       {
+        sort_order: 2,
         name: 'copy',
         display_name: 'Copy to Clipboard',
         icon: 'MdClipboard',
@@ -116,6 +128,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{email}'
       },
       {
+        sort_order: 1,
         name: 'email',
         display_name: 'Send Email',
         icon: 'MdMail',
@@ -124,6 +137,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{email}'
       },
       {
+        sort_order: 0,
         name: 'verify',
         display_name: 'Verify Email',
         icon: 'MdPaperPlane',
@@ -132,6 +146,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{uuid}'
       },
       {
+        sort_order: 0,
         name: 'verify',
         display_name: 'Verify Email',
         icon: 'MdPaperPlane',
@@ -155,6 +170,7 @@ export const attributeTypes: AttributeType[] = [
     },
     actions: [
       {
+        sort_order: 7,
         name: 'delete',
         display_name: 'Delete',
         icon: 'MdTrash',
@@ -163,6 +179,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{uuid}'
       },
       {
+        sort_order: 6,
         name: 'edit',
         display_name: 'Edit',
         icon: 'MdCreate',
@@ -171,6 +188,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{uuid}'
       },
       {
+        sort_order: 5,
         name: 'verify',
         display_name: 'Verify Address',
         icon: 'MdPaperPlane',
@@ -179,6 +197,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{uuid}'
       },
       {
+        sort_order: 4,
         name: 'copy',
         display_name: 'Copy to Clipboard',
         icon: 'MdClipboard',
@@ -188,6 +207,7 @@ export const attributeTypes: AttributeType[] = [
           '{street_address_1},{street_address_2},{locality},{region},{postal_code},{country}'
       },
       {
+        sort_order: 3,
         name: 'nav',
         display_name: 'Get Directions',
         icon: 'MdNavigate',
@@ -197,6 +217,7 @@ export const attributeTypes: AttributeType[] = [
           '{street_address_1},{street_address_2},{locality},{region},{postal_code},{country}'
       },
       {
+        sort_order: 2,
         name: 'verify',
         display_name: 'Verify Address',
         icon: 'MdPaperPlane',
@@ -205,6 +226,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{uuid}'
       },
       {
+        sort_order: 1,
         name: 'map',
         display_name: 'View Map',
         icon: 'MdMap',
@@ -225,6 +247,7 @@ export const attributeTypes: AttributeType[] = [
     },
     actions: [
       {
+        sort_order: 5,
         name: 'delete',
         display_name: 'Delete',
         icon: 'MdTrash',
@@ -233,6 +256,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{uuid}'
       },
       {
+        sort_order: 4,
         name: 'edit',
         display_name: 'Edit',
         icon: 'MdCreate',
@@ -241,6 +265,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{uuid}'
       },
       {
+        sort_order: 3,
         name: 'copy',
         display_name: 'Copy to Clipboard',
         icon: 'MdClipboard',
@@ -249,6 +274,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{latitude},{longitude}'
       },
       {
+        sort_order: 2,
         name: 'locate',
         display_name: 'Locate',
         icon: 'MdLocate',
@@ -257,6 +283,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{latitude},{longitude}'
       },
       {
+        sort_order: 1,
         name: 'navigate',
         display_name: 'Navigate',
         icon: 'MdNavigate',
@@ -275,6 +302,7 @@ export const attributeTypes: AttributeType[] = [
     },
     actions: [
       {
+        sort_order: 4,
         name: 'delete',
         display_name: 'Delete',
         icon: 'MdTrash',
@@ -283,6 +311,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{uuid}'
       },
       {
+        sort_order: 3,
         name: 'edit',
         display_name: 'Edit',
         icon: 'MdCreate',
@@ -291,6 +320,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{uuid}'
       },
       {
+        sort_order: 2,
         name: 'copy',
         display_name: 'Copy to Clipboard',
         icon: 'MdClipboard',
@@ -299,6 +329,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{handle}'
       },
       {
+        sort_order: 1,
         name: 'link',
         display_name: 'Open Link',
         icon: 'MdLink',
@@ -318,6 +349,7 @@ export const attributeTypes: AttributeType[] = [
     },
     actions: [
       {
+        sort_order: 4,
         name: 'delete',
         display_name: 'Delete',
         icon: 'MdTrash',
@@ -326,6 +358,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{uuid}'
       },
       {
+        sort_order: 3,
         name: 'edit',
         display_name: 'Edit',
         icon: 'MdCreate',
@@ -334,6 +367,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{uuid}'
       },
       {
+        sort_order: 2,
         name: 'copy',
         display_name: 'Copy to Clipboard',
         icon: 'MdClipboard',
@@ -342,6 +376,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{date}'
       },
       {
+        sort_order: 1,
         name: 'calendar',
         display_name: 'Open Calendar',
         icon: 'MdCalendar',
@@ -361,6 +396,7 @@ export const attributeTypes: AttributeType[] = [
     },
     actions: [
       {
+        sort_order: 4,
         name: 'delete',
         display_name: 'Delete',
         icon: 'MdTrash',
@@ -369,6 +405,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{uuid}'
       },
       {
+        sort_order: 3,
         name: 'edit',
         display_name: 'Edit',
         icon: 'MdCreate',
@@ -377,6 +414,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{uuid}'
       },
       {
+        sort_order: 2,
         name: 'copy',
         display_name: 'Copy to Clipboard',
         icon: 'MdClipboard',
@@ -385,6 +423,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{text}'
       },
       {
+        sort_order: 1,
         name: 'copy',
         display_name: 'Copy to Clipboard',
         icon: 'MdClipboard',
@@ -403,6 +442,7 @@ export const attributeTypes: AttributeType[] = [
     },
     actions: [
       {
+        sort_order: 4,
         name: 'delete',
         display_name: 'Delete',
         icon: 'MdTrash',
@@ -411,6 +451,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{uuid}'
       },
       {
+        sort_order: 3,
         name: 'edit',
         display_name: 'Edit',
         icon: 'MdCreate',
@@ -419,6 +460,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{uuid}'
       },
       {
+        sort_order: 2,
         name: 'copy',
         display_name: 'Copy to Clipboard',
         icon: 'MdClipboard',
@@ -427,6 +469,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{}'
       },
       {
+        sort_order: 1,
         name: 'copy',
         display_name: 'Copy to Clipboard',
         icon: 'MdClipboard',
@@ -443,6 +486,7 @@ export const attributeTypes: AttributeType[] = [
     empty_value: {},
     actions: [
       {
+        sort_order: 4,
         name: 'delete',
         display_name: 'Delete',
         icon: 'MdTrash',
@@ -451,6 +495,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{uuid}'
       },
       {
+        sort_order: 3,
         name: 'edit',
         display_name: 'Edit',
         icon: 'MdCreate',
@@ -459,6 +504,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{uuid}'
       },
       {
+        sort_order: 2,
         name: 'copy',
         display_name: 'Copy to Clipboard',
         icon: 'MdClipboard',
@@ -467,6 +513,7 @@ export const attributeTypes: AttributeType[] = [
         action_value: '{}'
       },
       {
+        sort_order: 1,
         name: 'copy',
         display_name: 'Copy to Clipboard',
         icon: 'MdClipboard',

@@ -9,7 +9,10 @@ type Props = {
 }
 
 const UserAttribute = ({ attribute }: Props) => {
-  console.log(attribute)
+  const actions = attribute.attribute_type.actions.sort((a, b) => {
+    return a.sort_order - b.sort_order
+  })
+
   return (
     <Attribute
       attribute={attribute}
@@ -20,7 +23,7 @@ const UserAttribute = ({ attribute }: Props) => {
         //   fill="#C8CCD4"
         // />
         <ActionIcon
-          name={attribute.attribute_type.actions[4].icon}
+          name={actions[0].icon}
           width="2.5em"
           fill="#1BBC9B"
           clickable
@@ -28,7 +31,7 @@ const UserAttribute = ({ attribute }: Props) => {
       }
       rightIcon={
         <ActionIcon
-          name={attribute.attribute_type.actions[1].icon}
+          name={actions[1].icon}
           width="2.5em"
           fill="#1BBC9B"
           clickable
