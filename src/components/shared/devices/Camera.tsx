@@ -12,9 +12,17 @@ type Props = {
   onClose: () => void
 }
 
+const buildCameraRoot = () => {
+  const root = document.createElement('div')
+  root.setAttribute('id', 'camera-root')
+  return root
+}
+
 const Camera = ({ onShot, onClose }: Props) => {
   const [, setError] = useState(null)
   const [facingMode, setFacingMode] = useState('user')
+  const [rootAppended, setRootAppended] = useState(false)
+  const CameraRoot = useRef<HTMLDivElement>(buildCameraRoot())
   const stream = useRef<HTMLVideoElement>(null)
   const cameraSupported = 'mediaDevices' in navigator
 
@@ -60,35 +68,44 @@ const Camera = ({ onShot, onClose }: Props) => {
   }
 
   useEffect(() => {
+    const root = CameraRoot.current
+    document.body.appendChild(root)
+    setRootAppended(true)
     if (cameraSupported) initCamera()
     return () => {
       stopStream()
+      root.remove()
     }
     // eslint-disable-next-line
   }, [])
 
-  return ReactDOM.createPortal(
-    <div className={styles.CameraContainer}>
-      <video ref={stream} playsInline autoPlay />
+  return rootAppended
+    ? ReactDOM.createPortal(
+        <div className={styles.CameraContainer}>
+          <video ref={stream} playsInline autoPlay />
 
-      <div className={styles.CameraControls}>
-        <button className={styles.CameraControlButton}>
-          <MdReverseCamera
-            color="white"
-            fontSize="2.5em"
-            onClick={toggleFacingMode}
-          />
-        </button>
-        <button className={styles.CameraControlButton} onClick={takePicture}>
-          <MdCamera color="white" fontSize="2.5em" />
-        </button>
-        <button className={styles.CameraControlButton} onClick={onClose}>
-          <MdClose color="white" fontSize="2.5em" />
-        </button>
-      </div>
-    </div>,
-    document.querySelector('#camera-root')!
-  )
+          <div className={styles.CameraControls}>
+            <button className={styles.CameraControlButton}>
+              <MdReverseCamera
+                color="white"
+                fontSize="2.5em"
+                onClick={toggleFacingMode}
+              />
+            </button>
+            <button
+              className={styles.CameraControlButton}
+              onClick={takePicture}
+            >
+              <MdCamera color="white" fontSize="2.5em" />
+            </button>
+            <button className={styles.CameraControlButton} onClick={onClose}>
+              <MdClose color="white" fontSize="2.5em" />
+            </button>
+          </div>
+        </div>,
+        document.querySelector('#camera-root')!
+      )
+    : null
 }
 
 export default Camera
