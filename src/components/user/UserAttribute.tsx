@@ -9,14 +9,21 @@ type Props = {
 }
 
 const UserAttribute = ({ attribute }: Props) => {
+  console.log(attribute)
   return (
     <Attribute
       attribute={attribute}
       leftIcon={
+        // <ActionIcon
+        //   name={attribute.attribute_type.actions[0].icon}
+        //   width="2.5em"
+        //   fill="#C8CCD4"
+        // />
         <ActionIcon
-          name={attribute.attribute_type.actions[0].icon}
+          name={attribute.attribute_type.actions[4].icon}
           width="2.5em"
-          fill="#C8CCD4"
+          fill="#1BBC9B"
+          clickable
         />
       }
       rightIcon={

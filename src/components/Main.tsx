@@ -3,7 +3,10 @@ import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
 
 import { fetchAttributeTypes } from '../store/util/utilActions'
-import { fetchUserProfile } from '../store/user/userActions'
+import {
+  fetchUserProfile,
+  fetchUserAttributes
+} from '../store/user/userActions'
 import { fetchContacts } from '../store/contact/contactActions'
 
 import HomeView from './views/HomeView'
@@ -16,12 +19,14 @@ import EntitySearchView from './views/EntitySearchView'
 type Props = {
   fetchAttributeTypes: () => Promise<void>
   fetchUserProfile: () => Promise<void>
+  fetchUserAttributes: () => Promise<void>
   fetchContacts: () => Promise<void>
 }
 
 const Main = ({
   fetchAttributeTypes,
   fetchUserProfile,
+  fetchUserAttributes,
   fetchContacts
 }: Props) => {
   const [, setError] = useState(false)
@@ -32,6 +37,7 @@ const Main = ({
         await Promise.all([
           fetchAttributeTypes(),
           fetchUserProfile(),
+          fetchUserAttributes(),
           fetchContacts()
         ])
       } catch (err) {
@@ -39,7 +45,12 @@ const Main = ({
       }
     }
     loadUser()
-  })
+  }, [
+    fetchAttributeTypes,
+    fetchUserProfile,
+    fetchUserAttributes,
+    fetchContacts
+  ])
 
   return (
     <>
@@ -56,5 +67,6 @@ const Main = ({
 export default connect(null, {
   fetchAttributeTypes,
   fetchUserProfile,
+  fetchUserAttributes,
   fetchContacts
 })(Main)

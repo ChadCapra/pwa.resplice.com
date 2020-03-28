@@ -46,7 +46,7 @@ export const createSession = (values: {
   dispatch({ type: CREATE_SESSION, loading: true })
   try {
     const response = await api.post('/auth/session/create', values)
-    const session: Session = response.data.session
+    const session: Session = response.data
     dispatch({
       type: CREATE_SESSION,
       payload: { session, loginValues: values }

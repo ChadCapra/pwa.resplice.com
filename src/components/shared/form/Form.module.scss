@@ -48,7 +48,7 @@
   position: relative;
   width: 100%;
   text-align: left;
-  margin: 16px 0px;
+  margin: 1em 0px;
   height: 50px;
   border: 1px solid #c8ccd4;
   border-radius: 5px;
@@ -76,6 +76,9 @@
 .ErrorText {
   color: #fc3769;
   font-size: 14px;
+  position: absolute;
+  bottom: -1.15em;
+  left: 0;
 }
 .WarningText {
   color: #e5bd37;
@@ -89,7 +92,7 @@
   width: calc(100% - 15px);
   padding-top: 12px;
   top: 0;
-  left: 15px;
+  left: 1em;
   outline: 0;
   border: 0;
   font-size: 16px;

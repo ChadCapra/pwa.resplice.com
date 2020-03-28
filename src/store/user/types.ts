@@ -1,11 +1,11 @@
 export interface UserState {
   loading: boolean
   error: Dictionary<any> | null
-  profile: UserProfile | null
-  attributes: Dictionary<UserAttribute> | null
+  profile: IUserProfile | null
+  attributes: Dictionary<IUserAttribute> | null
   attributes_loaded_at: Date | null
 }
-export interface UserProfile {
+export interface IUserProfile {
   uuid: string
   name: string
   avatar: string
@@ -19,8 +19,8 @@ export interface UserProfile {
   location_enabled: boolean
   notification_value_uuid: string
 }
-export interface UserAttribute {
-  attribute_uuid: string
+export interface IUserAttribute {
+  uuid: string
   attribute_type_id: number
   name: string
   collection: string
@@ -49,21 +49,21 @@ export const DELETE_USER_ATTRIBUTE = 'DELETE_USER_ATTRIBUTE'
 
 interface FetchUserProfileAction {
   type: typeof FETCH_USER_PROFILE
-  payload?: UserProfile
+  payload?: IUserProfile
   loading?: boolean
   error?: Dictionary<any> | null
 }
 
 interface EditUserNameAction {
   type: typeof EDIT_USER_NAME
-  payload?: UserProfile
+  payload?: IUserProfile
   loading?: boolean
   error?: Dictionary<any> | null
 }
 
 interface EditUserAvatarAction {
   type: typeof EDIT_USER_AVATAR
-  payload?: UserProfile
+  payload?: IUserProfile
   loading?: boolean
   error?: Dictionary<any> | null
 }
@@ -76,42 +76,42 @@ interface DeleteUserAction {
 
 interface FetchUserAttributesAction {
   type: typeof FETCH_USER_ATTRIBUTES
-  payload?: UserAttribute[]
+  payload?: IUserAttribute[]
   loading?: boolean
   error?: Dictionary<any> | null
 }
 
 interface FetchUserAttributeAction {
   type: typeof FETCH_USER_ATTRIBUTE
-  payload?: UserAttribute
+  payload?: IUserAttribute
   loading?: boolean
   error?: Dictionary<any> | null
 }
 
 interface AddUserAttributeAction {
   type: typeof ADD_USER_ATTRIBUTE
-  payload?: UserAttribute
+  payload?: IUserAttribute
   loading?: boolean
   error?: Dictionary<any> | null
 }
 
 interface EditUserAttributeAction {
   type: typeof EDIT_USER_ATTRIBUTE
-  payload?: UserAttribute
+  payload?: IUserAttribute
   loading?: boolean
   error?: Dictionary<any> | null
 }
 
 interface VerifyUserAttributeAction {
   type: typeof VERIFY_USER_ATTRIBUTE
-  payload?: UserAttribute
+  payload?: IUserAttribute
   loading?: boolean
   error?: Dictionary<any> | null
 }
 
 interface ToggleQrSharableAction {
   type: typeof TOGGLE_QR_SHARABLE
-  payload?: UserAttribute
+  payload?: IUserAttribute
   loading?: boolean
   error?: Dictionary<any> | null
 }

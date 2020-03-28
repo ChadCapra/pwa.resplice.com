@@ -45,11 +45,10 @@ const Verify = ({
   }, [session])
 
   if (!session) return <Redirect to="/auth/login" />
-  if (session.authenticated_at && session.user_registered_at)
-    return <Redirect to="/" />
-  if (session.authenticated_at) return <Redirect to="/auth/register" />
-  if (session.email_verified_at && session.phone_verified_at)
-    return <Redirect to="/auth/eula" />
+  if (session.user_registered_at) return <Redirect to="/" />
+  if (session.authenticated_at && session.user_uuid)
+    return <Redirect to="/auth/register" />
+  if (session.authenticated_at) return <Redirect to="/auth/eula" />
 
   const subtitles = (() => {
     if (secondCodeRequired) {

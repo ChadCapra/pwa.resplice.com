@@ -103,8 +103,7 @@ export default (
               ...state.contacts![action.payload.uuid],
               attributes: {
                 ...state.contacts![action.payload.uuid].attributes,
-                [action.payload.attribute.attribute_uuid]:
-                  action.payload.attribute
+                [action.payload.attribute.uuid]: action.payload.attribute
               }
             }
           }) ||

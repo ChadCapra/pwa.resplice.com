@@ -9,7 +9,7 @@ const UserView = () => {
   return (
     <SwipeView
       navText={['Profile', 'Settings']}
-      header={<ViewHeader route="/" />}
+      header={<ViewHeader backRoute="/" />}
     >
       <UserProfile />
       <UserSettings />

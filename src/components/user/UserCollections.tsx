@@ -1,17 +1,19 @@
 import React from 'react'
-
-// TODO: remove line when using global state
-import { UserMock, attributeTypes } from '../../api/mockData'
+import { connect } from 'react-redux'
 import { buildCollections } from '../../helpers'
+import { RespliceState, IUserAttribute, AttributeType } from '../../store/store'
 
 import Flex from '../shared/layout/Flex'
 import AttributeCard from '../shared/attribute/AttributeCard'
 import UserAttribute from './UserAttribute'
 
-// TODO: remove line when using global state
-const { attributes } = UserMock
+type Props = {
+  attributes: Dictionary<IUserAttribute> | null
+  attributeTypes: AttributeType[] | null
+}
 
-const UserCollections = () => {
+const UserCollections = ({ attributes, attributeTypes }: Props) => {
+  if (!attributes || !attributeTypes) return <p>Loading</p>
   const collections = buildCollections(attributes, attributeTypes)
 
   return (
@@ -20,9 +22,7 @@ const UserCollections = () => {
         return (
           <AttributeCard key={collection} collection={collection}>
             {attrs.map(attr => {
-              return (
-                <UserAttribute key={attr.attribute_uuid} attribute={attr} />
-              )
+              return <UserAttribute key={attr.uuid} attribute={attr} />
             })}
           </AttributeCard>
         )
@@ -31,4 +31,11 @@ const UserCollections = () => {
   )
 }
 
-export default UserCollections
+const mapStateToProps = (state: RespliceState) => {
+  return {
+    attributes: state.userState.attributes,
+    attributeTypes: state.utilState.attributeTypes
+  }
+}
+
+export default connect(mapStateToProps)(UserCollections)

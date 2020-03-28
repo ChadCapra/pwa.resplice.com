@@ -41,7 +41,7 @@ export default (state = INITIAL_STATE, action: UserActions): UserState => {
       return {
         ...state,
         attributes:
-          (action.payload && toDictionary('attribute_uuid', action.payload)) ||
+          (action.payload && toDictionary('uuid', action.payload)) ||
           state.attributes,
         loading: action.loading || false,
         error: action.error || null
@@ -56,7 +56,7 @@ export default (state = INITIAL_STATE, action: UserActions): UserState => {
         attributes:
           (action.payload && {
             ...state.attributes,
-            [action.payload.attribute_uuid]: action.payload
+            [action.payload.uuid]: action.payload
           }) ||
           state.attributes,
         loading: action.loading || false,

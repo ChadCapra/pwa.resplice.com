@@ -3,7 +3,8 @@ import { FixedSizeList as VList } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import styled from 'styled-components'
 
-import AlphaNumericSlider from '../Util/AlphaNumericSlider'
+import EntitySummary from './EntitySummary'
+// import AlphaNumericSlider from '../Util/AlphaNumericSlider'
 
 const ListContainer = styled.div`
   position: relative;
@@ -12,10 +13,10 @@ const ListContainer = styled.div`
 
 type Props = {
   list: any
-  children: any
+  // children: React.ReactElement
 }
 
-const EntityList = ({ list, children }: Props) => {
+const EntityList = ({ list }: Props) => {
   const virtualListEl = useRef(null)
 
   // const handleLetterClick = (idx: number) => {
@@ -24,9 +25,22 @@ const EntityList = ({ list, children }: Props) => {
   //   }
   // }
 
-  const renderItem = ({ index, style }: any) => {
+  const renderItem = ({
+    index,
+    style
+  }: {
+    index: number
+    style: React.CSSProperties
+  }) => {
     const profile = list[index]
-    return React.cloneElement(children, { profile, style })
+    return (
+      <EntitySummary
+        title={profile.title}
+        subtitle={profile.tags}
+        thumbnail={<div></div>}
+        style={style}
+      />
+    )
   }
 
   return (

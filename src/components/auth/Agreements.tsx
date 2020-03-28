@@ -51,7 +51,7 @@ const Agreements = ({ session, loading, error, acceptEula }: Props) => {
           onClick={() => setEulaAccepted(!eulaAccepted)}
         >
           <span>I agree to the terms</span>
-          <Checkbox name="eula" checked={eulaAccepted} />
+          <Checkbox name="eula" checked={eulaAccepted} readOnly />
         </Card.Body>
       </Card.Layout>
 
@@ -66,7 +66,7 @@ const Agreements = ({ session, loading, error, acceptEula }: Props) => {
           onClick={() => setPrivacyAccepted(!privacyAccepted)}
         >
           <span>I agree to the terms</span>
-          <Checkbox name="privacy" checked={privacyAccepted} />
+          <Checkbox name="privacy" checked={privacyAccepted} readOnly />
         </Card.Body>
       </Card.Layout>
 

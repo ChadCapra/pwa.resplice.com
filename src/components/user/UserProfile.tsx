@@ -1,16 +1,12 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
-
-// TODO: remove line when using global state
-import { UserMock } from '../../api/mockData'
+import { RespliceState, IUserProfile } from '../../store/store'
 
 import Flex from '../shared/layout/Flex'
 import Avatar from '../shared/avatar/Avatar'
 import UserRanks from './UserRanks'
 import UserCollections from './UserCollections'
-
-// TODO: remove line when using global state
-const { profile } = UserMock
 
 const UserProfileContainer = styled.div`
   width: 100%;
@@ -36,10 +32,13 @@ const StatTitle = styled.h3`
   color: var(--text-light);
 `
 
-// TODO: Replace with length of contact array
-const ContactCount = 8
+type Props = {
+  profile: IUserProfile | null
+  contactCount: number | null
+}
 
-const UserProfile = () => {
+const UserProfile = ({ profile, contactCount }: Props) => {
+  if (!profile) return <p>Loading</p>
   return (
     <Flex justify="center" fill>
       <UserProfileContainer>
@@ -52,7 +51,7 @@ const UserProfile = () => {
 
         <Flex justify="between" align="center" style={{ marginBottom: '1em' }}>
           <Flex direction="column" justify="center" grow>
-            <Stat>{ContactCount}</Stat>
+            <Stat>{contactCount}</Stat>
             <StatTitle>Contacts</StatTitle>
           </Flex>
           <Flex justify="center" grow>
@@ -70,4 +69,13 @@ const UserProfile = () => {
   )
 }
 
-export default UserProfile
+const mapStateToProps = (state: RespliceState) => {
+  return {
+    profile: state.userState.profile,
+    contactCount:
+      state.contactState.contacts &&
+      Object.keys(state.contactState.contacts).length
+  }
+}
+
+export default connect(mapStateToProps)(UserProfile)
