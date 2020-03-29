@@ -126,6 +126,9 @@ const getPath = (name: string, props: any) => {
 }
 
 const IconWrapper = styled.div<{ clickable: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &:active {
     ${props => (props.clickable ? 'transform: scale(0.9);' : '')}
   }

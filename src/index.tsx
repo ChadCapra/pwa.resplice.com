@@ -1,11 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { IntlProvider } from 'react-intl'
 import { Provider } from 'react-redux'
+import { IntlProvider } from 'react-intl'
+import { ThemeProvider } from 'styled-components'
 import { createStore, applyMiddleware, compose } from 'redux'
 import reduxThunk from 'redux-thunk'
 import respliceState from './store'
 
+import theme from './theme'
 import './styles/reset.css'
 import './styles/theme.css'
 import './styles/index.css'
@@ -29,7 +31,9 @@ const store = createStore(
 ReactDOM.render(
   <Provider store={store}>
     <IntlProvider locale={'en'}>
-      <Resplice />
+      <ThemeProvider theme={theme}>
+        <Resplice />
+      </ThemeProvider>
     </IntlProvider>
   </Provider>,
   document.getElementById('root')

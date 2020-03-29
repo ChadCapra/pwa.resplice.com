@@ -18,7 +18,6 @@
   &.Primary {
     color: white;
     background-color: var(--brand-primary);
-    max-width: 350px;
 
     &.Loading {
       background-color: darken(#1bbc9b, 5%);

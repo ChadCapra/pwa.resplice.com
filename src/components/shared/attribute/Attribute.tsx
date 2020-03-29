@@ -10,6 +10,7 @@ type Props = {
   attribute: IEntityAttributeWithType
   leftIcon: React.ReactNode
   rightIcon: React.ReactNode
+  onClick?: (e: React.PointerEvent<HTMLDivElement>) => void
 }
 
 const IconContainer = styled.div`
@@ -26,6 +27,7 @@ const IconContainer = styled.div`
 
 const AttributeValues = styled(Flex)`
   overflow: hidden;
+  cursor: pointer;
   &:active {
     transform: scale(0.95);
   }
@@ -51,11 +53,17 @@ const AttributeValue = styled.p`
   white-space: nowrap;
 `
 
-const Attribute = ({ attribute, leftIcon, rightIcon }: Props) => {
+const Attribute = ({ attribute, leftIcon, rightIcon, onClick }: Props) => {
   return (
     <Flex justify="between" align="center">
       <IconContainer>{leftIcon}</IconContainer>
-      <AttributeValues direction="column" justify="center" align="start" grow>
+      <AttributeValues
+        direction="column"
+        justify="center"
+        align="start"
+        grow
+        onClick={onClick}
+      >
         <AttributeName>{attribute.name}</AttributeName>
         <AttributeValue>{formatAttributeValue(attribute.value)}</AttributeValue>
       </AttributeValues>

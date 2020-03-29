@@ -8,6 +8,7 @@ html {
   --success: #1bbc9b;
   --warning: #ffdd57;
   --danger: #ff3860;
+  --danger-light: rgba(255, 56, 96, 0.15);
 
   --neutral-1: #6c7dd5;
   --neutral-2: grey;
