@@ -45,7 +45,8 @@ const Verify = ({
   }, [session])
 
   if (!session) return <Redirect to="/auth/login" />
-  if (session.user_registered_at) return <Redirect to="/" />
+  if (session.authenticated_at && session.user_registered_at)
+    return <Redirect to="/" />
   if (session.authenticated_at && session.user_uuid)
     return <Redirect to="/auth/register" />
   if (session.authenticated_at) return <Redirect to="/auth/eula" />
