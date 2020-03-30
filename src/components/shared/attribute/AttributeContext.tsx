@@ -7,6 +7,7 @@ import ActionIcon from '../util/ActionIcon'
 type Props = {
   attributeName: string
   attributeActions: AttributeAction[]
+  onActionClick: (actionName: string) => void
 }
 
 const ContextContainer = styled.div`
@@ -38,14 +39,22 @@ const ContextOption = styled.button<{ danger: boolean }>`
   }
 `
 
-const AttributeContext = ({ attributeName, attributeActions }: Props) => {
+const AttributeContext = ({
+  attributeName,
+  attributeActions,
+  onActionClick
+}: Props) => {
   return (
     <ContextContainer>
       <ContextHeader>{attributeName}</ContextHeader>
       <div style={{ padding: '1em' }}>
         {attributeActions.map((action, idx) => {
           return (
-            <ContextOption key={idx} danger={action.name === 'delete'}>
+            <ContextOption
+              key={idx}
+              danger={action.name === 'delete'}
+              onClick={() => onActionClick(action.name)}
+            >
               <ActionIcon
                 name={action.icon}
                 width="2.5em"

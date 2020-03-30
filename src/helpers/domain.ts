@@ -35,3 +35,7 @@ export const buildCollections = (
   })
   return collections
 }
+
+export const handleAttributeAction = (actionName: string) => {
+  console.log(actionName)
+}
