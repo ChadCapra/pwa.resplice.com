@@ -43,7 +43,8 @@ const Modal = ({ show, onClose, height = '75%', children }: Props) => {
   }
 
   const ModalStyle = cx(styles.ModalContent, {
-    [styles.ModalClosing]: closing
+    [styles.ModalClosing]: closing,
+    [styles.ModalFull]: height === '100%'
   })
 
   return show && rootAppended
@@ -55,7 +56,7 @@ const Modal = ({ show, onClose, height = '75%', children }: Props) => {
           />
           <div className={ModalStyle} style={{ height }}>
             <div className={styles.ModalExit} onClick={() => animateAndClose()}>
-              <MdClose color="#1bbc9b" fontSize="2.5em" />
+              <MdClose color="#1bbc9b" fontSize="2em" />
             </div>
             {children}
           </div>
