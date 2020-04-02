@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { IEntityAttributeWithType } from '../../store/store'
+import { IUserAttribute, AttributeType } from '../../store/store'
 
 import { handleAttributeAction } from '../../helpers'
 
@@ -11,16 +11,19 @@ import EditAttribute from './EditAttribute'
 import DeleteAttribute from './DeleteAttribute'
 
 type Props = {
-  attribute: IEntityAttributeWithType
+  attribute: IUserAttribute & { attribute_type: AttributeType }
 }
 
 const UserAttribute = ({ attribute }: Props) => {
   const [showContext, setShowContext] = useState(false)
   const [showEdit, setShowEdit] = useState(false)
   const [showDelete, setShowDelete] = useState(false)
-  const actions = attribute.attribute_type.actions.sort((a, b) => {
+  let actions = attribute.attribute_type.actions.sort((a, b) => {
     return a.sort_order - b.sort_order
   })
+  if (attribute.latest_to_verify) {
+    actions = actions.filter(action => !(action.name === 'verify'))
+  }
 
   const handleActionClick = (actionName: string) => {
     setShowContext(false)
@@ -50,6 +53,7 @@ const UserAttribute = ({ attribute }: Props) => {
             width="2.5em"
             fill="var(--brand-primary)"
             clickable
+            onClick={() => handleActionClick(actions[0].name)}
           />
         }
         rightIcon={
@@ -58,6 +62,7 @@ const UserAttribute = ({ attribute }: Props) => {
             width="2.5em"
             fill="var(--brand-primary)"
             clickable
+            onClick={() => handleActionClick(actions[1].name)}
           />
         }
         onClick={() => setShowContext(true)}
@@ -65,7 +70,7 @@ const UserAttribute = ({ attribute }: Props) => {
 
       <Modal
         show={showContext}
-        height="45%"
+        height="60%"
         onClose={() => setShowContext(false)}
       >
         <AttributeContext

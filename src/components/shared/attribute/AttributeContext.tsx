@@ -11,10 +11,11 @@ type Props = {
 }
 
 const ContextContainer = styled.div`
-  max-width: ${props => props.theme['mobile-max-width']};
+  max-width: 575px;
   width: 100%;
   height: 100%;
   overflow: auto;
+  margin: auto;
   box-sizing: border-box;
 `
 const ContextHeader = styled.h2`
@@ -31,10 +32,18 @@ const ContextOption = styled.button<{ danger: boolean }>`
   border-radius: 10px;
   background-color: ${props =>
     props.danger ? 'var(--danger-light)' : 'white'};
+  cursor: pointer;
+
+  &:active {
+    background-color: var(--light-2);
+    p {
+      transform: scale(0.9);
+    }
+  }
 
   & p {
     margin-left: 0.5em;
-    font-size: 2em;
+    font-size: 1.5em;
     color: ${props => (props.danger ? 'var(--danger)' : 'var(--text)')};
   }
 `

@@ -134,18 +134,31 @@ const IconWrapper = styled.div<{ clickable: boolean }>`
   }
 `
 
+type Props = {
+  name?: string
+  style?: React.CSSProperties
+  fill?: string
+  viewBox?: string
+  height?: string
+  width?: string
+  className?: string
+  clickable?: boolean
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void
+}
+
 const ActionIcon = ({
   name = '',
   style = {},
   fill = '#000',
   viewBox = '0 0 512 512',
+  height = '100%',
   width = '100%',
   className = '',
-  height = '100%',
-  clickable = false
-}) => {
+  clickable = false,
+  onClick
+}: Props) => {
   return (
-    <IconWrapper clickable={clickable}>
+    <IconWrapper clickable={clickable} onClick={onClick}>
       <svg
         width={width}
         style={style}

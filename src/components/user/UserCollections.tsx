@@ -22,7 +22,14 @@ const UserCollections = ({ attributes, attributeTypes }: Props) => {
         return (
           <AttributeCard key={collectionName} collectionName={collectionName}>
             {attrs.map(attr => {
-              return <UserAttribute key={attr.uuid} attribute={attr} />
+              return (
+                <UserAttribute
+                  key={attr.uuid}
+                  attribute={
+                    attr as IUserAttribute & { attribute_type: AttributeType }
+                  }
+                />
+              )
             })}
           </AttributeCard>
         )
