@@ -16,10 +16,12 @@ const Container = styled(Flex)`
   box-sizing: border-box;
   max-width: ${props => props.theme['mobile-max-width']};
   overflow: auto;
+  margin: auto;
+  padding: 2em 0;
 `
 
 const CardContainer = styled.div`
-  padding: 0 1.5em;
+  padding: 0 2em;
   margin: 0.5em 0;
 `
 
@@ -87,38 +89,43 @@ const AttributeTypeSelect = ({ attributeTypes, onSelect }: Props) => {
   return (
     <Container direction="column" fill justify="start">
       {attributeTypes &&
-        attributeTypes.map(type => (
-          <CardContainer key={type.name} onClick={() => onSelect(type)}>
-            <AttributeCard collectionName={type.name}>
-              <Attribute
-                attribute={
-                  {
-                    name: type.name,
-                    value: getTypeValue(type.value_template)
-                  } as IEntityAttributeWithType
-                }
-                leftIcon={
-                  <ActionIcon
-                    name={type.actions[0].icon}
-                    width="2.5em"
-                    fill="var(--brand-primary)"
-                    clickable
-                    onClick={() => {}}
-                  />
-                }
-                rightIcon={
-                  <ActionIcon
-                    name={type.actions[2].icon}
-                    width="2.5em"
-                    fill="var(--brand-primary)"
-                    clickable
-                    onClick={() => {}}
-                  />
-                }
-              />
-            </AttributeCard>
-          </CardContainer>
-        ))}
+        attributeTypes.map(type => {
+          const actions = type.actions.filter(
+            action => !(action.name === 'verify')
+          )
+          return (
+            <CardContainer key={type.name} onClick={() => onSelect(type)}>
+              <AttributeCard collectionName={type.name}>
+                <Attribute
+                  attribute={
+                    {
+                      name: type.name,
+                      value: getTypeValue(type.value_template)
+                    } as IEntityAttributeWithType
+                  }
+                  leftIcon={
+                    <ActionIcon
+                      name={actions[0].icon}
+                      width="2.5em"
+                      fill="var(--brand-primary)"
+                      clickable
+                      onClick={() => {}}
+                    />
+                  }
+                  rightIcon={
+                    <ActionIcon
+                      name={actions[1].icon}
+                      width="2.5em"
+                      fill="var(--brand-primary)"
+                      clickable
+                      onClick={() => {}}
+                    />
+                  }
+                />
+              </AttributeCard>
+            </CardContainer>
+          )
+        })}
     </Container>
   )
 }

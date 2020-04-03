@@ -84,6 +84,10 @@ const AddAttributeForm = ({
     return errors
   }
 
+  const actions = attributeType.actions.filter(
+    action => !(action.name === 'verify')
+  )
+
   return (
     <Container direction="column">
       <StyledHeader>Editing {addingAttribute.name}</StyledHeader>
@@ -96,7 +100,7 @@ const AddAttributeForm = ({
           }
           leftIcon={
             <ActionIcon
-              name={attributeType.actions[0].icon}
+              name={actions[0].icon}
               width="2.5em"
               fill="var(--brand-primary)"
               clickable
@@ -105,7 +109,7 @@ const AddAttributeForm = ({
           }
           rightIcon={
             <ActionIcon
-              name={attributeType.actions[2].icon}
+              name={actions[1].icon}
               width="2.5em"
               fill="var(--brand-primary)"
               clickable

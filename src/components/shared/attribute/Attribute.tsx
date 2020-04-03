@@ -21,6 +21,8 @@ const IconContainer = styled.div`
   width: 40px;
   height: 40px;
   flex: 0 0 auto;
+  cursor: pointer;
+
   &:first-of-type {
     margin-right: 1em;
   }
