@@ -1,33 +1,115 @@
 import React from 'react'
-import { IUserAttribute, AttributeType } from '../../store/store'
-import { Formik, Form, Field } from 'formik'
+import { Formik, Form, Field, FieldProps } from 'formik'
 
 import Input from '../shared/form/Input'
+import InputPhone from '../shared/form/InputPhone'
+import Button from '../shared/button/Button'
 
-type Props = {
-  attribute?: IUserAttribute & { attribute_type: AttributeType }
-  attributeType: AttributeType
-  onSubmit: (values: any) => void
+type FormValues = {
+  collection: string
+  name: string
+  [key: string]: any
 }
 
-const AttributeForm = ({ attribute, attributeType, onSubmit }: Props) => {
-  const initialValues = () =>
-    attribute
-      ? {
-          collection: attribute.collection,
-          name: attribute.name,
-          ...attribute.value
-        }
-      : {
-          collection: '',
-          name: '',
-          ...attributeType.empty_value
-        }
+type Props = {
+  attributeUuid?: string
+  initialValues: FormValues
+  loading: boolean
+  validate: (values: FormValues) => void
+  onSubmit: (values: FormValues) => void
+}
+
+const AttributeForm = ({
+  attributeUuid,
+  initialValues,
+  loading,
+  validate,
+  onSubmit
+}: Props) => {
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({ initialValues }) => (
+    <Formik
+      initialValues={initialValues}
+      validateOnChange
+      initialTouched={{ collection: true, name: true }}
+      validate={validate}
+      onSubmit={onSubmit}
+    >
+      {formikBag => (
         <Form>
-          <Field type="text" name="collection" component={Input} />
+          <Field name="collection">
+            {({ field, form: { touched }, meta }: FieldProps) => (
+              <Input
+                type="text"
+                label="Attribute Collection"
+                {...field}
+                meta={{ ...meta, touched: !!touched[field.name] }}
+              />
+            )}
+          </Field>
+          <Field name="name">
+            {({ field, meta }: FieldProps) => (
+              <Input
+                type="text"
+                label="Attribute Name"
+                {...field}
+                meta={meta}
+              />
+            )}
+          </Field>
+          {Object.keys(initialValues).map(key => {
+            switch (key) {
+              case 'phone':
+                return (
+                  <Field key={key} name={key}>
+                    {({ field, meta }: FieldProps) => (
+                      <InputPhone
+                        label="Phone Number"
+                        {...field}
+                        meta={meta}
+                        onChange={val => formikBag.setFieldValue(key, val)}
+                      />
+                    )}
+                  </Field>
+                )
+              case 'email':
+                return (
+                  <Field key={key} name={key}>
+                    {({ field, meta }: FieldProps) => (
+                      <Input
+                        type="email"
+                        label="Email Address"
+                        {...field}
+                        meta={meta}
+                      />
+                    )}
+                  </Field>
+                )
+              case 'date':
+                return (
+                  <Field key={key} name={key}>
+                    {({ field, meta }: FieldProps) => (
+                      <Input
+                        type="date"
+                        label="Date of Event"
+                        {...field}
+                        meta={meta}
+                      />
+                    )}
+                  </Field>
+                )
+              default:
+                return null
+            }
+          })}
+
+          <Button
+            type="submit"
+            variant="primary"
+            style={{ margin: 'auto' }}
+            disabled={!formikBag.dirty}
+          >
+            {loading ? 'Saving' : 'Save'}
+          </Button>
         </Form>
       )}
     </Formik>

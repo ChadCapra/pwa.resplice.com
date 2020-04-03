@@ -121,15 +121,19 @@ export const addUserAttribute = (
   }
 }
 
-export const editUserAttribute = (
-  attribute: IUserAttribute
-): UserThunk => async dispatch => {
+export const editUserAttribute = ({
+  uuid,
+  collection,
+  name,
+  value
+}: IUserAttribute): UserThunk => async dispatch => {
   dispatch({ type: EDIT_USER_ATTRIBUTE, loading: true })
   try {
-    const response = await api.put(
-      `/user/attributes/${attribute.uuid}/edit`,
-      attribute
-    )
+    const response = await api.put(`/user/attributes/${uuid}/edit`, {
+      collection,
+      name,
+      value
+    })
     const editedAttribute: IUserAttribute = response.data
     dispatch({
       type: EDIT_USER_ATTRIBUTE,
