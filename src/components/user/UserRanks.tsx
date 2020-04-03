@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import Modal from '../shared/modal/Modal'
+import ComingSoon from '../views/ComingSoonView'
 // TODO: Replace with rank icon component for dynamic icons
 import { ReactComponent as ShieldIcon } from '../../assets/Copper_3.svg'
 
@@ -19,7 +20,7 @@ const UserRanks = () => {
     <>
       <Rank onClick={() => setShowRanks(true)} />
       <Modal show={showRanks} onClose={() => setShowRanks(false)}>
-        User Ranks
+        <ComingSoon name="User Ranks" />
       </Modal>
     </>
   )
