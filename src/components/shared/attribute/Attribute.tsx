@@ -13,6 +13,10 @@ type Props = {
   onClick?: (e: React.PointerEvent<HTMLDivElement>) => void
 }
 
+const AttributeContainer = styled(Flex)`
+  padding: 0.5em 0;
+`
+
 const IconContainer = styled.div`
   width: 40px;
   height: 40px;
@@ -55,7 +59,7 @@ const AttributeValue = styled.p`
 
 const Attribute = ({ attribute, leftIcon, rightIcon, onClick }: Props) => {
   return (
-    <Flex justify="between" align="center">
+    <AttributeContainer justify="between" align="center">
       <IconContainer>{leftIcon}</IconContainer>
       <AttributeValues
         direction="column"
@@ -68,7 +72,7 @@ const Attribute = ({ attribute, leftIcon, rightIcon, onClick }: Props) => {
         <AttributeValue>{formatAttributeValue(attribute.value)}</AttributeValue>
       </AttributeValues>
       <IconContainer>{rightIcon}</IconContainer>
-    </Flex>
+    </AttributeContainer>
   )
 }
 

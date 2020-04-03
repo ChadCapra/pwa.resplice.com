@@ -18,12 +18,7 @@ const Container = styled(Flex)`
   overflow: auto;
 `
 
-const CardContainer = styled.button`
-  display: flex;
-  outline: none;
-  border: none;
-  text-align: left;
-  background: transparent;
+const CardContainer = styled.div`
   padding: 0 1.5em;
   margin: 0.5em 0;
 `
