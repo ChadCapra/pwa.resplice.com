@@ -72,8 +72,8 @@ const Login = ({ session, createSession, loading, error }: Props) => {
                     label="Mobile Phone"
                     name={field.name}
                     value={field.value}
-                    onChange={val => formikBag.setFieldValue('phone', val)}
                     meta={meta}
+                    onChange={val => formikBag.setFieldValue('phone', val)}
                   />
                 )}
               </Field>
@@ -106,7 +106,9 @@ const Login = ({ session, createSession, loading, error }: Props) => {
                   type="submit"
                   variant="primary"
                   loading={loading}
-                  disabled={!formikBag.dirty}
+                  disabled={
+                    !formikBag.dirty || !!Object.keys(formikBag.errors).length
+                  }
                 >
                   Start
                 </Button>
