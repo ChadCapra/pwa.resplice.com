@@ -106,9 +106,7 @@ const Login = ({ session, createSession, loading, error }: Props) => {
                   type="submit"
                   variant="primary"
                   loading={loading}
-                  disabled={
-                    !formikBag.dirty || !!Object.keys(formikBag.errors).length
-                  }
+                  disabled={!formikBag.dirty}
                 >
                   Start
                 </Button>
