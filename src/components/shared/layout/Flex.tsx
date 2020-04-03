@@ -84,9 +84,14 @@ const FlexBox = styled.div<StyleProps>`
   ${props => props.grow && 'flex: 1 1 0px;'}
 `
 
-const Flex = ({ direction, fill, ...props }: Props) => {
+const Flex = ({ direction, fill, justify, align, grow, ...props }: Props) => {
   return (
-    <FlexBox flexDirection={direction} widthFill={fill} {...props}>
+    <FlexBox
+      flexDirection={direction}
+      widthFill={fill}
+      {...{ justify, align, grow }}
+      {...props}
+    >
       {props.children}
     </FlexBox>
   )
