@@ -7,8 +7,9 @@ export interface UtilState {
 export interface AttributeType {
   id: number
   name: string
+  default_collection: string
   verify_seconds: number | null
-  empty_value: Dictionary<string | null>
+  value_template: Dictionary<string | null>
   actions: AttributeAction[]
 }
 export interface AttributeAction {

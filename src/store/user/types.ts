@@ -34,6 +34,13 @@ export interface IUserAttribute {
   expiry: string | null
 }
 
+export interface IAddAttributeValues {
+  attribute_type_id: number
+  name: string
+  collection: string
+  value: Dictionary<string>
+}
+
 export const FETCH_USER_PROFILE = 'FETCH_USER_PROFILE'
 export const EDIT_USER_NAME = 'EDIT_USER_NAME'
 export const EDIT_USER_AVATAR = 'EDIT_USER_AVATAR'

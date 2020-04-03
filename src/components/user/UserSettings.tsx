@@ -1,7 +1,9 @@
 import React from 'react'
 
+import ComingSoon from '../views/ComingSoonView'
+
 const Settings = () => {
-  return <div>Settings</div>
+  return <ComingSoon name="Settings" />
 }
 
 export default Settings

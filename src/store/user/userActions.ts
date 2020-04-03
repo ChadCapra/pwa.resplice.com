@@ -2,6 +2,7 @@ import { RespliceState } from '../store'
 import {
   IUserProfile,
   IUserAttribute,
+  IAddAttributeValues,
   UserActions,
   FETCH_USER_PROFILE,
   EDIT_USER_NAME,
@@ -106,7 +107,7 @@ export const fetchUserAttribute = (
 }
 
 export const addUserAttribute = (
-  attribute: IUserAttribute
+  attribute: IAddAttributeValues
 ): UserThunk => async dispatch => {
   dispatch({ type: ADD_USER_ATTRIBUTE, loading: true })
   try {

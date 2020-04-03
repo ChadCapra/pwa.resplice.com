@@ -17,7 +17,13 @@ type Props = {
 
 const ComingSoon = ({ name }: Props) => {
   return (
-    <Flex direction="column" fill justify="center" align="center">
+    <Flex
+      direction="column"
+      fill
+      justify="center"
+      align="center"
+      style={{ padding: '2em 0' }}
+    >
       <Header>{name} Coming Soon</Header>
       <RespliceLogo height="175" width="175" />
     </Flex>

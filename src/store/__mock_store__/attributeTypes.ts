@@ -4,8 +4,9 @@ export const attributeTypes: AttributeType[] = [
   {
     id: 1,
     name: 'Phone',
+    default_collection: 'Phones',
     verify_seconds: 300,
-    empty_value: {
+    value_template: {
       phone: null
     },
     actions: [
@@ -86,8 +87,9 @@ export const attributeTypes: AttributeType[] = [
   {
     id: 2,
     name: 'Email',
+    default_collection: 'Emails',
     verify_seconds: 300,
-    empty_value: {
+    value_template: {
       email: null
     },
     actions: [
@@ -159,8 +161,9 @@ export const attributeTypes: AttributeType[] = [
   {
     id: 3,
     name: 'Address',
+    default_collection: 'Addresses',
     verify_seconds: 2592000,
-    empty_value: {
+    value_template: {
       country: null,
       locality: null,
       postal_code: null,
@@ -240,8 +243,9 @@ export const attributeTypes: AttributeType[] = [
   {
     id: 4,
     name: 'Location',
+    default_collection: 'Locations',
     verify_seconds: null,
-    empty_value: {
+    value_template: {
       latitude: null,
       longitude: null
     },
@@ -296,8 +300,9 @@ export const attributeTypes: AttributeType[] = [
   {
     id: 5,
     name: 'Hyperlink',
+    default_collection: 'Links',
     verify_seconds: null,
-    empty_value: {
+    value_template: {
       url: null
     },
     actions: [
@@ -342,8 +347,9 @@ export const attributeTypes: AttributeType[] = [
   {
     id: 6,
     name: 'Date',
+    default_collection: 'Dates',
     verify_seconds: null,
-    empty_value: {
+    value_template: {
       end: null,
       start: null
     },
@@ -389,8 +395,9 @@ export const attributeTypes: AttributeType[] = [
   {
     id: 7,
     name: 'Image',
+    default_collection: 'Images',
     verify_seconds: null,
-    empty_value: {
+    value_template: {
       image: null,
       thumbnail: null
     },
@@ -435,55 +442,12 @@ export const attributeTypes: AttributeType[] = [
   },
   {
     id: 8,
-    name: 'Text',
+    name: 'Markdown',
+    default_collection: 'Other',
     verify_seconds: null,
-    empty_value: {
+    value_template: {
       text: null
     },
-    actions: [
-      {
-        sort_order: 4,
-        name: 'delete',
-        display_name: 'Delete',
-        icon: 'MdTrash',
-        user_only: true,
-        unverified_only: false,
-        action_value: '{uuid}'
-      },
-      {
-        sort_order: 3,
-        name: 'edit',
-        display_name: 'Edit',
-        icon: 'MdCreate',
-        user_only: true,
-        unverified_only: false,
-        action_value: '{uuid}'
-      },
-      {
-        sort_order: 2,
-        name: 'copy',
-        display_name: 'Copy to Clipboard',
-        icon: 'MdClipboard',
-        user_only: false,
-        unverified_only: false,
-        action_value: '{}'
-      },
-      {
-        sort_order: 1,
-        name: 'copy',
-        display_name: 'Copy to Clipboard',
-        icon: 'MdClipboard',
-        user_only: false,
-        unverified_only: false,
-        action_value: '{}'
-      }
-    ]
-  },
-  {
-    id: 9,
-    name: 'JSON',
-    verify_seconds: null,
-    empty_value: {},
     actions: [
       {
         sort_order: 4,

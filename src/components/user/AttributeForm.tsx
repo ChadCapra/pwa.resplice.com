@@ -12,7 +12,6 @@ type FormValues = {
 }
 
 type Props = {
-  attributeUuid?: string
   initialValues: FormValues
   loading: boolean
   validate: (values: FormValues) => void
@@ -20,7 +19,6 @@ type Props = {
 }
 
 const AttributeForm = ({
-  attributeUuid,
   initialValues,
   loading,
   validate,
@@ -91,6 +89,19 @@ const AttributeForm = ({
                       <Input
                         type="date"
                         label="Date of Event"
+                        {...field}
+                        meta={meta}
+                      />
+                    )}
+                  </Field>
+                )
+              case 'text':
+                return (
+                  <Field key={key} name={key}>
+                    {({ field, meta }: FieldProps) => (
+                      <Input
+                        type="text"
+                        label="Enter Text"
                         {...field}
                         meta={meta}
                       />

@@ -1,7 +1,12 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { IUserAttribute, AttributeType, RespliceState } from '../../store/store'
+import {
+  IUserAttribute,
+  IAddAttributeValues,
+  AttributeType,
+  RespliceState
+} from '../../store/store'
 
 import Flex from '../shared/layout/Flex'
 import AttributeForm from './AttributeForm'
@@ -9,7 +14,7 @@ import AttributeCard from '../shared/attribute/AttributeCard'
 import Attribute from '../shared/attribute/Attribute'
 import ActionIcon from '../shared/util/ActionIcon'
 
-import { editUserAttribute } from '../../store/user/userActions'
+import { addUserAttribute } from '../../store/user/userActions'
 
 const Container = styled(Flex)`
   margin: auto;
@@ -26,20 +31,39 @@ const StyledHeader = styled.h2`
   text-overflow: ellipsis;
 `
 
-type Props = {
-  attribute: IUserAttribute & { attribute_type: AttributeType }
-  loading: boolean
-  editUserAttribute: (editedAttribute: IUserAttribute) => Promise<void>
+const getTypeValue = (value: Dictionary<string | null>) => {
+  const typeValue: Dictionary<string> = {}
+  Object.keys(value).forEach(val => {
+    typeValue[val] = ''
+  })
+  return typeValue
 }
 
-const EditAttribute = ({ attribute, loading, editUserAttribute }: Props) => {
-  const [editingAttribute, setEditingAttribute] = useState(attribute)
+type Props = {
+  attributeType: AttributeType
+  loading: boolean
+  onBack: () => void
+  addUserAttribute: (addedAttribute: IAddAttributeValues) => Promise<void>
+}
+
+const AddAttributeForm = ({
+  attributeType,
+  loading,
+  onBack,
+  addUserAttribute
+}: Props) => {
+  const [addingAttribute, setAddingAttribute] = useState({
+    attribute_type_id: attributeType.id,
+    collection: attributeType.default_collection,
+    name: attributeType.name,
+    value: getTypeValue(attributeType.value_template)
+  })
 
   const onSubmit = ({ collection, name, ...value }: Dictionary<any>) => {
-    editUserAttribute({ ...editingAttribute, collection, name, value })
+    addUserAttribute({ ...addingAttribute, collection, name, value })
   }
   const validate = ({ collection, name, ...value }: Dictionary<any>) => {
-    setEditingAttribute({ ...editingAttribute, collection, name, value })
+    setAddingAttribute({ ...addingAttribute, collection, name, value })
 
     const errors: Dictionary<string> = {}
     if (!collection) {
@@ -62,13 +86,17 @@ const EditAttribute = ({ attribute, loading, editUserAttribute }: Props) => {
 
   return (
     <Container direction="column">
-      <StyledHeader>Editing {editingAttribute.name}</StyledHeader>
-      <AttributeCard collectionName={editingAttribute.collection}>
+      <StyledHeader>Editing {addingAttribute.name}</StyledHeader>
+      <AttributeCard collectionName={addingAttribute.collection}>
         <Attribute
-          attribute={editingAttribute}
+          attribute={
+            addingAttribute as IUserAttribute & {
+              attribute_type: AttributeType
+            }
+          }
           leftIcon={
             <ActionIcon
-              name={attribute.attribute_type.actions[0].icon}
+              name={attributeType.actions[0].icon}
               width="2.5em"
               fill="var(--brand-primary)"
               clickable
@@ -77,7 +105,7 @@ const EditAttribute = ({ attribute, loading, editUserAttribute }: Props) => {
           }
           rightIcon={
             <ActionIcon
-              name={attribute.attribute_type.actions[2].icon}
+              name={attributeType.actions[2].icon}
               width="2.5em"
               fill="var(--brand-primary)"
               clickable
@@ -89,9 +117,9 @@ const EditAttribute = ({ attribute, loading, editUserAttribute }: Props) => {
 
       <AttributeForm
         initialValues={{
-          collection: attribute.collection,
-          name: attribute.name,
-          ...attribute.value
+          collection: addingAttribute.collection,
+          name: addingAttribute.name,
+          ...addingAttribute.value
         }}
         loading={loading}
         validate={validate}
@@ -107,4 +135,4 @@ const mapStateToProps = (state: RespliceState) => {
   }
 }
 
-export default connect(mapStateToProps, { editUserAttribute })(EditAttribute)
+export default connect(mapStateToProps, { addUserAttribute })(AddAttributeForm)

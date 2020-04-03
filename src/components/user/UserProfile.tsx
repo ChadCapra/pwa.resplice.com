@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { RespliceState, IUserProfile } from '../../store/store'
 
 import Flex from '../shared/layout/Flex'
+import Modal from '../shared/modal/Modal'
 import Avatar from '../shared/avatar/Avatar'
 import UserRanks from './UserRanks'
 import UserCollections from './UserCollections'
+import FAB from '../shared/button/FAB'
+import AddAttribute from './AddAttribute'
 
 const UserProfileContainer = styled.div`
   width: 100%;
@@ -38,6 +41,7 @@ type Props = {
 }
 
 const UserProfile = ({ profile, contactCount }: Props) => {
+  const [showAdd, setShowAdd] = useState(false)
   if (!profile) return <p>Loading</p>
   return (
     <Flex justify="center" fill>
@@ -65,6 +69,12 @@ const UserProfile = ({ profile, contactCount }: Props) => {
 
         <UserCollections />
       </UserProfileContainer>
+
+      <FAB onClick={() => setShowAdd(true)} />
+
+      <Modal show={showAdd} height="100%" onClose={() => setShowAdd(false)}>
+        <AddAttribute />
+      </Modal>
     </Flex>
   )
 }
