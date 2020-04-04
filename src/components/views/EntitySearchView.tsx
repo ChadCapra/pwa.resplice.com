@@ -1,7 +1,8 @@
 import React from 'react'
+import ComingSoon from '../views/ComingSoonView'
 
 const EntitySearchView = () => {
-  return <div>Entity Search</div>
+  return <ComingSoon name="Search" />
 }
 
 export default EntitySearchView

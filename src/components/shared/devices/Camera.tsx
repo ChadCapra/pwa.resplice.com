@@ -51,8 +51,8 @@ const Camera = ({ onShot, onClose }: Props) => {
   }
   const stopStream = () => {
     if (stream.current && stream.current.srcObject) {
-      const player: any = stream.current.srcObject
-      player.getVideoTracks().forEach((track: any) => track.stop())
+      const player = stream.current.srcObject as MediaStream
+      player.getVideoTracks().forEach(track => track.stop())
     }
   }
   const takePicture = () => {

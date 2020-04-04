@@ -1,7 +1,8 @@
 import React from 'react'
+import ComingSoon from '../views/ComingSoonView'
 
 const EditShares = () => {
-  return <div>Edit user shares</div>
+  return <ComingSoon name="Editing Shares" />
 }
 
 export default EditShares

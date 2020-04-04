@@ -36,6 +36,7 @@ const ChildContainer = styled.div`
   background-color: white;
   border-top-right-radius: 25px;
   border-top-left-radius: 25px;
+  box-sizing: border-box;
 `
 
 type HeaderProps = {
@@ -100,7 +101,7 @@ const SwipeView = ({ navText, header, children }: Props) => {
       </View.Header>
       <View.Body>
         <ViewBackground>
-          <Swiper startPage={parseInt(page)}>
+          <Swiper start={parseInt(page)}>
             {children.map((child, idx) => {
               return <ChildContainer key={idx}>{child}</ChildContainer>
             })}

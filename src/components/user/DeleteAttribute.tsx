@@ -1,7 +1,8 @@
 import React from 'react'
+import ComingSoon from '../views/ComingSoonView'
 
 const DeleteAttribute = () => {
-  return <div>Delete Attribute</div>
+  return <ComingSoon name="Delete Attribute" />
 }
 
 export default DeleteAttribute
