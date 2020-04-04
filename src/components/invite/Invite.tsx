@@ -6,11 +6,15 @@ import CameraIcon from '../../assets/camera-reverse.svg'
 import Flex from '../shared/layout/Flex'
 import Scanner from './Scanner'
 import InviteCode from './InviteCode'
+import InviteSearch from './InviteSearch'
+import Button from '../shared/button/Button'
+import Modal from '../shared/modal/Modal'
 
 const Container = styled(Flex)`
   height: 100%;
-  padding: 0 2em;
+  padding: 2em;
   margin: auto;
+  overflow: auto;
   max-width: ${props => props.theme['mobile-max-width']};
   box-sizing: border-box;
 `
@@ -21,6 +25,7 @@ const CodeContainer = styled(Flex)`
   height: initial;
   width: 75%;
   padding: 2.5em;
+  box-shadow: var(--card-shadow-3);
 
   & img {
     color: white;
@@ -30,11 +35,26 @@ const CodeContainer = styled(Flex)`
   }
 `
 
+const Text = styled.p`
+  text-align: center;
+  padding-bottom: 2em;
+
+  & span {
+    font-weight: bold;
+    color: black;
+  }
+`
+
 const Invite = () => {
   const [showScanner, setShowScanner] = useState(false)
+  const [showInviteSearch, setShowInviteSearch] = useState(false)
 
   return (
     <Container direction="column" justify="center" align="center">
+      <Text>
+        Have someone scan your code with the <span>Resplice App</span> and enter
+        the code below for a quick share.
+      </Text>
       <CodeContainer
         id="QRCodeContainer"
         justify="center"
@@ -60,6 +80,17 @@ const Invite = () => {
       </CodeContainer>
 
       <InviteCode />
+      <Button variant="primary" onClick={() => setShowInviteSearch(true)}>
+        Invite
+      </Button>
+
+      <Modal
+        show={showInviteSearch}
+        height="100%"
+        onClose={() => setShowInviteSearch(false)}
+      >
+        <InviteSearch />
+      </Modal>
     </Container>
   )
 }

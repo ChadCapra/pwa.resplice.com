@@ -18,7 +18,9 @@ body,
 button,
 input,
 select,
-textarea {
+textarea,
+p,
+span {
   font-family: 'Open Sans', 'Droid Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
