@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import { Contact } from '../../store/store'
 
 import EntitySummary from '../shared/entity/EntitySummary'
@@ -14,6 +15,8 @@ const formatTags = (tags: string[]): string => {
 }
 
 const ContactSummary = ({ entity: contact, style }: Props) => {
+  let history = useHistory()
+
   return (
     <EntitySummary
       title={contact.name}
@@ -26,6 +29,7 @@ const ContactSummary = ({ entity: contact, style }: Props) => {
         />
       }
       style={style}
+      onClick={() => history.push(`/contact/${contact.uuid}`)}
     />
   )
 }

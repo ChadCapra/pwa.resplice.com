@@ -9,6 +9,7 @@ type Props = {
   thumbnail: React.ReactNode
   icon?: React.ReactNode
   style?: React.CSSProperties
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void
 }
 
 const Title = styled.p`
@@ -30,9 +31,16 @@ const Subtitle = styled.p`
   white-space: nowrap;
 `
 
-const EntitySummary = ({ title, subtitle, thumbnail, icon, style }: Props) => {
+const EntitySummary = ({
+  title,
+  subtitle,
+  thumbnail,
+  icon,
+  style,
+  onClick
+}: Props) => {
   return (
-    <Flex justify="start" align="center" style={style}>
+    <Flex justify="start" align="center" style={style} onClick={onClick}>
       {thumbnail}
       <Flex
         direction="column"

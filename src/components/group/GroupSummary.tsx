@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import { Group } from '../../store/store'
 
 import EntitySummary from '../shared/entity/EntitySummary'
@@ -14,6 +15,8 @@ const formatMemberCount = (count: number): string => {
 }
 
 const GroupSummary = ({ entity: group, style }: Props) => {
+  let history = useHistory()
+
   return (
     <EntitySummary
       title={group.name}
@@ -26,6 +29,7 @@ const GroupSummary = ({ entity: group, style }: Props) => {
         />
       }
       style={style}
+      onClick={() => history.push(`/group/${group.uuid}`)}
     />
   )
 }

@@ -18,11 +18,14 @@ type Props = {
 }
 
 const ContactList = ({ contacts }: Props) => {
-  return contacts ? (
+  const contactList = contacts ? Object.values(contacts) : null
+  return contactList ? (
     <ListContainer>
-      <EntityList list={Object.values(contacts)} ListItem={ContactSummary} />
+      <EntityList list={contactList} ListItem={ContactSummary} />
     </ListContainer>
-  ) : null
+  ) : (
+    <p>Loading</p>
+  )
 }
 
 const mapStateToProps = (state: RespliceState) => {
