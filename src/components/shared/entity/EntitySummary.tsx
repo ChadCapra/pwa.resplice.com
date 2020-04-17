@@ -32,7 +32,7 @@ const Subtitle = styled.p`
 
 const EntitySummary = ({ title, subtitle, thumbnail, icon, style }: Props) => {
   return (
-    <Flex justify="start" style={style}>
+    <Flex justify="start" align="center" style={style}>
       {thumbnail}
       <Flex
         direction="column"

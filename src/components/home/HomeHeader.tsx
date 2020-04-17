@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import styled from 'styled-components'
-import { RespliceState } from '../../store/store'
+import { RespliceState, IUserProfile } from '../../store/store'
 
 import MdSearch from 'react-ionicons/lib/MdSearch'
 import Flex from '../shared/layout/Flex'
@@ -37,10 +37,10 @@ const ThumbnailContainer = styled.div`
 `
 
 type Props = {
-  uuid?: string
+  profile: IUserProfile | null
 }
 
-const HomeHeader = ({ uuid }: Props) => {
+const HomeHeader = ({ profile }: Props) => {
   const [toUserProfile, setToUserProfile] = useState(false)
   if (toUserProfile) return <Redirect push to="/user" />
   return (
@@ -50,8 +50,12 @@ const HomeHeader = ({ uuid }: Props) => {
         <Label>Resplice</Label>
       </Search>
       <ThumbnailContainer>
-        {uuid ? (
-          <AvatarThumbnail uuid={uuid} onClick={() => setToUserProfile(true)} />
+        {profile ? (
+          <AvatarThumbnail
+            avatar={profile.avatar}
+            uuid={profile.uuid}
+            onClick={() => setToUserProfile(true)}
+          />
         ) : (
           <AvatarLoading />
         )}
@@ -62,7 +66,7 @@ const HomeHeader = ({ uuid }: Props) => {
 
 const mapStateToProps = (state: RespliceState) => {
   return {
-    uuid: state.userState.profile?.uuid
+    profile: state.userState.profile
   }
 }
 

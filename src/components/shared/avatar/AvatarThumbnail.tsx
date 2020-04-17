@@ -4,7 +4,7 @@ import Identicon from 'react-identicons'
 import styled from 'styled-components'
 
 type Props = {
-  avatar?: string
+  avatar: string | null
   uuid: string
   onClick: (uuid: string) => void
 }
@@ -12,7 +12,7 @@ type Props = {
 const ThumbnailContainer = styled.div`
   height: 50px;
   width: 50px;
-  background-color: var(--light-3);
+  background-color: var(--light-1);
   border-radius: 25px;
   display: flex;
   justify-content: center;
