@@ -8,13 +8,14 @@ export interface AuthState {
 export type Session = {
   uuid: string
   user_uuid: string
-  authenticated_at: string
+  verified_at: string
   phone_verified_at: string
   phone_verify_token: string | null
   email_verified_at: string
   email_verify_token: string | null
   failed_verifications: number
-  user_registered_at: string
+  eula_accepted_at: string
+  profile_completed_at: string
   remember_me: boolean
   expiry: string
 }
@@ -25,7 +26,7 @@ export const GET_SESSION = 'GET_SESSION'
 export const VERIFY_SESSION = 'VERIFY_SESSION'
 export const ACCEPT_EULA = 'ACCEPT_EULA'
 export const REGISTER = 'REGISTER'
-export const DELETE_SESSION = 'DELETE_SESSION'
+export const EXPIRE_SESSION = 'EXPIRE_SESSION'
 
 interface SetLocaleAction {
   type: typeof SET_LOCALE
@@ -67,8 +68,8 @@ interface RegisterAction {
   error?: Dictionary<any> | null
 }
 
-interface DeleteSessionAction {
-  type: typeof DELETE_SESSION
+interface ExpireSessionAction {
+  type: typeof EXPIRE_SESSION
 }
 
 export type AuthActions =
@@ -78,4 +79,4 @@ export type AuthActions =
   | VerifySessionAction
   | AcceptEulaAction
   | RegisterAction
-  | DeleteSessionAction
+  | ExpireSessionAction

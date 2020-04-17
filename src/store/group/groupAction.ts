@@ -2,7 +2,6 @@ import { RespliceState } from '../store'
 import {
   GroupState,
   Group,
-  GroupRecord,
   GroupMember,
   GroupAttribute,
   GroupShare,
@@ -15,17 +14,14 @@ import api from '../../api'
 
 import { toDictionary } from '../../helpers'
 
-export const fetchGroups = (): ThunkAction<
-  void,
-  RespliceState,
-  null,
-  GroupActions
-> => async dispatch => {
+type GroupThunk = ThunkAction<Promise<void>, RespliceState, null, GroupActions>
+
+export const fetchGroups = (): GroupThunk => async (dispatch) => {
   dispatch({ type: FETCH_GROUPS, loading: true })
   try {
-    const response = await api.get('/groups/get')
+    const response = await api.get('/groups')
     const groups: Group[] = response.data
-    const groupRecords: Dictionary<GroupRecord> = toDictionary('uuid', groups)
+    const groupRecords: Dictionary<Group> = toDictionary('uuid', groups)
     dispatch({
       type: FETCH_GROUPS,
       payload: groupRecords

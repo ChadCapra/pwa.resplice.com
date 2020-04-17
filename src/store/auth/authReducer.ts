@@ -7,7 +7,7 @@ import {
   VERIFY_SESSION,
   ACCEPT_EULA,
   REGISTER,
-  DELETE_SESSION
+  EXPIRE_SESSION
 } from './types'
 
 const INITIAL_STATE: AuthState = {
@@ -40,7 +40,7 @@ export default (state = INITIAL_STATE, action: AuthActions): AuthState => {
         loading: action.loading || false,
         error: action.error || null
       }
-    case DELETE_SESSION:
+    case EXPIRE_SESSION:
       return INITIAL_STATE
     default:
       return state

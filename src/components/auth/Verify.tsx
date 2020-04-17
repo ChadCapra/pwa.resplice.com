@@ -10,7 +10,7 @@ import InputCode from '../shared/form/InputCode'
 import Button from '../shared/button/Button'
 // import Alert from '../shared/modal/Alert'
 
-import { verifySession, deleteSession } from '../../store/auth/authActions'
+import { verifySession, expireSession } from '../../store/auth/authActions'
 
 type LoginValues = { phone: string; email: string }
 type Props = {
@@ -19,7 +19,7 @@ type Props = {
   loading: boolean
   error: Dictionary<any> | null
   verifySession: (code: string) => Promise<void>
-  deleteSession: () => { type: string }
+  expireSession: (sessionUuid: string) => Promise<void>
 }
 
 const Verify = ({
@@ -28,7 +28,7 @@ const Verify = ({
   loading,
   error,
   verifySession,
-  deleteSession
+  expireSession
 }: Props) => {
   const [secondCodeRequired, setSecondCodeRequired] = useState(false)
   const animation = useSpring({
@@ -45,11 +45,11 @@ const Verify = ({
   }, [session])
 
   if (!session) return <Redirect to="/auth/login" />
-  if (session.authenticated_at && session.user_registered_at)
+  if (session.verified_at && session.profile_completed_at)
     return <Redirect to="/" />
-  if (session.authenticated_at && session.user_uuid)
+  if (session.verified_at && session.eula_accepted_at)
     return <Redirect to="/auth/register" />
-  if (session.authenticated_at) return <Redirect to="/auth/eula" />
+  if (session.verified_at) return <Redirect to="/auth/eula" />
 
   const subtitles = (() => {
     if (secondCodeRequired) {
@@ -106,7 +106,7 @@ const Verify = ({
           <Button
             variant="secondary"
             loading={loading}
-            onClick={deleteSession}
+            onClick={() => expireSession(session.uuid)}
             style={{ marginTop: '15%' }}
           >
             {loading ? 'Verifying' : 'Cancel'}
@@ -131,5 +131,5 @@ const mapStateToProps = (state: RespliceState) => {
 
 export default connect(mapStateToProps, {
   verifySession,
-  deleteSession
+  expireSession
 })(Verify)

@@ -1,7 +1,7 @@
 export interface GroupState {
   loading: boolean
   error: Dictionary<any> | null
-  groups: Dictionary<GroupRecord> | null
+  groups: Dictionary<Group> | null
   groups_loaded_at: Date | null
 }
 export interface Group {
@@ -13,11 +13,9 @@ export interface Group {
   member_uuids: string[]
   pending_attribute_value: Dictionary<string>
   requested_at: string
-}
-export interface GroupRecord extends Group {
-  members: Dictionary<GroupMember>
-  attributes: Dictionary<GroupAttribute>
-  shares: Dictionary<GroupShare>
+  members?: Dictionary<GroupMember>
+  attributes?: Dictionary<GroupAttribute>
+  shares?: Dictionary<GroupShare>
 }
 export interface GroupMember {
   group_uuid: string
@@ -42,7 +40,7 @@ export const FETCH_GROUPS = 'FETCH_GROUPS'
 
 interface FetchGroupsAction {
   type: typeof FETCH_GROUPS
-  payload?: Dictionary<GroupRecord>
+  payload?: Dictionary<Group>
   loading?: boolean
   error?: Dictionary<any> | null
 }

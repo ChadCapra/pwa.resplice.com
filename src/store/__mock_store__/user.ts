@@ -22,7 +22,7 @@ export const UserMock: IUserMock = {
     },
     unlock_pin: '555555',
     unlock_pin_expiry: 'datetime',
-    user_registered_at: 'datetime',
+    profile_completed_at: 'datetime',
     share_count: 10,
     attribute_count: 2,
     location_enabled: true,

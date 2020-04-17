@@ -8,7 +8,7 @@ import {
   VERIFY_SESSION,
   ACCEPT_EULA,
   REGISTER,
-  DELETE_SESSION
+  EXPIRE_SESSION
 } from './types'
 import { ThunkAction } from 'redux-thunk'
 import api from '../../api'
@@ -37,15 +37,12 @@ export const setLocale = (locale: string) => {
 export const createSession = (values: {
   phone: string
   email: string
-}): ThunkAction<
-  Promise<void>,
-  RespliceState,
-  null,
-  AuthActions
-> => async dispatch => {
+}): ThunkAction<Promise<void>, RespliceState, null, AuthActions> => async (
+  dispatch
+) => {
   dispatch({ type: CREATE_SESSION, loading: true })
   try {
-    const response = await api.post('/auth/session/create', values)
+    const response = await api.post('/session/create', values)
     const session: Session = response.data
     dispatch({
       type: CREATE_SESSION,
@@ -61,11 +58,11 @@ export const getSession = (): ThunkAction<
   RespliceState,
   null,
   AuthActions
-> => async dispatch => {
+> => async (dispatch) => {
   dispatch({ type: GET_SESSION, loading: true })
   try {
-    const response = await api.get('/auth/session/get')
-    const session: Session = response.data.session
+    const response = await api.get('/session')
+    const session: Session = response.data
     dispatch({ type: GET_SESSION, payload: session })
   } catch (err) {
     dispatch({ type: GET_SESSION, error: err })
@@ -74,18 +71,15 @@ export const getSession = (): ThunkAction<
 
 export const verifySession = (
   code: string
-): ThunkAction<
-  Promise<void>,
-  RespliceState,
-  null,
-  AuthActions
-> => async dispatch => {
+): ThunkAction<Promise<void>, RespliceState, null, AuthActions> => async (
+  dispatch
+) => {
   dispatch({ type: VERIFY_SESSION, loading: true })
   try {
-    const response = await api.patch('/auth/session/verify', {
+    const response = await api.patch('/session/verify', {
       verify_token: code
     })
-    const session: Session = response.data.session
+    const session: Session = response.data
     dispatch({
       type: VERIFY_SESSION,
       payload: session
@@ -97,20 +91,17 @@ export const verifySession = (
 
 export const acceptEula = (
   locale: string
-): ThunkAction<
-  Promise<void>,
-  RespliceState,
-  null,
-  AuthActions
-> => async dispatch => {
+): ThunkAction<Promise<void>, RespliceState, null, AuthActions> => async (
+  dispatch
+) => {
   dispatch({ type: ACCEPT_EULA, loading: true })
   try {
-    const response = await api.post('/auth/accept_eula', {
+    const response = await api.post('/user/create', {
       eula_accepted: true,
       privacy_accepted: true,
       locale
     })
-    const session: Session = response.data.session
+    const session: Session = response.data
     dispatch({
       type: ACCEPT_EULA,
       payload: session
@@ -129,17 +120,14 @@ export const register = (values: {
   region: string
   postal_code: string
   country: string
-}): ThunkAction<
-  Promise<void>,
-  RespliceState,
-  null,
-  AuthActions
-> => async dispatch => {
+}): ThunkAction<Promise<void>, RespliceState, null, AuthActions> => async (
+  dispatch
+) => {
   dispatch({ type: REGISTER, loading: true })
   try {
     await api.post('/user/complete_profile', values)
-    const response = await api.get('/auth/session/get')
-    const session: Session = response.data.session
+    const response = await api.get('/session')
+    const session: Session = response.data
     dispatch({
       type: REGISTER,
       payload: session
@@ -149,8 +137,11 @@ export const register = (values: {
   }
 }
 
-export const deleteSession = (): AuthActions => {
-  return {
-    type: DELETE_SESSION
-  }
+export const expireSession = (
+  session_uuid: string
+): ThunkAction<Promise<void>, RespliceState, null, AuthActions> => async (
+  dispatch
+) => {
+  dispatch({ type: EXPIRE_SESSION })
+  await api.post('/sessions/expire_session', { session_uuid })
 }

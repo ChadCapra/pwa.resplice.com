@@ -13,7 +13,7 @@ export interface IUserProfile {
   tags: Dictionary<string>
   unlock_pin: string
   unlock_pin_expiry: string
-  user_registered_at: string
+  profile_completed_at: string
   share_count: number
   attribute_count: number
   location_enabled: boolean

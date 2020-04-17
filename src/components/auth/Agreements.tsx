@@ -24,7 +24,7 @@ const Agreements = ({ session, loading, error, acceptEula }: Props) => {
   const [privacyAccepted, setPrivacyAccepted] = useState(false)
 
   if (!session) return <Redirect to="/auth/login" />
-  if (!!session.user_uuid) return <Redirect to="/auth/register" />
+  if (!!session.eula_accepted_at) return <Redirect to="/auth/register" />
 
   return (
     <Flex

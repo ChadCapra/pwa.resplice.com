@@ -8,6 +8,7 @@ import {
   fetchUserAttributes
 } from '../store/user/userActions'
 import { fetchContacts } from '../store/contact/contactActions'
+import { fetchGroups } from '../store/group/groupAction'
 
 import HomeView from './views/HomeView'
 import UserView from './views/UserView'
@@ -21,13 +22,15 @@ type Props = {
   fetchUserProfile: () => Promise<void>
   fetchUserAttributes: () => Promise<void>
   fetchContacts: () => Promise<void>
+  fetchGroups: () => Promise<void>
 }
 
 const Main = ({
   fetchAttributeTypes,
   fetchUserProfile,
   fetchUserAttributes,
-  fetchContacts
+  fetchContacts,
+  fetchGroups
 }: Props) => {
   const [, setError] = useState(false)
 
@@ -38,7 +41,8 @@ const Main = ({
           fetchAttributeTypes(),
           fetchUserProfile(),
           fetchUserAttributes(),
-          fetchContacts()
+          fetchContacts(),
+          fetchGroups()
         ])
       } catch (err) {
         setError(err)
@@ -49,7 +53,8 @@ const Main = ({
     fetchAttributeTypes,
     fetchUserProfile,
     fetchUserAttributes,
-    fetchContacts
+    fetchContacts,
+    fetchGroups
   ])
 
   return (
@@ -68,5 +73,6 @@ export default connect(null, {
   fetchAttributeTypes,
   fetchUserProfile,
   fetchUserAttributes,
-  fetchContacts
+  fetchContacts,
+  fetchGroups
 })(Main)

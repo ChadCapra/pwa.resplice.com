@@ -21,11 +21,11 @@ import api from '../../api'
 
 type UserThunk = ThunkAction<Promise<void>, RespliceState, null, UserActions>
 
-export const fetchUserProfile = (): UserThunk => async dispatch => {
+export const fetchUserProfile = (): UserThunk => async (dispatch) => {
   dispatch({ type: FETCH_USER_PROFILE, loading: true })
   try {
-    const response = await api.get('/user/profile')
-    const profile: IUserProfile = response.data.user
+    const response = await api.get('/user')
+    const profile: IUserProfile = response.data
     dispatch({
       type: FETCH_USER_PROFILE,
       payload: profile
@@ -36,7 +36,7 @@ export const fetchUserProfile = (): UserThunk => async dispatch => {
   }
 }
 
-export const editUserName = (name: string): UserThunk => async dispatch => {
+export const editUserName = (name: string): UserThunk => async (dispatch) => {
   dispatch({ type: EDIT_USER_NAME, loading: true })
   try {
     const response = await api.patch('/user/edit_name', name)
@@ -50,7 +50,7 @@ export const editUserName = (name: string): UserThunk => async dispatch => {
   }
 }
 
-export const editUserAvatar = (avatar: File): UserThunk => async dispatch => {
+export const editUserAvatar = (avatar: File): UserThunk => async (dispatch) => {
   dispatch({ type: EDIT_USER_AVATAR, loading: true })
   try {
     const response = await api.patch('/user/edit_avatar')
@@ -64,7 +64,7 @@ export const editUserAvatar = (avatar: File): UserThunk => async dispatch => {
   }
 }
 
-export const deleteUser = (): UserThunk => async dispatch => {
+export const deleteUser = (): UserThunk => async (dispatch) => {
   dispatch({ type: DELETE_USER, loading: true })
   try {
     await api.delete('/user/delete')
@@ -76,11 +76,11 @@ export const deleteUser = (): UserThunk => async dispatch => {
   }
 }
 
-export const fetchUserAttributes = (): UserThunk => async dispatch => {
+export const fetchUserAttributes = (): UserThunk => async (dispatch) => {
   dispatch({ type: FETCH_USER_ATTRIBUTES, loading: true })
   try {
-    const response = await api.get('/user/attributes/get')
-    const attributes: IUserAttribute[] = response.data.user_attributes
+    const response = await api.get('/user/attributes')
+    const attributes: IUserAttribute[] = response.data
     dispatch({
       type: FETCH_USER_ATTRIBUTES,
       payload: attributes
@@ -90,13 +90,13 @@ export const fetchUserAttributes = (): UserThunk => async dispatch => {
   }
 }
 
-export const fetchUserAttribute = (
-  uuid: string
-): UserThunk => async dispatch => {
+export const fetchUserAttribute = (uuid: string): UserThunk => async (
+  dispatch
+) => {
   dispatch({ type: FETCH_USER_ATTRIBUTE, loading: true })
   try {
-    const response = await api.get(`/user/attributes/${uuid}/get`)
-    const attribute: IUserAttribute = response.data[0]
+    const response = await api.get(`/user/attributes/${uuid}`)
+    const attribute: IUserAttribute = response.data
     dispatch({
       type: FETCH_USER_ATTRIBUTE,
       payload: attribute
@@ -108,7 +108,7 @@ export const fetchUserAttribute = (
 
 export const addUserAttribute = (
   attribute: IAddAttributeValues
-): UserThunk => async dispatch => {
+): UserThunk => async (dispatch) => {
   dispatch({ type: ADD_USER_ATTRIBUTE, loading: true })
   try {
     const response = await api.post('/user/attributes/add', attribute)
@@ -127,7 +127,7 @@ export const editUserAttribute = ({
   collection,
   name,
   value
-}: IUserAttribute): UserThunk => async dispatch => {
+}: IUserAttribute): UserThunk => async (dispatch) => {
   dispatch({ type: EDIT_USER_ATTRIBUTE, loading: true })
   try {
     const response = await api.put(`/user/attributes/${uuid}/edit`, {
@@ -148,7 +148,7 @@ export const editUserAttribute = ({
 export const verifyUserAttribute = (
   uuid: string,
   code: string
-): UserThunk => async dispatch => {
+): UserThunk => async (dispatch) => {
   dispatch({ type: VERIFY_USER_ATTRIBUTE, loading: true })
   try {
     const response = await api.patch(`/user/attributes/${uuid}/verify`, {
@@ -167,7 +167,7 @@ export const verifyUserAttribute = (
 export const toggleQrSharable = (
   uuid: string,
   sharable: boolean
-): UserThunk => async dispatch => {
+): UserThunk => async (dispatch) => {
   dispatch({ type: TOGGLE_QR_SHARABLE, loading: true })
   try {
     const response = await api.patch(
@@ -184,9 +184,9 @@ export const toggleQrSharable = (
   }
 }
 
-export const deleteUserAttribute = (
-  uuid: string
-): UserThunk => async dispatch => {
+export const deleteUserAttribute = (uuid: string): UserThunk => async (
+  dispatch
+) => {
   dispatch({ type: DELETE_USER_ATTRIBUTE, loading: true })
   try {
     await api.delete(`/user/attributes/${uuid}/set_qr_sharable`)

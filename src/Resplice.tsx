@@ -39,7 +39,7 @@ const Resplice = ({ session, getSession }: Props) => {
   }, [])
 
   const isAuthorized =
-    session && session.authenticated_at && session.user_registered_at
+    session && session.verified_at && session.profile_completed_at
   if (loading) return <GlobalLoading />
 
   return (
@@ -52,7 +52,7 @@ const Resplice = ({ session, getSession }: Props) => {
         />
         <Route
           path="/"
-          render={props =>
+          render={(props) =>
             isAuthorized ? <Main {...props} /> : <Redirect to="/auth/login" />
           }
         />

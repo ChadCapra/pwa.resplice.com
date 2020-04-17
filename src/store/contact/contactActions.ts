@@ -1,7 +1,6 @@
 import { RespliceState } from '../store'
 import {
   Contact,
-  ContactRecord,
   ContactCollection,
   ContactAttribute,
   ContactShare,
@@ -35,15 +34,12 @@ export const fetchContacts = (): ThunkAction<
   RespliceState,
   null,
   ContactActions
-> => async dispatch => {
+> => async (dispatch) => {
   dispatch({ type: FETCH_CONTACTS, loading: true })
   try {
-    const response = await api.get('/contacts/get')
-    const contacts: Contact[] = response.data.contacts
-    const contactRecords: Dictionary<ContactRecord> = toDictionary(
-      'uuid',
-      contacts
-    )
+    const response = await api.get('/contacts')
+    const contacts: Contact[] = response.data
+    const contactRecords: Dictionary<Contact> = toDictionary('uuid', contacts)
     dispatch({
       type: FETCH_CONTACTS,
       payload: contactRecords
@@ -55,12 +51,14 @@ export const fetchContacts = (): ThunkAction<
 
 export const fetchContact = (
   uuid: string
-): ThunkAction<void, RespliceState, null, ContactActions> => async dispatch => {
+): ThunkAction<void, RespliceState, null, ContactActions> => async (
+  dispatch
+) => {
   dispatch({ type: FETCH_CONTACT, loading: true })
   try {
-    const response = await api.get(`/contacts/${uuid}/get`)
+    const response = await api.get(`/contacts/${uuid}`)
     const contactCollection: ContactCollection = response.data
-    const contactRecord: ContactRecord = {
+    const contactRecord: Contact = {
       ...contactCollection.contact,
       attributes: toDictionary('uuid', contactCollection.contact_attributes),
       shares: toDictionary('uuid', contactCollection.contact_shares)
@@ -77,24 +75,17 @@ export const fetchContact = (
 export const inviteContact = (invite: {
   type: 'phone' | 'email'
   value: string
-}): ThunkAction<
-  void,
-  RespliceState,
-  null,
-  ContactActions
-> => async dispatch => {
+}): ThunkAction<void, RespliceState, null, ContactActions> => async (
+  dispatch
+) => {
   dispatch({ type: INVITE_CONTACT, loading: true })
   try {
     const response = await api.post('/contacts/invite', invite)
-    const contactCollection: ContactCollection = response.data
-    const contactRecord: ContactRecord = {
-      ...contactCollection.contact,
-      attributes: toDictionary('uuid', contactCollection.contact_attributes),
-      shares: toDictionary('uuid', contactCollection.contact_shares)
-    }
+    const contact: Contact = response.data
+    if (!contact) return // Did not create a connection only an invite
     dispatch({
       type: INVITE_CONTACT,
-      payload: contactRecord
+      payload: contact
     })
   } catch (err) {
     dispatch({ type: INVITE_CONTACT, error: err })
@@ -104,14 +95,16 @@ export const inviteContact = (invite: {
 export const unlockContact = (
   uuid: string,
   pin: string
-): ThunkAction<void, RespliceState, null, ContactActions> => async dispatch => {
+): ThunkAction<void, RespliceState, null, ContactActions> => async (
+  dispatch
+) => {
   dispatch({ type: UNLOCK_CONTACT, loading: true })
   try {
     const response = await api.post(`/contacts/${uuid}/unlock`, {
       unlock_pin: pin
     })
     const contactCollection: ContactCollection = response.data
-    const contactRecord: ContactRecord = {
+    const contactRecord: Contact = {
       ...contactCollection.contact,
       attributes: toDictionary('uuid', contactCollection.contact_attributes),
       shares: toDictionary('uuid', contactCollection.contact_shares)
@@ -128,7 +121,9 @@ export const unlockContact = (
 export const setContactInfo = (
   uuid: string,
   info: { nickname: string; description: string }
-): ThunkAction<void, RespliceState, null, ContactActions> => async dispatch => {
+): ThunkAction<void, RespliceState, null, ContactActions> => async (
+  dispatch
+) => {
   dispatch({ type: SET_CONTACT_INFO, loading: true })
   try {
     const response = await api.patch(`/contacts/${uuid}/set_info`, info)
@@ -145,7 +140,9 @@ export const setContactInfo = (
 export const addContactTag = (
   uuid: string,
   tag: string
-): ThunkAction<void, RespliceState, null, ContactActions> => async dispatch => {
+): ThunkAction<void, RespliceState, null, ContactActions> => async (
+  dispatch
+) => {
   dispatch({ type: ADD_CONTACT_TAG, loading: true })
   try {
     const response = await api.patch(`/contacts/${uuid}/add_tag`, { tag })
@@ -162,7 +159,9 @@ export const addContactTag = (
 export const removeContactTag = (
   uuid: string,
   tag: string
-): ThunkAction<void, RespliceState, null, ContactActions> => async dispatch => {
+): ThunkAction<void, RespliceState, null, ContactActions> => async (
+  dispatch
+) => {
   dispatch({ type: REMOVE_CONTACT_TAG, loading: true })
   try {
     const response = await api.patch(`/contacts/${uuid}/remove_tag`, { tag })
@@ -178,7 +177,9 @@ export const removeContactTag = (
 
 export const deleteContact = (
   uuid: string
-): ThunkAction<void, RespliceState, null, ContactActions> => async dispatch => {
+): ThunkAction<void, RespliceState, null, ContactActions> => async (
+  dispatch
+) => {
   dispatch({ type: DELETE_CONTACT, loading: true })
   try {
     await api.delete(`/contacts/${uuid}/delete`)
@@ -196,10 +197,10 @@ export const fetchContactsAttributes = (): ThunkAction<
   RespliceState,
   null,
   ContactActions
-> => async dispatch => {
+> => async (dispatch) => {
   dispatch({ type: FETCH_CONTACTS_ATTRIBUTES, loading: true })
   try {
-    const response = await api.get('/contacts/attributes/get')
+    const response = await api.get('/contacts/attributes')
     const attributes: ContactAttribute[] = response.data
     const attributesDictionary: Dictionary<ContactAttribute> = toDictionary(
       'attribute_uuid',
@@ -216,10 +217,12 @@ export const fetchContactsAttributes = (): ThunkAction<
 
 export const fetchContactAttributes = (
   uuid: string
-): ThunkAction<void, RespliceState, null, ContactActions> => async dispatch => {
+): ThunkAction<void, RespliceState, null, ContactActions> => async (
+  dispatch
+) => {
   dispatch({ type: FETCH_CONTACT_ATTRIBUTES, loading: true })
   try {
-    const response = await api.get(`/contacts/${uuid}/attributes/get`)
+    const response = await api.get(`/contacts/${uuid}/attributes`)
     const attributes: ContactAttribute[] = response.data
     const attributesDictionary: Dictionary<ContactAttribute> = toDictionary(
       'attribute_uuid',
@@ -237,11 +240,13 @@ export const fetchContactAttributes = (
 export const fetchContactAttribute = (
   uuid: string,
   attribute_uuid: string
-): ThunkAction<void, RespliceState, null, ContactActions> => async dispatch => {
+): ThunkAction<void, RespliceState, null, ContactActions> => async (
+  dispatch
+) => {
   dispatch({ type: FETCH_CONTACT_ATTRIBUTE, loading: true })
   try {
     const response = await api.get(
-      `/contacts/${uuid}/attributes/${attribute_uuid}/get`
+      `/contacts/${uuid}/attributes/${attribute_uuid}`
     )
     const attribute: ContactAttribute = response.data
     dispatch({
@@ -255,7 +260,9 @@ export const fetchContactAttribute = (
 
 export const deletePendingAttributes = (
   uuid: string
-): ThunkAction<void, RespliceState, null, ContactActions> => async dispatch => {
+): ThunkAction<void, RespliceState, null, ContactActions> => async (
+  dispatch
+) => {
   dispatch({ type: DELETE_PENDING_ATTRIBUTES, loading: true })
   try {
     await api.delete(`/contacts/${uuid}/attributes/delete_pending`)
@@ -273,10 +280,10 @@ export const fetchContactsShares = (): ThunkAction<
   RespliceState,
   null,
   ContactActions
-> => async dispatch => {
+> => async (dispatch) => {
   dispatch({ type: FETCH_CONTACTS_SHARES, loading: true })
   try {
-    const response = await api.get('/contacts/shares/get')
+    const response = await api.get('/contacts/shares')
     const shares: ContactShare[] = response.data
     dispatch({
       type: FETCH_CONTACTS_SHARES,
@@ -289,10 +296,12 @@ export const fetchContactsShares = (): ThunkAction<
 
 export const fetchContactShares = (
   uuid: string
-): ThunkAction<void, RespliceState, null, ContactActions> => async dispatch => {
+): ThunkAction<void, RespliceState, null, ContactActions> => async (
+  dispatch
+) => {
   dispatch({ type: FETCH_CONTACT_SHARES, loading: true })
   try {
-    const response = await api.get(`/contacts/${uuid}/shares/get`)
+    const response = await api.get(`/contacts/${uuid}/shares`)
     const shares: ContactShare[] = response.data
     dispatch({
       type: FETCH_CONTACT_SHARES,
@@ -306,12 +315,12 @@ export const fetchContactShares = (
 export const fetchContactShare = (
   uuid: string,
   attribute_uuid: string
-): ThunkAction<void, RespliceState, null, ContactActions> => async dispatch => {
+): ThunkAction<void, RespliceState, null, ContactActions> => async (
+  dispatch
+) => {
   dispatch({ type: FETCH_CONTACT_SHARE, loading: true })
   try {
-    const response = await api.get(
-      `/contacts/${uuid}/shares/${attribute_uuid}/get`
-    )
+    const response = await api.get(`/contacts/${uuid}/shares/${attribute_uuid}`)
     const share: ContactShare = response.data
     dispatch({
       type: FETCH_CONTACT_SHARE,
@@ -325,7 +334,9 @@ export const fetchContactShare = (
 export const addContactShare = (
   uuid: string,
   attribute_uuid: string
-): ThunkAction<void, RespliceState, null, ContactActions> => async dispatch => {
+): ThunkAction<void, RespliceState, null, ContactActions> => async (
+  dispatch
+) => {
   dispatch({ type: ADD_CONTACT_SHARE, loading: true })
   try {
     const response = await api.post(
@@ -345,7 +356,9 @@ export const setContactShareExpiry = (
   uuid: string,
   attribute_uuid: string,
   expiry: string
-): ThunkAction<void, RespliceState, null, ContactActions> => async dispatch => {
+): ThunkAction<void, RespliceState, null, ContactActions> => async (
+  dispatch
+) => {
   dispatch({ type: SET_CONTACT_SHARE_EXPIRY, loading: true })
   try {
     const response = await api.patch(
@@ -365,7 +378,9 @@ export const setContactShareExpiry = (
 export const deleteContactShare = (
   uuid: string,
   attribute_uuid: string
-): ThunkAction<void, RespliceState, null, ContactActions> => async dispatch => {
+): ThunkAction<void, RespliceState, null, ContactActions> => async (
+  dispatch
+) => {
   dispatch({ type: DELETE_CONTACT_SHARE, loading: true })
   try {
     await api.delete(`/contacts/${uuid}/shares/${attribute_uuid}/delete`)
