@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import { useQuery } from '../../../helpers'
@@ -18,7 +18,7 @@ const StyledHeader = styled.div`
 const NavText = styled.h2<{ active: boolean }>`
   font-size: 2em;
   font-weight: 500;
-  ${props => !props.active && 'color: var(--light-4);'}
+  ${(props) => !props.active && 'color: var(--light-4);'}
   cursor: pointer;
 `
 
@@ -40,18 +40,19 @@ const ChildContainer = styled.div`
 `
 
 type HeaderProps = {
-  startPage: number
   navText: Array<string>
+  active: number
   children: React.ReactNode
   handleNavClick: (idx: number) => void
 }
 
 const SwipeViewHeader = ({
-  startPage,
   navText,
+  active,
   children,
   handleNavClick
 }: HeaderProps) => {
+  const activeIdx = active - 1
   return (
     <StyledHeader>
       {children}
@@ -67,7 +68,7 @@ const SwipeViewHeader = ({
           return (
             <NavText
               key={idx}
-              active={startPage - 1 === idx}
+              active={activeIdx === idx}
               onClick={() => handleNavClick(idx)}
             >
               {text}
@@ -86,14 +87,15 @@ type Props = {
 }
 
 const SwipeView = ({ navText, header, children }: Props) => {
-  const page = useQuery().get('page') || '1'
+  const initialPage = useQuery().get('page') || '1'
+  const [page, setPage] = useState(parseInt(initialPage))
 
   return (
     <View.Layout>
       <View.Header>
         <SwipeViewHeader
           navText={navText}
-          startPage={parseInt(page)}
+          active={page}
           handleNavClick={() => {}}
         >
           {header}
@@ -101,7 +103,7 @@ const SwipeView = ({ navText, header, children }: Props) => {
       </View.Header>
       <View.Body>
         <ViewBackground>
-          <Swiper start={parseInt(page)}>
+          <Swiper startPage={page} onSwipe={(idx) => setPage(idx + 1)}>
             {children.map((child, idx) => {
               return <ChildContainer key={idx}>{child}</ChildContainer>
             })}
