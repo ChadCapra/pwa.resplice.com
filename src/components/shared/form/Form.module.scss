@@ -139,6 +139,7 @@
 
   &:focus {
     outline: none;
+    border-color: var(--brand-primary);
   }
   &:nth-child(3n) {
     margin-right: 20px;
