@@ -18,7 +18,8 @@ const StyledHeader = styled.div`
 const NavText = styled.h2<{ active: boolean }>`
   font-size: 2em;
   font-weight: 500;
-  ${(props) => !props.active && 'color: var(--light-4);'}
+  color: var(--light-4);
+  ${(props) => props.active && 'color: var(--text); transform: scale(1.1);'}
   cursor: pointer;
 `
 
