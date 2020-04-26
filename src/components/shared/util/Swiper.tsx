@@ -38,7 +38,8 @@ const Swiper = memo(
           const scale = down ? 1 - distance / window.innerWidth / 2 : 1
           return { x, scale, display: 'block' }
         })
-      }
+      },
+      { axis: 'x' }
     )
     return props.map(({ x, display, scale }: any, idx: number) => (
       <animated.div
