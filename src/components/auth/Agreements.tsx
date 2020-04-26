@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Redirect } from 'react-router'
 
 import { acceptEula } from '../../store/auth/authActions'
+import { getSession } from '../../store/auth/authActions'
 import { RespliceState, Session } from '../../store/store'
 
 import Flex from '../shared/layout/Flex'
@@ -17,6 +18,7 @@ type Props = {
   loading: boolean
   error: Dictionary<any> | null
   acceptEula: (locale: string) => Promise<void>
+  getSession: () => Promise<void>
 }
 
 const Agreements = ({ session, loading, error, acceptEula }: Props) => {
@@ -74,7 +76,10 @@ const Agreements = ({ session, loading, error, acceptEula }: Props) => {
         variant="primary"
         disabled={!eulaAccepted || !privacyAccepted}
         loading={loading}
-        onClick={() => acceptEula('en')}
+        onClick={async () => {
+          await acceptEula('en')
+          getSession()
+        }}
         style={{ marginTop: '1em' }}
       >
         Accept
@@ -91,4 +96,4 @@ const mapStateToProps = (state: RespliceState) => {
   }
 }
 
-export default connect(mapStateToProps, { acceptEula })(Agreements)
+export default connect(mapStateToProps, { acceptEula, getSession })(Agreements)
