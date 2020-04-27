@@ -1,10 +1,12 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { RespliceState, Contact } from '../../store/store'
 import styled from 'styled-components'
 
 import EntityList from '../shared/entity/EntityList'
 import ContactSummary from './ContactSummary'
+import FAB from '../shared/button/FAB'
 
 const ListContainer = styled.div`
   height: 100%;
@@ -18,11 +20,16 @@ type Props = {
 }
 
 const ContactList = ({ contacts }: Props) => {
+  const history = useHistory()
   const contactList = contacts ? Object.values(contacts) : null
   return contactList ? (
-    <ListContainer>
-      <EntityList list={contactList} ListItem={ContactSummary} />
-    </ListContainer>
+    <>
+      <ListContainer>
+        <EntityList list={contactList} ListItem={ContactSummary} />
+      </ListContainer>
+
+      <FAB onClick={() => history.push('/invite')} />
+    </>
   ) : (
     <p>Loading</p>
   )

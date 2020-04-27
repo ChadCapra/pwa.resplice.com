@@ -22,7 +22,7 @@ const UserAttribute = ({ attribute }: Props) => {
     return a.sort_order - b.sort_order
   })
   if (attribute.latest_to_verify) {
-    actions = actions.filter(action => !(action.name === 'verify'))
+    actions = actions.filter((action) => !(action.name === 'verify'))
   }
 
   const handleActionClick = (actionName: string) => {
@@ -38,7 +38,7 @@ const UserAttribute = ({ attribute }: Props) => {
         setShowDelete(true)
         return
       default:
-        handleAttributeAction(actionName)
+        handleAttributeAction(actionName, Object.values(attribute.value))
         return
     }
   }

@@ -82,7 +82,7 @@ const AttributeForm = ({
                     )}
                   </Field>
                 )
-              case 'date':
+              case 'start':
                 return (
                   <Field key={key} name={key}>
                     {({ field, meta }: FieldProps) => (
