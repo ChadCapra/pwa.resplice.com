@@ -6,7 +6,7 @@ import { RespliceState, Session } from '../../store/store'
 
 import styles from './Auth.module.scss'
 import Flex from '../shared/layout/Flex'
-import InputCode from '../shared/form/InputCode'
+import InputCode from '../shared/form/CodeInput'
 import Button from '../shared/button/Button'
 // import Alert from '../shared/modal/Alert'
 

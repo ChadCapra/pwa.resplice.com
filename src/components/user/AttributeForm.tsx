@@ -2,7 +2,7 @@ import React from 'react'
 import { Formik, Form, Field, FieldProps } from 'formik'
 
 import Input from '../shared/form/Input'
-import InputPhone from '../shared/form/InputPhone'
+import InputPhone from '../shared/form/PhoneInput'
 import Button from '../shared/button/Button'
 
 type FormValues = {

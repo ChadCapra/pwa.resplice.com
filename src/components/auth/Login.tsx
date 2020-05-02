@@ -8,7 +8,7 @@ import { createSession } from '../../store/auth/authActions'
 
 import Flex from '../shared/layout/Flex'
 import Input from '../shared/form/Input'
-import InputPhone from '../shared/form/InputPhone'
+import InputPhone from '../shared/form/PhoneInput'
 import Checkbox from '../shared/form/Checkbox'
 import Button from '../shared/button/Button'
 
