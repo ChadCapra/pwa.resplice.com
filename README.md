@@ -1,45 +1,24 @@
-# Resplice
+# Resplice UI Repository
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/cef2d9ea-ff7d-48c1-89fa-8d9eee3b3561/deploy-status)](https://app.netlify.com/sites/resplice-app/deploys)
+This repository contains Resplice UI Projects and UI Component Libraries
 
-Front-end codebase for Resplice
+## Overview
 
-## Pull Requests
+## Packages
 
-If you are making a pull request please use a descriptive name
-Use this template for a description:
+### pwa_old (depreciated)
 
-```md
-# Description
+Old React UI that contains some usable components and code_snippets
 
-Please include a summary of the change and a link to which issue is fixed. Please also include relevant motivation and context. List any dependencies that are required for this change.
+### re-components
 
-Fixes # (issue)
+This package is a Resplice React cmponent library.
+It contains all shared UI elements across all projects to maintain consistency in functionality and style.
 
-## Type of change
+### resplice-pwa
 
-Please delete options that are not relevant.
+This package is the main UI project for the ReSplice PWA.
 
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] This change requires a documentation update
+### rechat-pwa
 
-# How Has This Been Tested?
-
-Please describe the tests that you ran to verify your changes. Provide instructions so we can reproduce. Please also list any relevant details for your test configuration
-
-- [ ] Test A
-- [ ] Test B
-
-# Checklist:
-
-- [ ] My code follows the style guidelines of this project
-- [ ] I have performed a self-review of my own code
-- [ ] My code has been reviewed by at least one peer
-- [ ] I have commented my code, particularly in hard-to-understand areas
-- [ ] I have made corresponding changes to the documentation
-- [ ] My changes generate no new warnings
-- [ ] I have added tests that prove my fix is effective or that my feature works
-- [ ] New and existing unit tests pass locally with my changes
-```
+This package is the main UI project for the ReChat PWA.
